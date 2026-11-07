@@ -112,6 +112,10 @@
   }
   .wiki-btn:hover { background: #fff8ec; }
   .wiki-btn svg, .site svg { width: 18px; height: 18px; flex: none; }
+  .names { color: var(--muted); font-size: 0.9rem; margin: -8px 0 12px; }
+  .source.note-src { text-align: left; margin: 2px 0 6px; }
+  .nw { white-space: nowrap; }
+  .source a { color: var(--rice); }
   .source { font-size: 0.78rem; color: var(--muted); margin: 0; text-align: center; }
   .panel h3 { font-weight: 700; font-size: 1.15rem; margin: 26px 0 10px; }
   .empty { color: var(--muted); font-size: 0.9rem; margin: 0; }
@@ -297,19 +301,48 @@
     if (!r.ok) throw new Error(path);
     return r.json();
   }
-  const [data, countries, picksFile, suggestionsFile, regionsFile, food] = await Promise.all([
+  const [data, countries, picksFile, suggestionsFile, regionsFile, food, notesFile] = await Promise.all([
     load("data-cuisines", "data/cuisines.json"),
     load("data-countries", "data/countries.geojson"),
     load("data-picks", "data/picks.json").catch(() => ({})),
     load("data-suggestions", "data/suggestions.json").catch(() => ({})),
     load("data-regions", "data/regions.geojson").catch(() => ({ features: [] })),
     load("data-food", "data/food.json").catch(() => ({ dishes: [], ingredients: [] })),
+    load("data-notes", "data/notes.json").catch(() => ({})),
   ]);
   // Short intros for dishes and ingredients, loaded in the background
   let foodSummaries = {};
   load("data-food_summaries", "data/food_summaries.json").then(d => { foodSummaries = d || {}; }).catch(() => {});
   const suggestions = suggestionsFile.cuisines || {};
   const picks = picksFile.cuisines || {};
+  // Notes written for this explorer (content/ in the repo): our own text, sources,
+  // and suggested sites and cookbooks for entries Wikipedia leaves out
+  const notes = { cuisines: {}, dishes: {}, ingredients: {}, ...(notesFile || {}) };
+  for (const [id, n] of Object.entries(notes.cuisines)) {
+    if (!n.sites && !n.cookbooks) continue;
+    const s = suggestions[id] || (suggestions[id] = {});
+    s.sites = (n.sites || []).concat(s.sites || []);
+    s.cookbooks = (n.cookbooks || []).concat(s.cookbooks || []);
+  }
+  const CORRECT = "https://github.com/kyle-pace/cuisine-explorer/issues/new?title=";
+  // Our own text, with [[links]] turned into buttons that open what they point to
+  function noteHtml(n) {
+    const links = new Map((n.links || []).map(l => [l.text.toLowerCase(), l]));
+    const linkify = p => esc(p).replace(/\[\[([^\]|#]+)(?:#[^\]|]*)?(?:\|([^\]]+))?\]\]([,.;:!?)]*)/g, (m, target, label, punct) => {
+      const l = links.get(target.trim().toLowerCase().replace(/&#39;/g, "'").replace(/&amp;/g, "&"));
+      const text = label || target;
+      if (!l) return text + punct;
+      const key = l.kind === "dish" ? "data-dish" : l.kind === "ingredient" ? "data-ing" : "data-id";
+      return `<span class="nw"><button class="link" ${key}="${attr(l.id)}">${text}</button>${punct}</span>`;
+    });
+    return (n.text || []).map(p => `<p>${linkify(p)}</p>`).join("");
+  }
+  function noteSources(n, what) {
+    const src = (n.sources || []).filter(x => x.url);
+    return `<p class="source note-src">Written for this explorer${src.length ? " from " + src.map(x =>
+      `<a href="${attr(x.url)}" target="_blank" rel="noopener">${esc(x.name)}</a>`).join(", ") : ""}.
+      <a href="${CORRECT + encodeURIComponent("Correction: " + what)}" target="_blank" rel="noopener">Suggest a correction</a></p>`;
+  }
   // Full Wikipedia intros, built weekly; loaded in the background
   let summaries = {};
   load("data-summaries", "data/summaries.json").then(d => { summaries = d || {}; if (selected) fillIntro(selected); }).catch(() => {});
@@ -751,9 +784,12 @@
         if (isPhone()) panel.classList.add("full");
       });
     };
-    const text = summaries[c.title];
+    const note = notes.cuisines[c.id];
+    if (note && (note.text || []).length) { intro.innerHTML = noteHtml(note); return; }
+    const text = c.title && summaries[c.title];
     if (text) return show(text);
     intro.innerHTML = c.desc ? `<p>${esc(capital(c.desc))}.</p>` : "";
+    if (!c.title) return;
     liveIntro(c).then(t => { if (t && selected === c && document.getElementById("intro") === intro) show(t); });
   }
 
@@ -818,6 +854,8 @@
       ? `Diaspora cuisine, from ${esc(isoName.get(c.arc.from) || c.arc.from)} to ${esc(isoName.get(c.arc.to) || c.arc.to)}`
       : esc(KIND_LABEL[c.kind] || "") + (country && c.kind !== "national" ? ` in ${esc(country)}` : country ? ` of ${esc(country)}` : "");
 
+    const cNote = notes.cuisines[c.id];
+    const kindText = c.indigenous ? `Indigenous foodways${cNote && cNote.area ? `, ${esc(cNote.area)}` : ""}` : kindLine;
     const p = picks[c.id] || c.picks || null;
     const sug = suggestions[c.id] || {};
     const sites = merge(p && p.sites, sug.sites, "url");
@@ -826,7 +864,9 @@
     function borrow(kind, key, n) {
       if (c.kind === "national") return null;
       for (let cur = c, i = 0; cur && i < 4; i++) {
-        cur = (cur.parents || []).map(id => byId.get(id)).find(p => p && p.iso3 === c.iso3) || (cur.kind !== "national" && cur.iso3 ? nationalByIso.get(cur.iso3) : null);
+        // Indigenous foodways borrow only from their own family, never from the country's national cuisine
+        cur = c.indigenous ? (cur.parents || []).map(id => byId.get(id)).find(Boolean)
+          : (cur.parents || []).map(id => byId.get(id)).find(p => p && p.iso3 === c.iso3) || (cur.kind !== "national" && cur.iso3 ? nationalByIso.get(cur.iso3) : null);
         if (!cur || cur === c) break;
         const items = merge((picks[cur.id] || {})[kind], (suggestions[cur.id] || {})[kind], key).slice(0, n);
         if (items.length) return { from: cur, items };
@@ -835,7 +875,7 @@
     }
     const bSites = sites.length ? null : borrow("sites", "url", 3);
     const bBooks = books.length ? null : borrow("cookbooks", "title", 4);
-    const short = x => esc(x.name.replace(/ cuisine$/, ""));
+    const short = x => esc(x.name.replace(/ (cuisine|foodways)$/, ""));
     const fromNote = b => `<p class="empty">Nothing specific to ${short(c)} cooking yet, so here's ${b.items.length > 1 ? "where" : "one place"} to start from <button class="link" data-id="${attr(b.from.id)}">${esc(b.from.name)}</button>.</p>`;
     const myDishes = (dishesOf.get(c.id) || []).slice().sort((a, b) => (b.ingredients.length > 0) - (a.ingredients.length > 0) || a.name.localeCompare(b.name));
     const keyIngs = keyIngredients(myDishes, 10);
@@ -855,8 +895,10 @@
     panel.style.setProperty("--accent", col);
     body.innerHTML = `
       <h2>${esc(c.name)}</h2>
-      <p class="kind"><i style="background:${col}"></i>${kindLine}</p>
+      <p class="kind"><i style="background:${col}"></i>${kindText}</p>
+      ${cNote && cNote.names ? `<p class="names">${esc(cNote.names)}</p>` : ""}
       <div class="intro" id="intro"></div>
+      ${cNote ? noteSources(cNote, c.name) : ""}
       ${p && p.note ? `<p class="intro"><em>${esc(p.note)}</em></p>` : ""}
 
       <h3>Recipe sites</h3>
@@ -871,8 +913,8 @@
       ${myDishes.length ? `<h3>Dishes</h3>${chipList(myDishes, dishChip, 24)}` : ""}
       ${keyIngs.length ? `<h3>Key ingredients</h3><p class="empty" style="margin-bottom:8px">Pick one to see where else in the world it's cooked with.</p><div class="chips">${keyIngs.map(x => ingChip(x.ing)).join("")}</div>` : ""}
 
-      <a class="wiki-btn" href="${attr(c.url)}" target="_blank" rel="noopener">Read the full article on Wikipedia ${ARROW}</a>
-      <p class="source">Summary from Wikipedia, shared under CC BY-SA.</p>
+      ${c.url ? `<a class="wiki-btn" href="${attr(c.url)}" target="_blank" rel="noopener">${cNote ? "Read Wikipedia's article" : "Read the full article on Wikipedia"} ${ARROW}</a>
+      ${cNote ? "" : `<p class="source">Summary from Wikipedia, shared under CC BY-SA. <a href="${CORRECT + encodeURIComponent("Correction: " + c.name)}" target="_blank" rel="noopener">Suggest a correction</a></p>`}` : ""}
 
       ${sameArea.length ? `<h3>Also from this area</h3><div class="chips">${sameArea.map(chip).join("")}</div>` : ""}
       ${kids.length ? `<h3>Within ${esc(c.name.replace(/ cuisine$/, ""))} cooking</h3><div class="chips">${kids.map(chip).join("")}</div>` : ""}
@@ -907,7 +949,10 @@
   function fillFoodIntro(x) {
     const intro = document.getElementById("intro");
     if (!intro) return;
-    const title = x.type === "dish" ? x.id : x.title;
+    const own = (x.type === "dish" ? notes.dishes : notes.ingredients)[x.id];
+    if (own && (own.text || []).length) { intro.innerHTML = noteHtml(own); return; }
+    const title = x.type === "dish" ? (x.title || x.id) : x.title;
+    if (!title) { intro.innerHTML = ""; return; }
     const show = text => {
       if (current !== x) return;
       const shortText = shortIntro(text, isPhone() ? 220 : 300);
@@ -931,6 +976,7 @@
       if (sites.length) { cook = { c, sites: sites.slice(0, 2) }; break; }
     }
     const siblings = (dishesOf.get(homes[0].id) || []).filter(x => x !== d);
+    const dNote = notes.dishes[d.id];
     crumbs.innerHTML = backCrumb() || "Dish";
     panel.style.setProperty("--accent", col);
     body.style.setProperty("--accent", col);
@@ -942,8 +988,9 @@
       <h3>Where it's from</h3>
       <div class="chips">${homes.map(chip).join("")}</div>
       ${cook ? `<h3>Cook it</h3><p class="empty" style="margin-bottom:10px">Recipe sites for <button class="link" data-id="${attr(cook.c.id)}">${esc(cook.c.name)}</button>.</p><ul class="sites">${cook.sites.map(site).join("")}</ul>` : ""}
-      <a class="wiki-btn" href="${attr(wikiUrl(d.id))}" target="_blank" rel="noopener">Read about ${esc(d.name)} on Wikipedia ${ARROW}</a>
-      <p class="source">Summary from Wikipedia, shared under CC BY-SA.</p>
+      ${dNote ? noteSources(dNote, d.name) : ""}
+      ${d.note && !d.title ? "" : `<a class="wiki-btn" href="${attr(wikiUrl(d.title || d.id))}" target="_blank" rel="noopener">Read about ${esc(d.name)} on Wikipedia ${ARROW}</a>
+      ${dNote ? "" : `<p class="source">Summary from Wikipedia, shared under CC BY-SA.</p>`}`}
       ${siblings.length ? `<h3>More from ${esc(homes[0].name)}</h3>${chipList(siblings, dishChip, 16)}` : ""}
     `;
     showPanel();
@@ -964,6 +1011,7 @@
     for (const d of i.dishList) for (const o of d.ingredients) if (o !== i.id) pairs.set(o, (pairs.get(o) || 0) + 1);
     const paired = [...pairs].sort((a, b) => b[1] - a[1]).slice(0, 10).map(([id]) => ingById.get(id));
     crumbs.innerHTML = backCrumb() || "Ingredient";
+    const iNote = notes.ingredients[i.id];
     panel.style.setProperty("--accent", "#ede6da");
     body.style.setProperty("--accent", "#ede6da");
     body.innerHTML = `
@@ -977,8 +1025,9 @@
         <div class="chips">${ds.slice(0, 5).map(dishChip).join("")}${ds.length > 5 ? `<span class="more-n">and ${ds.length - 5} more</span>` : ""}</div></li>`).join("")}</ul>
       ${rows.length > 14 ? `<p class="empty">Also in ${rows.slice(14).map(([cid]) => `<button class="link" data-id="${attr(cid)}">${esc(shortName(byId.get(cid)))}</button>`).join(", ")}.</p>` : ""}
       ${paired.length ? `<h3>Often cooked with</h3><div class="chips">${paired.map(x => ingChip(x)).join("")}</div>` : ""}
-      <a class="wiki-btn" href="${attr(wikiUrl(i.title))}" target="_blank" rel="noopener">Read about ${esc(i.name.toLowerCase())} on Wikipedia ${ARROW}</a>
-      <p class="source">Summary from Wikipedia, shared under CC BY-SA.</p>
+      ${iNote ? noteSources(iNote, i.name) : ""}
+      ${i.title ? `<a class="wiki-btn" href="${attr(wikiUrl(i.title))}" target="_blank" rel="noopener">Read about ${esc(i.name.toLowerCase())} on Wikipedia ${ARROW}</a>
+      ${iNote ? "" : `<p class="source">Summary from Wikipedia, shared under CC BY-SA.</p>`}` : ""}
     `;
     showPanel();
     fillFoodIntro(i);
@@ -995,6 +1044,7 @@
     const nationals = all.filter(c => c.kind === "national").sort((a, b) => (dishesOf.get(b.id) || []).length - (dishesOf.get(a.id) || []).length);
     const shared = dishes.filter(d => d.cuisines.length > 1).sort((a, b) => b.cuisines.length - a.cuisines.length || a.name.localeCompare(b.name));
     const groups = [
+      ["indigenous", "Indigenous foodways"],
       ["peoples", "Peoples and places without their own country"],
       ["diaspora", "Diaspora and fusion"],
       ["religious", "Religious cuisines and diets"],
@@ -1010,7 +1060,7 @@
       cuisines: `<h3>Cuisines with the most dishes listed</h3>${chipList(nationals.filter(c => dishesOf.has(c.id)), chip, 30)}
         <h3>Beyond borders</h3><p class="empty" style="margin-bottom:4px">Cooking that doesn't fit inside one country: carried by people, shaped by faith, or from empires that no longer exist.</p>
         ${groups.map(([k, label]) => {
-          const items = beyond.filter(c => c.kind === k).sort((a, b) => a.name.localeCompare(b.name));
+          const items = (k === "indigenous" ? all.filter(c => c.indigenous) : beyond.filter(c => c.kind === k && !c.indigenous)).sort((a, b) => a.name.localeCompare(b.name));
           return items.length ? `<h3 class="small-h">${label}</h3><div class="chips">${items.map(chip).join("")}</div>` : "";
         }).join("")}`,
     };

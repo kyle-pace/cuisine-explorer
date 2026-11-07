@@ -27,10 +27,13 @@ json.dump(wd, open("raw/wikidata.json", "w"), ensure_ascii=False, indent=1)
 PY
 
 python3 scripts/build.py
+python3 scripts/merge_notes.py
 python3 scripts/build_regions.py
 
 # Dishes and ingredients: Wikidata first, then infobox ingredients, then again to merge them
 python3 scripts/fetch_dishes.py
 python3 scripts/fetch_infobox_ingredients.py
 python3 scripts/fetch_dishes.py
+# Hand-written notes (content/) on top of the food data, then intros
+python3 scripts/merge_notes.py
 python3 scripts/fetch_food_summaries.py

@@ -9,6 +9,7 @@ on:
     paths:
       - "scripts/**"
       - "data/overrides.json"
+      - "content/**"
       - ".github/workflows/update-data.yml"
 
 permissions:

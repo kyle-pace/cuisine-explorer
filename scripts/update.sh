@@ -10,6 +10,7 @@ curl -sSfL -A "$UA" "https://en.wikipedia.org/w/index.php?title=List_of_cuisines
 
 python3 scripts/parse_list.py raw/list.wikitext data/list_entries.json
 python3 scripts/resolve_redirects.py data/list_entries.json raw/redirects.json
+python3 scripts/fetch_summaries.py data/list_entries.json data/summaries.json
 python3 scripts/fetch_wikidata.py data/list_entries.json raw/wikidata.json
 
 # Look up redirect targets on Wikidata too, and merge them in

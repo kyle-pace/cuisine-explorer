@@ -1,0 +1,77 @@
+{
+  "Australian cuisine": {
+    "sites": [
+      {"name": "Belly Rumbles: Australian Recipes", "url": "https://bellyrumbles.com/category/australian-recipes/", "type": "blog", "note": "Sara McCleary's collection of Australian classics such as Anzac biscuits, pavlova, sausage rolls and native-ingredient bakes."},
+      {"name": "RecipeTin Eats", "url": "https://www.recipetineats.com/home/", "type": "blog", "note": "Sydney-based Nagi Maehashi's widely used recipe site; broad in scope, but a staple of Australian home cooking."}
+    ],
+    "cookbooks": [
+      {"title": "The Cook's Companion", "author": "Stephanie Alexander", "year": 2004, "isbn": "9781920989002", "url": "https://www.penguin.com.au/books/the-cooks-companion-9781920989002", "note": "Ingredient-by-ingredient reference long regarded as the standard Australian kitchen book; a 30th anniversary edition followed."},
+      {"title": "Mabu Mabu", "author": "Nornie Bero", "year": 2021, "isbn": "9781743797280", "url": "https://publishing.hardiegrant.com/en-us/books/mabu-mabu-by-nornie-bero/9781743797280", "note": "Home cooking with native Australian ingredients by Torres Strait Islander chef Nornie Bero."}
+    ]
+  },
+  "Fijian cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {"title": "Me'a Kai: The Food and Flavours of the South Pacific", "author": "Robert Oliver, Tracy Berno and Shiri Ram", "year": 2010, "isbn": "9781869621759", "url": "https://openlibrary.org/books/OL28452199M", "note": "Regional cookbook built on recipes from island cooks, with chapters on Fiji, Samoa, Tonga, Vanuatu, the Cook Islands and Tahiti."},
+      {"title": "Eat Pacific: The Pacific Island Food Revolution Cookbook", "author": "Robert Oliver (ed.)", "year": 2024, "isbn": "9781991016805", "url": "https://masseypress.ac.nz/books/eat-pacific", "note": "Massey University Press book from the Pacific Island Food Revolution TV series, with a section per island nation including Fiji."}
+    ]
+  },
+  "Samoan cuisine": {
+    "sites": [
+      {"name": "Polynesian Cultural Center Blog: Samoan recipes", "url": "https://blog.polynesia.com/tag/samoan-recipe", "type": "site", "note": "Samoan dishes such as palusami from the Hawaii cultural center's blog, written with its Pacific Islander staff."}
+    ],
+    "cookbooks": [
+      {"title": "Mea'ai Samoa: Recipes and Stories from the Heart of Polynesia", "author": "Robert Oliver, Tracy Berno and Shiri Ram", "year": 2013, "isbn": "9781775534273", "note": "Samoa-focused follow-up to Me'a Kai, tracing dishes back to local growers; won a Gourmand award."},
+      {"title": "Me'a Kai: The Food and Flavours of the South Pacific", "author": "Robert Oliver, Tracy Berno and Shiri Ram", "year": 2010, "isbn": "9781869621759", "url": "https://openlibrary.org/books/OL28452199M", "note": "Regional cookbook with a chapter of Samoan recipes from island cooks."}
+    ]
+  },
+  "Culture of Tonga#Cuisine": {
+    "sites": [
+      {"name": "Polynesian Cultural Center Blog: Lupulu", "url": "https://www.polynesia.com/blog/tongan-lupulu-recipe", "type": "site", "note": "Recipe and background for lu pulu, the Tongan taro-leaf and corned beef dish."}
+    ],
+    "cookbooks": [
+      {"title": "Me'a Kai: The Food and Flavours of the South Pacific", "author": "Robert Oliver, Tracy Berno and Shiri Ram", "year": 2010, "isbn": "9781869621759", "url": "https://openlibrary.org/books/OL28452199M", "note": "Regional cookbook with a chapter on Tonga."},
+      {"title": "Eat Pacific: The Pacific Island Food Revolution Cookbook", "author": "Robert Oliver (ed.)", "year": 2024, "isbn": "9781991016805", "url": "https://masseypress.ac.nz/books/eat-pacific", "note": "Pacific Island Food Revolution cookbook with a Tonga section."}
+    ]
+  },
+  "Vanuatuan cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {"title": "Me'a Kai: The Food and Flavours of the South Pacific", "author": "Robert Oliver, Tracy Berno and Shiri Ram", "year": 2010, "isbn": "9781869621759", "url": "https://openlibrary.org/books/OL28452199M", "note": "Regional cookbook with a chapter on Vanuatu."},
+      {"title": "Eat Pacific: The Pacific Island Food Revolution Cookbook", "author": "Robert Oliver (ed.)", "year": 2024, "isbn": "9781991016805", "url": "https://masseypress.ac.nz/books/eat-pacific", "note": "Pacific Island Food Revolution cookbook with a Vanuatu section."}
+    ]
+  },
+  "Culture of the Cook Islands#Cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {"title": "Me'a Kai: The Food and Flavours of the South Pacific", "author": "Robert Oliver, Tracy Berno and Shiri Ram", "year": 2010, "isbn": "9781869621759", "url": "https://openlibrary.org/books/OL28452199M", "note": "Regional cookbook with a chapter on the Cook Islands."},
+      {"title": "Eat Pacific: The Pacific Island Food Revolution Cookbook", "author": "Robert Oliver (ed.)", "year": 2024, "isbn": "9781991016805", "url": "https://masseypress.ac.nz/books/eat-pacific", "note": "Pacific Island Food Revolution cookbook with a Cook Islands section."}
+    ]
+  },
+  "New Caledonian cuisine": {
+    "sites": [
+      {"name": "New Caledonia Tourism: Kanak cooking", "url": "https://www.newcaledonia.travel/nz/gastronomy-wine/gastronomy/kanak-cooking", "type": "site", "note": "Official tourism board overview of Kanak food, including bougna cooked in an earth oven."}
+    ],
+    "cookbooks": [
+      {"title": "Eat Pacific: The Pacific Island Food Revolution Cookbook", "author": "Robert Oliver (ed.)", "year": 2024, "isbn": "9781991016805", "url": "https://masseypress.ac.nz/books/eat-pacific", "note": "Pacific Island Food Revolution cookbook with a New Caledonia section."}
+    ]
+  },
+  "Solomon Islands cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {"title": "Eat Pacific: The Pacific Island Food Revolution Cookbook", "author": "Robert Oliver (ed.)", "year": 2024, "isbn": "9781991016805", "url": "https://masseypress.ac.nz/books/eat-pacific", "note": "Pacific Island Food Revolution cookbook with a Solomon Islands section."}
+    ]
+  },
+  "Tuvaluan cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {"title": "Eat Pacific: The Pacific Island Food Revolution Cookbook", "author": "Robert Oliver (ed.)", "year": 2024, "isbn": "9781991016805", "url": "https://masseypress.ac.nz/books/eat-pacific", "note": "Pacific Island Food Revolution cookbook with a Tuvalu section."}
+    ]
+  },
+  "Niuean cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {"title": "Eat Pacific: The Pacific Island Food Revolution Cookbook", "author": "Robert Oliver (ed.)", "year": 2024, "isbn": "9781991016805", "url": "https://masseypress.ac.nz/books/eat-pacific", "note": "Pacific Island Food Revolution cookbook with a Niue section."}
+    ]
+  }
+}

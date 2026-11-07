@@ -1,0 +1,202 @@
+{
+  "Italian cuisine": {
+    "sites": [
+      {
+        "name": "Pasta Grannies",
+        "url": "https://pastagrannies.substack.com/p/pasta-grannies-is-now-on-substack",
+        "type": "youtube",
+        "note": "Vicky Bennison's long-running video series filming Italian grandmothers making regional pasta by hand."
+      },
+      {
+        "name": "Recipes from Italy",
+        "url": "https://recipesfromitaly.com",
+        "type": "blog",
+        "note": "Traditional Italian recipes written by Italian home cooks, organized by region and course."
+      },
+      {
+        "name": "Manu's Menu",
+        "url": "https://www.manusmenu.com/about/about-this-site",
+        "type": "blog",
+        "note": "Italian-born home cook Manuela sharing classic family and regional Italian dishes."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "Essentials of Classic Italian Cooking",
+        "author": "Marcella Hazan",
+        "year": 1992,
+        "isbn": "9780394584041",
+        "url": "https://www.penguinrandomhouse.com/books/77517/essentials-of-classic-italian-cooking-by-marcella-hazan/",
+        "note": "Hazan's combined classic texts, a standard reference for Italian home cooking."
+      },
+      {
+        "title": "The Silver Spoon",
+        "author": "The Silver Spoon Kitchen",
+        "year": 2005,
+        "isbn": "9780714845319",
+        "note": "English translation of Il Cucchiaio d'Argento, a broad Italian household cookbook first published in 1950."
+      },
+      {
+        "title": "Pasta Grannies: The Official Cookbook",
+        "author": "Vicky Bennison",
+        "year": 2019,
+        "isbn": "9781784882884",
+        "url": "https://www.penguin.co.uk/books/466409/pasta-grannies-the-official-cookbook-by-vicky-bennison",
+        "note": "Regional pasta recipes collected from Italian home cooks featured in the video series."
+      }
+    ]
+  },
+  "French cuisine": {
+    "sites": [
+      {
+        "name": "Pardon Your French",
+        "url": "https://pardonyourfrench.com",
+        "type": "blog",
+        "note": "Audrey Le Goff, a French cook, shares classic and regional French home recipes."
+      },
+      {
+        "name": "La Cuisine de Géraldine",
+        "url": "https://lacuisinedegeraldine.fr/en/about-us",
+        "type": "blog",
+        "note": "French home cooking blog by Géraldine Leverd, also author of The New French Kitchen."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "Mastering the Art of French Cooking, Volume I",
+        "author": "Julia Child, Simone Beck, Louisette Bertholle",
+        "year": 1961,
+        "isbn": "9780375413407",
+        "url": "https://penguinrandomhouse.com/books/27072/mastering-the-art-of-french-cooking-volume-i/9780375413407",
+        "note": "Foundational English-language guide to classic French technique."
+      },
+      {
+        "title": "A Kitchen in France",
+        "author": "Mimi Thorisson",
+        "year": 2014,
+        "url": "https://www.penguinrandomhouse.com/books/236662/a-kitchen-in-france-by-mimi-thorisson/",
+        "note": "Seasonal French country cooking from the Médoc, by the author of the Manger blog."
+      }
+    ]
+  },
+  "Spanish cuisine": {
+    "sites": [
+      {
+        "name": "Spain on a Fork",
+        "url": "https://spainonafork.com/welcome2/",
+        "type": "youtube",
+        "note": "Albert Bevia's video channel and site of traditional and everyday Spanish recipes."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "The Food of Spain",
+        "author": "Claudia Roden",
+        "year": 2011,
+        "isbn": "9780718157197",
+        "url": "https://www.penguin.co.uk/books/179/179569/the-food-of-spain/9780718157197.html",
+        "note": "Region-by-region survey of Spanish cooking with history and recipes."
+      }
+    ]
+  },
+  "Greek cuisine": {
+    "sites": [
+      {
+        "name": "Dimitra's Dishes",
+        "url": "https://dimitrasdishes.com",
+        "type": "youtube",
+        "note": "Dimitra Alfieris's video channel and blog focused on classic Greek home cooking."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "The Greek Kitchen",
+        "author": "Vefa Alexiadou",
+        "url": "https://www.phaidon.com/products/the-greek-kitchen",
+        "note": "Phaidon collection of Greek recipes from Greece's best-known television cook."
+      },
+      {
+        "title": "My Greek Table",
+        "author": "Diane Kochilas",
+        "year": 2018,
+        "isbn": "9781250166371",
+        "url": "https://www.powells.com/book/my-greek-table-9781250166371",
+        "note": "Companion book to Kochilas's public television series on Greek home cooking."
+      },
+      {
+        "title": "Ikaria",
+        "author": "Diane Kochilas",
+        "year": 2014,
+        "url": "https://www.penguinrandomhouse.com/books/593549/ikaria-by-diane-kochilas-photography-by-vassillis-stenos",
+        "note": "Recipes and food traditions of the Greek island of Ikaria."
+      }
+    ]
+  },
+  "German cuisine": {
+    "sites": [
+      {
+        "name": "Quick German Recipes",
+        "url": "https://www.quick-german-recipes.com/about-me.html",
+        "type": "blog",
+        "note": "Long-running site by German-born cook Gerhild Fulson (Oma) with traditional German home recipes."
+      },
+      {
+        "name": "Dirndl Kitchen",
+        "url": "https://dirndlkitchen.com",
+        "type": "blog",
+        "note": "Blog of German and Bavarian recipes, from main dishes to holiday baking."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "Classic German Cooking",
+        "author": "Luisa Weiss",
+        "year": 2022,
+        "isbn": "9781984861887",
+        "url": "https://www.penguinrandomhouse.com/books/716001/classic-german-cooking-by-luisa-weiss/9781984861887",
+        "note": "Broad collection of traditional German savory dishes by the Berlin-based writer."
+      },
+      {
+        "title": "Classic German Baking",
+        "author": "Luisa Weiss",
+        "year": 2016,
+        "isbn": "9781607748250",
+        "url": "https://penguinrandomhouse.com/books/247835/classic-german-baking-by-luisa-weiss",
+        "note": "Traditional German cakes, breads and holiday cookies."
+      }
+    ]
+  },
+  "Portuguese cuisine": {
+    "sites": [
+      {
+        "name": "Food From Portugal",
+        "url": "https://www.foodfromportugal.com/",
+        "type": "site",
+        "note": "Portuguese-run recipe site and video channel of traditional Portuguese dishes."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "The New Portuguese Table",
+        "author": "David Leite",
+        "year": 2009,
+        "isbn": "9780307394415",
+        "url": "https://www.penguinrandomhouse.com/books/99720/the-new-portuguese-table-by-david-leite-photography-by-nuno-correia/",
+        "note": "Portuguese-American writer's take on traditional and modern Portuguese cooking."
+      }
+    ]
+  },
+  "English cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "English Food",
+        "author": "Jane Grigson",
+        "year": 1974,
+        "isbn": "9780140273243",
+        "url": "https://www.penguin.co.uk/books/24292/english-food-by-jane-grigson-revised-by-sophie-grigsonilustrated-by-gillian-zeiner-with-a-further-selection-by-clare-leighton-and-eric-ravilious/9780140273243",
+        "note": "Classic collection of traditional English recipes with historical notes."
+      }
+    ]
+  }
+}

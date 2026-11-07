@@ -73,5 +73,132 @@
         "note": "Classic dishes from the Thai home kitchen by the SheSimmers author."
       }
     ]
+  },
+  "Vietnamese cuisine": {
+    "sites": [
+      {
+        "name": "Viet World Kitchen",
+        "url": "https://vietworldkitchen.com/blog/category/recipes-vietnamese",
+        "type": "blog",
+        "note": "Andrea Nguyen's blog on Vietnamese cooking, ingredients and technique."
+      },
+      {
+        "name": "Hungry Huy",
+        "url": "https://www.hungryhuy.com/vietnamese/",
+        "type": "blog",
+        "note": "Vietnamese-American Huy Vu's recipes for home-style Vietnamese dishes."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "Into the Vietnamese Kitchen",
+        "author": "Andrea Nguyen",
+        "year": 2006,
+        "isbn": "9781580086653",
+        "url": "https://penguinrandomhouse.com/books/197218/into-the-vietnamese-kitchen-by-andrea-nguyen",
+        "note": "Wide-ranging guide to traditional Vietnamese home cooking."
+      },
+      {
+        "title": "Vietnamese Food Any Day",
+        "author": "Andrea Nguyen",
+        "year": 2019,
+        "isbn": "9780399580352",
+        "url": "https://penguinrandomhouse.com/books/558093/vietnamese-food-any-day-by-andrea-nguyen",
+        "note": "Weeknight Vietnamese recipes using widely available ingredients."
+      }
+    ]
+  },
+  "Turkish cuisine": {
+    "sites": [
+      {
+        "name": "Ozlem's Turkish Table",
+        "url": "https://ozlemsturkishtable.com/tag/turkish-recipes/page/9",
+        "type": "blog",
+        "note": "Turkish-born cook and teacher Ozlem Warren's blog of home-style Turkish recipes."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "The Turkish Cookbook",
+        "author": "Musa Dağdeviren",
+        "year": 2019,
+        "isbn": "9780714878157",
+        "url": "https://www.phaidon.com/products/the-turkish-cookbook",
+        "note": "Large survey of regional Turkish recipes by the Istanbul chef behind Çiya."
+      },
+      {
+        "title": "Ozlem's Turkish Table: Recipes from My Homeland",
+        "author": "Ozlem Warren",
+        "note": "Home cooking from across Turkey by the blog's author."
+      }
+    ]
+  },
+  "Lebanese cuisine": {
+    "sites": [
+      {
+        "name": "Maureen Abood",
+        "url": "https://maureenabood.com/blog/",
+        "type": "blog",
+        "note": "Lebanese-American writer Maureen Abood's blog of classic and modern Lebanese recipes."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "Rose Water and Orange Blossoms",
+        "author": "Maureen Abood",
+        "year": 2015,
+        "isbn": "9780762454860",
+        "url": "https://www.hachettebookgroup.com/titles/maureen-abood/rose-water-and-orange-blossoms/9780762454860/",
+        "note": "Fresh and classic recipes from a Lebanese-American family kitchen."
+      },
+      {
+        "title": "The Lebanese Kitchen",
+        "author": "Salma Hage",
+        "year": 2012,
+        "isbn": "9780714864808",
+        "note": "Large collection of Lebanese home recipes, published by Phaidon."
+      },
+      {
+        "title": "Lebanon: Cooking the Foods of My Homeland",
+        "author": "Anissa Helou",
+        "year": 2026,
+        "isbn": "9780063334922",
+        "note": "Recipes gathered from villages across Lebanon by the Beirut-born food writer."
+      }
+    ]
+  },
+  "Filipino cuisine": {
+    "sites": [
+      {
+        "name": "Panlasang Pinoy",
+        "url": "https://panlasangpinoy.com/filipino-food/",
+        "type": "blog",
+        "note": "Vanjo Merano's large library of Filipino recipes and cooking videos."
+      },
+      {
+        "name": "Kawaling Pinoy",
+        "url": "https://www.kawalingpinoy.com/about/",
+        "type": "blog",
+        "note": "Lalaine Manalo's blog of Filipino home cooking."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "I Am a Filipino: And This Is How We Cook",
+        "author": "Nicole Ponseca and Miguel Trinidad",
+        "year": 2018,
+        "isbn": "9781579657673",
+        "url": "https://hachettebookgroup.com/titles/nicole-ponseca/i-am-a-filipino/9781579657673",
+        "note": "Filipino classics and their history from the team behind Maharlika in New York."
+      },
+      {
+        "title": "Filipinx: Heritage Recipes from the Diaspora",
+        "author": "Angela Dimayuga and Ligaya Mishan",
+        "year": 2021,
+        "isbn": "9781419750380",
+        "url": "https://www.abramsbooks.com/product/filipinx_9781419750380/",
+        "note": "Filipino-American chef's take on heritage dishes."
+      }
+    ]
   }
 }

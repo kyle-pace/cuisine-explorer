@@ -971,7 +971,7 @@
       <p class="kind"><i style="background:#ede6da"></i>Ingredient in ${i.dishes} ${i.dishes === 1 ? "dish" : "dishes"} across ${rows.length} ${rows.length === 1 ? "cuisine" : "cuisines"}</p>
       <div class="intro" id="intro"></div>
       <h3>Where it's cooked with</h3>
-      <p class="empty" style="margin-bottom:10px">The brighter a place on the globe, the more of its dishes use it.</p>
+      <p class="empty" style="margin-bottom:10px">The brighter a place on the globe, the more of its dishes use it. This counts dishes listed on Wikipedia, so well-documented cuisines show up brighter.</p>
       <ul class="where">${rows.slice(0, 14).map(([cid, ds]) => `<li>
         <button class="where-c" data-id="${attr(cid)}">${esc(byId.get(cid).name)}</button> <span class="n">${ds.length}</span>
         <div class="chips">${ds.slice(0, 5).map(dishChip).join("")}${ds.length > 5 ? `<span class="more-n">and ${ds.length - 5} more</span>` : ""}</div></li>`).join("")}</ul>

@@ -1,0 +1,229 @@
+{
+  "Mexican cuisine": {
+    "sites": [
+      {
+        "name": "Mexico in My Kitchen",
+        "url": "https://www.mexicoinmykitchen.com/",
+        "type": "blog",
+        "note": "Mely Martínez's long-running blog of Mexican home-style recipes."
+      },
+      {
+        "name": "Pati Jinich",
+        "url": "https://patijinich.com/recipes/",
+        "type": "site",
+        "note": "Recipe archive from the Mexican-born chef and host of the PBS series Pati's Mexican Table."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "The Essential Cuisines of Mexico",
+        "author": "Diana Kennedy",
+        "year": 2000,
+        "url": "https://openlibrary.org/books/OL20946574M/The_essential_cuisines_of_Mexico",
+        "note": "Combined edition of Kennedy's three foundational books on regional Mexican cooking."
+      },
+      {
+        "title": "The Mexican Home Kitchen",
+        "author": "Mely Martínez",
+        "year": 2020,
+        "isbn": "9781631066931",
+        "url": "https://www.quarto.com/books/9781631066931/mexican-home-kitchen",
+        "note": "Home-style recipes from the author of the Mexico in My Kitchen blog."
+      }
+    ]
+  },
+  "Argentine cuisine": {
+    "sites": [
+      {
+        "name": "Familia Kitchen: Argentina",
+        "url": "https://familiakitchen.com/destination/argentina/",
+        "type": "site",
+        "note": "Argentine recipes and stories on a Latino family cooking site."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "Seven Fires: Grilling the Argentine Way",
+        "author": "Francis Mallmann",
+        "year": 2009,
+        "url": "https://openlibrary.org/works/OL16812918W/Seven_Fires",
+        "note": "Argentine live-fire cooking from the Patagonian chef known for open-flame techniques."
+      },
+      {
+        "title": "The Food of Argentina",
+        "author": "Ross Dobson and Rachel Tolosa Paz",
+        "year": 2018,
+        "isbn": "9781925418712",
+        "url": "https://smithstreetbooks.com/?p=1427",
+        "note": "Everyday Argentine cooking from asado and empanadas to sweets."
+      }
+    ]
+  },
+  "Brazilian cuisine": {
+    "sites": [
+      {
+        "name": "Olivia's Cuisine",
+        "url": "https://oliviascuisine.com/",
+        "type": "blog",
+        "note": "Brazilian-born Olivia Mesquita's blog, with a large section of Brazilian classics."
+      },
+      {
+        "name": "Easy and Delish",
+        "url": "https://www.easyanddelish.com/easy-brazilian-recipes/",
+        "type": "blog",
+        "note": "Brazilian recipe collection from a Brazilian-born home cook based in the US."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "Brazil: The Cookbook",
+        "author": "Josimar Melo",
+        "url": "https://www.phaidon.com/en-us/products/brazil-the-cookbook",
+        "note": "Broad survey of Brazilian home cooking by a São Paulo food critic, published by Phaidon."
+      },
+      {
+        "title": "Manu: Recipes and Stories from My Brazil",
+        "author": "Manoella Buffara",
+        "url": "https://www.phaidon.com/en-us/products/manu-recipes-and-stories-from-my-brazil",
+        "note": "Chef of Curitiba's Manu restaurant on the food of southern Brazil."
+      }
+    ]
+  },
+  "Colombian cuisine": {
+    "sites": [
+      {
+        "name": "My Colombian Recipes",
+        "url": "https://www.mycolombianrecipes.com/",
+        "type": "blog",
+        "note": "Medellín-born Erica Dinho's blog of traditional Colombian recipes."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "Colombiana: A Rediscovery of Recipes and Rituals from the Soul of Colombia",
+        "author": "Mariana Velásquez",
+        "year": 2021,
+        "isbn": "9780063019430",
+        "note": "Bogotá-born food stylist's tour of Colombian regional cooking."
+      }
+    ]
+  },
+  "Peruvian cuisine": {
+    "sites": [
+      {
+        "name": "Peru Delights",
+        "url": "https://perudelights.com/",
+        "type": "blog",
+        "note": "Morena Cuadra's blog of Peruvian home recipes and food culture."
+      },
+      {
+        "name": "Eat Peru",
+        "url": "https://www.eatperu.com/",
+        "type": "site",
+        "note": "Guide to Peruvian dishes and ingredients with a recipe section."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "Peru: The Cookbook",
+        "author": "Gastón Acurio",
+        "year": 2015,
+        "isbn": "9780714869209",
+        "url": "https://www.phaidon.com/en-us/products/peru-the-cookbook/",
+        "note": "Large collection of Peruvian home recipes from Peru's best-known chef."
+      },
+      {
+        "title": "The Fire of Peru",
+        "author": "Ricardo Zarate",
+        "url": "https://openlibrary.org/books/OL27190726M/The_fire_of_Peru",
+        "note": "Peruvian dishes adapted for home kitchens by a Lima-born chef working in the US."
+      }
+    ]
+  },
+  "Cuban cuisine": {
+    "sites": [
+      {
+        "name": "My Big Fat Cuban Family",
+        "url": "https://www.mybigfatcubanfamily.com/",
+        "type": "blog",
+        "note": "Marta Darby's blog of Cuban family recipes."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "Memories of a Cuban Kitchen",
+        "author": "Mary Urrutia Randelman and Joan Schwartz",
+        "year": 1992,
+        "url": "https://openlibrary.org/books/OL1720415M/Memories_of_a_Cuban_kitchen",
+        "note": "Classic English-language collection of Cuban home recipes and family memoir."
+      },
+      {
+        "title": "Cocina al minuto",
+        "author": "Nitza Villapol",
+        "url": "https://openlibrary.org/books/OL5928903M/Cocina_al_minuto",
+        "note": "Spanish-language standard of Cuban home cooking by the longtime Cuban TV cook."
+      }
+    ]
+  },
+  "Jamaican cuisine": {
+    "sites": [
+      {
+        "name": "Jamaican Cookery",
+        "url": "https://www.jamaicancookery.com/",
+        "type": "blog",
+        "note": "Long-running blog of everyday Jamaican home recipes."
+      },
+      {
+        "name": "Jamaican Foods and Recipes",
+        "url": "https://jamaicanfoodsandrecipes.com/",
+        "type": "site",
+        "note": "Recipe site focused on traditional Jamaican dishes."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "Traditional Jamaican Cookery",
+        "author": "Norma Benghiat",
+        "url": "https://openlibrary.org/books/OL15957207M/Traditional_Jamaican_cookery",
+        "note": "Survey of classic Jamaican dishes and their history."
+      },
+      {
+        "title": "Original Flava: Caribbean Recipes from Home",
+        "author": "Craig McAnuff and Shaun McAnuff",
+        "year": 2019,
+        "note": "Jamaican-heritage brothers from London on Caribbean home cooking."
+      }
+    ]
+  },
+  "Puerto Rican cuisine": {
+    "sites": [
+      {
+        "name": "Delish D'Lites",
+        "url": "https://delishdlites.com",
+        "type": "blog",
+        "note": "Jannese Torres's blog of Puerto Rican and Latin recipes."
+      },
+      {
+        "name": "Sense and Edibility",
+        "url": "https://senseandedibility.com/category/cuisines/puerto-rican/",
+        "type": "blog",
+        "note": "Food blog with a large Puerto Rican recipe category."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "Diasporican: A Puerto Rican Cookbook",
+        "author": "Illyanna Maisonet",
+        "year": 2022,
+        "isbn": "9781984859761",
+        "note": "Puerto Rican cooking as practiced in the diaspora, by a Sacramento-based food writer."
+      },
+      {
+        "title": "Cocina criolla",
+        "author": "Carmen Aboy Valldejuli",
+        "url": "https://openlibrary.org/books/OL6181464M/Cocina_criolla.",
+        "note": "Long-standing reference of Puerto Rican cooking, also published in English as Puerto Rican Cookery."
+      }
+    ]
+  }
+}

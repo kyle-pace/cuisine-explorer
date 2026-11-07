@@ -1,0 +1,344 @@
+{
+  "Japanese cuisine": {
+    "sites": [
+      {
+        "name": "Just One Cookbook",
+        "url": "https://justonecookbook.com",
+        "type": "blog",
+        "note": "Namiko Chen's long-running blog and videos on Japanese home cooking."
+      },
+      {
+        "name": "RecipeTin Japan",
+        "url": "https://japan.recipetineats.com/",
+        "type": "blog",
+        "note": "Japanese home recipes from Yumiko, a Japan-born cook, sister site to RecipeTin Eats."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "Washoku: Recipes from the Japanese Home Kitchen",
+        "author": "Elizabeth Andoh",
+        "year": 2005,
+        "isbn": "9781580085199",
+        "url": "https://www.penguinrandomhouse.com/books/198425/washoku-by-elizabeth-andoh/",
+        "note": "Ten Speed Press guide to everyday Japanese home cooking and its principles, by a Tokyo-based teacher."
+      },
+      {
+        "title": "Japanese Cooking: A Simple Art",
+        "author": "Shizuo Tsuji",
+        "year": 1980,
+        "isbn": "9781568363882",
+        "url": "https://www.penguinrandomhouse.com/books/563613/japanese-cooking-by-shizuo-tsuji-introduction-by-mfk-fisher-foreword-by-ruth-reichl-preface-byyoshiki-tsuji/",
+        "note": "Classic technique-focused reference from the founder of an Osaka cooking school; ISBN is the Kodansha anniversary edition."
+      },
+      {
+        "title": "Japan: The Cookbook",
+        "author": "Nancy Singleton Hachisu",
+        "year": 2018,
+        "url": "https://www.phaidon.com/en-us/products/japan-the-cookbook",
+        "note": "Large Phaidon compendium of Japanese home recipes by a writer who has lived on a farm in Japan for decades."
+      }
+    ]
+  },
+  "Yoshoku": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Japanese Soul Cooking",
+        "author": "Tadashi Ono and Harris Salat",
+        "year": 2013,
+        "isbn": "9781607743521",
+        "url": "https://www.penguinrandomhouse.com/books/218238/japanese-soul-cooking-by-tadashi-ono-and-harris-salat/",
+        "note": "Japanese comfort food such as curry, tonkatsu and korokke, including Western-influenced dishes."
+      }
+    ]
+  },
+  "Korean cuisine": {
+    "sites": [
+      {
+        "name": "Maangchi",
+        "url": "https://www.maangchi.com/",
+        "type": "youtube",
+        "note": "Maangchi's Korean recipe site and YouTube channel, one of the best known English sources for Korean cooking."
+      },
+      {
+        "name": "Korean Bapsang",
+        "url": "https://www.koreanbapsang.com/category/recipes/",
+        "type": "blog",
+        "note": "Home-style Korean recipes from Hyosun, a Korean-American mom."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "Maangchi's Real Korean Cooking",
+        "author": "Maangchi",
+        "year": 2015,
+        "isbn": "9780544129894",
+        "note": "First print cookbook from the YouTube cook, covering everyday and festive Korean dishes."
+      },
+      {
+        "title": "Koreatown: A Cookbook",
+        "author": "Deuki Hong and Matt Rodbard",
+        "year": 2016,
+        "isbn": "9780804186131",
+        "url": "https://www.penguinrandomhouse.com/books/239393/koreatown-by-deuki-hong-and-matt-rodbard/",
+        "note": "Korean cooking as found in Koreatowns across the US, from a chef and a food writer."
+      },
+      {
+        "title": "Cook Korean!",
+        "author": "Robin Ha",
+        "year": 2016,
+        "isbn": "9781607748878",
+        "url": "https://www.penguinrandomhouse.com/books/252746/cook-korean-by-robin-ha/9781607748878/",
+        "note": "Korean recipes presented as illustrated comics by a Korean-born cartoonist."
+      }
+    ]
+  },
+  "Korean Chinese cuisine": {
+    "sites": [
+      {
+        "name": "Korean Bapsang: Korean Chinese",
+        "url": "https://www.koreanbapsang.com/category/korean-chinese",
+        "type": "blog",
+        "note": "Korean Bapsang's section on Korean Chinese dishes such as jjajangmyeon and jjamppong."
+      }
+    ],
+    "cookbooks": []
+  },
+  "Chinese cuisine": {
+    "sites": [
+      {
+        "name": "The Woks of Life",
+        "url": "https://thewoksoflife.com/",
+        "type": "blog",
+        "note": "Chinese and Chinese American recipes from the Leung family, running since 2013."
+      },
+      {
+        "name": "Chinese Cooking Demystified",
+        "url": "https://www.youtube.com/@ChineseCookingDemystified",
+        "type": "youtube",
+        "note": "Technique-heavy YouTube channel on regional Chinese home and restaurant cooking."
+      },
+      {
+        "name": "Red House Spice",
+        "url": "https://redhousespice.com/about/",
+        "type": "blog",
+        "note": "Classic Chinese recipes from Wei Guo, who grew up in Gansu, blogging since 2017."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "Every Grain of Rice: Simple Chinese Home Cooking",
+        "author": "Fuchsia Dunlop",
+        "year": 2013,
+        "isbn": "9780393089042",
+        "url": "https://wwnorton.com/books/9780393089042",
+        "note": "Everyday Chinese home cooking, much of it vegetable-led, by a leading English-language authority."
+      },
+      {
+        "title": "The Woks of Life: Recipes to Know and Love from a Chinese American Family",
+        "author": "Bill, Judy, Sarah and Kaitlin Leung",
+        "year": 2022,
+        "isbn": "9780593233894",
+        "url": "https://www.penguinrandomhouse.com/books/671310/the-woks-of-life-by-judy-bill-sarah-and-kaitlin-leung/",
+        "note": "Cookbook from the family behind The Woks of Life blog."
+      },
+      {
+        "title": "All Under Heaven: Recipes from the 35 Cuisines of China",
+        "author": "Carolyn Phillips",
+        "year": 2016,
+        "isbn": "9781607749820",
+        "url": "https://www.penguinrandomhouse.com/books/534780/all-under-heaven-by-carolyn-phillips/9781607749820/",
+        "note": "Broad survey of China's regional cooking, organized by region."
+      }
+    ]
+  },
+  "Sichuan cuisine": {
+    "sites": [
+      {
+        "name": "China Sichuan Food",
+        "url": "https://www.chinasichuanfood.com/",
+        "type": "blog",
+        "note": "Elaine's blog of Chinese home recipes with a strong Sichuan focus."
+      },
+      {
+        "name": "The Mala Market Blog",
+        "url": "https://blog.themalamarket.com/mala-market-blog-about-page/",
+        "type": "blog",
+        "note": "Recipes and ingredient guides from a US importer of Sichuan pantry staples."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "The Food of Sichuan",
+        "author": "Fuchsia Dunlop",
+        "year": 2019,
+        "isbn": "9781324004837",
+        "url": "https://wwnorton.com/books/9781324004837",
+        "note": "Revised and expanded edition of Dunlop's Land of Plenty, a core reference on Sichuan cooking."
+      },
+      {
+        "title": "The Book of Sichuan Chili Crisp",
+        "author": "Jing Gao",
+        "year": 2022,
+        "isbn": "9781984862174",
+        "url": "https://www.penguinrandomhouse.com/books/721865/the-book-of-sichuan-chili-crisp-by-jing-gao/",
+        "note": "Sichuan-inspired recipes from the founder of the Fly By Jing condiment brand."
+      }
+    ]
+  },
+  "Hunan cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Revolutionary Chinese Cookbook: Recipes from Hunan Province",
+        "author": "Fuchsia Dunlop",
+        "year": 2007,
+        "isbn": "9780393062229",
+        "url": "https://wwnorton.com/books/9780393062229",
+        "note": "Dunlop's study of Hunanese home and restaurant cooking."
+      }
+    ]
+  },
+  "Jiangsu cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Land of Fish and Rice: Recipes from the Culinary Heart of China",
+        "author": "Fuchsia Dunlop",
+        "year": 2016,
+        "url": "https://wwnorton.com/books/Land-of-Fish-and-Rice/",
+        "note": "Covers the Jiangnan region around Shanghai, Jiangsu and Zhejiang."
+      }
+    ]
+  },
+  "Huaiyang cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Land of Fish and Rice: Recipes from the Culinary Heart of China",
+        "author": "Fuchsia Dunlop",
+        "year": 2016,
+        "url": "https://wwnorton.com/books/Land-of-Fish-and-Rice/",
+        "note": "Jiangnan cookbook that includes Yangzhou and Huaiyang dishes."
+      }
+    ]
+  },
+  "Shanghai cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Land of Fish and Rice: Recipes from the Culinary Heart of China",
+        "author": "Fuchsia Dunlop",
+        "year": 2016,
+        "url": "https://wwnorton.com/books/Land-of-Fish-and-Rice/",
+        "note": "Covers the Jiangnan region, including Shanghai-style cooking."
+      }
+    ]
+  },
+  "Zhejiang cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Land of Fish and Rice: Recipes from the Culinary Heart of China",
+        "author": "Fuchsia Dunlop",
+        "year": 2016,
+        "url": "https://wwnorton.com/books/Land-of-Fish-and-Rice/",
+        "note": "Covers the Jiangnan region, including Hangzhou, Shaoxing and Ningbo in Zhejiang."
+      }
+    ]
+  },
+  "Hangbang cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Land of Fish and Rice: Recipes from the Culinary Heart of China",
+        "author": "Fuchsia Dunlop",
+        "year": 2016,
+        "url": "https://wwnorton.com/books/Land-of-Fish-and-Rice/",
+        "note": "Jiangnan cookbook that includes classic Hangzhou dishes."
+      }
+    ]
+  },
+  "Gansu cuisine": {
+    "sites": [
+      {
+        "name": "Red House Spice",
+        "url": "https://redhousespice.com/about/",
+        "type": "blog",
+        "note": "General Chinese recipe blog by Wei Guo, who was born and raised in Gansu."
+      }
+    ],
+    "cookbooks": []
+  },
+  "Cantonese cuisine": {
+    "sites": [
+      {
+        "name": "Made With Lau",
+        "url": "https://madewithlau.com",
+        "type": "youtube",
+        "note": "Family-run channel and site teaching Cantonese recipes from retired chef Daddy Lau."
+      }
+    ],
+    "cookbooks": []
+  },
+  "Hong Kong cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Hong Kong Food City",
+        "author": "Tony Tan",
+        "year": 2018,
+        "isbn": "9781760527716",
+        "note": "Hong Kong home and street food recipes from Melbourne-based chef Tony Tan."
+      },
+      {
+        "title": "The Vibrant Hong Kong Table",
+        "author": "Christine Wong",
+        "isbn": "9781797219912",
+        "note": "Vegan versions of Hong Kong classics, from dim sum to bakery buns."
+      }
+    ]
+  },
+  "Taiwan cuisine": {
+    "sites": [
+      {
+        "name": "Cooking in Chinglish",
+        "url": "https://cookinginchinglish.com",
+        "type": "blog",
+        "note": "Taiwanese home recipes from Edwina, who grew up in Taiwan."
+      },
+      {
+        "name": "Tiny Urban Kitchen: Taiwanese Recipes",
+        "url": "https://tinyurbankitchen.com/taiwanese-recipes/",
+        "type": "blog",
+        "note": "Small set of Taiwanese recipes from Jen Che, a Taiwanese American blogger in Hong Kong."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "Made in Taiwan",
+        "author": "Clarissa Wei",
+        "year": 2023,
+        "isbn": "9781982198978",
+        "url": "https://www.simonandschuster.com/books/Made-in-Taiwan/Clarissa-Wei/9781982198978",
+        "note": "Taiwanese recipes and food culture from journalist Clarissa Wei."
+      },
+      {
+        "title": "The Food of Taiwan: Recipes from the Beautiful Island",
+        "author": "Cathy Erway",
+        "year": 2015,
+        "isbn": "9780544303010",
+        "note": "Survey of Taiwanese home and night-market cooking by a Taiwanese American food writer."
+      },
+      {
+        "title": "First Generation",
+        "author": "Frankie Gaw",
+        "year": 2022,
+        "isbn": "9781984860767",
+        "url": "https://www.penguinrandomhouse.com/books/690431/first-generation-by-frankie-gaw/",
+        "note": "Taiwanese American family recipes and stories from Frankie Gaw."
+      }
+    ]
+  }
+}

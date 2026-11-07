@@ -244,5 +244,79 @@
         "note": "Home cooking from Ipoh by the 2014 MasterChef UK winner."
       }
     ]
+  },
+  "Iranian cuisine": {
+    "sites": [
+      {
+        "name": "Unicorns in the Kitchen",
+        "url": "https://www.unicornsinthekitchen.com/persian-recipes",
+        "type": "blog",
+        "note": "Iranian-born Shadi HasanzadeNemati's blog with a large Persian recipe section."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "Food of Life: Ancient Persian and Modern Iranian Cooking and Ceremonies",
+        "author": "Najmieh Batmanglij",
+        "year": 1986,
+        "isbn": "9781949445800",
+        "note": "Standard reference on Iranian cooking from Mage Publishers; ISBN is the 2024 40th anniversary edition."
+      },
+      {
+        "title": "The Saffron Tales: Recipes from the Persian Kitchen",
+        "author": "Yasmin Khan",
+        "year": 2016,
+        "isbn": "9781408868737",
+        "note": "Recipes collected while traveling across Iran, published by Bloomsbury."
+      }
+    ]
+  },
+  "Russian cuisine": {
+    "sites": [
+      {
+        "name": "Olga's Flavor Factory",
+        "url": "https://www.olgasflavorfactory.com/category/russianrecipes/",
+        "type": "blog",
+        "note": "Russian-born home cook Olga's blog, with a dedicated Russian recipes category."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "Please to the Table: The Russian Cookbook",
+        "author": "Anya von Bremzen and John Welchman",
+        "year": 1990,
+        "isbn": "9780894807534",
+        "url": "https://openlibrary.org/books/OL1888867M",
+        "note": "Broad cookbook covering Russia and the former Soviet republics."
+      },
+      {
+        "title": "Salt & Time: Recipes from a Russian Kitchen",
+        "author": "Alissa Timoshkina",
+        "year": 2019,
+        "isbn": "9781623718053",
+        "url": "https://www.simonandschuster.ca/books/Salt-Time/Alissa-Timoshkina/9781623718053",
+        "note": "Siberian-born author's modern take on Russian home cooking."
+      }
+    ]
+  },
+  "Israeli cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Zahav: A World of Israeli Cooking",
+        "author": "Michael Solomonov and Steven Cook",
+        "year": 2015,
+        "isbn": "9780544373280",
+        "note": "Recipes and stories from the Philadelphia restaurant Zahav."
+      },
+      {
+        "title": "Sababa: Fresh, Sunny Flavors from My Israeli Kitchen",
+        "author": "Adeena Sussman",
+        "year": 2019,
+        "isbn": "9780525533450",
+        "url": "https://penguinrandomhouse.com/books/562247/sababa-by-adeena-sussman-foreword-by-michael-solomonov",
+        "note": "Tel Aviv-based food writer's recipes built around the Carmel Market."
+      }
+    ]
   }
 }

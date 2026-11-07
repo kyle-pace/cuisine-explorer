@@ -52,8 +52,8 @@ def main():
             dest = out.setdefault(cid, {"sites": [], "cookbooks": []})
             for s in entry.get("sites", []) or []:
                 url = (s.get("url") or "").strip()
-                if not s.get("name") or not url.startswith("https://"):
-                    dropped.append(f"{cid}: site without name or https link: {s}")
+                if not s.get("name") or not url.startswith(("https://", "http://")):
+                    dropped.append(f"{cid}: site without name or link: {s}")
                     continue
                 if any(x["url"].rstrip("/") == url.rstrip("/") for x in dest["sites"]):
                     continue

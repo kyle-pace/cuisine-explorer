@@ -1,0 +1,116 @@
+{
+  "Nigerian cuisine": {
+    "sites": [
+      {"name": "Kitchen Butterfly", "url": "https://www.kitchenbutterfly.com/about-2", "type": "blog", "note": "Long-running blog by Nigerian food writer and historian Ozoz Sokoh, with Nigerian and New Nigerian recipes."},
+      {"name": "Sisi Yemmie", "url": "https://sisiyemmie.com/", "type": "blog", "note": "Nigerian home cooking recipes and meal plans, paired with the SisiYemmieTV YouTube channel."}
+    ],
+    "cookbooks": [
+      {"title": "My Everyday Lagos: Nigerian Cooking at Home and in the Diaspora", "author": "Yewande Komolafe", "year": 2023, "isbn": "9781984858931", "url": "https://www.penguinrandomhouse.com/books/646506/my-everyday-lagos-by-yewande-komolafe/", "note": "Nigerian home cooking adapted for kitchens abroad by a New York Times Cooking contributor."},
+      {"title": "Chop Chop: Cooking the Food of Nigeria", "author": "Ozoz Sokoh", "year": 2025, "isbn": "9781648291890", "url": "https://www.hachette.co.uk/titles/ozoz-sokoh/chop-chop/9781648291890/", "note": "Survey of Nigerian dishes and ingredients from the writer behind Kitchen Butterfly."}
+    ]
+  },
+  "Ethiopian cuisine": {
+    "sites": [
+      {"name": "Eleni's Kitchen Blog", "url": "https://www.eleniskitchen.com/blog", "type": "blog", "note": "Recipes from Ethiopian-born caterer and cooking instructor Eleni Woldeyes near Portland; also promotes her spice and sauce shop."}
+    ],
+    "cookbooks": [
+      {"title": "Ethiopia: Recipes and Traditions from the Horn of Africa", "author": "Yohanis Gebreyesus with Jeff Koehler", "year": 2018, "isbn": "9781623719630", "url": "https://www.simonandschuster.ca/books/Ethiopia/Yohanis-Gebreyesus/9781623719630", "note": "Broad treatment of Ethiopian cooking by an Addis Ababa chef and TV host."},
+      {"title": "Enebla: Recipes from an Ethiopian Kitchen", "author": "Luladey Moges", "year": 2022, "isbn": "9781771513623", "url": "https://touchwoodeditions.com/book/enebla", "note": "Approachable Ethiopian home recipes from a Los Angeles based cook and teacher."}
+    ]
+  },
+  "Moroccan cuisine": {
+    "sites": [
+      {"name": "My Moroccan Food", "url": "https://www.mymoroccanfood.com/", "type": "blog", "note": "Moroccan recipe blog linked to cookbook author Nargisse Benkabbou, covering breads, soups and tagines."},
+      {"name": "Taste of Maroc", "url": "https://tasteofmaroc.com/about/", "type": "site", "note": "Moroccan recipes and tutorials from Christine Benlafquih, formerly the Moroccan food writer at The Spruce Eats."},
+      {"name": "Salima's Kitchen", "url": "https://salimaskitchen.com/category/moroccan/", "type": "blog", "note": "Moroccan section of Salima Benkhalti's blog, drawing on her family cooking."}
+    ],
+    "cookbooks": [
+      {"title": "Couscous and Other Good Food from Morocco", "author": "Paula Wolfert", "year": 1973, "isbn": "9780060913960", "url": "https://openroadmedia.com/ebook/couscous-and-other-good-food-from-morocco/9780062047984", "note": "Classic English language reference on Moroccan cooking."},
+      {"title": "Mourad: New Moroccan", "author": "Mourad Lahlou", "year": 2011, "isbn": "9781579654290", "url": "https://www.hachettebookgroup.com/titles/mourad-lahlou/mourad-new-moroccan/9781579657024/?lens=artisan", "note": "Restaurant chef's modern take on Moroccan flavors, published by Artisan."},
+      {"title": "Casablanca: My Moroccan Food", "author": "Nargisse Benkabbou", "year": 2018, "isbn": "9781784723934", "note": "Traditional and modern Moroccan home recipes from the creator of My Moroccan Food."}
+    ]
+  },
+  "South African cuisine": {
+    "sites": [
+      {"name": "Drizzle and Dip", "url": "https://drizzleanddip.com/category/recipes/cuisine/south-african/", "type": "blog", "note": "South African recipes section of Cape Town food writer Sam Linsell's blog."},
+      {"name": "TASTE", "url": "https://taste.co.za/south-african-recipes", "type": "magazine", "note": "South African recipe collection from the Woolworths food magazine."},
+      {"name": "The Cinnamon Jar", "url": "https://thecinnamonjar.com/category/south-african-recipes/", "type": "blog", "note": "South African favourites like bobotie and milk tart from Maretha, a South African home cook in the UK."}
+    ],
+    "cookbooks": [
+      {"title": "The South African Cookbook", "author": "Nokx Majozi", "year": 2026, "isbn": "9781623715502", "url": "https://interlinkbooks.com/product/the-south-african-cookbook/", "note": "Recipes from Cape Town to Durban by a Durban raised chef formerly at Rosewood London."}
+    ]
+  },
+  "Ghanaian cuisine": {
+    "sites": [
+      {"name": "Eat with Afia", "url": "https://eatwithafia.com", "type": "blog", "note": "Plant based Ghanaian cooking from Afia Amoako."},
+      {"name": "Fafa Gilbert (Ndudu by Fafa)", "url": "https://fafagilbert.com/tag/ghana-recipes", "type": "blog", "note": "Ghanaian recipe posts from cook and writer Fafa Gilbert."}
+    ],
+    "cookbooks": [
+      {"title": "Eat with Afia: A Celebration of Plant-Based Ghanaian Cooking", "author": "Afia Amoako", "year": 2026, "isbn": "9780593850954", "url": "https://www.penguinrandomhouse.com/books/761621/eat-with-afia-by-afia-amoako/", "note": "Plant based Ghanaian recipes and family food traditions."},
+      {"title": "Ghana to the World: Recipes and Stories That Look Forward While Honoring the Past", "author": "Eric Adjepong", "isbn": "9780593234778", "note": "Ghanaian and West African recipes from a Ghanaian American chef, published by Clarkson Potter."}
+    ]
+  },
+  "Egyptian cuisine": {
+    "sites": [
+      {"name": "Chez Nermine", "url": "https://cheznermine.com/", "type": "blog", "note": "Egyptian recipes and the stories behind them from Egyptian American cook Nermine."},
+      {"name": "Amira's Pantry", "url": "https://amiraspantry.com/tag/egyptian-cuisine/", "type": "blog", "note": "Egyptian section of Amira's recipe blog, with koshari, hawawshi, feteer and sweets."}
+    ],
+    "cookbooks": [
+      {"title": "Eat, Habibi, Eat!: Fresh Recipes for Modern Egyptian Cooking", "author": "Shahir Massoud", "year": 2021, "isbn": "9780525610939", "url": "https://penguinrandomhouse.ca/books/617268/eat-habibi-eat-by-shahir-massoud/9780525610939", "note": "Modern Egyptian home cooking from a Canadian chef and TV cook."},
+      {"title": "The Taste of Egypt: Home Cooking from the Middle East", "author": "Dyna Eldaief", "isbn": "9781649034281", "note": "Egyptian family recipes, published by AUC Press."}
+    ]
+  },
+  "Kenyan cuisine": {
+    "sites": [
+      {"name": "Kaluhi's Kitchen", "url": "http://www.kaluhiskitchen.com/", "type": "blog", "note": "Award winning Kenyan food blog by Kaluhi Adagala, focused on Kenyan home cooking."},
+      {"name": "Nairobi Kitchen", "url": "https://nairobikitchen.blogspot.com", "type": "blog", "note": "Kenyan recipes blog by Nairobi cook Mulunga."},
+      {"name": "Pika Chakula", "url": "https://www.pikachakula.com/", "type": "blog", "note": "Kenyan and East African recipes such as kuku paka and mandazi."}
+    ],
+    "cookbooks": []
+  },
+  "Senegalese cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {"title": "Senegal: Modern Senegalese Recipes from the Source to the Bowl", "author": "Pierre Thiam with Jennifer Sit", "year": 2015, "isbn": "9781891105555", "url": "https://www.simonandschuster.ca/books/Senegal/Pierre-Thiam/9781891105555", "note": "Senegalese cooking organized by region from a Dakar born New York chef."}
+    ]
+  },
+  "Tunisian cuisine": {
+    "sites": [
+      {"name": "Our Tunisian Table", "url": "https://ourtunisiantable.com", "type": "blog", "note": "Tunisian and Maghreb recipes such as lablebi and brik, written by Munya and Rim."}
+    ],
+    "cookbooks": [
+      {"title": "The Tunisia Cookbook: Healthy Red Cuisine from Carthage to Kairouan", "author": "Haffida Ben Rejeb Latta", "note": "English language collection of Tunisian recipes."}
+    ]
+  },
+  "Algerian cuisine": {
+    "sites": [
+      {"name": "Amour de Cuisine", "url": "https://www.amourdecuisine.fr/en", "type": "blog", "note": "Algerian home cooking and pastries from Algerian born cook Soulef Zaoui, in English and French."}
+    ],
+    "cookbooks": []
+  },
+  "Somali cuisine": {
+    "sites": [
+      {"name": "Xawaash", "url": "http://xawaash.com/", "type": "blog", "note": "Somali recipe blog started in 2011 by Leila Adde and Abdullahi Kassim in Ontario."}
+    ],
+    "cookbooks": []
+  },
+  "Cameroonian cuisine": {
+    "sites": [
+      {"name": "Precious Core", "url": "https://www.preciouscore.com/?p=22", "type": "blog", "note": "Recipe blog by Precious Nkeih centered on Cameroonian dishes, with a companion YouTube channel."},
+      {"name": "Immaculate Bites", "url": "https://www.africanbites.com/about", "type": "blog", "note": "African and Caribbean recipes from Cameroon born cook Imma, with many Cameroonian dishes."}
+    ],
+    "cookbooks": []
+  },
+  "Ugandan cuisine": {
+    "sites": [
+      {"name": "A Kitchen in Uganda", "url": "https://akitcheninuganda.com/recipe-index", "type": "blog", "note": "Ugandan recipes such as katogo and firinda from Sophie; most posts date to 2018 or earlier."}
+    ],
+    "cookbooks": []
+  },
+  "Zimbabwean cuisine": {
+    "sites": [
+      {"name": "Princess Tafadzwa", "url": "https://www.princesstafadzwa.com/", "type": "blog", "note": "Zimbabwean recipes using Shona ingredients and dish names, alongside craft posts."}
+    ],
+    "cookbooks": []
+  }
+}

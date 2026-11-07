@@ -1,0 +1,1831 @@
+{
+ "_about": "Research suggestions for recipe sites and cookbooks, not yet reviewed. Move the ones you like into picks.json; the explorer shows picks first and marks these as suggested.",
+ "cuisines": {
+  "Algerian cuisine": {
+   "sites": [
+    {
+     "name": "Amour de Cuisine",
+     "url": "https://www.amourdecuisine.fr/en",
+     "type": "blog",
+     "note": "Algerian home cooking and pastries from Algerian born cook Soulef Zaoui, in English and French."
+    }
+   ]
+  },
+  "Argentine cuisine": {
+   "sites": [
+    {
+     "name": "Familia Kitchen: Argentina",
+     "url": "https://familiakitchen.com/destination/argentina/",
+     "type": "site",
+     "note": "Argentine recipes and stories on a Latino family cooking site."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "Seven Fires: Grilling the Argentine Way",
+     "author": "Francis Mallmann",
+     "year": 2009,
+     "url": "https://openlibrary.org/works/OL16812918W/Seven_Fires",
+     "note": "Argentine live-fire cooking from the Patagonian chef known for open-flame techniques."
+    },
+    {
+     "title": "The Food of Argentina",
+     "author": "Ross Dobson and Rachel Tolosa Paz",
+     "year": 2018,
+     "isbn": "9781925418712",
+     "url": "https://smithstreetbooks.com/?p=1427",
+     "note": "Everyday Argentine cooking from asado and empanadas to sweets."
+    }
+   ]
+  },
+  "Australian cuisine": {
+   "sites": [
+    {
+     "name": "Belly Rumbles: Australian Recipes",
+     "url": "https://bellyrumbles.com/category/australian-recipes/",
+     "type": "blog",
+     "note": "Sara McCleary's collection of Australian classics such as Anzac biscuits, pavlova, sausage rolls and native-ingredient bakes."
+    },
+    {
+     "name": "RecipeTin Eats",
+     "url": "https://www.recipetineats.com/home/",
+     "type": "blog",
+     "note": "Sydney-based Nagi Maehashi's widely used recipe site; broad in scope, but a staple of Australian home cooking."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "The Cook's Companion",
+     "author": "Stephanie Alexander",
+     "year": 2004,
+     "isbn": "9781920989002",
+     "url": "https://www.penguin.com.au/books/the-cooks-companion-9781920989002",
+     "note": "Ingredient-by-ingredient reference long regarded as the standard Australian kitchen book; a 30th anniversary edition followed."
+    },
+    {
+     "title": "Mabu Mabu",
+     "author": "Nornie Bero",
+     "year": 2021,
+     "isbn": "9781743797280",
+     "url": "https://publishing.hardiegrant.com/en-us/books/mabu-mabu-by-nornie-bero/9781743797280",
+     "note": "Home cooking with native Australian ingredients by Torres Strait Islander chef Nornie Bero."
+    }
+   ]
+  },
+  "Austrian cuisine": {
+   "sites": [
+    {
+     "name": "Vienna Sunday Kitchen",
+     "url": "https://www.vienna-sunday.kitchen/newest-recipes/",
+     "type": "blog",
+     "note": "Viennese food blog of Austrian home cooking and pastries, with English-language recipes."
+    },
+    {
+     "name": "Lil Vienna",
+     "url": "https://www.lilvienna.com/?p=1366",
+     "type": "blog",
+     "note": "Austrian recipes from Ursula and David, two Austrians living in Boston."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "Austrian Cooking and Baking",
+     "author": "Gretel Beer",
+     "isbn": "9780486232201",
+     "note": "Long-standing English-language classic on Austrian dishes and baking, in print from Dover."
+    }
+   ]
+  },
+  "Brazilian cuisine": {
+   "sites": [
+    {
+     "name": "Olivia's Cuisine",
+     "url": "https://oliviascuisine.com/",
+     "type": "blog",
+     "note": "Brazilian-born Olivia Mesquita's blog, with a large section of Brazilian classics."
+    },
+    {
+     "name": "Easy and Delish",
+     "url": "https://www.easyanddelish.com/easy-brazilian-recipes/",
+     "type": "blog",
+     "note": "Brazilian recipe collection from a Brazilian-born home cook based in the US."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "Brazil: The Cookbook",
+     "author": "Josimar Melo",
+     "url": "https://www.phaidon.com/en-us/products/brazil-the-cookbook",
+     "note": "Broad survey of Brazilian home cooking by a São Paulo food critic, published by Phaidon."
+    },
+    {
+     "title": "Manu: Recipes and Stories from My Brazil",
+     "author": "Manoella Buffara",
+     "url": "https://www.phaidon.com/en-us/products/manu-recipes-and-stories-from-my-brazil",
+     "note": "Chef of Curitiba's Manu restaurant on the food of southern Brazil."
+    }
+   ]
+  },
+  "British cuisine": {
+   "sites": [
+    {
+     "name": "Great British Chefs: traditional British recipes",
+     "url": "https://www.greatbritishchefs.com/features/our-most-popular-traditional-british-recipes",
+     "type": "site",
+     "note": "UK chef-driven recipe site with a large section of classic British dishes."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "British Regional Food",
+     "author": "Mark Hix",
+     "year": 2006,
+     "isbn": "9781844002344",
+     "note": "London chef Mark Hix's survey of regional dishes and producers across Britain."
+    }
+   ]
+  },
+  "Cameroonian cuisine": {
+   "sites": [
+    {
+     "name": "Precious Core",
+     "url": "https://www.preciouscore.com/?p=22",
+     "type": "blog",
+     "note": "Recipe blog by Precious Nkeih centered on Cameroonian dishes, with a companion YouTube channel."
+    },
+    {
+     "name": "Immaculate Bites",
+     "url": "https://www.africanbites.com/about",
+     "type": "blog",
+     "note": "African and Caribbean recipes from Cameroon born cook Imma, with many Cameroonian dishes."
+    }
+   ]
+  },
+  "Cantonese cuisine": {
+   "sites": [
+    {
+     "name": "Made With Lau",
+     "url": "https://madewithlau.com",
+     "type": "youtube",
+     "note": "Family-run channel and site teaching Cantonese recipes from retired chef Daddy Lau."
+    }
+   ]
+  },
+  "Chinese cuisine": {
+   "sites": [
+    {
+     "name": "The Woks of Life",
+     "url": "https://thewoksoflife.com/",
+     "type": "blog",
+     "note": "Chinese and Chinese American recipes from the Leung family, running since 2013."
+    },
+    {
+     "name": "Chinese Cooking Demystified",
+     "url": "https://www.youtube.com/@ChineseCookingDemystified",
+     "type": "youtube",
+     "note": "Technique-heavy YouTube channel on regional Chinese home and restaurant cooking."
+    },
+    {
+     "name": "Red House Spice",
+     "url": "https://redhousespice.com/about/",
+     "type": "blog",
+     "note": "Classic Chinese recipes from Wei Guo, who grew up in Gansu, blogging since 2017."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "Every Grain of Rice: Simple Chinese Home Cooking",
+     "author": "Fuchsia Dunlop",
+     "year": 2013,
+     "isbn": "9780393089042",
+     "url": "https://wwnorton.com/books/9780393089042",
+     "note": "Everyday Chinese home cooking, much of it vegetable-led, by a leading English-language authority."
+    },
+    {
+     "title": "The Woks of Life: Recipes to Know and Love from a Chinese American Family",
+     "author": "Bill, Judy, Sarah and Kaitlin Leung",
+     "year": 2022,
+     "isbn": "9780593233894",
+     "url": "https://www.penguinrandomhouse.com/books/671310/the-woks-of-life-by-judy-bill-sarah-and-kaitlin-leung/",
+     "note": "Cookbook from the family behind The Woks of Life blog."
+    },
+    {
+     "title": "All Under Heaven: Recipes from the 35 Cuisines of China",
+     "author": "Carolyn Phillips",
+     "year": 2016,
+     "isbn": "9781607749820",
+     "url": "https://www.penguinrandomhouse.com/books/534780/all-under-heaven-by-carolyn-phillips/9781607749820/",
+     "note": "Broad survey of China's regional cooking, organized by region."
+    }
+   ]
+  },
+  "Christian dietary laws": {
+   "cookbooks": [
+    {
+     "title": "When You Fast: Recipes for Lenten Seasons",
+     "author": "Catherine Mandell",
+     "year": 2023,
+     "isbn": "9780881412628",
+     "url": "https://svspress.com/when-you-fast-recipes-for-lenten-seasons",
+     "note": "About 200 Eastern Orthodox fasting recipes without meat, and options without dairy or oil, from St Vladimir's Seminary Press."
+    }
+   ]
+  },
+  "Colombian cuisine": {
+   "sites": [
+    {
+     "name": "My Colombian Recipes",
+     "url": "https://www.mycolombianrecipes.com/",
+     "type": "blog",
+     "note": "Medellín-born Erica Dinho's blog of traditional Colombian recipes."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "Colombiana: A Rediscovery of Recipes and Rituals from the Soul of Colombia",
+     "author": "Mariana Velásquez",
+     "year": 2021,
+     "isbn": "9780063019430",
+     "note": "Bogotá-born food stylist's tour of Colombian regional cooking."
+    }
+   ]
+  },
+  "Cuban cuisine": {
+   "sites": [
+    {
+     "name": "My Big Fat Cuban Family",
+     "url": "https://www.mybigfatcubanfamily.com/",
+     "type": "blog",
+     "note": "Marta Darby's blog of Cuban family recipes."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "Memories of a Cuban Kitchen",
+     "author": "Mary Urrutia Randelman and Joan Schwartz",
+     "year": 1992,
+     "url": "https://openlibrary.org/books/OL1720415M/Memories_of_a_Cuban_kitchen",
+     "note": "Classic English-language collection of Cuban home recipes and family memoir."
+    },
+    {
+     "title": "Cocina al minuto",
+     "author": "Nitza Villapol",
+     "url": "https://openlibrary.org/books/OL5928903M/Cocina_al_minuto",
+     "note": "Spanish-language standard of Cuban home cooking by the longtime Cuban TV cook."
+    }
+   ]
+  },
+  "Culture of Tonga#Cuisine": {
+   "sites": [
+    {
+     "name": "Polynesian Cultural Center Blog: Lupulu",
+     "url": "https://www.polynesia.com/blog/tongan-lupulu-recipe",
+     "type": "site",
+     "note": "Recipe and background for lu pulu, the Tongan taro-leaf and corned beef dish."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "Me'a Kai: The Food and Flavours of the South Pacific",
+     "author": "Robert Oliver, Tracy Berno and Shiri Ram",
+     "year": 2010,
+     "isbn": "9781869621759",
+     "url": "https://openlibrary.org/books/OL28452199M",
+     "note": "Regional cookbook with a chapter on Tonga."
+    },
+    {
+     "title": "Eat Pacific: The Pacific Island Food Revolution Cookbook",
+     "author": "Robert Oliver (ed.)",
+     "year": 2024,
+     "isbn": "9781991016805",
+     "url": "https://masseypress.ac.nz/books/eat-pacific",
+     "note": "Pacific Island Food Revolution cookbook with a Tonga section."
+    }
+   ]
+  },
+  "Culture of the Cook Islands#Cuisine": {
+   "cookbooks": [
+    {
+     "title": "Me'a Kai: The Food and Flavours of the South Pacific",
+     "author": "Robert Oliver, Tracy Berno and Shiri Ram",
+     "year": 2010,
+     "isbn": "9781869621759",
+     "url": "https://openlibrary.org/books/OL28452199M",
+     "note": "Regional cookbook with a chapter on the Cook Islands."
+    },
+    {
+     "title": "Eat Pacific: The Pacific Island Food Revolution Cookbook",
+     "author": "Robert Oliver (ed.)",
+     "year": 2024,
+     "isbn": "9781991016805",
+     "url": "https://masseypress.ac.nz/books/eat-pacific",
+     "note": "Pacific Island Food Revolution cookbook with a Cook Islands section."
+    }
+   ]
+  },
+  "Egyptian cuisine": {
+   "sites": [
+    {
+     "name": "Chez Nermine",
+     "url": "https://cheznermine.com/",
+     "type": "blog",
+     "note": "Egyptian recipes and the stories behind them from Egyptian American cook Nermine."
+    },
+    {
+     "name": "Amira's Pantry",
+     "url": "https://amiraspantry.com/tag/egyptian-cuisine/",
+     "type": "blog",
+     "note": "Egyptian section of Amira's recipe blog, with koshari, hawawshi, feteer and sweets."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "Eat, Habibi, Eat!: Fresh Recipes for Modern Egyptian Cooking",
+     "author": "Shahir Massoud",
+     "year": 2021,
+     "isbn": "9780525610939",
+     "url": "https://penguinrandomhouse.ca/books/617268/eat-habibi-eat-by-shahir-massoud/9780525610939",
+     "note": "Modern Egyptian home cooking from a Canadian chef and TV cook."
+    },
+    {
+     "title": "The Taste of Egypt: Home Cooking from the Middle East",
+     "author": "Dyna Eldaief",
+     "isbn": "9781649034281",
+     "note": "Egyptian family recipes, published by AUC Press."
+    }
+   ]
+  },
+  "English cuisine": {
+   "cookbooks": [
+    {
+     "title": "English Food",
+     "author": "Jane Grigson",
+     "year": 1974,
+     "isbn": "9780140273243",
+     "url": "https://www.penguin.co.uk/books/24292/english-food-by-jane-grigson-revised-by-sophie-grigsonilustrated-by-gillian-zeiner-with-a-further-selection-by-clare-leighton-and-eric-ravilious/9780140273243",
+     "note": "Classic collection of traditional English recipes with historical notes."
+    }
+   ]
+  },
+  "Ethiopian cuisine": {
+   "sites": [
+    {
+     "name": "Eleni's Kitchen Blog",
+     "url": "https://www.eleniskitchen.com/blog",
+     "type": "blog",
+     "note": "Recipes from Ethiopian-born caterer and cooking instructor Eleni Woldeyes near Portland; also promotes her spice and sauce shop."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "Ethiopia: Recipes and Traditions from the Horn of Africa",
+     "author": "Yohanis Gebreyesus with Jeff Koehler",
+     "year": 2018,
+     "isbn": "9781623719630",
+     "url": "https://www.simonandschuster.ca/books/Ethiopia/Yohanis-Gebreyesus/9781623719630",
+     "note": "Broad treatment of Ethiopian cooking by an Addis Ababa chef and TV host."
+    },
+    {
+     "title": "Enebla: Recipes from an Ethiopian Kitchen",
+     "author": "Luladey Moges",
+     "year": 2022,
+     "isbn": "9781771513623",
+     "url": "https://touchwoodeditions.com/book/enebla",
+     "note": "Approachable Ethiopian home recipes from a Los Angeles based cook and teacher."
+    }
+   ]
+  },
+  "Fasting and abstinence in the Ethiopian Orthodox Tewahedo Church": {
+   "cookbooks": [
+    {
+     "title": "Teff Love: Adventures in Vegan Ethiopian Cooking",
+     "author": "Kittee Berns",
+     "year": 2015,
+     "isbn": "9781570673115",
+     "note": "Plant-based Ethiopian cookbook whose wots, alichas and injera match the dishes eaten on Orthodox fasting days."
+    }
+   ]
+  },
+  "Fijian cuisine": {
+   "cookbooks": [
+    {
+     "title": "Me'a Kai: The Food and Flavours of the South Pacific",
+     "author": "Robert Oliver, Tracy Berno and Shiri Ram",
+     "year": 2010,
+     "isbn": "9781869621759",
+     "url": "https://openlibrary.org/books/OL28452199M",
+     "note": "Regional cookbook built on recipes from island cooks, with chapters on Fiji, Samoa, Tonga, Vanuatu, the Cook Islands and Tahiti."
+    },
+    {
+     "title": "Eat Pacific: The Pacific Island Food Revolution Cookbook",
+     "author": "Robert Oliver (ed.)",
+     "year": 2024,
+     "isbn": "9781991016805",
+     "url": "https://masseypress.ac.nz/books/eat-pacific",
+     "note": "Massey University Press book from the Pacific Island Food Revolution TV series, with a section per island nation including Fiji."
+    }
+   ]
+  },
+  "Filipino cuisine": {
+   "sites": [
+    {
+     "name": "Panlasang Pinoy",
+     "url": "https://panlasangpinoy.com/filipino-food/",
+     "type": "blog",
+     "note": "Vanjo Merano's large library of Filipino recipes and cooking videos."
+    },
+    {
+     "name": "Kawaling Pinoy",
+     "url": "https://www.kawalingpinoy.com/about/",
+     "type": "blog",
+     "note": "Lalaine Manalo's blog of Filipino home cooking."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "I Am a Filipino: And This Is How We Cook",
+     "author": "Nicole Ponseca and Miguel Trinidad",
+     "year": 2018,
+     "isbn": "9781579657673",
+     "url": "https://hachettebookgroup.com/titles/nicole-ponseca/i-am-a-filipino/9781579657673",
+     "note": "Filipino classics and their history from the team behind Maharlika in New York."
+    },
+    {
+     "title": "Filipinx: Heritage Recipes from the Diaspora",
+     "author": "Angela Dimayuga and Ligaya Mishan",
+     "year": 2021,
+     "isbn": "9781419750380",
+     "url": "https://www.abramsbooks.com/product/filipinx_9781419750380/",
+     "note": "Filipino-American chef's take on heritage dishes."
+    }
+   ]
+  },
+  "French cuisine": {
+   "sites": [
+    {
+     "name": "Pardon Your French",
+     "url": "https://pardonyourfrench.com",
+     "type": "blog",
+     "note": "Audrey Le Goff, a French cook, shares classic and regional French home recipes."
+    },
+    {
+     "name": "La Cuisine de Géraldine",
+     "url": "https://lacuisinedegeraldine.fr/en/about-us",
+     "type": "blog",
+     "note": "French home cooking blog by Géraldine Leverd, also author of The New French Kitchen."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "Mastering the Art of French Cooking, Volume I",
+     "author": "Julia Child, Simone Beck, Louisette Bertholle",
+     "year": 1961,
+     "isbn": "9780375413407",
+     "url": "https://penguinrandomhouse.com/books/27072/mastering-the-art-of-french-cooking-volume-i/9780375413407",
+     "note": "Foundational English-language guide to classic French technique."
+    },
+    {
+     "title": "A Kitchen in France",
+     "author": "Mimi Thorisson",
+     "year": 2014,
+     "url": "https://www.penguinrandomhouse.com/books/236662/a-kitchen-in-france-by-mimi-thorisson/",
+     "note": "Seasonal French country cooking from the Médoc, by the author of the Manger blog."
+    }
+   ]
+  },
+  "Gansu cuisine": {
+   "sites": [
+    {
+     "name": "Red House Spice",
+     "url": "https://redhousespice.com/about/",
+     "type": "blog",
+     "note": "General Chinese recipe blog by Wei Guo, who was born and raised in Gansu."
+    }
+   ]
+  },
+  "German cuisine": {
+   "sites": [
+    {
+     "name": "Quick German Recipes",
+     "url": "https://www.quick-german-recipes.com/about-me.html",
+     "type": "blog",
+     "note": "Long-running site by German-born cook Gerhild Fulson (Oma) with traditional German home recipes."
+    },
+    {
+     "name": "Dirndl Kitchen",
+     "url": "https://dirndlkitchen.com",
+     "type": "blog",
+     "note": "Blog of German and Bavarian recipes, from main dishes to holiday baking."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "Classic German Cooking",
+     "author": "Luisa Weiss",
+     "year": 2022,
+     "isbn": "9781984861887",
+     "url": "https://www.penguinrandomhouse.com/books/716001/classic-german-cooking-by-luisa-weiss/9781984861887",
+     "note": "Broad collection of traditional German savory dishes by the Berlin-based writer."
+    },
+    {
+     "title": "Classic German Baking",
+     "author": "Luisa Weiss",
+     "year": 2016,
+     "isbn": "9781607748250",
+     "url": "https://penguinrandomhouse.com/books/247835/classic-german-baking-by-luisa-weiss",
+     "note": "Traditional German cakes, breads and holiday cookies."
+    }
+   ]
+  },
+  "Ghanaian cuisine": {
+   "sites": [
+    {
+     "name": "Eat with Afia",
+     "url": "https://eatwithafia.com",
+     "type": "blog",
+     "note": "Plant based Ghanaian cooking from Afia Amoako."
+    },
+    {
+     "name": "Fafa Gilbert (Ndudu by Fafa)",
+     "url": "https://fafagilbert.com/tag/ghana-recipes",
+     "type": "blog",
+     "note": "Ghanaian recipe posts from cook and writer Fafa Gilbert."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "Eat with Afia: A Celebration of Plant-Based Ghanaian Cooking",
+     "author": "Afia Amoako",
+     "year": 2026,
+     "isbn": "9780593850954",
+     "url": "https://www.penguinrandomhouse.com/books/761621/eat-with-afia-by-afia-amoako/",
+     "note": "Plant based Ghanaian recipes and family food traditions."
+    },
+    {
+     "title": "Ghana to the World: Recipes and Stories That Look Forward While Honoring the Past",
+     "author": "Eric Adjepong",
+     "isbn": "9780593234778",
+     "note": "Ghanaian and West African recipes from a Ghanaian American chef, published by Clarkson Potter."
+    }
+   ]
+  },
+  "Greek cuisine": {
+   "sites": [
+    {
+     "name": "Dimitra's Dishes",
+     "url": "https://dimitrasdishes.com",
+     "type": "youtube",
+     "note": "Dimitra Alfieris's video channel and blog focused on classic Greek home cooking."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "The Greek Kitchen",
+     "author": "Vefa Alexiadou",
+     "url": "https://www.phaidon.com/products/the-greek-kitchen",
+     "note": "Phaidon collection of Greek recipes from Greece's best-known television cook."
+    },
+    {
+     "title": "My Greek Table",
+     "author": "Diane Kochilas",
+     "year": 2018,
+     "isbn": "9781250166371",
+     "note": "Companion book to Kochilas's public television series on Greek home cooking."
+    },
+    {
+     "title": "Ikaria",
+     "author": "Diane Kochilas",
+     "year": 2014,
+     "url": "https://www.penguinrandomhouse.com/books/593549/ikaria-by-diane-kochilas-photography-by-vassillis-stenos",
+     "note": "Recipes and food traditions of the Greek island of Ikaria."
+    }
+   ]
+  },
+  "Hangbang cuisine": {
+   "cookbooks": [
+    {
+     "title": "Land of Fish and Rice: Recipes from the Culinary Heart of China",
+     "author": "Fuchsia Dunlop",
+     "year": 2016,
+     "url": "https://wwnorton.com/books/Land-of-Fish-and-Rice/",
+     "note": "Jiangnan cookbook that includes classic Hangzhou dishes."
+    }
+   ]
+  },
+  "Hong Kong cuisine": {
+   "cookbooks": [
+    {
+     "title": "Hong Kong Food City",
+     "author": "Tony Tan",
+     "year": 2018,
+     "isbn": "9781760527716",
+     "note": "Hong Kong home and street food recipes from Melbourne-based chef Tony Tan."
+    },
+    {
+     "title": "The Vibrant Hong Kong Table",
+     "author": "Christine Wong",
+     "isbn": "9781797219912",
+     "note": "Vegan versions of Hong Kong classics, from dim sum to bakery buns."
+    }
+   ]
+  },
+  "Huaiyang cuisine": {
+   "cookbooks": [
+    {
+     "title": "Land of Fish and Rice: Recipes from the Culinary Heart of China",
+     "author": "Fuchsia Dunlop",
+     "year": 2016,
+     "url": "https://wwnorton.com/books/Land-of-Fish-and-Rice/",
+     "note": "Jiangnan cookbook that includes Yangzhou and Huaiyang dishes."
+    }
+   ]
+  },
+  "Hunan cuisine": {
+   "cookbooks": [
+    {
+     "title": "Revolutionary Chinese Cookbook: Recipes from Hunan Province",
+     "author": "Fuchsia Dunlop",
+     "year": 2007,
+     "isbn": "9780393062229",
+     "url": "https://wwnorton.com/books/9780393062229",
+     "note": "Dunlop's study of Hunanese home and restaurant cooking."
+    }
+   ]
+  },
+  "Hungarian cuisine": {
+   "sites": [
+    {
+     "name": "Zsuzsa Is in the Kitchen",
+     "url": "https://zsuzsaisinthekitchen.blogspot.com/2010/01",
+     "type": "blog",
+     "note": "Hungarian-born home cook's blog of traditional Hungarian recipes."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "The Cuisine of Hungary",
+     "author": "George Lang",
+     "year": 1971,
+     "isbn": "9780517169636",
+     "note": "Classic English-language history and recipe collection by the Hungarian-born restaurateur."
+    }
+   ]
+  },
+  "Indian cuisine": {
+   "sites": [
+    {
+     "name": "Swasthi's Recipes",
+     "url": "https://www.indianhealthyrecipes.com/about/",
+     "type": "blog",
+     "note": "Swasthi Shreekanth's long-running blog of everyday Indian home cooking from across the regions."
+    },
+    {
+     "name": "Hari Ghotra",
+     "url": "https://www.harighotra.co.uk/indian-recipes",
+     "type": "site",
+     "note": "UK-based cook Hari Ghotra's recipe library and videos of home-style Indian dishes."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "Madhur Jaffrey's Indian Cookery",
+     "author": "Madhur Jaffrey",
+     "year": 1982,
+     "isbn": "9780593802960",
+     "url": "https://penguinrandomhouse.ca/books/761108/indian-cookery-by-madhur-jaffrey/9780593802960",
+     "note": "Classic introduction to Indian home cooking, reissued by Knopf in 2024."
+    },
+    {
+     "title": "Made in India: Recipes from an Indian Family Kitchen",
+     "author": "Meera Sodha",
+     "year": 2014,
+     "isbn": "9781250071019",
+     "url": "https://openlibrary.org/books/OL27193672M",
+     "note": "Gujarati-rooted family recipes from a British Indian home kitchen."
+    }
+   ]
+  },
+  "Indonesian cuisine": {
+   "sites": [
+    {
+     "name": "Daily Cooking Quest",
+     "url": "https://dailycookingquest.com/cuisines/indonesian.html",
+     "type": "blog",
+     "note": "Indonesian home cook Anita's blog with a large archive of Indonesian recipes."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "Coconut & Sambal: Recipes from My Indonesian Kitchen",
+     "author": "Lara Lee",
+     "year": 2020,
+     "isbn": "9781526603517",
+     "note": "Indonesian home cooking by an Australian-Indonesian chef, published by Bloomsbury."
+    },
+    {
+     "title": "Sri Owen's Indonesian Food",
+     "author": "Sri Owen",
+     "isbn": "9781623717186",
+     "note": "Broad survey of Indonesian regional cooking by a longtime authority on the cuisine."
+    }
+   ]
+  },
+  "Iranian cuisine": {
+   "sites": [
+    {
+     "name": "Unicorns in the Kitchen",
+     "url": "https://www.unicornsinthekitchen.com/persian-recipes",
+     "type": "blog",
+     "note": "Iranian-born Shadi HasanzadeNemati's blog with a large Persian recipe section."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "Food of Life: Ancient Persian and Modern Iranian Cooking and Ceremonies",
+     "author": "Najmieh Batmanglij",
+     "year": 1986,
+     "isbn": "9781949445800",
+     "note": "Standard reference on Iranian cooking from Mage Publishers; ISBN is the 2024 40th anniversary edition."
+    },
+    {
+     "title": "The Saffron Tales: Recipes from the Persian Kitchen",
+     "author": "Yasmin Khan",
+     "year": 2016,
+     "isbn": "9781408868737",
+     "note": "Recipes collected while traveling across Iran, published by Bloomsbury."
+    }
+   ]
+  },
+  "Irish cuisine": {
+   "sites": [
+    {
+     "name": "Irish American Mom",
+     "url": "https://www.irishamericanmom.com/recipes/",
+     "type": "blog",
+     "note": "Irish-born cook living in the US sharing traditional Irish recipes."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "The Irish Cookbook",
+     "author": "Jp McMahon",
+     "year": 2020,
+     "isbn": "9781838660567",
+     "url": "https://www.phaidon.com/products/the-irish-cookbook",
+     "note": "Phaidon's broad collection of traditional Irish recipes by a Galway chef."
+    },
+    {
+     "title": "Irish Traditional Cooking",
+     "author": "Darina Allen",
+     "url": "https://www.gillbooks.ie/food-drink/food-drink/irish-traditional-cooking",
+     "note": "Heritage Irish recipes and food lore from the Ballymaloe Cookery School founder."
+    }
+   ]
+  },
+  "Israeli cuisine": {
+   "cookbooks": [
+    {
+     "title": "Zahav: A World of Israeli Cooking",
+     "author": "Michael Solomonov and Steven Cook",
+     "year": 2015,
+     "isbn": "9780544373280",
+     "note": "Recipes and stories from the Philadelphia restaurant Zahav."
+    },
+    {
+     "title": "Sababa: Fresh, Sunny Flavors from My Israeli Kitchen",
+     "author": "Adeena Sussman",
+     "year": 2019,
+     "isbn": "9780525533450",
+     "url": "https://penguinrandomhouse.com/books/562247/sababa-by-adeena-sussman-foreword-by-michael-solomonov",
+     "note": "Tel Aviv-based food writer's recipes built around the Carmel Market."
+    }
+   ]
+  },
+  "Italian cuisine": {
+   "sites": [
+    {
+     "name": "Pasta Grannies",
+     "url": "https://pastagrannies.substack.com/p/pasta-grannies-is-now-on-substack",
+     "type": "youtube",
+     "note": "Vicky Bennison's long-running video series filming Italian grandmothers making regional pasta by hand."
+    },
+    {
+     "name": "Recipes from Italy",
+     "url": "https://recipesfromitaly.com",
+     "type": "blog",
+     "note": "Traditional Italian recipes written by Italian home cooks, organized by region and course."
+    },
+    {
+     "name": "Manu's Menu",
+     "url": "https://www.manusmenu.com/about/about-this-site",
+     "type": "blog",
+     "note": "Italian-born home cook Manuela sharing classic family and regional Italian dishes."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "Essentials of Classic Italian Cooking",
+     "author": "Marcella Hazan",
+     "year": 1992,
+     "isbn": "9780394584041",
+     "url": "https://www.penguinrandomhouse.com/books/77517/essentials-of-classic-italian-cooking-by-marcella-hazan/",
+     "note": "Hazan's combined classic texts, a standard reference for Italian home cooking."
+    },
+    {
+     "title": "The Silver Spoon",
+     "author": "The Silver Spoon Kitchen",
+     "year": 2005,
+     "isbn": "9780714845319",
+     "note": "English translation of Il Cucchiaio d'Argento, a broad Italian household cookbook first published in 1950."
+    },
+    {
+     "title": "Pasta Grannies: The Official Cookbook",
+     "author": "Vicky Bennison",
+     "year": 2019,
+     "isbn": "9781784882884",
+     "url": "https://www.penguin.co.uk/books/466409/pasta-grannies-the-official-cookbook-by-vicky-bennison",
+     "note": "Regional pasta recipes collected from Italian home cooks featured in the video series."
+    }
+   ]
+  },
+  "Jamaican cuisine": {
+   "sites": [
+    {
+     "name": "Jamaican Cookery",
+     "url": "https://www.jamaicancookery.com/",
+     "type": "blog",
+     "note": "Long-running blog of everyday Jamaican home recipes."
+    },
+    {
+     "name": "Jamaican Foods and Recipes",
+     "url": "https://jamaicanfoodsandrecipes.com/",
+     "type": "site",
+     "note": "Recipe site focused on traditional Jamaican dishes."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "Traditional Jamaican Cookery",
+     "author": "Norma Benghiat",
+     "url": "https://openlibrary.org/books/OL15957207M/Traditional_Jamaican_cookery",
+     "note": "Survey of classic Jamaican dishes and their history."
+    },
+    {
+     "title": "Original Flava: Caribbean Recipes from Home",
+     "author": "Craig McAnuff and Shaun McAnuff",
+     "year": 2019,
+     "note": "Jamaican-heritage brothers from London on Caribbean home cooking."
+    }
+   ]
+  },
+  "Japanese cuisine": {
+   "sites": [
+    {
+     "name": "Just One Cookbook",
+     "url": "https://justonecookbook.com",
+     "type": "blog",
+     "note": "Namiko Chen's long-running blog and videos on Japanese home cooking."
+    },
+    {
+     "name": "RecipeTin Japan",
+     "url": "https://japan.recipetineats.com/",
+     "type": "blog",
+     "note": "Japanese home recipes from Yumiko, a Japan-born cook, sister site to RecipeTin Eats."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "Washoku: Recipes from the Japanese Home Kitchen",
+     "author": "Elizabeth Andoh",
+     "year": 2005,
+     "isbn": "9781580085199",
+     "url": "https://www.penguinrandomhouse.com/books/198425/washoku-by-elizabeth-andoh/",
+     "note": "Ten Speed Press guide to everyday Japanese home cooking and its principles, by a Tokyo-based teacher."
+    },
+    {
+     "title": "Japanese Cooking: A Simple Art",
+     "author": "Shizuo Tsuji",
+     "year": 1980,
+     "isbn": "9781568363882",
+     "url": "https://www.penguinrandomhouse.com/books/563613/japanese-cooking-by-shizuo-tsuji-introduction-by-mfk-fisher-foreword-by-ruth-reichl-preface-byyoshiki-tsuji/",
+     "note": "Classic technique-focused reference from the founder of an Osaka cooking school; ISBN is the Kodansha anniversary edition."
+    },
+    {
+     "title": "Japan: The Cookbook",
+     "author": "Nancy Singleton Hachisu",
+     "year": 2018,
+     "url": "https://www.phaidon.com/en-us/products/japan-the-cookbook",
+     "note": "Large Phaidon compendium of Japanese home recipes by a writer who has lived on a farm in Japan for decades."
+    }
+   ]
+  },
+  "Jewish cuisine": {
+   "sites": [
+    {
+     "name": "Tori Avey: Jewish Recipes",
+     "url": "https://toriavey.com/jewish-recipes/",
+     "type": "blog",
+     "note": "Tori Avey's Jewish recipe index, often paired with notes on each dish's history."
+    },
+    {
+     "name": "The Nosher (My Jewish Learning)",
+     "url": "https://www.myjewishlearning.com/recipes/",
+     "type": "site",
+     "note": "Recipe section of the nonprofit My Jewish Learning, covering Ashkenazi, Sephardi and Mizrahi home cooking and holiday food."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "The Book of Jewish Food: An Odyssey from Samarkand to New York",
+     "author": "Claudia Roden",
+     "year": 1996,
+     "isbn": "9780394532585",
+     "url": "https://openlibrary.org/books/OL22397425M",
+     "note": "Roden's history-rich survey of Ashkenazi and Sephardi cooking across the diaspora."
+    },
+    {
+     "title": "King Solomon's Table: A Culinary Exploration of Jewish Cooking from Around the World",
+     "author": "Joan Nathan",
+     "year": 2017,
+     "isbn": "9780385351140",
+     "note": "Joan Nathan's global tour of Jewish dishes, with recipes gathered from communities on several continents."
+    }
+   ]
+  },
+  "Jiangsu cuisine": {
+   "cookbooks": [
+    {
+     "title": "Land of Fish and Rice: Recipes from the Culinary Heart of China",
+     "author": "Fuchsia Dunlop",
+     "year": 2016,
+     "url": "https://wwnorton.com/books/Land-of-Fish-and-Rice/",
+     "note": "Covers the Jiangnan region around Shanghai, Jiangsu and Zhejiang."
+    }
+   ]
+  },
+  "Kenyan cuisine": {
+   "sites": [
+    {
+     "name": "Kaluhi's Kitchen",
+     "url": "http://www.kaluhiskitchen.com/",
+     "type": "blog",
+     "note": "Award winning Kenyan food blog by Kaluhi Adagala, focused on Kenyan home cooking."
+    },
+    {
+     "name": "Nairobi Kitchen",
+     "url": "https://nairobikitchen.blogspot.com",
+     "type": "blog",
+     "note": "Kenyan recipes blog by Nairobi cook Mulunga."
+    },
+    {
+     "name": "Pika Chakula",
+     "url": "https://www.pikachakula.com/",
+     "type": "blog",
+     "note": "Kenyan and East African recipes such as kuku paka and mandazi."
+    }
+   ]
+  },
+  "Korean Chinese cuisine": {
+   "sites": [
+    {
+     "name": "Korean Bapsang: Korean Chinese",
+     "url": "https://www.koreanbapsang.com/category/korean-chinese",
+     "type": "blog",
+     "note": "Korean Bapsang's section on Korean Chinese dishes such as jjajangmyeon and jjamppong."
+    }
+   ]
+  },
+  "Korean cuisine": {
+   "sites": [
+    {
+     "name": "Maangchi",
+     "url": "https://www.maangchi.com/",
+     "type": "youtube",
+     "note": "Maangchi's Korean recipe site and YouTube channel, one of the best known English sources for Korean cooking."
+    },
+    {
+     "name": "Korean Bapsang",
+     "url": "https://www.koreanbapsang.com/category/recipes/",
+     "type": "blog",
+     "note": "Home-style Korean recipes from Hyosun, a Korean-American mom."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "Maangchi's Real Korean Cooking",
+     "author": "Maangchi",
+     "year": 2015,
+     "isbn": "9780544129894",
+     "note": "First print cookbook from the YouTube cook, covering everyday and festive Korean dishes."
+    },
+    {
+     "title": "Koreatown: A Cookbook",
+     "author": "Deuki Hong and Matt Rodbard",
+     "year": 2016,
+     "isbn": "9780804186131",
+     "url": "https://www.penguinrandomhouse.com/books/239393/koreatown-by-deuki-hong-and-matt-rodbard/",
+     "note": "Korean cooking as found in Koreatowns across the US, from a chef and a food writer."
+    },
+    {
+     "title": "Cook Korean!",
+     "author": "Robin Ha",
+     "year": 2016,
+     "isbn": "9781607748878",
+     "url": "https://www.penguinrandomhouse.com/books/252746/cook-korean-by-robin-ha/9781607748878/",
+     "note": "Korean recipes presented as illustrated comics by a Korean-born cartoonist."
+    }
+   ]
+  },
+  "Lebanese cuisine": {
+   "sites": [
+    {
+     "name": "Maureen Abood",
+     "url": "https://maureenabood.com/blog/",
+     "type": "blog",
+     "note": "Lebanese-American writer Maureen Abood's blog of classic and modern Lebanese recipes."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "Rose Water and Orange Blossoms",
+     "author": "Maureen Abood",
+     "year": 2015,
+     "isbn": "9780762454860",
+     "url": "https://www.hachettebookgroup.com/titles/maureen-abood/rose-water-and-orange-blossoms/9780762454860/",
+     "note": "Fresh and classic recipes from a Lebanese-American family kitchen."
+    },
+    {
+     "title": "The Lebanese Kitchen",
+     "author": "Salma Hage",
+     "year": 2012,
+     "isbn": "9780714864808",
+     "note": "Large collection of Lebanese home recipes, published by Phaidon."
+    },
+    {
+     "title": "Lebanon: Cooking the Foods of My Homeland",
+     "author": "Anissa Helou",
+     "year": 2026,
+     "isbn": "9780063334922",
+     "note": "Recipes gathered from villages across Lebanon by the Beirut-born food writer."
+    }
+   ]
+  },
+  "Malaysian cuisine": {
+   "sites": [
+    {
+     "name": "Rasa Malaysia",
+     "url": "https://rasamalaysia.com/nyonya-recipes/",
+     "type": "blog",
+     "note": "Penang-born Bee Yinn Low's recipe site, including Malaysian and Nyonya dishes."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "Malaysia: Recipes from a Family Kitchen",
+     "author": "Ping Coombes",
+     "year": 2016,
+     "isbn": "9781681881850",
+     "note": "Home cooking from Ipoh by the 2014 MasterChef UK winner."
+    }
+   ]
+  },
+  "Mangalorean Catholic cuisine": {
+   "sites": [
+    {
+     "name": "Ruchik Randhap",
+     "url": "https://www.ruchikrandhap.com/recipes",
+     "type": "blog",
+     "note": "Mangalore-raised Shireen Sequeira's blog, strong on Mangalorean Catholic dishes alongside other Mangalorean communities."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "Jane DSouza's Cook Book",
+     "author": "Jane D'Souza",
+     "year": 2004,
+     "note": "Collection of 480 recipes, 109 of them Mangalorean Catholic; publisher not confirmed."
+    }
+   ]
+  },
+  "Mexican cuisine": {
+   "sites": [
+    {
+     "name": "Mexico in My Kitchen",
+     "url": "https://www.mexicoinmykitchen.com/",
+     "type": "blog",
+     "note": "Mely Martínez's long-running blog of Mexican home-style recipes."
+    },
+    {
+     "name": "Pati Jinich",
+     "url": "https://patijinich.com/recipes/",
+     "type": "site",
+     "note": "Recipe archive from the Mexican-born chef and host of the PBS series Pati's Mexican Table."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "The Essential Cuisines of Mexico",
+     "author": "Diana Kennedy",
+     "year": 2000,
+     "url": "https://openlibrary.org/books/OL20946574M/The_essential_cuisines_of_Mexico",
+     "note": "Combined edition of Kennedy's three foundational books on regional Mexican cooking."
+    },
+    {
+     "title": "The Mexican Home Kitchen",
+     "author": "Mely Martínez",
+     "year": 2020,
+     "isbn": "9781631066931",
+     "url": "https://www.quarto.com/books/9781631066931/mexican-home-kitchen",
+     "note": "Home-style recipes from the author of the Mexico in My Kitchen blog."
+    }
+   ]
+  },
+  "Moroccan cuisine": {
+   "sites": [
+    {
+     "name": "My Moroccan Food",
+     "url": "https://www.mymoroccanfood.com/",
+     "type": "blog",
+     "note": "Moroccan recipe blog linked to cookbook author Nargisse Benkabbou, covering breads, soups and tagines."
+    },
+    {
+     "name": "Taste of Maroc",
+     "url": "https://tasteofmaroc.com/about/",
+     "type": "site",
+     "note": "Moroccan recipes and tutorials from Christine Benlafquih, formerly the Moroccan food writer at The Spruce Eats."
+    },
+    {
+     "name": "Salima's Kitchen",
+     "url": "https://salimaskitchen.com/category/moroccan/",
+     "type": "blog",
+     "note": "Moroccan section of Salima Benkhalti's blog, drawing on her family cooking."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "Couscous and Other Good Food from Morocco",
+     "author": "Paula Wolfert",
+     "year": 1973,
+     "isbn": "9780060913960",
+     "url": "https://openroadmedia.com/ebook/couscous-and-other-good-food-from-morocco/9780062047984",
+     "note": "Classic English language reference on Moroccan cooking."
+    },
+    {
+     "title": "Mourad: New Moroccan",
+     "author": "Mourad Lahlou",
+     "year": 2011,
+     "isbn": "9781579654290",
+     "url": "https://www.hachettebookgroup.com/titles/mourad-lahlou/mourad-new-moroccan/9781579657024/?lens=artisan",
+     "note": "Restaurant chef's modern take on Moroccan flavors, published by Artisan."
+    },
+    {
+     "title": "Casablanca: My Moroccan Food",
+     "author": "Nargisse Benkabbou",
+     "year": 2018,
+     "isbn": "9781784723934",
+     "note": "Traditional and modern Moroccan home recipes from the creator of My Moroccan Food."
+    }
+   ]
+  },
+  "New Caledonian cuisine": {
+   "sites": [
+    {
+     "name": "New Caledonia Tourism: Kanak cooking",
+     "url": "https://www.newcaledonia.travel/nz/gastronomy-wine/gastronomy/kanak-cooking",
+     "type": "site",
+     "note": "Official tourism board overview of Kanak food, including bougna cooked in an earth oven."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "Eat Pacific: The Pacific Island Food Revolution Cookbook",
+     "author": "Robert Oliver (ed.)",
+     "year": 2024,
+     "isbn": "9781991016805",
+     "url": "https://masseypress.ac.nz/books/eat-pacific",
+     "note": "Pacific Island Food Revolution cookbook with a New Caledonia section."
+    }
+   ]
+  },
+  "Nigerian cuisine": {
+   "sites": [
+    {
+     "name": "Kitchen Butterfly",
+     "url": "https://www.kitchenbutterfly.com/about-2",
+     "type": "blog",
+     "note": "Long-running blog by Nigerian food writer and historian Ozoz Sokoh, with Nigerian and New Nigerian recipes."
+    },
+    {
+     "name": "Sisi Yemmie",
+     "url": "https://sisiyemmie.com/",
+     "type": "blog",
+     "note": "Nigerian home cooking recipes and meal plans, paired with the SisiYemmieTV YouTube channel."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "My Everyday Lagos: Nigerian Cooking at Home and in the Diaspora",
+     "author": "Yewande Komolafe",
+     "year": 2023,
+     "isbn": "9781984858931",
+     "url": "https://www.penguinrandomhouse.com/books/646506/my-everyday-lagos-by-yewande-komolafe/",
+     "note": "Nigerian home cooking adapted for kitchens abroad by a New York Times Cooking contributor."
+    },
+    {
+     "title": "Chop Chop: Cooking the Food of Nigeria",
+     "author": "Ozoz Sokoh",
+     "year": 2025,
+     "isbn": "9781648291890",
+     "url": "https://www.hachette.co.uk/titles/ozoz-sokoh/chop-chop/9781648291890/",
+     "note": "Survey of Nigerian dishes and ingredients from the writer behind Kitchen Butterfly."
+    }
+   ]
+  },
+  "Niuean cuisine": {
+   "cookbooks": [
+    {
+     "title": "Eat Pacific: The Pacific Island Food Revolution Cookbook",
+     "author": "Robert Oliver (ed.)",
+     "year": 2024,
+     "isbn": "9781991016805",
+     "url": "https://masseypress.ac.nz/books/eat-pacific",
+     "note": "Pacific Island Food Revolution cookbook with a Niue section."
+    }
+   ]
+  },
+  "Peruvian cuisine": {
+   "sites": [
+    {
+     "name": "Peru Delights",
+     "url": "https://perudelights.com/",
+     "type": "blog",
+     "note": "Morena Cuadra's blog of Peruvian home recipes and food culture."
+    },
+    {
+     "name": "Eat Peru",
+     "url": "https://www.eatperu.com/",
+     "type": "site",
+     "note": "Guide to Peruvian dishes and ingredients with a recipe section."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "Peru: The Cookbook",
+     "author": "Gastón Acurio",
+     "year": 2015,
+     "isbn": "9780714869209",
+     "url": "https://www.phaidon.com/en-us/products/peru-the-cookbook/",
+     "note": "Large collection of Peruvian home recipes from Peru's best-known chef."
+    },
+    {
+     "title": "The Fire of Peru",
+     "author": "Ricardo Zarate",
+     "url": "https://openlibrary.org/books/OL27190726M/The_fire_of_Peru",
+     "note": "Peruvian dishes adapted for home kitchens by a Lima-born chef working in the US."
+    }
+   ]
+  },
+  "Polish cuisine": {
+   "sites": [
+    {
+     "name": "Polonist",
+     "url": "https://www.polonist.com/about/",
+     "type": "blog",
+     "note": "Polish recipes and food culture from a Polish-born writer living abroad."
+    },
+    {
+     "name": "Polish Your Kitchen",
+     "url": "https://polishyourkitchen.com",
+     "type": "blog",
+     "note": "Long-running blog of traditional Polish home recipes."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "Fresh from Poland: New Vegetarian Cooking from the Old Country",
+     "author": "Michał Korkosz",
+     "year": 2020,
+     "isbn": "9781615196555",
+     "url": "https://theexperimentpublishing.com/catalogs/spring-2020/fresh-from-poland/",
+     "note": "Vegetarian versions of Polish classics by the author of the Rozkoszny blog."
+    }
+   ]
+  },
+  "Portuguese cuisine": {
+   "sites": [
+    {
+     "name": "Food From Portugal",
+     "url": "https://www.foodfromportugal.com/",
+     "type": "site",
+     "note": "Portuguese-run recipe site and video channel of traditional Portuguese dishes."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "The New Portuguese Table",
+     "author": "David Leite",
+     "year": 2009,
+     "isbn": "9780307394415",
+     "url": "https://www.penguinrandomhouse.com/books/99720/the-new-portuguese-table-by-david-leite-photography-by-nuno-correia/",
+     "note": "Portuguese-American writer's take on traditional and modern Portuguese cooking."
+    }
+   ]
+  },
+  "Puerto Rican cuisine": {
+   "sites": [
+    {
+     "name": "Delish D'Lites",
+     "url": "https://delishdlites.com",
+     "type": "blog",
+     "note": "Jannese Torres's blog of Puerto Rican and Latin recipes."
+    },
+    {
+     "name": "Sense and Edibility",
+     "url": "https://senseandedibility.com/category/cuisines/puerto-rican/",
+     "type": "blog",
+     "note": "Food blog with a large Puerto Rican recipe category."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "Diasporican: A Puerto Rican Cookbook",
+     "author": "Illyanna Maisonet",
+     "year": 2022,
+     "isbn": "9781984859761",
+     "note": "Puerto Rican cooking as practiced in the diaspora, by a Sacramento-based food writer."
+    },
+    {
+     "title": "Cocina criolla",
+     "author": "Carmen Aboy Valldejuli",
+     "url": "https://openlibrary.org/books/OL6181464M/Cocina_criolla.",
+     "note": "Long-standing reference of Puerto Rican cooking, also published in English as Puerto Rican Cookery."
+    }
+   ]
+  },
+  "Russian cuisine": {
+   "sites": [
+    {
+     "name": "Olga's Flavor Factory",
+     "url": "https://www.olgasflavorfactory.com/category/russianrecipes/",
+     "type": "blog",
+     "note": "Russian-born home cook Olga's blog, with a dedicated Russian recipes category."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "Please to the Table: The Russian Cookbook",
+     "author": "Anya von Bremzen and John Welchman",
+     "year": 1990,
+     "isbn": "9780894807534",
+     "url": "https://openlibrary.org/books/OL1888867M",
+     "note": "Broad cookbook covering Russia and the former Soviet republics."
+    },
+    {
+     "title": "Salt & Time: Recipes from a Russian Kitchen",
+     "author": "Alissa Timoshkina",
+     "year": 2019,
+     "isbn": "9781623718053",
+     "url": "https://www.simonandschuster.ca/books/Salt-Time/Alissa-Timoshkina/9781623718053",
+     "note": "Siberian-born author's modern take on Russian home cooking."
+    }
+   ]
+  },
+  "Samoan cuisine": {
+   "sites": [
+    {
+     "name": "Polynesian Cultural Center Blog: Samoan recipes",
+     "url": "https://blog.polynesia.com/tag/samoan-recipe",
+     "type": "site",
+     "note": "Samoan dishes such as palusami from the Hawaii cultural center's blog, written with its Pacific Islander staff."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "Mea'ai Samoa: Recipes and Stories from the Heart of Polynesia",
+     "author": "Robert Oliver, Tracy Berno and Shiri Ram",
+     "year": 2013,
+     "isbn": "9781775534273",
+     "note": "Samoa-focused follow-up to Me'a Kai, tracing dishes back to local growers; won a Gourmand award."
+    },
+    {
+     "title": "Me'a Kai: The Food and Flavours of the South Pacific",
+     "author": "Robert Oliver, Tracy Berno and Shiri Ram",
+     "year": 2010,
+     "isbn": "9781869621759",
+     "url": "https://openlibrary.org/books/OL28452199M",
+     "note": "Regional cookbook with a chapter of Samoan recipes from island cooks."
+    }
+   ]
+  },
+  "Senegalese cuisine": {
+   "cookbooks": [
+    {
+     "title": "Senegal: Modern Senegalese Recipes from the Source to the Bowl",
+     "author": "Pierre Thiam with Jennifer Sit",
+     "year": 2015,
+     "isbn": "9781891105555",
+     "url": "https://www.simonandschuster.ca/books/Senegal/Pierre-Thiam/9781891105555",
+     "note": "Senegalese cooking organized by region from a Dakar born New York chef."
+    }
+   ]
+  },
+  "Shanghai cuisine": {
+   "cookbooks": [
+    {
+     "title": "Land of Fish and Rice: Recipes from the Culinary Heart of China",
+     "author": "Fuchsia Dunlop",
+     "year": 2016,
+     "url": "https://wwnorton.com/books/Land-of-Fish-and-Rice/",
+     "note": "Covers the Jiangnan region, including Shanghai-style cooking."
+    }
+   ]
+  },
+  "Sichuan cuisine": {
+   "sites": [
+    {
+     "name": "China Sichuan Food",
+     "url": "https://www.chinasichuanfood.com/",
+     "type": "blog",
+     "note": "Elaine's blog of Chinese home recipes with a strong Sichuan focus."
+    },
+    {
+     "name": "The Mala Market Blog",
+     "url": "https://blog.themalamarket.com/mala-market-blog-about-page/",
+     "type": "blog",
+     "note": "Recipes and ingredient guides from a US importer of Sichuan pantry staples."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "The Food of Sichuan",
+     "author": "Fuchsia Dunlop",
+     "year": 2019,
+     "isbn": "9781324004837",
+     "url": "https://wwnorton.com/books/9781324004837",
+     "note": "Revised and expanded edition of Dunlop's Land of Plenty, a core reference on Sichuan cooking."
+    },
+    {
+     "title": "The Book of Sichuan Chili Crisp",
+     "author": "Jing Gao",
+     "year": 2022,
+     "isbn": "9781984862174",
+     "url": "https://www.penguinrandomhouse.com/books/721865/the-book-of-sichuan-chili-crisp-by-jing-gao/",
+     "note": "Sichuan-inspired recipes from the founder of the Fly By Jing condiment brand."
+    }
+   ]
+  },
+  "Solomon Islands cuisine": {
+   "cookbooks": [
+    {
+     "title": "Eat Pacific: The Pacific Island Food Revolution Cookbook",
+     "author": "Robert Oliver (ed.)",
+     "year": 2024,
+     "isbn": "9781991016805",
+     "url": "https://masseypress.ac.nz/books/eat-pacific",
+     "note": "Pacific Island Food Revolution cookbook with a Solomon Islands section."
+    }
+   ]
+  },
+  "Somali cuisine": {
+   "sites": [
+    {
+     "name": "Xawaash",
+     "url": "http://xawaash.com/",
+     "type": "blog",
+     "note": "Somali recipe blog started in 2011 by Leila Adde and Abdullahi Kassim in Ontario."
+    }
+   ]
+  },
+  "South African cuisine": {
+   "sites": [
+    {
+     "name": "Drizzle and Dip",
+     "url": "https://drizzleanddip.com/category/recipes/cuisine/south-african/",
+     "type": "blog",
+     "note": "South African recipes section of Cape Town food writer Sam Linsell's blog."
+    },
+    {
+     "name": "TASTE",
+     "url": "https://taste.co.za/south-african-recipes",
+     "type": "magazine",
+     "note": "South African recipe collection from the Woolworths food magazine."
+    },
+    {
+     "name": "The Cinnamon Jar",
+     "url": "https://thecinnamonjar.com/category/south-african-recipes/",
+     "type": "blog",
+     "note": "South African favourites like bobotie and milk tart from Maretha, a South African home cook in the UK."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "The South African Cookbook",
+     "author": "Nokx Majozi",
+     "year": 2026,
+     "isbn": "9781623715502",
+     "url": "https://interlinkbooks.com/product/the-south-african-cookbook/",
+     "note": "Recipes from Cape Town to Durban by a Durban raised chef formerly at Rosewood London."
+    }
+   ]
+  },
+  "Spanish cuisine": {
+   "sites": [
+    {
+     "name": "Spain on a Fork",
+     "url": "https://spainonafork.com/welcome2/",
+     "type": "youtube",
+     "note": "Albert Bevia's video channel and site of traditional and everyday Spanish recipes."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "The Food of Spain",
+     "author": "Claudia Roden",
+     "year": 2011,
+     "isbn": "9780718157197",
+     "url": "https://www.penguin.co.uk/books/179/179569/the-food-of-spain/9780718157197.html",
+     "note": "Region-by-region survey of Spanish cooking with history and recipes."
+    }
+   ]
+  },
+  "Swedish cuisine": {
+   "sites": [
+    {
+     "name": "Scandicuisine: Swedish recipes",
+     "url": "https://scandicuisine.com/category/swedish-recipes",
+     "type": "blog",
+     "note": "Traditional Swedish recipes from Cecilia, a cook from a Finnish-Swedish family on Åland."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "The Nordic Cookbook",
+     "author": "Magnus Nilsson",
+     "year": 2015,
+     "isbn": "9780714868721",
+     "note": "Swedish chef's large survey of home cooking across the Nordic countries, with strong Swedish coverage."
+    },
+    {
+     "title": "The Little Swedish Kitchen",
+     "author": "Rachel Khoo",
+     "year": 2015,
+     "isbn": "9780718188917",
+     "note": "Swedish home recipes from the cook's time living in Stockholm."
+    }
+   ]
+  },
+  "Taiwan cuisine": {
+   "sites": [
+    {
+     "name": "Cooking in Chinglish",
+     "url": "https://cookinginchinglish.com",
+     "type": "blog",
+     "note": "Taiwanese home recipes from Edwina, who grew up in Taiwan."
+    },
+    {
+     "name": "Tiny Urban Kitchen: Taiwanese Recipes",
+     "url": "https://tinyurbankitchen.com/taiwanese-recipes/",
+     "type": "blog",
+     "note": "Small set of Taiwanese recipes from Jen Che, a Taiwanese American blogger in Hong Kong."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "Made in Taiwan",
+     "author": "Clarissa Wei",
+     "year": 2023,
+     "isbn": "9781982198978",
+     "url": "https://www.simonandschuster.com/books/Made-in-Taiwan/Clarissa-Wei/9781982198978",
+     "note": "Taiwanese recipes and food culture from journalist Clarissa Wei."
+    },
+    {
+     "title": "The Food of Taiwan: Recipes from the Beautiful Island",
+     "author": "Cathy Erway",
+     "year": 2015,
+     "isbn": "9780544303010",
+     "note": "Survey of Taiwanese home and night-market cooking by a Taiwanese American food writer."
+    },
+    {
+     "title": "First Generation",
+     "author": "Frankie Gaw",
+     "year": 2022,
+     "isbn": "9781984860767",
+     "url": "https://www.penguinrandomhouse.com/books/690431/first-generation-by-frankie-gaw/",
+     "note": "Taiwanese American family recipes and stories from Frankie Gaw."
+    }
+   ]
+  },
+  "Thai cuisine": {
+   "sites": [
+    {
+     "name": "Hot Thai Kitchen",
+     "url": "https://hot-thai-kitchen.com",
+     "type": "youtube",
+     "note": "Pailin Chongchitnant's recipes and videos, with background on technique and ingredients."
+    },
+    {
+     "name": "SheSimmers",
+     "url": "https://shesimmers.com/who-is-shesimmers",
+     "type": "blog",
+     "note": "Bangkok-born writer Leela Punyaratabandhu's blog on Thai home cooking."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "Thai Food",
+     "author": "David Thompson",
+     "year": 2002,
+     "isbn": "9781580084628",
+     "url": "https://www.penguinrandomhouse.com/books/198298/thai-food-by-david-thompson/9781580084628/",
+     "note": "Encyclopedic reference on Thai cooking and its history."
+    },
+    {
+     "title": "Hot Thai Kitchen",
+     "author": "Pailin Chongchitnant",
+     "year": 2016,
+     "isbn": "9780147529923",
+     "url": "https://penguinrandomhouse.com/books/258501/hot-thai-kitchen-by-pailin-chongchitnant",
+     "note": "Companion book to the YouTube channel, explaining Thai flavor building."
+    },
+    {
+     "title": "Simple Thai Food",
+     "author": "Leela Punyaratabandhu",
+     "year": 2014,
+     "isbn": "9781607745235",
+     "note": "Classic dishes from the Thai home kitchen by the SheSimmers author."
+    }
+   ]
+  },
+  "Tunisian cuisine": {
+   "sites": [
+    {
+     "name": "Our Tunisian Table",
+     "url": "https://ourtunisiantable.com",
+     "type": "blog",
+     "note": "Tunisian and Maghreb recipes such as lablebi and brik, written by Munya and Rim."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "The Tunisia Cookbook: Healthy Red Cuisine from Carthage to Kairouan",
+     "author": "Haffida Ben Rejeb Latta",
+     "note": "English language collection of Tunisian recipes."
+    }
+   ]
+  },
+  "Turkish cuisine": {
+   "sites": [
+    {
+     "name": "Ozlem's Turkish Table",
+     "url": "https://ozlemsturkishtable.com/tag/turkish-recipes/page/9",
+     "type": "blog",
+     "note": "Turkish-born cook and teacher Ozlem Warren's blog of home-style Turkish recipes."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "The Turkish Cookbook",
+     "author": "Musa Dağdeviren",
+     "year": 2019,
+     "isbn": "9780714878157",
+     "url": "https://www.phaidon.com/products/the-turkish-cookbook",
+     "note": "Large survey of regional Turkish recipes by the Istanbul chef behind Çiya."
+    },
+    {
+     "title": "Ozlem's Turkish Table: Recipes from My Homeland",
+     "author": "Ozlem Warren",
+     "note": "Home cooking from across Turkey by the blog's author."
+    }
+   ]
+  },
+  "Tuvaluan cuisine": {
+   "cookbooks": [
+    {
+     "title": "Eat Pacific: The Pacific Island Food Revolution Cookbook",
+     "author": "Robert Oliver (ed.)",
+     "year": 2024,
+     "isbn": "9781991016805",
+     "url": "https://masseypress.ac.nz/books/eat-pacific",
+     "note": "Pacific Island Food Revolution cookbook with a Tuvalu section."
+    }
+   ]
+  },
+  "Ugandan cuisine": {
+   "sites": [
+    {
+     "name": "A Kitchen in Uganda",
+     "url": "https://akitcheninuganda.com/recipe-index",
+     "type": "blog",
+     "note": "Ugandan recipes such as katogo and firinda from Sophie; most posts date to 2018 or earlier."
+    }
+   ]
+  },
+  "Ukrainian cuisine": {
+   "sites": [
+    {
+     "name": "Savas Kitchen: Ukrainian recipes",
+     "url": "https://savaskitchen.com/category/ukrainian-recipes",
+     "type": "blog",
+     "note": "Ukrainian-born home cook Nataliia Savas's section of family Ukrainian recipes."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "Mamushka: Recipes from Ukraine and Eastern Europe",
+     "author": "Olia Hercules",
+     "year": 2015,
+     "isbn": "9781616289614",
+     "url": "https://www.simonandschuster.com/books/Mamushka/Olia-Hercules/9781616289614",
+     "note": "Ukrainian-born chef's debut cookbook of family recipes from Ukraine and the former Soviet region."
+    }
+   ]
+  },
+  "Vanuatuan cuisine": {
+   "cookbooks": [
+    {
+     "title": "Me'a Kai: The Food and Flavours of the South Pacific",
+     "author": "Robert Oliver, Tracy Berno and Shiri Ram",
+     "year": 2010,
+     "isbn": "9781869621759",
+     "url": "https://openlibrary.org/books/OL28452199M",
+     "note": "Regional cookbook with a chapter on Vanuatu."
+    },
+    {
+     "title": "Eat Pacific: The Pacific Island Food Revolution Cookbook",
+     "author": "Robert Oliver (ed.)",
+     "year": 2024,
+     "isbn": "9781991016805",
+     "url": "https://masseypress.ac.nz/books/eat-pacific",
+     "note": "Pacific Island Food Revolution cookbook with a Vanuatu section."
+    }
+   ]
+  },
+  "Vietnamese cuisine": {
+   "sites": [
+    {
+     "name": "Viet World Kitchen",
+     "url": "https://vietworldkitchen.com/blog/category/recipes-vietnamese",
+     "type": "blog",
+     "note": "Andrea Nguyen's blog on Vietnamese cooking, ingredients and technique."
+    },
+    {
+     "name": "Hungry Huy",
+     "url": "https://www.hungryhuy.com/vietnamese/",
+     "type": "blog",
+     "note": "Vietnamese-American Huy Vu's recipes for home-style Vietnamese dishes."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "Into the Vietnamese Kitchen",
+     "author": "Andrea Nguyen",
+     "year": 2006,
+     "isbn": "9781580086653",
+     "url": "https://penguinrandomhouse.com/books/197218/into-the-vietnamese-kitchen-by-andrea-nguyen",
+     "note": "Wide-ranging guide to traditional Vietnamese home cooking."
+    },
+    {
+     "title": "Vietnamese Food Any Day",
+     "author": "Andrea Nguyen",
+     "year": 2019,
+     "isbn": "9780399580352",
+     "url": "https://penguinrandomhouse.com/books/558093/vietnamese-food-any-day-by-andrea-nguyen",
+     "note": "Weeknight Vietnamese recipes using widely available ingredients."
+    }
+   ]
+  },
+  "Yoshoku": {
+   "cookbooks": [
+    {
+     "title": "Japanese Soul Cooking",
+     "author": "Tadashi Ono and Harris Salat",
+     "year": 2013,
+     "isbn": "9781607743521",
+     "url": "https://www.penguinrandomhouse.com/books/218238/japanese-soul-cooking-by-tadashi-ono-and-harris-salat/",
+     "note": "Japanese comfort food such as curry, tonkatsu and korokke, including Western-influenced dishes."
+    }
+   ]
+  },
+  "Zhejiang cuisine": {
+   "cookbooks": [
+    {
+     "title": "Land of Fish and Rice: Recipes from the Culinary Heart of China",
+     "author": "Fuchsia Dunlop",
+     "year": 2016,
+     "url": "https://wwnorton.com/books/Land-of-Fish-and-Rice/",
+     "note": "Covers the Jiangnan region, including Hangzhou, Shaoxing and Ningbo in Zhejiang."
+    }
+   ]
+  },
+  "Zimbabwean cuisine": {
+   "sites": [
+    {
+     "name": "Princess Tafadzwa",
+     "url": "https://www.princesstafadzwa.com/",
+     "type": "blog",
+     "note": "Zimbabwean recipes using Shona ingredients and dish names, alongside craft posts."
+    }
+   ]
+  }
+ }
+}

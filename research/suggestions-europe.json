@@ -120,7 +120,6 @@
         "author": "Diane Kochilas",
         "year": 2018,
         "isbn": "9781250166371",
-        "url": "https://www.powells.com/book/my-greek-table-9781250166371",
         "note": "Companion book to Kochilas's public television series on Greek home cooking."
       },
       {
@@ -196,6 +195,166 @@
         "isbn": "9780140273243",
         "url": "https://www.penguin.co.uk/books/24292/english-food-by-jane-grigson-revised-by-sophie-grigsonilustrated-by-gillian-zeiner-with-a-further-selection-by-clare-leighton-and-eric-ravilious/9780140273243",
         "note": "Classic collection of traditional English recipes with historical notes."
+      }
+    ]
+  },
+  "British cuisine": {
+    "sites": [
+      {
+        "name": "Great British Chefs: traditional British recipes",
+        "url": "https://www.greatbritishchefs.com/features/our-most-popular-traditional-british-recipes",
+        "type": "site",
+        "note": "UK chef-driven recipe site with a large section of classic British dishes."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "British Regional Food",
+        "author": "Mark Hix",
+        "year": 2006,
+        "isbn": "9781844002344",
+        "note": "London chef Mark Hix's survey of regional dishes and producers across Britain."
+      }
+    ]
+  },
+  "Polish cuisine": {
+    "sites": [
+      {
+        "name": "Polonist",
+        "url": "https://www.polonist.com/about/",
+        "type": "blog",
+        "note": "Polish recipes and food culture from a Polish-born writer living abroad."
+      },
+      {
+        "name": "Polish Your Kitchen",
+        "url": "https://polishyourkitchen.com",
+        "type": "blog",
+        "note": "Long-running blog of traditional Polish home recipes."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "Fresh from Poland: New Vegetarian Cooking from the Old Country",
+        "author": "Michał Korkosz",
+        "year": 2020,
+        "isbn": "9781615196555",
+        "url": "https://theexperimentpublishing.com/catalogs/spring-2020/fresh-from-poland/",
+        "note": "Vegetarian versions of Polish classics by the author of the Rozkoszny blog."
+      }
+    ]
+  },
+  "Ukrainian cuisine": {
+    "sites": [
+      {
+        "name": "Savas Kitchen: Ukrainian recipes",
+        "url": "https://savaskitchen.com/category/ukrainian-recipes",
+        "type": "blog",
+        "note": "Ukrainian-born home cook Nataliia Savas's section of family Ukrainian recipes."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "Mamushka: Recipes from Ukraine and Eastern Europe",
+        "author": "Olia Hercules",
+        "year": 2015,
+        "isbn": "9781616289614",
+        "url": "https://www.simonandschuster.com/books/Mamushka/Olia-Hercules/9781616289614",
+        "note": "Ukrainian-born chef's debut cookbook of family recipes from Ukraine and the former Soviet region."
+      }
+    ]
+  },
+  "Hungarian cuisine": {
+    "sites": [
+      {
+        "name": "Zsuzsa Is in the Kitchen",
+        "url": "https://zsuzsaisinthekitchen.blogspot.com/2010/01",
+        "type": "blog",
+        "note": "Hungarian-born home cook's blog of traditional Hungarian recipes."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "The Cuisine of Hungary",
+        "author": "George Lang",
+        "year": 1971,
+        "isbn": "9780517169636",
+        "note": "Classic English-language history and recipe collection by the Hungarian-born restaurateur."
+      }
+    ]
+  },
+  "Swedish cuisine": {
+    "sites": [
+      {
+        "name": "Scandicuisine: Swedish recipes",
+        "url": "https://scandicuisine.com/category/swedish-recipes",
+        "type": "blog",
+        "note": "Traditional Swedish recipes from Cecilia, a cook from a Finnish-Swedish family on Åland."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "The Nordic Cookbook",
+        "author": "Magnus Nilsson",
+        "year": 2015,
+        "isbn": "9780714868721",
+        "note": "Swedish chef's large survey of home cooking across the Nordic countries, with strong Swedish coverage."
+      },
+      {
+        "title": "The Little Swedish Kitchen",
+        "author": "Rachel Khoo",
+        "year": 2015,
+        "isbn": "9780718188917",
+        "note": "Swedish home recipes from the cook's time living in Stockholm."
+      }
+    ]
+  },
+  "Irish cuisine": {
+    "sites": [
+      {
+        "name": "Irish American Mom",
+        "url": "https://www.irishamericanmom.com/recipes/",
+        "type": "blog",
+        "note": "Irish-born cook living in the US sharing traditional Irish recipes."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "The Irish Cookbook",
+        "author": "Jp McMahon",
+        "year": 2020,
+        "isbn": "9781838660567",
+        "url": "https://www.phaidon.com/products/the-irish-cookbook",
+        "note": "Phaidon's broad collection of traditional Irish recipes by a Galway chef."
+      },
+      {
+        "title": "Irish Traditional Cooking",
+        "author": "Darina Allen",
+        "url": "https://www.gillbooks.ie/food-drink/food-drink/irish-traditional-cooking",
+        "note": "Heritage Irish recipes and food lore from the Ballymaloe Cookery School founder."
+      }
+    ]
+  },
+  "Austrian cuisine": {
+    "sites": [
+      {
+        "name": "Vienna Sunday Kitchen",
+        "url": "https://www.vienna-sunday.kitchen/newest-recipes/",
+        "type": "blog",
+        "note": "Viennese food blog of Austrian home cooking and pastries, with English-language recipes."
+      },
+      {
+        "name": "Lil Vienna",
+        "url": "https://www.lilvienna.com/?p=1366",
+        "type": "blog",
+        "note": "Austrian recipes from Ursula and David, two Austrians living in Boston."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "Austrian Cooking and Baking",
+        "author": "Gretel Beer",
+        "isbn": "9780486232201",
+        "note": "Long-standing English-language classic on Austrian dishes and baking, in print from Dover."
       }
     ]
   }

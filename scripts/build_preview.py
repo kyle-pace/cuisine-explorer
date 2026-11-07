@@ -19,8 +19,8 @@ inline = "\n".join([
     block("data-cuisines", "data/cuisines.json"),
     block("data-countries", "data/countries.geojson"),
     block("data-picks", "data/picks.json"),
-] + ([block("data-suggestions", "data/suggestions.json")]
-     if os.path.exists(os.path.join(ROOT, "data/suggestions.json")) else []))
+] + [block("data-" + name, f"data/{name}.json") for name in ("suggestions", "summaries")
+     if os.path.exists(os.path.join(ROOT, f"data/{name}.json"))])
 html = html.replace("<!--INLINE_DATA-->", inline)
 os.makedirs(os.path.join(ROOT, "dist"), exist_ok=True)
 out = os.path.join(ROOT, "dist", "preview.html")

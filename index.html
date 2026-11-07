@@ -85,8 +85,14 @@
   .kind { color: var(--muted); font-size: 0.9rem; margin: 0 0 14px; }
   .intro { font-size: 0.98rem; color: var(--rice); max-width: 62ch; }
   .intro p { margin: 0 0 10px; }
-  .source { font-size: 0.85rem; color: var(--muted); margin: 0 0 4px; }
-  .source a { color: var(--rice); }
+  .wiki-btn {
+    display: flex; align-items: center; justify-content: center; gap: 10px; margin: 20px 0 8px;
+    padding: 15px 20px; border-radius: 14px; background: var(--rice); color: var(--night);
+    font-size: 1.05rem; font-weight: 600; text-decoration: none; text-align: center;
+  }
+  .wiki-btn:hover { background: #fff8ec; }
+  .wiki-btn svg { width: 18px; height: 18px; flex: none; }
+  .source { font-size: 0.8rem; color: var(--muted); margin: 0 0 4px; text-align: center; }
   .panel h3 { font-family: var(--serif); font-weight: 400; font-size: 1.25rem; margin: 28px 0 10px; }
   .empty { color: var(--muted); font-size: 0.92rem; margin: 0; padding: 14px 16px; border: 1px dashed var(--line); border-radius: 12px; }
   .books { display: grid; grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); gap: 14px; }
@@ -205,6 +211,9 @@
     load("data-suggestions", "data/suggestions.json").catch(() => ({})),
   ]);
   const suggestions = suggestionsFile.cuisines || {};
+  // Full Wikipedia intros, built weekly; loaded in the background
+  let summaries = {};
+  load("data-summaries", "data/summaries.json").then(d => { summaries = d || {}; if (selected) fillIntro(selected); }).catch(() => {});
   const picks = picksFile.cuisines || {};
   const all = data.cuisines;
   const byId = new Map(all.map(c => [c.id, c]));
@@ -354,18 +363,28 @@
       .arcDashAnimateTime(world.arcDashAnimateTime());
   }
 
-  const summaryCache = new Map();
-  async function wikiSummary(c) {
-    if (summaryCache.has(c.id)) return summaryCache.get(c.id);
-    const p = (async () => {
-      try {
-        const r = await fetch("https://en.wikipedia.org/api/rest_v1/page/summary/" + encodeURIComponent(c.title.replace(/ /g, "_")), { headers: { "Api-User-Agent": "CuisineExplorer/0.1 (https://kylepace.net/labs)" } });
-        if (!r.ok) throw new Error(r.status);
-        return await r.json();
-      } catch (e) { return null; }
-    })();
-    summaryCache.set(c.id, p);
-    return p;
+  const paras = text => text.split(/\n+/).map(t => t.trim()).filter(Boolean).map(t => `<p>${esc(t)}</p>`).join("");
+  const liveCache = new Map();
+  function liveIntro(c) {
+    if (!liveCache.has(c.id)) {
+      const q = new URLSearchParams({ action: "query", prop: "extracts", exintro: "1", explaintext: "1", redirects: "1",
+        titles: c.title, format: "json", formatversion: "2", origin: "*" });
+      liveCache.set(c.id, fetch("https://en.wikipedia.org/w/api.php?" + q)
+        .then(r => r.ok ? r.json() : null)
+        .then(d => d && d.query && d.query.pages && d.query.pages[0] && d.query.pages[0].extract || null)
+        .catch(() => null));
+    }
+    return liveCache.get(c.id);
+  }
+  // Full intro: from the weekly build if we have it, otherwise live from Wikipedia,
+  // with the short Wikidata description as the fallback
+  function fillIntro(c) {
+    const intro = document.getElementById("intro");
+    if (!intro || selected !== c) return;
+    const text = summaries[c.title];
+    if (text) { intro.innerHTML = paras(text); return; }
+    intro.innerHTML = c.desc ? `<p>${esc(capital(c.desc))}.</p>` : "";
+    liveIntro(c).then(t => { if (t && selected === c && document.getElementById("intro") === intro) intro.innerHTML = paras(t); });
   }
 
   function open(c, { fly = true } = {}) {
@@ -415,8 +434,10 @@
       <h2>${esc(c.name)}</h2>
       <div class="accent-bar" style="background:${col}"></div>
       <p class="kind">${kindLine}</p>
-      <div class="intro" id="intro">${c.desc ? `<p>${esc(capital(c.desc))}.</p>` : ""}</div>
-      <p class="source">From Wikipedia. <a href="${attr(c.url)}" target="_blank" rel="noopener">Read the full article</a></p>
+      <div class="intro" id="intro"></div>
+      <a class="wiki-btn" href="${attr(c.url)}" target="_blank" rel="noopener">Read the full article on Wikipedia
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <p class="source">Summary from Wikipedia, shared under CC BY-SA.</p>
 
       <h3>Cookbooks</h3>
       ${shelf(p && p.cookbooks, sug.cookbooks, b => `<div class="books">${b.map(book).join("")}</div>`, "No cookbooks for this cuisine yet.")}
@@ -432,11 +453,7 @@
     if (p && p.note) body.querySelector(".source").insertAdjacentHTML("afterend", `<p class="intro"><em>${esc(p.note)}</em></p>`);
     panel.scrollTop = 0; body.scrollTop = 0;
 
-    wikiSummary(c).then(s => {
-      if (selected !== c || !s || !s.extract) return;
-      const intro = document.getElementById("intro");
-      if (intro) intro.innerHTML = `<p>${esc(trimIntro(s.extract))}</p>`;
-    });
+    fillIntro(c);
   }
 
   function showBeyond() {
@@ -484,14 +501,6 @@
   }
   function esc(s) { return String(s ?? "").replace(/[&<>"']/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch])); }
   function attr(s) { return esc(s); }
-  // First few sentences of the Wikipedia lead, up to about 420 characters
-  function trimIntro(t) {
-    const first = t.split(/\n+/)[0];
-    const sentences = first.match(/[^.!?]+[.!?]+(\s|$)/g) || [first];
-    let out = "";
-    for (const s of sentences) { if (out && (out + s).length > 420) break; out += s; }
-    return out.trim();
-  }
   function capital(s) { return s.charAt(0).toUpperCase() + s.slice(1).replace(/\.$/, ""); }
 
   // Search

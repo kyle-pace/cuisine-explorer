@@ -4,6 +4,12 @@ on:
   schedule:
     - cron: "17 13 * * 1"   # Mondays, early morning Pacific
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "scripts/**"
+      - "data/overrides.json"
+      - ".github/workflows/update-data.yml"
 
 permissions:
   contents: write

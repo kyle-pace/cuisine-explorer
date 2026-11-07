@@ -200,5 +200,49 @@
         "note": "Filipino-American chef's take on heritage dishes."
       }
     ]
+  },
+  "Indonesian cuisine": {
+    "sites": [
+      {
+        "name": "Daily Cooking Quest",
+        "url": "https://dailycookingquest.com/cuisines/indonesian.html",
+        "type": "blog",
+        "note": "Indonesian home cook Anita's blog with a large archive of Indonesian recipes."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "Coconut & Sambal: Recipes from My Indonesian Kitchen",
+        "author": "Lara Lee",
+        "year": 2020,
+        "isbn": "9781526603517",
+        "note": "Indonesian home cooking by an Australian-Indonesian chef, published by Bloomsbury."
+      },
+      {
+        "title": "Sri Owen's Indonesian Food",
+        "author": "Sri Owen",
+        "isbn": "9781623717186",
+        "note": "Broad survey of Indonesian regional cooking by a longtime authority on the cuisine."
+      }
+    ]
+  },
+  "Malaysian cuisine": {
+    "sites": [
+      {
+        "name": "Rasa Malaysia",
+        "url": "https://rasamalaysia.com/nyonya-recipes/",
+        "type": "blog",
+        "note": "Penang-born Bee Yinn Low's recipe site, including Malaysian and Nyonya dishes."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "Malaysia: Recipes from a Family Kitchen",
+        "author": "Ping Coombes",
+        "year": 2016,
+        "isbn": "9781681881850",
+        "note": "Home cooking from Ipoh by the 2014 MasterChef UK winner."
+      }
+    ]
   }
 }

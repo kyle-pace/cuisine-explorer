@@ -644,5 +644,10 @@
     "Andorran cuisine": [],
     "Tibetan cuisine": []
   },
-  "_about_tibet": "Tibet is drawn as its own area (scripts/simplify_countries.sh), with Tibetan cuisine as its cuisine."
+  "_about_tibet": "Tibet is drawn as its own area (scripts/simplify_countries.sh), with Tibetan cuisine as its cuisine.",
+  "_about_national": "Force which cuisine is a country's own (the one its shape opens), by ISO alpha-3.",
+  "national": {
+    "PNG": "Papua New Guinean cuisine",
+    "TIB": "Tibetan cuisine"
+  }
 }

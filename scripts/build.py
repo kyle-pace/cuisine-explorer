@@ -178,6 +178,11 @@ def main():
                  not re.search(r"cuisine$", c["name"], re.I), len(c["name"]))
         candidates[c["iso3"]].append((score, k))
     national = {iso: sorted(v)[0][1] for iso, v in candidates.items()}
+    # Hand picks win: "national": {"PNG": "Papua New Guinean cuisine"}
+    for iso, key in load("data/overrides.json", {}).get("national", {}).items():
+        if key in out:
+            out[key]["iso3"] = iso
+            national[iso] = key
     national_keys = set(national.values())
 
     for k, c in out.items():

@@ -482,7 +482,7 @@
       if (iso === selIso()) return selected.kind !== "national" ? mix(c, 0.7) : c;
       return mix(c, iso === hoverIso ? 0.85 : 0.6);
     })
-    .polygonSideColor(f => lit ? "rgba(27,20,36,0.9)" : isRegion(f) ? "rgba(237,230,218,0.25)" : (featColor(f) && featIso(f) === selIso() ? mix(featColor(f), 0.5) : "rgba(27,20,36,0.9)"))
+    .polygonSideColor(f => lit ? (isRegion(f) ? "rgba(0,0,0,0)" : "rgba(27,20,36,0.9)") : isRegion(f) ? "rgba(237,230,218,0.25)" : (featColor(f) && featIso(f) === selIso() ? mix(featColor(f), 0.5) : "rgba(27,20,36,0.9)"))
     .polygonStrokeColor(f => isRegion(f) ? (lit && !regionLit(f) ? "rgba(0,0,0,0)" : "rgba(255,248,236,0.85)") : "#1b1424")
     .polygonsTransitionDuration(reduceMotion ? 0 : 250)
     .polygonLabel(f => {

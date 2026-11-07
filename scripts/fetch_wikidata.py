@@ -48,11 +48,15 @@ def run(query):
             with urllib.request.urlopen(req, timeout=120) as r:
                 return json.load(r)["results"]["bindings"]
         except urllib.error.HTTPError as e:
-            if e.code in (429, 503):
+            # Rate limits and temporary server errors: wait and try again
+            if e.code in (429, 500, 502, 503, 504):
                 time.sleep(15 * (attempt + 1))
                 continue
             print(e.read()[:500])
             raise
+        except (urllib.error.URLError, TimeoutError):
+            time.sleep(15 * (attempt + 1))
+            continue
     raise RuntimeError("SPARQL endpoint kept refusing")
 
 

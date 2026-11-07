@@ -340,5 +340,281 @@
         "note": "Taiwanese American family recipes and stories from Frankie Gaw."
       }
     ]
+  },
+  "Macanese cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Taste of Macau: Portuguese Cuisine on the China Coast",
+        "author": "Annabel Jackson",
+        "year": 2003,
+        "isbn": "9789622096387",
+        "url": "https://hkupress.hku.hk/image/catalog/pdf-preview/9789622096387.pdf",
+        "note": "Hong Kong University Press book on Macanese cooking and its Portuguese and Chinese roots."
+      },
+      {
+        "title": "Traditional Macanese Recipes from my Auntie Albertina",
+        "author": "Cíntia Conceição Serro",
+        "year": 2013,
+        "isbn": "9789993745624",
+        "url": "https://iimacau.org.mo/bookshop/index.php/en/categories/iim-own-edition/non-integrated-in-collections/traditional-macanese-recipes-from-my-auntie-albertina-detail",
+        "note": "Family recipe collection published in Macau by the Instituto Internacional de Macau."
+      },
+      {
+        "title": "The Adventures of Fat Rice",
+        "author": "Abraham Conlon, Adrienne Lo and Hugh Amano",
+        "year": 2016,
+        "isbn": "9781607748953",
+        "note": "Recipes from a Chicago restaurant built around Macanese food."
+      }
+    ]
+  },
+  "Xinjiang cuisine": {
+    "sites": [
+      {
+        "name": "Far West China: Uyghur Food Recipes",
+        "url": "https://www.farwestchina.com/cuisine/ugyhur-food-recipes-xinjiang/",
+        "type": "site",
+        "note": "Xinjiang travel and culture site with a section of Uyghur dish recipes."
+      }
+    ],
+    "cookbooks": []
+  },
+  "Yunnan cuisine": {
+    "sites": [
+      {
+        "name": "China South of the Clouds",
+        "url": "https://chinasouthoftheclouds.com/category/recipes",
+        "type": "site",
+        "note": "Yunnan recipes, ingredient guides and travel notes tied to Georgia Freedman's Yunnan cookbook."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "Cooking South of the Clouds: Recipes and Stories from China's Yunnan Province",
+        "author": "Georgia Freedman",
+        "year": 2018,
+        "url": "https://www.hachette.co.nz/georgia-freedman/cooking-south-of-the-clouds-recipes-and-stories-from-chinas-yunnan-province",
+        "note": "Yunnan recipes gathered from home cooks and chefs across the province."
+      },
+      {
+        "title": "The Yunnan Cookbook: Recipes from China's Land of Ethnic Diversity",
+        "author": "Annabel Jackson",
+        "year": 2013,
+        "isbn": "9789881613974",
+        "url": "https://www.blacksmithbooks.com/books/the-yunnan-cookbook-recipes-from-chinas-land-of-ethnic-diversity/",
+        "note": "Hong Kong published collection of Yunnan dishes, including those of its minority groups."
+      }
+    ]
+  },
+  "Hakka cuisine": {
+    "sites": [
+      {
+        "name": "The Hakka Cookbook (blog)",
+        "url": "https://thehakkacookbook.com/tag/hakka-recipes/",
+        "type": "blog",
+        "note": "Linda Lau Anusasananan's companion blog with Hakka recipes and news."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "The Hakka Cookbook: Chinese Soul Food from around the World",
+        "author": "Linda Lau Anusasananan",
+        "year": 2012,
+        "isbn": "9780520273283",
+        "note": "University of California Press book on Hakka cooking in China and the diaspora, by a former Sunset food editor."
+      }
+    ]
+  },
+  "Teochew cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Teochew Heritage Cooking",
+        "author": "Eric Low",
+        "year": 2015,
+        "isbn": "9789814634281",
+        "url": "https://www.marshallcavendish.com/our-books/categories/books/teochew-heritage-cooking-p9789814634281",
+        "note": "History and 50 recipes of Singapore's Teochew community, by a Singapore chef."
+      },
+      {
+        "title": "Uncle Lau's Teochew Recipes",
+        "author": "Tan Lee Leng",
+        "isbn": "9789810733377",
+        "note": "Singapore heritage cookbook of Teochew home recipes."
+      }
+    ]
+  },
+  "Tibetan cuisine": {
+    "sites": [
+      {
+        "name": "Simply Tibetan",
+        "url": "https://simplytibetan.com/about-me/",
+        "type": "blog",
+        "note": "Tibetan home recipes such as thukpa, momo and laphing from a Tibetan home cook."
+      },
+      {
+        "name": "YoWangdu Tibetan Cookbook",
+        "url": "https://www.yowangdu.com/tibetan-food/tibetan-cookbook.html",
+        "type": "site",
+        "note": "Free online collection of Tibetan home recipes by Tibetan cook Lobsang Wangdu, on a Tibet travel site."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "Taste Tibet: Family Recipes from the Himalayas",
+        "author": "Julie Kleeman and Yeshi Jampa",
+        "isbn": "9781623718541",
+        "url": "https://simonandschuster.ca/books/Taste-Tibet/Julie-Kleeman/9781623718541",
+        "note": "Home recipes from the couple behind the Taste Tibet food business in Oxford."
+      },
+      {
+        "title": "Tibetan Cooking: Recipes for Daily Living, Celebration, and Ceremony",
+        "author": "Elizabeth Kelly",
+        "url": "https://www.shambhala.com/tibetan-cooking-2688.html",
+        "note": "Shambhala collection of everyday and festive Tibetan dishes."
+      }
+    ]
+  },
+  "Beijing cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Mandarin Food and Cooking: 75 Regional Recipes from Beijing and Northern China",
+        "author": "Terry Tan",
+        "year": 2013,
+        "isbn": "9781908991003",
+        "url": "https://www.simonandschuster.net/books/Mandarin-Food-and-Cooking/Terry-Tan/9781908991003",
+        "note": "Illustrated collection of Beijing and northern Chinese dishes by food writer Terry Tan."
+      }
+    ]
+  },
+  "Peranakan cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "The Modern Nonya Table",
+        "author": "Sylvia Tan",
+        "year": 2019,
+        "isbn": "9789814868594",
+        "url": "https://www.marshallcavendish.com/our-books/categories/books/the-modern-nonya-table-p9789814868594",
+        "note": "Simplified Peranakan home recipes with background on spice pastes and food culture, from Singapore's Marshall Cavendish."
+      },
+      {
+        "title": "Florence Tan's Timeless Peranakan Recipes: Simply Delicious Nyonya Cooking",
+        "author": "Florence Tan",
+        "note": "Collection of Nyonya home recipes, sold through Gerakbudaya in Penang."
+      }
+    ]
+  },
+  "Kaiseki": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Kaiseki: The Exquisite Cuisine of Kyoto's Kikunoi Restaurant",
+        "author": "Yoshihiro Murata",
+        "year": 2006,
+        "isbn": "9781568364421",
+        "url": "https://penguinrandomhouse.com/books/563552/kaiseki-by-yoshihiro-murata-foreword-by-ferran-adria-foreword-by-nobu-matsuhisa-photographs-by-masashi-kuma",
+        "note": "Seasonal kaiseki menus from the chef of Kyoto's Kikunoi, published by Kodansha."
+      }
+    ]
+  },
+  "Korean temple cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Korean Temple Cooking: Lessons on Life and Buddhism, with Recipes",
+        "author": "Hoo Nam Seelmann",
+        "isbn": "9781964786186",
+        "url": "https://www.hardiegrantgift.com.au/books/korean-temple-cooking-9781964786186",
+        "note": "Recipes and teachings of the Buddhist nun Jeong Kwan, known from Chef's Table."
+      }
+    ]
+  },
+  "Hmong cuisine": {
+    "sites": [
+      {
+        "name": "ChawJ Creations",
+        "url": "https://chawjcreations.com/tag/hmong/",
+        "type": "blog",
+        "note": "Hmong food and storytelling site by Cindy Her, a pastry chef in the Pacific Northwest."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "Cooking from the Heart: The Hmong Kitchen in America",
+        "author": "Sami Scripter and Sheng Yang",
+        "year": 2009,
+        "url": "https://www.hmongabc.com/collections/books-ntawv/products/cooking-from-the-heart-the-hmong-kitchen-in-america",
+        "note": "Hmong American home recipes and food traditions, published by the University of Minnesota Press."
+      }
+    ]
+  },
+  "Chinese Buddhist cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "The Vegan Chinese Kitchen: Recipes and Modern Stories from a Thousand-Year-Old Tradition",
+        "author": "Hannah Che",
+        "year": 2022,
+        "isbn": "9780593139707",
+        "note": "Plant-based Chinese cooking rooted in the Buddhist vegetarian tradition, by a Chinese American cook."
+      }
+    ]
+  },
+  "Shaanxi cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Xi'an Famous Foods: The Cuisine of Western China, from New York's Favorite Noodle Shop",
+        "author": "Jason Wang with Jessica Chou",
+        "year": 2020,
+        "isbn": "9781419747526",
+        "url": "https://abramsbooks.com/product/xian-famous-foods_9781647000080",
+        "note": "Shaanxi-style noodles and dishes from the family behind the New York restaurant chain."
+      }
+    ]
+  },
+  "Northeastern Chinese cuisine": {
+    "sites": [
+      {
+        "name": "The Mala Market Blog: Northeast",
+        "url": "https://blog.themalamarket.com/category/regional-chinese-cuisines/northeast/",
+        "type": "blog",
+        "note": "Dongbei recipes and articles on a regional Chinese cooking blog from a US ingredient importer."
+      }
+    ],
+    "cookbooks": []
+  },
+  "Korean royal court cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "The Art of Korean Cooking",
+        "author": "Onjium",
+        "year": 2026,
+        "isbn": "9780500029541",
+        "url": "https://www.thamesandhudson.com/products/the-art-of-korean-cooking",
+        "note": "Thames and Hudson book from Onjium, a Seoul institute and restaurant that studies and revives traditional Korean cuisine."
+      }
+    ]
+  },
+  "Chinese Latin American cuisine": {
+    "sites": [
+      {
+        "name": "Perú Delights: Chifa recipes",
+        "url": "https://perudelights.com/tag/chifa-recipes/",
+        "type": "blog",
+        "note": "Chifa (Chinese Peruvian) recipes on a long-running Peruvian home cooking blog."
+      },
+      {
+        "name": "Cecilia Tupac: Chifa Peruano",
+        "url": "https://en.ceciliatupac.com/chifa-peruano",
+        "type": "site",
+        "note": "Chifa section on the site of Peruvian cook Cecilia Tupac."
+      }
+    ],
+    "cookbooks": []
   }
 }

@@ -1,4 +1,39 @@
 {
+  "Native American cuisine": {
+    "cookbooks": [
+      {
+        "title": "The Sioux Chef's Indigenous Kitchen",
+        "author": "Sean Sherman with Beth Dooley",
+        "year": 2017,
+        "isbn": "9780816699797",
+        "note": "Pre-colonial Indigenous ingredients and dishes of the Dakota and Minnesota territory, from the Oglala Lakota chef."
+      }
+    ]
+  },
+  "Canadian cuisine": {
+    "sites": [
+      {
+        "name": "Kitchen Frau: Canadian Food",
+        "url": "https://www.kitchenfrau.com/canadian-food/",
+        "type": "blog",
+        "note": "Canadian food section of an Alberta-based home cooking blog."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "Canada's Favourite Recipes",
+        "author": "Rose Murray and Elizabeth Baird",
+        "isbn": "9781770500983",
+        "note": "Collection of well-known Canadian home recipes by two veteran Canadian food writers."
+      },
+      {
+        "title": "Feast: Recipes and Stories from a Canadian Road Trip",
+        "author": "Lindsay Anderson and Dana VanVeller",
+        "year": 2017,
+        "note": "Recipes gathered on a cross-country trip through every Canadian province and territory."
+      }
+    ]
+  },
   "Mexican cuisine": {
     "sites": [
       {
@@ -32,6 +67,351 @@
       }
     ]
   },
+  "New Mexican cuisine": {
+    "sites": [
+      {
+        "name": "MJ's Kitchen: Chile and New Mexico",
+        "url": "https://mjskitchen.com/recipe-index/chile-and-new-mexico/",
+        "type": "blog",
+        "note": "New Mexico chile recipes on a Southwest home cooking blog."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "Red or Green: New Mexico Cuisine",
+        "author": "Clyde Casey",
+        "isbn": "9780826354150",
+        "url": "https://www.simonandschuster.com.au/books/Red-or-Green/Clyde-Casey/9780826354167",
+        "note": "Traditional New Mexican recipes built around red and green chile, from the University of New Mexico Press."
+      }
+    ]
+  },
+  "Tex-Mex cuisine": {
+    "sites": [
+      {
+        "name": "Homesick Texan",
+        "url": "https://www.homesicktexan.com/homesick-texan-cookbook-introduction/comment-page-20/",
+        "type": "blog",
+        "note": "Lisa Fain's long-running blog of Texan and Tex-Mex home cooking."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "The Homesick Texan Cookbook",
+        "author": "Lisa Fain",
+        "year": 2011,
+        "isbn": "9781401324261",
+        "url": "https://www.hachettebookgroup.com/titles/lisa-fain/the-homesick-texan-cookbook/9781401324261",
+        "note": "Texas home cooking with many Tex-Mex staples, from the Homesick Texan blog."
+      }
+    ]
+  },
+  "Cuisine of the Southern United States": {
+    "sites": [
+      {
+        "name": "Lana's Cooking",
+        "url": "https://www.lanascooking.com/about/",
+        "type": "blog",
+        "note": "Lana Stuart's blog of Southern home cooking from Georgia."
+      },
+      {
+        "name": "A Southern Soul: Southern Classics",
+        "url": "https://asouthernsoul.com/recipes/southern-classics",
+        "type": "blog",
+        "note": "Collection of classic Southern recipes on a Southern home cooking blog."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "The Gift of Southern Cooking",
+        "author": "Edna Lewis and Scott Peacock",
+        "year": 2003,
+        "note": "Southern home cooking from the celebrated Virginia-born chef and her Alabama-born collaborator."
+      },
+      {
+        "title": "The Lee Bros. Southern Cookbook",
+        "author": "Matt Lee and Ted Lee",
+        "year": 2006,
+        "note": "Charleston-raised brothers on Southern recipes and food traditions."
+      }
+    ]
+  },
+  "Louisiana Creole cuisine": {
+    "sites": [
+      {
+        "name": "Kenneth Temple: Cajun and Creole",
+        "url": "https://kennethtemple.com/recipes/cajun-creole/",
+        "type": "blog",
+        "note": "Cajun and Creole recipes from a New Orleans-based cook and video creator."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "The New Orleans Cookbook",
+        "author": "Rima Collin and Richard Collin",
+        "isbn": "9780394752754",
+        "note": "Standard reference of Creole and Cajun dishes as cooked in New Orleans."
+      }
+    ]
+  },
+  "Cajun cuisine": {
+    "sites": [
+      {
+        "name": "Kenneth Temple: Cajun and Creole",
+        "url": "https://kennethtemple.com/recipes/cajun-creole/",
+        "type": "blog",
+        "note": "Cajun and Creole recipes from a New Orleans-based cook and video creator."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "Chasing the Gator: Isaac Toups and the New Cajun Cooking",
+        "author": "Isaac Toups and Jennifer V. Cole",
+        "year": 2018,
+        "isbn": "9780316465779",
+        "url": "https://www.hachette.co.uk/titles/isaac-toups/chasing-the-gator/9780316465779",
+        "note": "Cajun cooking from a Louisiana-raised New Orleans chef."
+      }
+    ]
+  },
+  "Cuisine of New Orleans": {
+    "sites": [
+      {
+        "name": "Kenneth Temple: Cajun and Creole",
+        "url": "https://kennethtemple.com/recipes/cajun-creole/",
+        "type": "blog",
+        "note": "Cajun and Creole recipes from a New Orleans-based cook and video creator."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "The New Orleans Cookbook",
+        "author": "Rima Collin and Richard Collin",
+        "isbn": "9780394752754",
+        "note": "Standard reference of Creole and Cajun dishes as cooked in New Orleans."
+      },
+      {
+        "title": "The Food of New Orleans",
+        "author": "John DeMers",
+        "isbn": "9789625931005",
+        "url": "https://tuttlepublishing.com/books-by-country/the-food-of-new-orleans",
+        "note": "Illustrated collection of Cajun and Creole recipes from the city."
+      }
+    ]
+  },
+  "Lowcountry cuisine": {
+    "cookbooks": [
+      {
+        "title": "The Way Home: A Celebration of Sea Islands Food and Family",
+        "author": "Kardea Brown",
+        "year": 2022,
+        "note": "Gullah Geechee family recipes from the South Carolina Sea Islands."
+      },
+      {
+        "title": "Charleston's Gullah Recipes",
+        "author": "Darren M. Campbell",
+        "isbn": "9780972229517",
+        "note": "Gullah home recipes from the Charleston area."
+      }
+    ]
+  },
+  "Soul food": {
+    "sites": [
+      {
+        "name": "The Soul Food Pot",
+        "url": "https://thesoulfoodpot.com/recipe-index",
+        "type": "blog",
+        "note": "Shaunda Necole's blog of soul food and Southern recipes."
+      },
+      {
+        "name": "Cooks with Soul",
+        "url": "https://cookswithsoul.com/2024-holiday-gift-guide-soul-food-cookbooks-by-black-authors/",
+        "type": "blog",
+        "note": "Soul food recipe site that also covers cookbooks by Black authors."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "The Soul Food Pot Cookbook: Favorite Recipes, Places, and Food Traditions",
+        "author": "Shaunda Necole",
+        "note": "Soul food recipes and traditions from the creator of The Soul Food Pot blog."
+      }
+    ]
+  },
+  "Texan cuisine": {
+    "sites": [
+      {
+        "name": "Homesick Texan",
+        "url": "https://www.homesicktexan.com/homesick-texan-cookbook-introduction/comment-page-20/",
+        "type": "blog",
+        "note": "Lisa Fain's long-running blog of Texan and Tex-Mex home cooking."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "The Homesick Texan Cookbook",
+        "author": "Lisa Fain",
+        "year": 2011,
+        "isbn": "9781401324261",
+        "url": "https://www.hachettebookgroup.com/titles/lisa-fain/the-homesick-texan-cookbook/9781401324261",
+        "note": "Texas home cooking from barbecue to Tex-Mex, from the Homesick Texan blog."
+      }
+    ]
+  },
+  "Cuisine of Hawaii": {
+    "cookbooks": [
+      {
+        "title": "Aloha Kitchen: Recipes from Hawai'i",
+        "author": "Alana Kysar",
+        "year": 2019,
+        "isbn": "9780399581366",
+        "note": "Hawaii local food from poke to plate lunch, by a Maui-raised food blogger."
+      }
+    ]
+  },
+  "Pacific Northwest cuisine": {
+    "cookbooks": [
+      {
+        "title": "The Northwest Essentials Cookbook",
+        "author": "Greg Atkinson",
+        "note": "Cooking with the ingredients that define Pacific Northwest regional cuisine, by a Seattle chef and writer."
+      },
+      {
+        "title": "Pure Flavor: 125 Fresh All-American Recipes from the Pacific Northwest",
+        "author": "Kurt Beecher Dammeier",
+        "year": 2007,
+        "isbn": "9780307346421",
+        "note": "Regional recipes from the founder of Seattle's Beecher's Handmade Cheese."
+      },
+      {
+        "title": "PNW Veg",
+        "author": "Kim O'Donnel",
+        "isbn": "9781632170538",
+        "url": "https://penguinrandomhouse.com/books/isbn/9781632170538",
+        "note": "Seasonal vegetarian recipes built on Pacific Northwest produce."
+      }
+    ]
+  },
+  "American Jewish cuisine": {
+    "cookbooks": [
+      {
+        "title": "Jewish Cooking in America",
+        "author": "Joan Nathan",
+        "year": 1994,
+        "note": "History and recipes of Jewish home cooking across the United States."
+      },
+      {
+        "title": "The Gefilte Manifesto: New Recipes for Old World Jewish Foods",
+        "author": "Jeffrey Yoskowitz and Liz Alpern",
+        "year": 2016,
+        "note": "Ashkenazi deli and home staples updated by the founders of The Gefilteria."
+      }
+    ]
+  },
+  "Chinese American cuisine": {
+    "sites": [
+      {
+        "name": "I Heart Umami: Chinese American",
+        "url": "https://iheartumami.com/category/cuisines/chinese-american",
+        "type": "blog",
+        "note": "Chinese American takeout-style recipes on an Asian home cooking blog."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "The Chinese Takeout Cookbook",
+        "author": "Diana Kuan",
+        "year": 2012,
+        "isbn": "9780345529121",
+        "note": "Home versions of American Chinese takeout dishes."
+      }
+    ]
+  },
+  "Filipino-American cuisine": {
+    "cookbooks": [
+      {
+        "title": "The Filipino-American Kitchen",
+        "author": "Jennifer M. Aranas",
+        "isbn": "9780804851688",
+        "url": "https://www.tuttlepublishing.com/philippines/the-filipino-american-kitchen-9780804851305",
+        "note": "Traditional Filipino recipes with contemporary American touches, by a Chicago chef."
+      },
+      {
+        "title": "Filipinx: Heritage Recipes from the Diaspora",
+        "author": "Angela Dimayuga and Ligaya Mishan",
+        "year": 2021,
+        "isbn": "9781419750380",
+        "note": "Filipino American cooking from a New York chef raised in the Bay Area."
+      }
+    ]
+  },
+  "Italian-American cuisine": {
+    "cookbooks": [
+      {
+        "title": "Italian American: Red Sauce Classics and New Essentials",
+        "author": "Angie Rito and Scott Tacinelli",
+        "year": 2021,
+        "isbn": "9780593138007",
+        "note": "Red-sauce classics and updates from the chefs of New York's Don Angie."
+      }
+    ]
+  },
+  "Costa Rican cuisine": {
+    "sites": [
+      {
+        "name": "Pura Vida Moms",
+        "url": "https://puravidamoms.com/costa-rican-cookbook/",
+        "type": "site",
+        "note": "Costa Rica-focused family site with traditional Costa Rican recipes and its own cookbook."
+      }
+    ]
+  },
+  "Guatemalan cuisine": {
+    "sites": [
+      {
+        "name": "The Foodies' Kitchen: Guatemalan Recipe Collection",
+        "url": "https://www.thefoodieskitchen.com/2011/09/12/guatemalan-recipe-collection/",
+        "type": "blog",
+        "note": "Index of Guatemalan recipes on a home cooking blog."
+      },
+      {
+        "name": "Familia Kitchen: Guatemala",
+        "url": "https://familiakitchen.com/destination/guatemala/",
+        "type": "site",
+        "note": "Guatemalan recipes and stories on a Latino family cooking site."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "False Tongues and Sunday Bread: A Guatemalan and Mayan Cookbook",
+        "author": "Copeland Marks",
+        "note": "Survey of Guatemalan and Maya home cooking gathered across the country."
+      }
+    ]
+  },
+  "Nicaraguan cuisine": {
+    "cookbooks": [
+      {
+        "title": "Nicaraguan Cooking: My Grandmother's Recipes",
+        "author": "Trudy Espinoza-Abrams",
+        "year": 2004,
+        "isbn": "9781413437799",
+        "note": "Family recipes of traditional Nicaraguan dishes."
+      }
+    ]
+  },
+  "Salvadoran cuisine": {
+    "cookbooks": [
+      {
+        "title": "The SalviSoul Cookbook: Salvadoran Recipes and the Women Who Preserve Them",
+        "author": "Karla Tatiana Vasquez",
+        "year": 2023,
+        "isbn": "9781984861429",
+        "url": "https://www.penguinrandomhouse.com/books/709592/the-salvisoul-cookbook-by-karla-t-vasquez/",
+        "note": "Salvadoran home recipes collected from women cooks in El Salvador and the diaspora."
+      }
+    ]
+  },
   "Argentine cuisine": {
     "sites": [
       {
@@ -56,6 +436,16 @@
         "isbn": "9781925418712",
         "url": "https://smithstreetbooks.com/?p=1427",
         "note": "Everyday Argentine cooking from asado and empanadas to sweets."
+      }
+    ]
+  },
+  "Bolivian cuisine": {
+    "sites": [
+      {
+        "name": "Chipa by the Dozen",
+        "url": "https://chipabythedozen.com/en/category/bolivian-food-recipes-savory-sweet/",
+        "type": "blog",
+        "note": "Bolivian-American Lizet Bowen's bilingual blog of Bolivian recipes."
       }
     ]
   },
@@ -89,11 +479,34 @@
       }
     ]
   },
+  "Chilean cuisine": {
+    "sites": [
+      {
+        "name": "Mi Diario de Cocina: Chilean Recipes",
+        "url": "https://www.midiariodecocina.com/en/chilean-recipes/",
+        "type": "blog",
+        "note": "Bilingual blog with a large collection of traditional Chilean recipes."
+      },
+      {
+        "name": "Pilar's Chilean Food & Garden",
+        "url": "https://www.chileanfoodandgarden.com/?p=37406",
+        "type": "blog",
+        "note": "Chilean home cooking blog by Pilar Hernández."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "The Chilean Kitchen",
+        "author": "Pilar Hernández and Eileen Smith",
+        "note": "Traditional Chilean recipes from the author of the Chilean Food & Garden blog."
+      }
+    ]
+  },
   "Colombian cuisine": {
     "sites": [
       {
         "name": "My Colombian Recipes",
-        "url": "https://www.mycolombianrecipes.com/",
+        "url": "https://www.mycolombianrecipes.com/about/",
         "type": "blog",
         "note": "Medellín-born Erica Dinho's blog of traditional Colombian recipes."
       }
@@ -108,17 +521,50 @@
       }
     ]
   },
+  "Ecuadorian cuisine": {
+    "sites": [
+      {
+        "name": "Laylita's Recipes",
+        "url": "https://www.laylita.com/recipes/about/comment-page-1/",
+        "type": "blog",
+        "note": "Ecuadorian-born Layla Pujol's blog, strong on Ecuadorian and Latin American dishes."
+      }
+    ]
+  },
+  "Culture of Guyana#Cuisine": {
+    "sites": [
+      {
+        "name": "Metemgee",
+        "url": "https://metemgee.com/",
+        "type": "blog",
+        "note": "Guyanese-born Althea Brown's blog of Guyanese and Caribbean recipes."
+      },
+      {
+        "name": "Alica's Pepperpot",
+        "url": "https://alicaspepperpot.com/",
+        "type": "blog",
+        "note": "Blog of Guyanese home recipes."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "Tastes Like Home: My Caribbean Cookbook",
+        "author": "Cynthia Nelson",
+        "note": "Guyanese and Caribbean home cooking by a Guyanese food writer, published by Ian Randle Publishers."
+      }
+    ]
+  },
   "Peruvian cuisine": {
     "sites": [
       {
         "name": "Peru Delights",
-        "url": "https://perudelights.com/",
+        "url": "https://perudelights.com/tag/peruvian-home-cooking/",
         "type": "blog",
         "note": "Morena Cuadra's blog of Peruvian home recipes and food culture."
       },
       {
         "name": "Eat Peru",
-        "url": "https://www.eatperu.com/",
+        "url": "https://www.eatperu.com/category/recipes/?sf_paged=2",
         "type": "site",
         "note": "Guide to Peruvian dishes and ingredients with a recipe section."
       }
@@ -140,11 +586,40 @@
       }
     ]
   },
+  "Venezuelan cuisine": {
+    "sites": [
+      {
+        "name": "Enriqueta Lemoine: Venezuelan recipes",
+        "url": "https://enrilemoine.com/en/2025/10/02/foolproof-and-fuss-free-authentic-venezuelan-recipes/",
+        "type": "blog",
+        "note": "Roundup of Venezuelan recipes on a Venezuelan-born food writer's blog."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "Arepa: Classic and Contemporary Recipes for Venezuela's Daily Bread",
+        "author": "Irena Stein",
+        "isbn": "9781788795173",
+        "url": "https://www.simonandschuster.ca/books/Arepa/Irena-Stein/9781788795173",
+        "note": "Arepa-focused cookbook from the owner of Alma Cocina Latina in Baltimore."
+      }
+    ]
+  },
+  "Barbadian cuisine": {
+    "cookbooks": [
+      {
+        "title": "Barbados Bu'n-Bu'n: My Culinary Adventure",
+        "author": "Rosemary Parkinson",
+        "isbn": "9789768225849",
+        "note": "Two-volume survey of Barbadian food, cooks, and recipes."
+      }
+    ]
+  },
   "Cuban cuisine": {
     "sites": [
       {
         "name": "My Big Fat Cuban Family",
-        "url": "https://www.mybigfatcubanfamily.com/",
+        "url": "https://www.mybigfatcubanfamily.com/about-marta/",
         "type": "blog",
         "note": "Marta Darby's blog of Cuban family recipes."
       }
@@ -165,17 +640,28 @@
       }
     ]
   },
+  "Haitian cuisine": {
+    "cookbooks": [
+      {
+        "title": "A Taste of Haiti",
+        "author": "Mirta Yurnet-Thomas",
+        "isbn": "9780781814133",
+        "url": "https://www.hippocrenebooks.com/store/p463/A_Taste_of_Haiti.html",
+        "note": "Haitian home recipes with background on the country's food culture."
+      }
+    ]
+  },
   "Jamaican cuisine": {
     "sites": [
       {
         "name": "Jamaican Cookery",
-        "url": "https://www.jamaicancookery.com/",
+        "url": "https://www.jamaicancookery.com/p/about-me.html",
         "type": "blog",
         "note": "Long-running blog of everyday Jamaican home recipes."
       },
       {
         "name": "Jamaican Foods and Recipes",
-        "url": "https://jamaicanfoodsandrecipes.com/",
+        "url": "https://jamaicanfoodsandrecipes.com/category-index/",
         "type": "site",
         "note": "Recipe site focused on traditional Jamaican dishes."
       }
@@ -205,7 +691,7 @@
       },
       {
         "name": "Sense and Edibility",
-        "url": "https://senseandedibility.com/category/cuisines/puerto-rican/",
+        "url": "https://senseandedibility.com/category/cuisines/puerto-rican/page/5/",
         "type": "blog",
         "note": "Food blog with a large Puerto Rican recipe category."
       }
@@ -223,6 +709,72 @@
         "author": "Carmen Aboy Valldejuli",
         "url": "https://openlibrary.org/books/OL6181464M/Cocina_criolla.",
         "note": "Long-standing reference of Puerto Rican cooking, also published in English as Puerto Rican Cookery."
+      }
+    ]
+  },
+  "Trinidad and Tobago cuisine": {
+    "sites": [
+      {
+        "name": "Cooking with Ria",
+        "url": "https://cookingwithria.com/about",
+        "type": "blog",
+        "note": "Trinidadian home recipes from Ria Mathura."
+      },
+      {
+        "name": "Trini Gourmet",
+        "url": "https://trinigourmet.com/",
+        "type": "blog",
+        "note": "Long-running Trinidad and Tobago food blog with local recipes."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "Sweet Hands: Island Cooking from Trinidad and Tobago",
+        "author": "Ramin Ganeshram",
+        "isbn": "9780781814652",
+        "note": "Classic Trinidadian and Tobagonian dishes, reissued in a 20th anniversary edition."
+      },
+      {
+        "title": "Cook-up in a Trini Kitchen",
+        "author": "John Lyons",
+        "year": 2009,
+        "isbn": "9781845230821",
+        "note": "Trinidadian recipes and food memories from a Trinidad-born artist and writer, published by Peepal Tree Press."
+      }
+    ]
+  },
+  "American Chinese cuisine": {
+    "sites": [
+      {
+        "name": "I Heart Umami: Chinese American",
+        "url": "https://iheartumami.com/category/cuisines/chinese-american",
+        "type": "blog",
+        "note": "Chinese American takeout-style recipes on an Asian home cooking blog."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "The Chinese Takeout Cookbook",
+        "author": "Diana Kuan",
+        "year": 2012,
+        "isbn": "9780345529121",
+        "note": "Home versions of American Chinese takeout dishes."
+      }
+    ]
+  },
+  "American cuisine": {
+    "cookbooks": [
+      {
+        "title": "Taste of Home All-American Cookbook",
+        "author": "Taste of Home",
+        "isbn": "9781621459279",
+        "url": "https://simonandschuster.ca/books/Taste-of-Home-All-American-Cookbook/Taste-of-Home/9781621459279",
+        "note": "Classic home recipes organized by US region."
+      },
+      {
+        "title": "The Cook's Country Cookbook",
+        "author": "Cook's Country (America's Test Kitchen)",
+        "note": "Tested versions of classic, regional, and heirloom American home recipes."
       }
     ]
   }

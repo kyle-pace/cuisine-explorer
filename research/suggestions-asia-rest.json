@@ -318,5 +318,622 @@
         "note": "Tel Aviv-based food writer's recipes built around the Carmel Market."
       }
     ]
+  },
+  "Pakistani cuisine": {
+    "sites": [
+      {
+        "name": "Pakistan Eats",
+        "url": "https://pakistaneats.substack.com/p/pakistani-dishes-for-beginners",
+        "type": "blog",
+        "note": "Maryam Jillani's newsletter on Pakistani food, recipes and food culture."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "Pakistan: Recipes and Stories from Home Kitchens, Restaurants, and Roadside Stands",
+        "author": "Maryam Jillani",
+        "year": 2024,
+        "isbn": "9781958417416",
+        "note": "Regional survey of Pakistani cooking by the Pakistan Eats writer."
+      },
+      {
+        "title": "Zareen's Pakistani Kitchen: Recipes from a Well-Fed Childhood",
+        "author": "Zareen Khan",
+        "note": "Home recipes from the founder of the Zareen's restaurants in California."
+      }
+    ]
+  },
+  "Georgian cuisine": {
+    "sites": [
+      {
+        "name": "Georgian Recipes",
+        "url": "https://georgianrecipes.net/about-georgian-recipes",
+        "type": "site",
+        "note": "Recipe site dedicated to traditional Georgian dishes."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "The Georgian Feast",
+        "author": "Darra Goldstein",
+        "year": 1993,
+        "url": "https://ucpress.edu/books/the-georgian-feast/paper",
+        "note": "Classic English-language study of Georgian food and culture, with recipes."
+      },
+      {
+        "title": "Tasting Georgia: A Food and Wine Journey in the Caucasus",
+        "author": "Carla Capalbo",
+        "year": 2017,
+        "note": "Region-by-region guide to Georgian food and wine with recipes."
+      },
+      {
+        "title": "Supra: A Feast of Georgian Cooking",
+        "author": "Tiko Tuskadze",
+        "year": 2017,
+        "note": "Georgian home recipes from the owner of a London Georgian restaurant."
+      }
+    ]
+  },
+  "Armenian cuisine": {
+    "sites": [
+      {
+        "name": "The Armenian Kitchen",
+        "url": "https://www.thearmeniankitchen.com/classic-armenian-recipes-another/",
+        "type": "blog",
+        "note": "Armenian-American blog of family recipes and reviews of Armenian cookbooks."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "Simply Armenian: Naturally Healthy Ethnic Cooking Made Easy",
+        "author": "Barbara Ghazarian",
+        "isbn": "9781931834063",
+        "note": "Accessible collection of traditional Armenian home dishes."
+      }
+    ]
+  },
+  "Singaporean cuisine": {
+    "sites": [
+      {
+        "name": "My Singapore Food",
+        "url": "https://mysingaporefood.com/",
+        "type": "site",
+        "note": "Recipe archive focused on documenting Singaporean heritage dishes."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "Agak Agak: Everyday Recipes from Singapore",
+        "author": "Shu Han Lee",
+        "year": 2021,
+        "note": "Singaporean home cooking by a London-based cook, published by Hardie Grant."
+      },
+      {
+        "title": "Singapore Cooking: Fabulous Recipes from Asia's Food Capital",
+        "author": "Terry Tan",
+        "isbn": "9780804844833",
+        "note": "Tuttle collection covering Singapore's Chinese, Malay, Indian and Peranakan dishes."
+      }
+    ]
+  },
+  "Sri Lankan cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Weligama: Recipes from Sri Lanka",
+        "author": "Emily Dobbs",
+        "year": 2017,
+        "isbn": "9781409171447",
+        "url": "https://www.hachette.co.uk/titles/emily-dobbs/weligama/9781409171447/",
+        "note": "Sri Lankan home and street food from the founder of a London hopper stall."
+      },
+      {
+        "title": "Sri Lanka: The Cookbook",
+        "author": "Prakash K. Sivanathan",
+        "isbn": "9781836008200",
+        "note": "Broad collection of Sri Lankan curries, sambols and snacks."
+      }
+    ]
+  },
+  "Burmese cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Mandalay: Recipes and Tales from a Burmese Kitchen",
+        "author": "MiMi Aye",
+        "year": 2019,
+        "note": "Burmese home cooking and family stories, published by Bloomsbury."
+      },
+      {
+        "title": "The Rangoon Sisters",
+        "author": "Amy Chung and Emily Chung",
+        "year": 2020,
+        "isbn": "9781529103205",
+        "url": "https://www.penguin.co.uk/books/1117247/the-rangoon-sisters/9781529103205",
+        "note": "Burmese family recipes from two London supper club hosts."
+      }
+    ]
+  },
+  "Syrian cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Syria: Recipes from Home",
+        "author": "Itab Azzam and Dina Mousawi",
+        "year": 2017,
+        "isbn": "9780762490523",
+        "note": "Home recipes gathered from Syrian women in exile; ISBN is the US edition titled Our Syria."
+      },
+      {
+        "title": "Sumac: Recipes and Stories from Syria",
+        "author": "Anas Atassi",
+        "isbn": "9781623718978",
+        "note": "Homs-born author's family recipes and memories of Syria."
+      }
+    ]
+  },
+  "Palestinian cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Zaitoun: Recipes and Stories from the Palestinian Kitchen",
+        "author": "Yasmin Khan",
+        "year": 2018,
+        "isbn": "9781408883846",
+        "note": "Recipes collected while traveling through the West Bank, Gaza and Israel."
+      },
+      {
+        "title": "Falastin: A Cookbook",
+        "author": "Sami Tamimi and Tara Wigley",
+        "year": 2020,
+        "note": "Palestinian recipes from the Jerusalem-born Ottolenghi co-founder."
+      }
+    ]
+  },
+  "Afghan cuisine": {
+    "sites": [
+      {
+        "name": "Afghan Culture Unveiled",
+        "url": "https://www.afghancultureunveiled.com/humaira-ghilzai/afghancooking/2013/01/our-aushak-recipe-in-print-food52.html",
+        "type": "blog",
+        "note": "Afghan-American Humaira Ghilzai's blog on Afghan food and culture."
+      },
+      {
+        "name": "Afghan Cooks",
+        "url": "https://afghancooks.com/recipes/",
+        "type": "blog",
+        "note": "Recipe blog dedicated to traditional Afghan dishes."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "The Best of Afghan Cooking",
+        "author": "Zarghuna Adel",
+        "isbn": "9780781814430",
+        "url": "https://www.hippocrenebooks.com/store/p498/TheBestofAfghanCooking.html",
+        "note": "Traditional Afghan home recipes from Hippocrene Books."
+      }
+    ]
+  },
+  "Bangladeshi cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Made in Bangladesh: Recipes and Stories from a Home Kitchen",
+        "author": "Dina Begum",
+        "isbn": "9781784886523",
+        "note": "Bangladeshi home cooking by a London-based food writer, published by Hardie Grant."
+      }
+    ]
+  },
+  "Nepalese cuisine": {
+    "sites": [
+      {
+        "name": "The Gundruk",
+        "url": "https://thegundruk.com",
+        "type": "blog",
+        "note": "Blog dedicated to Nepali recipes and food culture."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "Ayla: A Feast of Nepali Dishes from Mountain Peaks to Jungle Plains",
+        "author": "Santosh Shah",
+        "year": 2022,
+        "url": "https://penguinrandomhouse.com/books/690809/ayla-by-santosh-shah",
+        "note": "Regional Nepali cooking from a MasterChef: The Professionals finalist."
+      },
+      {
+        "title": "Taste of Nepal",
+        "author": "Jyoti Pathak",
+        "note": "Comprehensive Hippocrene cookbook of Nepali home cooking."
+      }
+    ]
+  },
+  "Uzbek cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Samarkand: Recipes and Stories from Central Asia and the Caucasus",
+        "author": "Caroline Eden and Eleanor Ford",
+        "year": 2016,
+        "isbn": "9780857833273",
+        "note": "Recipes centered on Uzbekistan and the Silk Road region, with travel writing."
+      },
+      {
+        "title": "The Art of Uzbek Cooking",
+        "author": "Lynn Visson",
+        "note": "English-language collection of traditional Uzbek recipes."
+      }
+    ]
+  },
+  "Iraqi cuisine": {
+    "sites": [
+      {
+        "name": "The Iraqi Family Cookbook",
+        "url": "https://iraqifamilycookbook.blogspot.com/2014",
+        "type": "blog",
+        "note": "Long-running blog of Iraqi family recipes tied to the cookbook of the same name."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "Delights from the Garden of Eden: A Cookbook and History of the Iraqi Cuisine",
+        "author": "Nawal Nasrallah",
+        "url": "https://prospectbooks.co.uk/products-page/current-titles/delights-from-the-garden-of-eden-abridged-2nd-edition",
+        "note": "Scholarly and practical history of Iraqi cooking with recipes; link is the abridged second edition."
+      },
+      {
+        "title": "The Iraqi Cookbook",
+        "author": "Lamees Ibrahim",
+        "isbn": "9781566567480",
+        "note": "Traditional Iraqi home dishes, published in the US by Interlink."
+      },
+      {
+        "title": "The Iraqi Table",
+        "author": "Raghad Al Safi",
+        "note": "Iraqi family recipes by an Iraqi-born, UK-based cook."
+      }
+    ]
+  },
+  "Yemeni cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Sifratna: Recipes from Our Yemeni Kitchen",
+        "author": "Amjaad Al-Hussain",
+        "year": 2018,
+        "note": "Yemeni family recipes compiled by a Virginia-based Yemeni-American author."
+      }
+    ]
+  },
+  "Cambodian cuisine": {
+    "sites": [
+      {
+        "name": "Chef Nak",
+        "url": "https://www.chefnak.com/nhum",
+        "type": "site",
+        "note": "Site of Cambodian chef and cookbook author Chef Nak, with notes on Khmer cookbooks."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "My Cambodia: A Khmer Cookbook",
+        "author": "Nite Yun",
+        "isbn": "9781984863379",
+        "url": "https://www.penguin.co.nz/books/my-cambodia-9781984863379",
+        "note": "Khmer recipes from the chef behind Nyum Bai in Oakland."
+      }
+    ]
+  },
+  "Lao cuisine": {
+    "sites": [
+      {
+        "name": "Saeng's Kitchen",
+        "url": "https://www.saengskitchen.com/",
+        "type": "youtube",
+        "note": "Lao-American cook Saeng Douangdara's recipes and videos of Lao home cooking."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "The Lao Kitchen: Lao Flavors and Stories Told Through Family Recipes",
+        "author": "Saeng Douangdara",
+        "isbn": "9780593836170",
+        "url": "https://www.penguin.com.au/books/the-lao-kitchen-9780593836170",
+        "note": "Family recipes from the creator of Saeng's Kitchen."
+      }
+    ]
+  },
+  "Azerbaijani cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Pomegranates & Saffron: A Culinary Journey to Azerbaijan",
+        "author": "Feride Buyuran",
+        "year": 2015,
+        "note": "Large collection of Azerbaijani recipes with cultural background."
+      }
+    ]
+  },
+  "Saudi Arabian cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "The Red Sea Cookbook: Over 100 Family Recipes and Stories from Saudi Arabia",
+        "author": "Madeeha Qureshi",
+        "isbn": "9781848994430",
+        "url": "https://watkinspublishing.com/?p=39993",
+        "note": "Family recipes from the Hejaz region and Jeddah."
+      },
+      {
+        "title": "Saudi Feast",
+        "author": "Anas Alfaozan",
+        "isbn": "9780847870974",
+        "url": "https://www.hardiegrant.com/au/publishing/bookfinder/book/saudi-feast-by-anas-alfaozan/9780847870974",
+        "note": "Survey of Saudi Arabian dishes across the kingdom's regions."
+      }
+    ]
+  },
+  "Kazakh cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Red Sands: Reportage and Recipes Through Central Asia, from Hinterland to Heartland",
+        "author": "Caroline Eden",
+        "year": 2020,
+        "note": "Travel writing and recipes across the five Central Asian republics, not this cuisine alone."
+      }
+    ]
+  },
+  "Kyrgyz cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Red Sands: Reportage and Recipes Through Central Asia, from Hinterland to Heartland",
+        "author": "Caroline Eden",
+        "year": 2020,
+        "note": "Travel writing and recipes across the five Central Asian republics, not this cuisine alone."
+      }
+    ]
+  },
+  "Tajik cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Red Sands: Reportage and Recipes Through Central Asia, from Hinterland to Heartland",
+        "author": "Caroline Eden",
+        "year": 2020,
+        "note": "Travel writing and recipes across the five Central Asian republics, not this cuisine alone."
+      }
+    ]
+  },
+  "Turkmen cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Red Sands: Reportage and Recipes Through Central Asia, from Hinterland to Heartland",
+        "author": "Caroline Eden",
+        "year": 2020,
+        "note": "Travel writing and recipes across the five Central Asian republics, not this cuisine alone."
+      }
+    ]
+  },
+  "Emirati cuisine": {
+    "sites": [
+      {
+        "name": "Emirati Recipes (Dubai Culture)",
+        "url": "https://dubaiculture.gov.ae/en/about-us/special-projects/our-projects-events/Emirati-Recipes",
+        "type": "site",
+        "note": "Dubai Culture and Arts Authority project documenting traditional Emirati recipes."
+      }
+    ],
+    "cookbooks": []
+  },
+  "New Zealand cuisine": {
+    "sites": [
+      {
+        "name": "Cloudy Kitchen",
+        "url": "https://cloudykitchen.com/blog/category/new-zealand-recipes/",
+        "type": "blog",
+        "note": "New Zealand-born baker Erin Clarkson's blog, with a section of Kiwi classics."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "Eat Up New Zealand",
+        "author": "Al Brown",
+        "note": "Celebration of New Zealand produce and home cooking by the Wellington chef."
+      },
+      {
+        "title": "Edmonds Cookery Book",
+        "author": "Edmonds",
+        "note": "Long-running staple of New Zealand home kitchens, first issued in 1908."
+      }
+    ]
+  },
+  "Kerala cuisine": {
+    "sites": [
+      {
+        "name": "Yummy Tummy Aarthi (Kerala recipes)",
+        "url": "https://yummytummyaarthi.com/recipes/kerala",
+        "type": "blog",
+        "note": "Kerala section of Aarthi's large South Indian home cooking blog."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "The Kerala Kitchen",
+        "author": "Lathika George",
+        "url": "https://www.hippocrenebooks.com/store/p497/TheKeralaKitchen.html",
+        "note": "Recipes and food memories from Kerala, published by Hippocrene."
+      },
+      {
+        "title": "Coconut Lagoon: Recipes from a South Indian Kitchen",
+        "author": "Joe Thottungal",
+        "note": "Kerala dishes from the Ottawa restaurant Coconut Lagoon, published by Figure 1."
+      }
+    ]
+  },
+  "Goan cuisine": {
+    "sites": [
+      {
+        "name": "Goan Food Recipes",
+        "url": "https://www.goanfoodrecipes.com/cuisine/goan",
+        "type": "blog",
+        "note": "Recipe blog dedicated to traditional Goan home dishes."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "The Essential Goa Cookbook",
+        "author": "Maria Teresa Menezes",
+        "url": "https://www.penguin.co.in/book/essential-goa-cookbook/",
+        "note": "Penguin India collection of Goan Catholic and Hindu home recipes."
+      }
+    ]
+  },
+  "Levantine cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "The Levantine Vegetarian",
+        "author": "Salma Hage",
+        "isbn": "9781838667641",
+        "note": "Meat-free recipes from across the Levant, published by Phaidon."
+      },
+      {
+        "title": "Hummus to Halva: Recipes from a Levantine Kitchen",
+        "author": "Ronen Givon",
+        "isbn": "9781911641988",
+        "url": "https://www.pavilionbooks.com/?p=5523",
+        "note": "Levantine home dishes from the founder of a London cafe."
+      },
+      {
+        "title": "Levantine: Fresh & Vibrant Recipes to Share from the Eastern Mediterranean Table",
+        "author": "Ghillie Basan",
+        "isbn": "9781788795845",
+        "url": "https://www.simonandschuster.ca/books/Levantine/Ghillie-Basan/9781788795845",
+        "note": "Mezze and shared plates from Lebanon, Syria, Jordan and neighbors."
+      }
+    ]
+  },
+  "Punjabi cuisine": {
+    "sites": [
+      {
+        "name": "Dassana's Veg Recipes (Punjabi)",
+        "url": "https://www.vegrecipesofindia.com/recipes/punjabi/",
+        "type": "blog",
+        "note": "Punjabi section of Dassana Amit's large Indian vegetarian recipe blog."
+      },
+      {
+        "name": "Chef Kunal Kapur",
+        "url": "https://www.chefkunalkapur.com/tag/punjabi",
+        "type": "site",
+        "note": "Indian chef and TV host Kunal Kapur's recipe site, tagged Punjabi dishes."
+      }
+    ],
+    "cookbooks": []
+  },
+  "Sephardic Jewish cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Sephardi: Cooking the History. Recipes of the Jews of Spain and the Diaspora, from the 13th Century to Today",
+        "author": "Hélène Jawhara Piñer",
+        "year": 2021,
+        "isbn": "9781644695319",
+        "note": "Historian's recipe collection tracing Sephardic food from medieval Spain onward."
+      }
+    ]
+  },
+  "Hyderabadi cuisine": {
+    "sites": [
+      {
+        "name": "Dassana's Veg Recipes (Hyderabadi)",
+        "url": "https://www.vegrecipesofindia.com/recipes/hyderabadi-cuisine",
+        "type": "blog",
+        "note": "Vegetarian Hyderabadi section of Dassana Amit's Indian recipe blog."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "The Jewels of the Nizam: Recipes from the Khansamas of Hyderabad",
+        "author": "Geeta Devi",
+        "url": "https://rupapublications.co.in/book/the-jewels-of-nizam-recipes-from-the-khansamas-of-hyderabad",
+        "note": "Royal Hyderabadi recipes collected from the cooks of noble households, published by Rupa."
+      }
+    ]
+  },
+  "Gujarati cuisine": {
+    "sites": [
+      {
+        "name": "Spice Up The Curry (Gujarat)",
+        "url": "https://www.spiceupthecurry.com/category/recipes-by-region/gujarat/",
+        "type": "blog",
+        "note": "Gujarati section of Kanan Patel's Indian vegetarian recipe blog."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "From Gujarat With Love: 100 Authentic Indian Vegetarian Recipes",
+        "author": "Vina Patel",
+        "isbn": "9781911663867",
+        "url": "https://www.pavilionbooks.com/products/from-gujarat-with-love-vina-patel-9781911663867/",
+        "note": "Vegetarian Gujarati home cooking, published by Pavilion."
+      }
+    ]
+  },
+  "Kurdish cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Nandên: Recipes from My Kurdish Kitchen",
+        "author": "Pary Baban",
+        "isbn": "9781788797467",
+        "url": "https://www.simonandschuster.ca/books/Nanden/Pary-Baban/9781788797467",
+        "note": "Kurdish home recipes by an Iraqi Kurdish-born, UK-based cook."
+      },
+      {
+        "title": "My Life, My Food, My Kurdistan",
+        "author": "Chiman Zebari",
+        "note": "Family recipes and memoir from Iraqi Kurdistan."
+      }
+    ]
+  },
+  "Parsi cuisine": {
+    "sites": [
+      {
+        "name": "ParsiCuisine.com",
+        "url": "https://www.parsicuisine.com/parsicuisine-com/",
+        "type": "site",
+        "note": "Long-running community recipe site devoted to Parsi Zoroastrian cooking."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "Parsi: From Persia to Bombay: Recipes & Tales from the Ancient Culture",
+        "author": "Farokh Talati",
+        "isbn": "9781472988690",
+        "note": "Parsi home recipes and history by a London-based chef, published by Bloomsbury."
+      }
+    ]
+  },
+  "Chettinad cuisine": {
+    "sites": [
+      {
+        "name": "Archana's Kitchen (Chettinad)",
+        "url": "https://www.archanaskitchen.com/tag/chettinad-recipes/page-2",
+        "type": "site",
+        "note": "Chettinad-tagged recipes on Archana Doshi's large Indian recipe site."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "The Bangala Table: Flavors and Recipes from Chettinad",
+        "author": "Sumeet Nair and Meenakshi Meyyappan",
+        "note": "Chettinad recipes from The Bangala heritage hotel in Karaikudi."
+      }
+    ]
   }
 }

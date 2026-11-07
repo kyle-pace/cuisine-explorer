@@ -285,5 +285,274 @@
         "note": "Collection of 480 recipes, 109 of them Mangalorean Catholic; publisher not confirmed."
       }
     ]
+  },
+  "Ancient Roman cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Cooking Apicius: Roman Recipes for Today",
+        "author": "Sally Grainger",
+        "isbn": "9781903018446",
+        "url": "https://prospectbooks.co.uk/products-page/current-titles/cooking-apicius",
+        "note": "Classicist and cook Sally Grainger's tested modern versions of recipes from the Roman Apicius collection, from Prospect Books."
+      },
+      {
+        "title": "The Classical Cookbook (revised edition)",
+        "author": "Andrew Dalby and Sally Grainger",
+        "year": 2012,
+        "isbn": "9781606061107",
+        "url": "https://shop.getty.edu/products/the-classical-cookbook-revised-edition-978-1606061107",
+        "note": "Getty Publications book of Greek and Roman recipes adapted from ancient texts by two food historians."
+      },
+      {
+        "title": "Tasting History: Explore the Past through 4,000 Years of Recipes",
+        "author": "Max Miller",
+        "year": 2023,
+        "isbn": "9781982186180",
+        "note": "Book from the Tasting History YouTube series; spans many eras, with several Roman recipes and their sources."
+      }
+    ]
+  },
+  "Medieval cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Pleyn Delit: Medieval Cookery for Modern Cooks",
+        "author": "Constance B. Hieatt, Brenda Hosington and Sharon Butler",
+        "year": 1996,
+        "isbn": "9780802076328",
+        "note": "University of Toronto Press classic pairing original English and French medieval recipes with modern adaptations."
+      },
+      {
+        "title": "The Medieval Kitchen: Recipes from France and Italy",
+        "author": "Odile Redon, Françoise Sabban and Silvano Serventi",
+        "year": 1998,
+        "note": "Food historians' adaptations of 14th and 15th century French and Italian recipes, with historical commentary."
+      }
+    ]
+  },
+  "Ottoman cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "500 Years of Ottoman Cuisine",
+        "author": "Marianna Yerasimos",
+        "isbn": "9789752301610",
+        "note": "Istanbul publisher Boyut's survey of palace and city cooking across the Ottoman centuries, with recipes adapted from historical sources."
+      }
+    ]
+  },
+  "Ancient Greek cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "The Classical Cookbook (revised edition)",
+        "author": "Andrew Dalby and Sally Grainger",
+        "year": 2012,
+        "isbn": "9781606061107",
+        "url": "https://shop.getty.edu/products/the-classical-cookbook-revised-edition-978-1606061107",
+        "note": "Getty Publications book of Greek and Roman recipes adapted from ancient texts by two food historians."
+      }
+    ]
+  },
+  "Byzantine cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Flavours of Byzantium",
+        "author": "Andrew Dalby",
+        "year": 2003,
+        "isbn": "9781903018149",
+        "note": "Prospect Books history of Byzantine food and drink by classicist Andrew Dalby, with recipes."
+      }
+    ]
+  },
+  "Soviet cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Mastering the Art of Soviet Cooking: A Memoir of Food and Longing",
+        "author": "Anya von Bremzen",
+        "year": 2013,
+        "note": "Memoir of Soviet life told decade by decade through its food, with recipes."
+      }
+    ]
+  },
+  "Cuisine of the Thirteen Colonies": {
+    "sites": [
+      {
+        "name": "Colonial Williamsburg: Recipes",
+        "url": "https://www.colonialwilliamsburg.org/learn/recipes/",
+        "type": "site",
+        "note": "Historic foodways recipes from the Colonial Williamsburg living history museum, adapted from 18th-century sources."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "Martha Washington's Booke of Cookery and Booke of Sweetmeats",
+        "author": "Karen Hess (transcriber and editor)",
+        "year": 1981,
+        "isbn": "9780231049313",
+        "note": "Columbia University Press edition of the Custis family manuscript used at Mount Vernon, annotated by culinary historian Karen Hess."
+      }
+    ]
+  },
+  "Maya cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Yucatán: Recipes from a Culinary Expedition",
+        "author": "David Sterling",
+        "year": 2014,
+        "isbn": "9780292735811",
+        "note": "University of Texas Press survey of Yucatecan cooking with deep coverage of Maya ingredients and techniques; modern rather than ancient."
+      }
+    ]
+  },
+  "Ancient Egyptian cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Food Fit for Pharaohs: An Ancient Egyptian Cookbook",
+        "author": "Michelle Berriedale-Johnson",
+        "isbn": "9780714119298",
+        "note": "British Museum Press book of recipes built from ingredients and dishes known from ancient Egypt."
+      }
+    ]
+  },
+  "Buddhist cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Korean Temple Cooking: Lessons on Life and Buddhism, with Recipes",
+        "author": "Hoo Nam Seelmann",
+        "year": 2025,
+        "isbn": "9781964786186",
+        "note": "Profile of Buddhist nun and temple cook Jeongkwan Snim, with her vegan temple recipes."
+      },
+      {
+        "title": "Wookwan's Korean Temple Food: The Road to the Taste of Enlightenment",
+        "author": "Wookwan",
+        "year": 2018,
+        "note": "English-language temple cookbook by Korean Buddhist nun Wookwan."
+      }
+    ]
+  },
+  "Buddhist vegetarianism": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Korean Temple Cooking: Lessons on Life and Buddhism, with Recipes",
+        "author": "Hoo Nam Seelmann",
+        "year": 2025,
+        "isbn": "9781964786186",
+        "note": "Profile of Buddhist nun and temple cook Jeongkwan Snim, with her vegan temple recipes."
+      }
+    ]
+  },
+  "Diet in Hinduism": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Lord Krishna's Cuisine: The Art of Indian Vegetarian Cooking",
+        "author": "Yamuna Devi",
+        "year": 1987,
+        "isbn": "9780525245643",
+        "note": "Large lacto-vegetarian Indian cookbook rooted in Vaishnava Hindu temple and devotional cooking; reissued in 2018."
+      }
+    ]
+  },
+  "Islamic dietary laws": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Feast: Food of the Islamic World",
+        "author": "Anissa Helou",
+        "year": 2018,
+        "isbn": "9780062363039",
+        "note": "Anissa Helou's survey of cooking across Muslim-majority regions, from the Arab world to Indonesia, organized by type of dish."
+      }
+    ]
+  },
+  "Mennonite cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "More-with-Less Cookbook",
+        "author": "Doris Janzen Longacre",
+        "year": 1976,
+        "note": "Herald Press cookbook of recipes gathered from Mennonite cooks on eating simply and frugally; a 40th anniversary edition followed in 2016."
+      }
+    ]
+  },
+  "Fasting and abstinence in the Catholic Church": {
+    "sites": [
+      {
+        "name": "Catholic Culture: Recipes for the Liturgical Year",
+        "url": "https://catholicculture.org/culture/liturgicalyear/recipes",
+        "type": "site",
+        "note": "Catholic recipe archive tied to feast days and fasting seasons such as Lent."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "A Continual Feast: A Cookbook to Celebrate the Joys of Family and Faith throughout the Christian Year",
+        "author": "Evelyn Birge Vitz",
+        "isbn": "9780898703849",
+        "url": "https://ignatius.com/a-continual-feast-cfep/",
+        "note": "Ignatius Press cookbook of dishes for feast days and fasting seasons across the church year."
+      }
+    ]
+  },
+  "Futurist cooking": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "The Futurist Cookbook",
+        "author": "Filippo Tommaso Marinetti",
+        "year": 1932,
+        "isbn": "9780141391649",
+        "url": "https://www.penguin.co.uk/books/186301/the-futurist-cookbook",
+        "note": "The Italian Futurist movement's 1932 food manifesto and recipe book, in English in Penguin Modern Classics."
+      }
+    ]
+  },
+  "Early modern European cuisine": {
+    "sites": [
+      {
+        "name": "Folger Shakespeare Library: Recipes series",
+        "url": "https://www.folger.edu/blogs/shakespeare-and-beyond/series/recipes",
+        "type": "site",
+        "note": "Folger blog series where staff and researchers cook and adapt recipes from 16th and 17th century manuscript cookbooks."
+      }
+    ],
+    "cookbooks": []
+  },
+  "History of Chinese cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Recipes from the Garden of Contentment: Yuan Mei's Manual of Gastronomy",
+        "author": "Yuan Mei, translated by Sean J.S. Chen",
+        "year": 2019,
+        "isbn": "9781614720430",
+        "note": "Annotated bilingual translation of the 18th-century Qing dynasty gastronomy classic Suiyuan Shidan, from Berkshire Publishing."
+      }
+    ]
+  },
+  "History of Indian cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "The Mughal Feast: Recipes from the Kitchen of Emperor Shah Jahan",
+        "author": "Salma Yusuf Husain",
+        "note": "Cookable adaptation of the Persian-language Mughal manuscript Nuskha-e-Shahjahani by food historian Salma Husain."
+      },
+      {
+        "title": "The Emperor's Table: The Art of Mughal Cuisine",
+        "author": "Salma Husain",
+        "note": "Salma Husain's collection of Mughal court-style recipes."
+      }
+    ]
   }
 }

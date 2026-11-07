@@ -357,5 +357,484 @@
         "note": "Long-standing English-language classic on Austrian dishes and baking, in print from Dover."
       }
     ]
+  },
+  "Czech cuisine": {
+    "sites": [
+      {
+        "name": "Cook Like Czechs",
+        "url": "https://cooklikeczechs.com/about/",
+        "type": "blog",
+        "note": "English-language blog of traditional Czech home recipes by a Czech cook."
+      }
+    ],
+    "cookbooks": []
+  },
+  "Swiss cuisine": {
+    "sites": [
+      {
+        "name": "Helvetic Kitchen",
+        "url": "https://www.helvetickitchen.com/recipes/retrospective",
+        "type": "blog",
+        "note": "Andie Pilot's blog of Swiss home cooking and baking, with notes on Swiss cookbooks."
+      },
+      {
+        "name": "Cuisine Helvetica",
+        "url": "https://cuisinehelvetica.com/swiss-recipes",
+        "type": "blog",
+        "note": "Heddi Nieuwsma's Swiss recipes and food culture from her life in Switzerland."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "Simply Swiss",
+        "author": "Andie Pilot",
+        "year": 2025,
+        "isbn": "9783039640799",
+        "url": "https://helvetiq.com/ch_en/simply-swiss",
+        "note": "Traditional Swiss recipes from the Helvetic Kitchen author, published by Helvetiq."
+      }
+    ]
+  },
+  "Dutch cuisine": {
+    "sites": [
+      {
+        "name": "By Andrea Janssen",
+        "url": "https://www.byandreajanssen.com/about/",
+        "type": "blog",
+        "note": "Dutch food blogger writing in English about Dutch and everyday home recipes."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "Dutch Feast",
+        "author": "Emily Wight",
+        "year": 2017,
+        "isbn": "9781551526874",
+        "note": "Dutch-Canadian writer's collection of traditional Dutch home recipes."
+      },
+      {
+        "title": "Dutch Food and Cooking",
+        "author": "Janny de Moor",
+        "isbn": "9781903141526",
+        "note": "Overview of Dutch food traditions with classic recipes, by a Dutch food historian."
+      }
+    ]
+  },
+  "Belgian cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "The Taste of Belgium",
+        "author": "Ruth Van Waerebeek",
+        "note": "Belgian-born cook's well-known English-language collection of Belgian home recipes."
+      }
+    ]
+  },
+  "Danish cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Cook Yourself Happy: The Danish Way",
+        "author": "Caroline Fleming",
+        "isbn": "9781911127284",
+        "note": "Danish home cooking and family recipes from a Danish author."
+      }
+    ]
+  },
+  "Norwegian cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "North Wild Kitchen: Home Cooking from the Heart of Norway",
+        "author": "Nevada Berg",
+        "year": 2018,
+        "isbn": "9783791384139",
+        "url": "https://www.penguinrandomhouse.com/books/586680/north-wild-kitchen-by-nevada-berg/9783791384139/",
+        "note": "Traditional Norwegian home cooking from the author of the North Wild Kitchen blog, published by Prestel."
+      }
+    ]
+  },
+  "Croatian cuisine": {
+    "sites": [
+      {
+        "name": "Da mi je nešto slatko",
+        "url": "https://www.damijenestoslatko.com/en/author/anamarija",
+        "type": "blog",
+        "note": "Croatian baking and dessert blog with English versions of its recipes."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "Croatia: The Cookbook",
+        "author": "Mate Janković",
+        "url": "https://www.ljevak.hr/croatia-the-cookbook",
+        "note": "Large survey of Croatian regional cooking, published by Ljevak."
+      },
+      {
+        "title": "Best of Croatian Cooking",
+        "author": "Liliana Pavicic, Gordana Pirker-Mosher",
+        "url": "https://www.hippocrenebooks.com/store/p328/BestofCroatianCooking.html",
+        "note": "Hippocrene collection of classic Croatian dishes."
+      }
+    ]
+  },
+  "Serbian cuisine": {
+    "sites": [
+      {
+        "name": "Balkan Lunchbox: Serbian recipes",
+        "url": "https://balkanlunchbox.com/category/country/serbian-recipes/page/3",
+        "type": "blog",
+        "note": "Balkan home cooking blog with a section of Serbian dishes."
+      }
+    ],
+    "cookbooks": []
+  },
+  "Bosnian cuisine": {
+    "sites": [
+      {
+        "name": "Balkan Lunchbox: Bosnian recipes",
+        "url": "https://balkanlunchbox.com/category/country/bosnian-recipes/page/2",
+        "type": "blog",
+        "note": "Balkan home cooking blog with a section of Bosnian dishes."
+      }
+    ],
+    "cookbooks": []
+  },
+  "Maltese cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Malta: Mediterranean Recipes from the Islands",
+        "author": "Simon Bajada",
+        "year": 2019,
+        "isbn": "9781743798812",
+        "note": "Recipes and food culture of Malta and Gozo, published by Hardie Grant."
+      },
+      {
+        "title": "Taste of Malta",
+        "author": "Claudia M. Caruana",
+        "note": "Hippocrene collection of traditional Maltese recipes."
+      }
+    ]
+  },
+  "Cypriot cuisine": {
+    "sites": [
+      {
+        "name": "Kopiaste",
+        "url": "https://www.kopiaste.org/about/",
+        "type": "blog",
+        "note": "Long-running blog of Greek and Cypriot home recipes."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "My Cypriot Table",
+        "author": "Irene Matys",
+        "isbn": "9780525612667",
+        "url": "https://penguinrandomhouse.com/books/721737/my-cypriot-table-by-irene-matys",
+        "note": "Greek Cypriot family recipes for sharing and entertaining."
+      },
+      {
+        "title": "Meliz's Kitchen",
+        "author": "Meliz Berg",
+        "isbn": "9781473591578",
+        "url": "https://www.penguin.com.au/books/melizs-kitchen-9781473591578",
+        "note": "Turkish Cypriot comfort food and family recipes."
+      }
+    ]
+  },
+  "Cuisine of Albania": {
+    "sites": [
+      {
+        "name": "My Albanian Food",
+        "url": "https://www.myalbanianfood.com/?p=936",
+        "type": "blog",
+        "note": "Albanian home recipes shared by an Albanian cook."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "The Albanian Table (Sofra Shqiptare)",
+        "author": "Merita Dovolani",
+        "note": "Bilingual collection of traditional Albanian family recipes."
+      }
+    ]
+  },
+  "Icelandic cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Icelandic Food and Cookery",
+        "author": "Nanna Rögnvaldardóttir",
+        "isbn": "9789979105305",
+        "url": "https://forlagid.is/vara/icelandic-food-and-cookery",
+        "note": "Introduction to traditional Icelandic dishes by Iceland's best-known food writer."
+      }
+    ]
+  },
+  "Latvian cuisine": {
+    "sites": [
+      {
+        "name": "Latvian Eats",
+        "url": "https://latvianeats.com",
+        "type": "blog",
+        "note": "English-language blog of traditional Latvian recipes, including a project cooking through old Latvian cookbooks."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "Baltic: New and Old Recipes from Estonia, Latvia and Lithuania",
+        "author": "Simon Bajada",
+        "note": "Survey of traditional and modern cooking across the three Baltic states."
+      }
+    ]
+  },
+  "Lithuanian cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Art of Lithuanian Cooking",
+        "author": "Maria Gieysztor de Gorgey",
+        "isbn": "9780781808996",
+        "url": "https://www.hippocrenebooks.com/store/p90/Art_of_Lithuanian_Cooking.html",
+        "note": "Hippocrene collection of traditional Lithuanian recipes."
+      },
+      {
+        "title": "Baltic: New and Old Recipes from Estonia, Latvia and Lithuania",
+        "author": "Simon Bajada",
+        "note": "Survey of traditional and modern cooking across the three Baltic states."
+      }
+    ]
+  },
+  "Estonian cuisine": {
+    "sites": [
+      {
+        "name": "Estonian Cuisine",
+        "url": "https://estoniancuisine.com/about-estonian-food-blog/",
+        "type": "blog",
+        "note": "English-language blog dedicated to Estonian home recipes."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "Baltic: New and Old Recipes from Estonia, Latvia and Lithuania",
+        "author": "Simon Bajada",
+        "note": "Survey of traditional and modern cooking across the three Baltic states."
+      }
+    ]
+  },
+  "Slovenian cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "The Food and Cooking of Slovenia",
+        "author": "Janez Bogataj",
+        "isbn": "9781903141601",
+        "url": "https://www.simonandschuster.ca/books/The-Food-and-Cooking-of-Slovenia/Janez-Bogataj/9781903141601",
+        "note": "Overview of Slovenian regional dishes by a Slovenian ethnologist."
+      }
+    ]
+  },
+  "Slovak cuisine": {
+    "sites": [
+      {
+        "name": "Slovak Cooking",
+        "url": "https://www.slovakcooking.com/about/",
+        "type": "blog",
+        "note": "English-language site of Slovak home recipes started by a young Slovak cook."
+      },
+      {
+        "name": "Cook Slovak",
+        "url": "https://cookslovak.com/category/recipes/",
+        "type": "blog",
+        "note": "Blog of traditional Slovak recipes and food customs."
+      }
+    ],
+    "cookbooks": []
+  },
+  "Macedonian cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Macedonia: The Cookbook",
+        "author": "Katerina Nitsou",
+        "isbn": "9781623718794",
+        "url": "https://www.simonandschuster.ca/books/Macedonia-The-Cookbook/Katerina-Nitsou/9781623718794",
+        "note": "Macedonian-Canadian author's recipes and stories from North Macedonia, published by Interlink."
+      }
+    ]
+  },
+  "Scottish cuisine": {
+    "sites": [
+      {
+        "name": "Scottish Scran",
+        "url": "https://scottishscran.com",
+        "type": "blog",
+        "note": "Blog working through traditional Scottish dishes one recipe at a time."
+      },
+      {
+        "name": "Something Sweet Something Savoury: Scottish recipes",
+        "url": "https://somethingsweetsomethingsavoury.com/category/scottish-recipes/",
+        "type": "blog",
+        "note": "Scottish home baking and cooking section of a UK food blog."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "The Scots Kitchen",
+        "author": "F. Marian McNeill",
+        "year": 1929,
+        "note": "Classic history of Scottish food traditions with recipes."
+      }
+    ]
+  },
+  "Welsh cuisine": {
+    "sites": [
+      {
+        "name": "Baking with Granny: Welsh recipes",
+        "url": "https://bakingwithgranny.co.uk/category/recipe/welsh/",
+        "type": "blog",
+        "note": "Traditional Welsh baking recipes such as Welsh cakes and bara brith."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "Flavours of Wales: The Baking Cookbook",
+        "author": "Gilli Davies, Huw Jones",
+        "note": "Welsh baking recipes by a long-standing Welsh food writer, with photography by Huw Jones."
+      }
+    ]
+  },
+  "Ashkenazi Jewish cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "The Gefilte Manifesto: New Recipes for Old World Jewish Foods",
+        "author": "Jeffrey Yoskowitz, Liz Alpern",
+        "year": 2016,
+        "isbn": "9781250071385",
+        "note": "Updated versions of Eastern European Jewish staples from the founders of The Gefilteria."
+      }
+    ]
+  },
+  "Sicilian cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "The Sicily Cookbook",
+        "author": "Cettina Vicenzino",
+        "isbn": "9781465491107",
+        "url": "https://dk.com/en-us/products/9781465491107-the-sicily-cookbook",
+        "note": "Traditional Sicilian island recipes by Cettina Vicenzino, published by DK."
+      },
+      {
+        "title": "Sicily: From The Silver Spoon",
+        "author": "The Silver Spoon Kitchen",
+        "url": "https://www.phaidon.com/en-us/products/sicily-from-the-silver-spoon",
+        "note": "Phaidon's regional Sicilian recipe collection."
+      },
+      {
+        "title": "Recipes from Sicily",
+        "author": "Katie Caldesi, Giancarlo Caldesi",
+        "isbn": "9781784887520",
+        "url": "https://penguin.co.uk/books/466272/recipes-from-sicily-by-katie-caldesi-and-giancarlo-caldesi/9781784887520",
+        "note": "Sicilian home recipes gathered by the London Italian restaurateurs."
+      }
+    ]
+  },
+  "Basque cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "The Basque Book",
+        "author": "Alexandra Raij, Eder Montero",
+        "year": 2016,
+        "isbn": "9781607747611",
+        "note": "Basque recipes from the chefs of New York's Txikito, published by Ten Speed Press."
+      },
+      {
+        "title": "Basque Country",
+        "author": "Marti Buckley",
+        "note": "Home cooking of the Basque Country by a writer based in San Sebastián, published by Artisan."
+      }
+    ]
+  },
+  "Catalan cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Catalan Cuisine",
+        "author": "Colman Andrews",
+        "year": 1988,
+        "isbn": "9781558323292",
+        "url": "https://openroadmedia.com/ebook/catalan-cuisine/9781909808362",
+        "note": "Landmark English-language study of Catalan cooking and its history."
+      }
+    ]
+  },
+  "Roman cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Tasting Rome",
+        "author": "Katie Parla, Kristina Gill",
+        "year": 2016,
+        "note": "Classic and contemporary Roman dishes from two Rome-based food writers."
+      },
+      {
+        "title": "Cooking the Roman Way",
+        "author": "David Downie",
+        "isbn": "9780062031099",
+        "note": "Recipes from Roman home cooks and trattorias, with background on the city's food."
+      }
+    ]
+  },
+  "Tuscan cuisine": {
+    "sites": [
+      {
+        "name": "Juls' Kitchen",
+        "url": "https://en.julskitchen.com",
+        "type": "blog",
+        "note": "Tuscan cook and author Giulia Scarpaleggia's blog of Tuscan home recipes."
+      },
+      {
+        "name": "Divina Cucina",
+        "url": "https://divinacucina.com/?p=3266",
+        "type": "blog",
+        "note": "Florence-based cooking teacher Judy Witts Francini's site on Tuscan food."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "The Tuscan Sun Cookbook",
+        "author": "Frances Mayes, Edward Mayes",
+        "isbn": "9780307885289",
+        "note": "Recipes from the authors' kitchen and neighbors in Cortona."
+      }
+    ]
+  },
+  "Neapolitan cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Naples at Table: Cooking in Campania",
+        "author": "Arthur Schwartz",
+        "year": 1998,
+        "url": "https://openroadmedia.com/ebook/naples-at-table/9780062319135",
+        "note": "Detailed guide to the home cooking of Naples and Campania."
+      }
+    ]
+  },
+  "Belarusian cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "The Belarusian Cookbook",
+        "author": "Aliaksandr Biely",
+        "isbn": "9781738314287",
+        "url": "https://skarynapress.com/kniharnia/9781738314287/",
+        "note": "English-language collection of traditional Belarusian recipes, published by Skaryna Press."
+      }
+    ]
   }
 }

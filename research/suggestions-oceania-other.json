@@ -287,7 +287,14 @@
     ]
   },
   "Ancient Roman cuisine": {
-    "sites": [],
+    "sites": [
+      {
+        "name": "Pass the Garum",
+        "url": "https://pass-the-garum.blogspot.com/p/about-me.html",
+        "type": "blog",
+        "note": "Blog by an ancient history graduate recreating Roman recipes as closely as possible to the sources; may no longer be updated."
+      }
+    ],
     "cookbooks": [
       {
         "title": "Cooking Apicius: Roman Recipes for Today",
@@ -435,6 +442,13 @@
         "author": "Wookwan",
         "year": 2018,
         "note": "English-language temple cookbook by Korean Buddhist nun Wookwan."
+      },
+      {
+        "title": "The Enlightened Kitchen: Fresh Vegetable Dishes from the Temples of Japan",
+        "author": "Mari Fujii",
+        "isbn": "9781568364360",
+        "url": "https://penguinrandomhouse.com/books/563547/the-enlightened-kitchen-by-mari-fujii",
+        "note": "Kodansha book of Japanese Zen temple (shojin ryori) vegetable cooking."
       }
     ]
   },
@@ -447,6 +461,19 @@
         "year": 2025,
         "isbn": "9781964786186",
         "note": "Profile of Buddhist nun and temple cook Jeongkwan Snim, with her vegan temple recipes."
+      },
+      {
+        "title": "The Enlightened Kitchen: Fresh Vegetable Dishes from the Temples of Japan",
+        "author": "Mari Fujii",
+        "isbn": "9781568364360",
+        "url": "https://penguinrandomhouse.com/books/563547/the-enlightened-kitchen-by-mari-fujii",
+        "note": "Kodansha book of Japanese Zen temple (shojin ryori) vegetable cooking."
+      },
+      {
+        "title": "Good Food from a Japanese Temple",
+        "author": "Soei Yoneda",
+        "isbn": "9780870115271",
+        "note": "Shojin ryori temple recipes by Buddhist nun Soei Yoneda."
       }
     ]
   },
@@ -526,7 +553,15 @@
         "note": "Folger blog series where staff and researchers cook and adapt recipes from 16th and 17th century manuscript cookbooks."
       }
     ],
-    "cookbooks": []
+    "cookbooks": [
+      {
+        "title": "Shakespeare's Kitchen: Renaissance Recipes for the Contemporary Cook",
+        "author": "Francine Segan",
+        "year": 2003,
+        "isbn": "9780375509179",
+        "note": "Food historian Francine Segan's adaptations of Elizabethan and Jacobean English recipes for modern kitchens."
+      }
+    ]
   },
   "History of Chinese cuisine": {
     "sites": [],
@@ -554,5 +589,84 @@
         "note": "Salma Husain's collection of Mughal court-style recipes."
       }
     ]
+  },
+  "Peasant foods": {
+    "sites": [
+      {
+        "name": "Juls' Kitchen: Cucina povera",
+        "url": "https://julskitchen.substack.com/p/cucina-povera-cookbook",
+        "type": "blog",
+        "note": "Tuscan cook Giulia Scarpaleggia's newsletter post on the frugal Italian peasant cooking her cookbook covers."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "Cucina Povera: The Italian Way of Transforming Humble Ingredients into Unforgettable Meals",
+        "author": "Giulia Scarpaleggia",
+        "isbn": "9781648290565",
+        "url": "https://www.hachettebookgroup.com/titles/giulia-scarpaleggia/cucina-povera/9781648290565/",
+        "note": "Recipes from Italy's peasant tradition of cooking with bread, beans, greens and scraps."
+      },
+      {
+        "title": "Cucina Povera: Tuscan Peasant Cooking",
+        "author": "Pamela Sheldon Johns",
+        "isbn": "9781449402389",
+        "note": "Tuscan farmhouse recipes and stories gathered from rural cooks."
+      }
+    ]
+  },
+  "Marshallese cuisine": {
+    "sites": [
+      {
+        "name": "School and Community Garden Cookbook (TerraCircle)",
+        "url": "https://terracircle.org.au/?p=4913",
+        "type": "site",
+        "note": "2025 Marshall Islands recipe book from the Canvasback Wellness Centre in Majuro, with a downloadable PDF."
+      }
+    ],
+    "cookbooks": []
+  },
+  "Kiribati#Cuisine": {
+    "sites": [
+      {
+        "name": "Boki ni Kuuka: Recipes from Kiribati (Live & Learn)",
+        "url": "https://livelearn.org/resources/boki-ni-kuuka-recipes-from-kiribati/",
+        "type": "site",
+        "note": "Free PDF cookbook of community recipes from Tarawa, Abaiang and Kiritimati, produced by the NGO Live & Learn."
+      }
+    ],
+    "cookbooks": []
+  },
+  "Diet in Sikhism": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Menus and Memories from Punjab: Meals to Nourish Body and Soul",
+        "author": "Veronica Sidhu",
+        "note": "Punjabi family cookbook and memoir from a New Jersey Sikh household, with a glossary of food and religious terms."
+      }
+    ]
+  },
+  "Fasting and abstinence of the Coptic Orthodox Church": {
+    "sites": [
+      {
+        "name": "Vegetarian Resource Group: Vegan Recipes from Egypt",
+        "url": "https://www.vrg.org/blog/2011/02/02/vegan-recipes-from-egypt/",
+        "type": "site",
+        "note": "Coptic Orthodox writer Marie Henein's fasting-day dishes such as koshari and ful medames, with notes on the Coptic fasts."
+      }
+    ],
+    "cookbooks": []
+  },
+  "Wallis and Futuna cuisine": {
+    "sites": [
+      {
+        "name": "Wallis and Futuna Tourism: Island savours",
+        "url": "https://www.wallis-futuna.travel/en/discover-our-islands/island-savours",
+        "type": "site",
+        "note": "Official tourism overview of local food such as umu earth-oven cooking, raw fish in coconut milk and faikai; no full recipes."
+      }
+    ],
+    "cookbooks": []
   }
 }

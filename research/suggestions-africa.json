@@ -486,5 +486,38 @@
       }
     ],
     "cookbooks": []
+  },
+  "Cuisine of Saint Helena": {
+    "sites": [
+      {
+        "name": "The Saint Cooks",
+        "url": "https://www.saintcooks.com/recipe/",
+        "type": "site",
+        "note": "St Helena island recipes such as plo and fishcakes from Robin and Emma-Jane, who are writing a St Helena cookbook."
+      }
+    ],
+    "cookbooks": []
+  },
+  "South Sudanese cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "South Sudanese Family Cookbook",
+        "author": "Jibrine Akima Magdaline Jok",
+        "note": "Self published collection of more than 100 South Sudanese family recipes, released in Melbourne around 2018."
+      }
+    ]
+  },
+  "Western Saharan cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Dining in Refugee Camps: The Art of Sahrawi Cooking",
+        "author": "Robin Kahn",
+        "year": 2010,
+        "isbn": "9781570272158",
+        "note": "Artist's book recording the recipes and meals of Sahrawi women living in refugee camps."
+      }
+    ]
   }
 }

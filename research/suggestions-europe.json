@@ -836,5 +836,317 @@
         "note": "English-language collection of traditional Belarusian recipes, published by Skaryna Press."
       }
     ]
+  },
+  "Montenegrin cuisine": {
+    "sites": [
+      {
+        "name": "Balkan Lunchbox: Montenegro recipes",
+        "url": "https://balkanlunchbox.com/category/country/montenegro-recipes",
+        "type": "blog",
+        "note": "Balkan home cooking blog with a section of Montenegrin dishes."
+      }
+    ],
+    "cookbooks": []
+  },
+  "Kosovan cuisine": {
+    "sites": [
+      {
+        "name": "Balkan Lunchbox: Kosovo recipes",
+        "url": "https://balkanlunchbox.com/category/country/kosovo-recipes",
+        "type": "blog",
+        "note": "Balkan home cooking blog with a section of Kosovar dishes."
+      }
+    ],
+    "cookbooks": []
+  },
+  "Cuisine of Luxembourg": {
+    "sites": [
+      {
+        "name": "Anne's Kitchen: classic Luxembourgish dishes",
+        "url": "https://anneskitchen.lu/category/recipes/classic-luxembourgish-dishes/",
+        "type": "blog",
+        "note": "Luxembourg cook and TV host Anne Faber's collection of traditional Luxembourgish recipes."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "Anne's Kitchen: My Luxembourg",
+        "author": "Anne Faber",
+        "url": "https://editions-schortgen.lu/en/book/annes-kitchen-my-luxembourg-anne-faber/",
+        "note": "Luxembourgish home cooking from the Anne's Kitchen author, published by Éditions Schortgen."
+      }
+    ]
+  },
+  "Andalusian cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Andalusia: Recipes from Seville and Beyond",
+        "author": "José Pizarro",
+        "year": 2019,
+        "note": "Spanish chef's collection of Andalusian dishes, published by Hardie Grant."
+      },
+      {
+        "title": "Andaluz: A Food Journey Through Southern Spain",
+        "author": "Fiona Dunlop",
+        "isbn": "9781623717285",
+        "url": "https://www.simonandschuster.ca/books/Andaluz/Fiona-Dunlop/9781623717285",
+        "note": "Recipes and food culture of Andalusia, published by Interlink."
+      }
+    ]
+  },
+  "Venetian cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Polpo: A Venetian Cookbook (of Sorts)",
+        "author": "Russell Norman",
+        "year": 2012,
+        "isbn": "9781408816790",
+        "note": "Venetian bacaro dishes from the London restaurateur behind Polpo."
+      },
+      {
+        "title": "Venice: Four Seasons of Home Cooking",
+        "author": "Skye McAlpine",
+        "isbn": "9780241299920",
+        "url": "https://www.penguin.com.au/books/venice-9780241299920",
+        "note": "Seasonal Venetian home cooking from a writer who grew up in Venice."
+      }
+    ]
+  },
+  "Cuisine of Liguria": {
+    "sites": [
+      {
+        "name": "A Small Kitchen in Genoa",
+        "url": "https://asmallkitcheningenoa.com/about",
+        "type": "blog",
+        "note": "Genoese cook Enrica Monzani's English-language blog of Ligurian recipes."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "Liguria: The Cookbook",
+        "author": "Laurel Evans",
+        "isbn": "9780847870615",
+        "url": "https://rizzoliusa.com/book/9780847870615",
+        "note": "Recipes from the Italian Riviera by a Liguria-based American writer, published by Rizzoli."
+      }
+    ]
+  },
+  "Cuisine of Sardinia": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "The Sardinian Cookbook: The Cooking and Culture of a Mediterranean Island",
+        "author": "Viktorija Todorovska",
+        "note": "Introduction to Sardinian food culture with traditional recipes."
+      },
+      {
+        "title": "A Sardinian Cookbook",
+        "author": "Giovanni Pilu, Roberta Muir",
+        "note": "Sardinian recipes from a Sardinian-born chef working in Sydney."
+      }
+    ]
+  },
+  "Bavarian cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Biergarten Cookbook: Traditional Bavarian Recipes",
+        "author": "Julia Skowronek",
+        "isbn": "9781465434012",
+        "url": "https://www.dk.com/us/9781465434012-biergarten-cookbook/",
+        "note": "Classic Bavarian beer garden dishes, published by DK."
+      }
+    ]
+  },
+  "Swabian cuisine": {
+    "sites": [
+      {
+        "name": "Sabrina's Table: Swabian recipes",
+        "url": "https://sabrinastable.com/en/swabian-recipes/",
+        "type": "blog",
+        "note": "German food blogger's collection of Swabian dishes such as Maultaschen and Spätzle."
+      }
+    ],
+    "cookbooks": []
+  },
+  "Cretan cuisine": {
+    "sites": [
+      {
+        "name": "Explore Crete: Cretan cooking recipes",
+        "url": "https://www.explorecrete.com/cuisine/psilakis-recipes.html",
+        "type": "site",
+        "note": "Traditional Cretan recipes drawn from the work of Cretan food writer Nikos Psilakis."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "Aegean: Recipes from the Mountains to the Sea",
+        "author": "Marianna Leivaditaki",
+        "isbn": "9781623718237",
+        "url": "https://www.simonandschuster.ca/books/Aegean/Marianna-Leivaditaki/9781623718237",
+        "note": "Cretan-born chef's recipes from her island upbringing, published by Interlink."
+      }
+    ]
+  },
+  "Romani cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Gypsy Feast: Recipes and Culinary Traditions of the Romany People",
+        "author": "Carol Wilson",
+        "isbn": "9780781810272",
+        "note": "Hippocrene collection of Romani recipes and food customs from across Europe."
+      }
+    ]
+  },
+  "Sami cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Taste of Sápmi: Sámi Cuisine",
+        "author": "Victoria Harnesk",
+        "note": "Sámi recipes and food traditions, including reindeer and foraged ingredients."
+      }
+    ]
+  },
+  "Corsican cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Corsica: The Recipes",
+        "author": "Nicolas Stromboni",
+        "isbn": "9781925418521",
+        "note": "Traditional Corsican dishes collected by Nicolas Stromboni, published by Smith Street Books."
+      },
+      {
+        "title": "Recipes from Corsica",
+        "author": "Christiane Schapira",
+        "url": "https://prospectbooks.co.uk/products-page/current-titles/recipes-from-corsica",
+        "note": "English translation of a collection of Corsican home recipes, from Prospect Books."
+      }
+    ]
+  },
+  "Calabrian cuisine": {
+    "sites": [
+      {
+        "name": "Cooking with Rosetta",
+        "url": "https://cookingwithrosetta-bureaujules.squarespace.com/blog-1",
+        "type": "blog",
+        "note": "Calabrian-born cooking teacher Rosetta Costantino's blog on Calabrian food."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "My Calabria: Rustic Family Cooking from Italy's Undiscovered South",
+        "author": "Rosetta Costantino",
+        "year": 2010,
+        "isbn": "9780393065169",
+        "url": "https://wwnorton.co.uk/books/9780393065169-my-calabria",
+        "note": "Calabrian family recipes and regional background, published by W. W. Norton."
+      }
+    ]
+  },
+  "Lombard cuisine": {
+    "sites": [
+      {
+        "name": "Great Italian Chefs: Lombardian recipes",
+        "url": "https://greatitalianchefs.com/collections/lombardian-recipes",
+        "type": "site",
+        "note": "Collection of Lombard dishes from Italian chefs on an established recipe site."
+      }
+    ],
+    "cookbooks": []
+  },
+  "Cuisine of Abruzzo": {
+    "sites": [
+      {
+        "name": "Great Italian Chefs: Abruzzese recipes",
+        "url": "https://www.greatitalianchefs.com/collections/abruzzese-recipes",
+        "type": "site",
+        "note": "Collection of dishes from Abruzzo by Italian chefs on an established recipe site."
+      },
+      {
+        "name": "The Pasta Project: Abruzzo",
+        "url": "https://www.the-pasta-project.com/abruzzo/",
+        "type": "blog",
+        "note": "Italy-based pasta blog's section on regional pasta dishes from Abruzzo."
+      }
+    ],
+    "cookbooks": []
+  },
+  "Cornish cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "From Pasties to Pilchards: Recipes and Memories of Cornwall",
+        "author": "Catherine Rothwell",
+        "isbn": "9780752449081",
+        "note": "Traditional Cornish recipes with local food history, published by The History Press."
+      }
+    ]
+  },
+  "Balearic cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Bread and Oil: A Celebration of Majorcan Culture",
+        "author": "Tomás Graves",
+        "isbn": "9781909166165",
+        "url": "https://grubstreet.co.uk/product/bread-oil-a-celebration-of-majorcan-culture/",
+        "note": "Mallorca-born writer's look at Majorcan food culture with traditional recipes, from Grub Street."
+      }
+    ]
+  },
+  "Anglo-Indian cuisine": {
+    "sites": [
+      {
+        "name": "Anglo-Indian Recipes (Bridget White)",
+        "url": "https://anglo-indianrecipes.blogspot.com/2013/05/anglo-indian-recipe-books-bridget-white.html",
+        "type": "blog",
+        "note": "Blog of Bangalore-based Anglo-Indian cookbook author and culinary historian Bridget White."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "Anglo-Indian Cuisine: A Legacy of Flavours from the Past",
+        "author": "Bridget White",
+        "isbn": "9781477251638",
+        "url": "https://bridget-white.com/anglo-indian-cuisine-a-legacy-of-flavours-from-the-past/",
+        "note": "Collection of traditional Anglo-Indian recipes from the community's best-known food writer."
+      },
+      {
+        "title": "Anglo-Indian Delicacies",
+        "author": "Bridget White",
+        "year": 2013,
+        "isbn": "9781482801378",
+        "url": "https://bridget-white.com/anglo-indian-delicacies-bridget-white/",
+        "note": "Vintage and contemporary Anglo-Indian dishes from the colonial era onward."
+      }
+    ]
+  },
+  "Culture of Martinique#Cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Sunshine Kitchen: Delicious Creole Recipes from the Heart of the Caribbean",
+        "author": "Vanessa Bolosier",
+        "isbn": "9781911682318",
+        "url": "https://www.pavilionbooks.com/products/sunshine-kitchen-delicious-creole-recipes-from-the-heart-of-the-caribbean-vanessa-bolosier-9781911682318/",
+        "note": "French Caribbean Creole home cooking by a Guadeloupe-born author, covering dishes shared with Martinique."
+      }
+    ]
+  },
+  "Northern Irish cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Paula McIntyre's Down to Earth Cookbook",
+        "author": "Paula McIntyre",
+        "isbn": "9781780730967",
+        "note": "Recipes built on Northern Irish produce by a Northern Irish chef and broadcaster."
+      }
+    ]
   }
 }

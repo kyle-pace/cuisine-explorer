@@ -110,6 +110,14 @@
    ]
   },
   "Ancient Roman cuisine": {
+   "sites": [
+    {
+     "name": "Pass the Garum",
+     "url": "https://pass-the-garum.blogspot.com/p/about-me.html",
+     "type": "blog",
+     "note": "Blog by an ancient history graduate recreating Roman recipes as closely as possible to the sources; may no longer be updated."
+    }
+   ],
    "cookbooks": [
     {
      "title": "Cooking Apicius: Roman Recipes for Today",
@@ -132,6 +140,78 @@
      "year": 2023,
      "isbn": "9781982186180",
      "note": "Book from the Tasting History YouTube series; spans many eras, with several Roman recipes and their sources."
+    }
+   ]
+  },
+  "Andalusian cuisine": {
+   "cookbooks": [
+    {
+     "title": "Andalusia: Recipes from Seville and Beyond",
+     "author": "José Pizarro",
+     "year": 2019,
+     "note": "Spanish chef's collection of Andalusian dishes, published by Hardie Grant."
+    },
+    {
+     "title": "Andaluz: A Food Journey Through Southern Spain",
+     "author": "Fiona Dunlop",
+     "isbn": "9781623717285",
+     "url": "https://www.simonandschuster.ca/books/Andaluz/Fiona-Dunlop/9781623717285",
+     "note": "Recipes and food culture of Andalusia, published by Interlink."
+    }
+   ]
+  },
+  "Andhra cuisine": {
+   "sites": [
+    {
+     "name": "Mahanandi",
+     "url": "https://nandyala.org/mahanandi/archives/2006/12/12/cooking-at-home-with-pedatha-cookbook-review-interview-and-recipe/",
+     "type": "blog",
+     "note": "Indira's long-running blog of Andhra vegetarian home cooking."
+    },
+    {
+     "name": "Spice Up The Curry (Andhra)",
+     "url": "https://www.spiceupthecurry.com/category/recipes-by-region/andhra-recipe/",
+     "type": "blog",
+     "note": "Andhra section of Kanan Patel's Indian vegetarian recipe blog."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "Five Morsels of Love",
+     "author": "Archana Pidathala",
+     "note": "Telugu family recipes adapted from the author's grandmother's cookbook."
+    },
+    {
+     "title": "Cooking at Home with Pedatha: Vegetarian Recipes from a Traditional Andhra Kitchen",
+     "author": "Jigyasa Giri and Pratibha Jain",
+     "note": "Traditional Andhra vegetarian recipes recorded from an elder home cook."
+    }
+   ]
+  },
+  "Anglo-Indian cuisine": {
+   "sites": [
+    {
+     "name": "Anglo-Indian Recipes (Bridget White)",
+     "url": "https://anglo-indianrecipes.blogspot.com/2013/05/anglo-indian-recipe-books-bridget-white.html",
+     "type": "blog",
+     "note": "Blog of Bangalore-based Anglo-Indian cookbook author and culinary historian Bridget White."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "Anglo-Indian Cuisine: A Legacy of Flavours from the Past",
+     "author": "Bridget White",
+     "isbn": "9781477251638",
+     "url": "https://bridget-white.com/anglo-indian-cuisine-a-legacy-of-flavours-from-the-past/",
+     "note": "Collection of traditional Anglo-Indian recipes from the community's best-known food writer."
+    },
+    {
+     "title": "Anglo-Indian Delicacies",
+     "author": "Bridget White",
+     "year": 2013,
+     "isbn": "9781482801378",
+     "url": "https://bridget-white.com/anglo-indian-delicacies-bridget-white/",
+     "note": "Vintage and contemporary Anglo-Indian dishes from the colonial era onward."
     }
    ]
   },
@@ -188,6 +268,35 @@
      "year": 2016,
      "isbn": "9781250071385",
      "note": "Updated versions of Eastern European Jewish staples from the founders of The Gefilteria."
+    }
+   ]
+  },
+  "Assamese cuisine": {
+   "sites": [
+    {
+     "name": "Aakhol Ghor",
+     "url": "https://aakholghor.blogspot.com/2008",
+     "type": "blog",
+     "note": "Blog dedicated to Assamese home cooking."
+    }
+   ]
+  },
+  "Assyrian cuisine": {
+   "sites": [
+    {
+     "name": "Hilda's Kitchen Blog (Assyrian)",
+     "url": "https://hildaskitchenblog.com/recipe/category/assyrian",
+     "type": "blog",
+     "note": "Assyrian home cook Hilda Sterner's blog, with a dedicated Assyrian recipes category."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "The Oldest Kitchen in the World",
+     "author": "Matay de Mayee",
+     "isbn": "9781962098083",
+     "url": "https://www.simonandschuster.net/books/The-Oldest-Kitchen-in-the-World/Matay-de-Mayee/9781962098083",
+     "note": "Assyrian recipes and food history from Mesopotamia to the diaspora."
     }
    ]
   },
@@ -249,6 +358,16 @@
     }
    ]
   },
+  "Awadhi cuisine": {
+   "sites": [
+    {
+     "name": "Archana's Kitchen (Awadhi)",
+     "url": "https://archanaskitchen.com/tag/lucknow-awadhi-cuisine-recipes",
+     "type": "site",
+     "note": "Lucknow and Awadhi recipes on Archana Doshi's Indian recipe site."
+    }
+   ]
+  },
   "Azerbaijani cuisine": {
    "cookbooks": [
     {
@@ -256,6 +375,46 @@
      "author": "Feride Buyuran",
      "year": 2015,
      "note": "Large collection of Azerbaijani recipes with cultural background."
+    }
+   ]
+  },
+  "Bahraini cuisine": {
+   "sites": [
+    {
+     "name": "The Odehlicious (Khaleeji)",
+     "url": "https://theodehlicious.com/cuisines/khaleeji/",
+     "type": "blog",
+     "note": "Khaleeji section of a Middle Eastern home cooking blog."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "Cardamom and Lime: Recipes from the Arabian Gulf",
+     "author": "Sarah al-Hamad",
+     "isbn": "9781566567251",
+     "url": "https://www.simonandschuster.ca/books/Cardamom-and-Lime/Sarah-al-Hamad/9781566567251",
+     "note": "Home cooking from the Gulf states as a whole, not this country alone."
+    }
+   ]
+  },
+  "Balearic cuisine": {
+   "cookbooks": [
+    {
+     "title": "Bread and Oil: A Celebration of Majorcan Culture",
+     "author": "Tomás Graves",
+     "isbn": "9781909166165",
+     "url": "https://grubstreet.co.uk/product/bread-oil-a-celebration-of-majorcan-culture/",
+     "note": "Mallorca-born writer's look at Majorcan food culture with traditional recipes, from Grub Street."
+    }
+   ]
+  },
+  "Balinese cuisine": {
+   "cookbooks": [
+    {
+     "title": "The Food of Indonesia: Delicious Recipes from Bali, Java and the Spice Islands",
+     "author": "Heinz von Holzen",
+     "isbn": "9780804845137",
+     "note": "Tuttle cookbook by a Bali-based chef, strongest on Balinese dishes."
     }
    ]
   },
@@ -295,6 +454,17 @@
     }
    ]
   },
+  "Bavarian cuisine": {
+   "cookbooks": [
+    {
+     "title": "Biergarten Cookbook: Traditional Bavarian Recipes",
+     "author": "Julia Skowronek",
+     "isbn": "9781465434012",
+     "url": "https://www.dk.com/us/9781465434012-biergarten-cookbook/",
+     "note": "Classic Bavarian beer garden dishes, published by DK."
+    }
+   ]
+  },
   "Beijing cuisine": {
    "cookbooks": [
     {
@@ -324,6 +494,16 @@
      "title": "The Taste of Belgium",
      "author": "Ruth Van Waerebeek",
      "note": "Belgian-born cook's well-known English-language collection of Belgian home recipes."
+    }
+   ]
+  },
+  "Belizean cuisine": {
+   "sites": [
+    {
+     "name": "Taking Belize: Belizean Recipes",
+     "url": "https://takingbelize.blogspot.com/p/belizean-recipes.html",
+     "type": "blog",
+     "note": "Collection of Belizean home recipes on a personal blog."
     }
    ]
   },
@@ -419,6 +599,13 @@
      "author": "Wookwan",
      "year": 2018,
      "note": "English-language temple cookbook by Korean Buddhist nun Wookwan."
+    },
+    {
+     "title": "The Enlightened Kitchen: Fresh Vegetable Dishes from the Temples of Japan",
+     "author": "Mari Fujii",
+     "isbn": "9781568364360",
+     "url": "https://penguinrandomhouse.com/books/563547/the-enlightened-kitchen-by-mari-fujii",
+     "note": "Kodansha book of Japanese Zen temple (shojin ryori) vegetable cooking."
     }
    ]
   },
@@ -430,6 +617,29 @@
      "year": 2025,
      "isbn": "9781964786186",
      "note": "Profile of Buddhist nun and temple cook Jeongkwan Snim, with her vegan temple recipes."
+    },
+    {
+     "title": "The Enlightened Kitchen: Fresh Vegetable Dishes from the Temples of Japan",
+     "author": "Mari Fujii",
+     "isbn": "9781568364360",
+     "url": "https://penguinrandomhouse.com/books/563547/the-enlightened-kitchen-by-mari-fujii",
+     "note": "Kodansha book of Japanese Zen temple (shojin ryori) vegetable cooking."
+    },
+    {
+     "title": "Good Food from a Japanese Temple",
+     "author": "Soei Yoneda",
+     "isbn": "9780870115271",
+     "note": "Shojin ryori temple recipes by Buddhist nun Soei Yoneda."
+    }
+   ]
+  },
+  "Bukharan Jewish cuisine": {
+   "sites": [
+    {
+     "name": "Jewish Food Society: Bukharian and Central Asian Jewish recipes",
+     "url": "https://www.jewishfoodsociety.org/collections/bukharian-central-asian-jewish-recipes",
+     "type": "site",
+     "note": "Nonprofit archive of family recipes, with a Bukharian collection."
     }
    ]
   },
@@ -479,6 +689,43 @@
      "isbn": "9780316465779",
      "url": "https://www.hachette.co.uk/titles/isaac-toups/chasing-the-gator/9780316465779",
      "note": "Cajun cooking from a Louisiana-raised New Orleans chef."
+    }
+   ]
+  },
+  "Calabrian cuisine": {
+   "sites": [
+    {
+     "name": "Cooking with Rosetta",
+     "url": "https://cookingwithrosetta-bureaujules.squarespace.com/blog-1",
+     "type": "blog",
+     "note": "Calabrian-born cooking teacher Rosetta Costantino's blog on Calabrian food."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "My Calabria: Rustic Family Cooking from Italy's Undiscovered South",
+     "author": "Rosetta Costantino",
+     "year": 2010,
+     "isbn": "9780393065169",
+     "url": "https://wwnorton.co.uk/books/9780393065169-my-calabria",
+     "note": "Calabrian family recipes and regional background, published by W. W. Norton."
+    }
+   ]
+  },
+  "California cuisine": {
+   "cookbooks": [
+    {
+     "title": "Chez Panisse Menu Cookbook",
+     "author": "Alice Waters",
+     "year": 1982,
+     "note": "Seasonal menus from the Berkeley restaurant central to California cuisine."
+    },
+    {
+     "title": "Chez Panisse Café Cookbook",
+     "author": "Alice Waters",
+     "year": 1999,
+     "isbn": "9780060175832",
+     "note": "Simpler ingredient-led dishes from the Chez Panisse upstairs café."
     }
    ]
   },
@@ -659,6 +906,17 @@
     }
    ]
   },
+  "Chinese aristocrat cuisine": {
+   "cookbooks": [
+    {
+     "title": "Recipes from the Garden of Contentment",
+     "author": "Yuan Mei, translated by Sean J. S. Chen",
+     "year": 2018,
+     "isbn": "9781614720430",
+     "note": "Annotated translation of an 18th-century Qing gourmet's recipe and dining manual from the scholar-official class."
+    }
+   ]
+  },
   "Chinese cuisine": {
    "sites": [
     {
@@ -707,6 +965,15 @@
     }
    ]
   },
+  "Chinese imperial cuisine": {
+   "cookbooks": [
+    {
+     "title": "Food for the Emperor: Recipes of Imperial China with a Dictionary of Chinese Cuisine",
+     "author": "John D. Keys",
+     "note": "Older English collection of recipes associated with the imperial kitchens, with a glossary of Chinese culinary terms."
+    }
+   ]
+  },
   "Christian dietary laws": {
    "cookbooks": [
     {
@@ -738,6 +1005,32 @@
     }
    ]
   },
+  "Cornish cuisine": {
+   "cookbooks": [
+    {
+     "title": "From Pasties to Pilchards: Recipes and Memories of Cornwall",
+     "author": "Catherine Rothwell",
+     "isbn": "9780752449081",
+     "note": "Traditional Cornish recipes with local food history, published by The History Press."
+    }
+   ]
+  },
+  "Corsican cuisine": {
+   "cookbooks": [
+    {
+     "title": "Corsica: The Recipes",
+     "author": "Nicolas Stromboni",
+     "isbn": "9781925418521",
+     "note": "Traditional Corsican dishes collected by Nicolas Stromboni, published by Smith Street Books."
+    },
+    {
+     "title": "Recipes from Corsica",
+     "author": "Christiane Schapira",
+     "url": "https://prospectbooks.co.uk/products-page/current-titles/recipes-from-corsica",
+     "note": "English translation of a collection of Corsican home recipes, from Prospect Books."
+    }
+   ]
+  },
   "Costa Rican cuisine": {
    "sites": [
     {
@@ -745,6 +1038,25 @@
      "url": "https://puravidamoms.com/costa-rican-cookbook/",
      "type": "site",
      "note": "Costa Rica-focused family site with traditional Costa Rican recipes and its own cookbook."
+    }
+   ]
+  },
+  "Cretan cuisine": {
+   "sites": [
+    {
+     "name": "Explore Crete: Cretan cooking recipes",
+     "url": "https://www.explorecrete.com/cuisine/psilakis-recipes.html",
+     "type": "site",
+     "note": "Traditional Cretan recipes drawn from the work of Cretan food writer Nikos Psilakis."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "Aegean: Recipes from the Mountains to the Sea",
+     "author": "Marianna Leivaditaki",
+     "isbn": "9781623718237",
+     "url": "https://www.simonandschuster.ca/books/Aegean/Marianna-Leivaditaki/9781623718237",
+     "note": "Cretan-born chef's recipes from her island upbringing, published by Interlink."
     }
    ]
   },
@@ -797,6 +1109,22 @@
     }
    ]
   },
+  "Cuisine of Abruzzo": {
+   "sites": [
+    {
+     "name": "Great Italian Chefs: Abruzzese recipes",
+     "url": "https://www.greatitalianchefs.com/collections/abruzzese-recipes",
+     "type": "site",
+     "note": "Collection of dishes from Abruzzo by Italian chefs on an established recipe site."
+    },
+    {
+     "name": "The Pasta Project: Abruzzo",
+     "url": "https://www.the-pasta-project.com/abruzzo/",
+     "type": "blog",
+     "note": "Italy-based pasta blog's section on regional pasta dishes from Abruzzo."
+    }
+   ]
+  },
   "Cuisine of Albania": {
    "sites": [
     {
@@ -814,7 +1142,25 @@
     }
    ]
   },
+  "Cuisine of Chicago": {
+   "cookbooks": [
+    {
+     "title": "Made in Chicago: Stories Behind 30 Great Hometown Bites",
+     "author": "Monica Eng",
+     "isbn": "9780252087059",
+     "note": "Origins and recipes of Chicago foods by a Chicago food journalist, published by the University of Illinois Press."
+    }
+   ]
+  },
   "Cuisine of Hawaii": {
+   "sites": [
+    {
+     "name": "Onolicious Hawaii",
+     "url": "https://onolicioushawaii.com",
+     "type": "blog",
+     "note": "Hawaii-based blog of local-style recipes."
+    }
+   ],
    "cookbooks": [
     {
      "title": "Aloha Kitchen: Recipes from Hawai'i",
@@ -822,6 +1168,88 @@
      "year": 2019,
      "isbn": "9780399581366",
      "note": "Hawaii local food from poke to plate lunch, by a Maui-raised food blogger."
+    }
+   ]
+  },
+  "Cuisine of Liguria": {
+   "sites": [
+    {
+     "name": "A Small Kitchen in Genoa",
+     "url": "https://asmallkitcheningenoa.com/about",
+     "type": "blog",
+     "note": "Genoese cook Enrica Monzani's English-language blog of Ligurian recipes."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "Liguria: The Cookbook",
+     "author": "Laurel Evans",
+     "isbn": "9780847870615",
+     "url": "https://rizzoliusa.com/book/9780847870615",
+     "note": "Recipes from the Italian Riviera by a Liguria-based American writer, published by Rizzoli."
+    }
+   ]
+  },
+  "Cuisine of Luxembourg": {
+   "sites": [
+    {
+     "name": "Anne's Kitchen: classic Luxembourgish dishes",
+     "url": "https://anneskitchen.lu/category/recipes/classic-luxembourgish-dishes/",
+     "type": "blog",
+     "note": "Luxembourg cook and TV host Anne Faber's collection of traditional Luxembourgish recipes."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "Anne's Kitchen: My Luxembourg",
+     "author": "Anne Faber",
+     "url": "https://editions-schortgen.lu/en/book/annes-kitchen-my-luxembourg-anne-faber/",
+     "note": "Luxembourgish home cooking from the Anne's Kitchen author, published by Éditions Schortgen."
+    }
+   ]
+  },
+  "Cuisine of Mexico City": {
+   "cookbooks": [
+    {
+     "title": "CDMX: The Food of Mexico City",
+     "author": "Rosa Cienfuegos",
+     "isbn": "9781922754585",
+     "note": "Mexico City street food and home dishes from a Mexico City-born chef."
+    },
+    {
+     "title": "Made in Mexico: The Cookbook",
+     "author": "Danny Mena",
+     "isbn": "9780847864690",
+     "note": "Classic and contemporary Mexico City recipes from a chef raised in the city."
+    },
+    {
+     "title": "Eat Mexico",
+     "author": "Lesley Téllez",
+     "note": "Mexico City street food and market recipes from a food writer who ran culinary tours there."
+    }
+   ]
+  },
+  "Cuisine of New England": {
+   "sites": [
+    {
+     "name": "Yankee Magazine: Chowder Recipes",
+     "url": "https://newengland.com/food/soups-stews-chowders/favorite-chowder-recipes",
+     "type": "magazine",
+     "note": "Recipes from Yankee, the long-running New England regional magazine."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "The New England Clam Shack Cookbook",
+     "author": "Brooke Dojny",
+     "isbn": "9781580174732",
+     "note": "Recipes from New England clam shacks, lobster pounds, and chowder houses."
+    },
+    {
+     "title": "The New England Cookbook: 350 Recipes from Town and Country, Land and Sea, Hearth and Home",
+     "author": "Brooke Dojny",
+     "isbn": "9781558321397",
+     "note": "Broad collection of New England home cooking."
     }
    ]
   },
@@ -850,6 +1278,40 @@
     }
    ]
   },
+  "Cuisine of New York City": {
+   "cookbooks": [
+    {
+     "title": "Eat NYC: The Iconic Recipes That Feed the City",
+     "author": "Yasmin Newman",
+     "isbn": "9781922754233",
+     "note": "Home versions of well-known New York City dishes from bagels to street food."
+    }
+   ]
+  },
+  "Cuisine of Saint Helena": {
+   "sites": [
+    {
+     "name": "The Saint Cooks",
+     "url": "https://www.saintcooks.com/recipe/",
+     "type": "site",
+     "note": "St Helena island recipes such as plo and fishcakes from Robin and Emma-Jane, who are writing a St Helena cookbook."
+    }
+   ]
+  },
+  "Cuisine of Sardinia": {
+   "cookbooks": [
+    {
+     "title": "The Sardinian Cookbook: The Cooking and Culture of a Mediterranean Island",
+     "author": "Viktorija Todorovska",
+     "note": "Introduction to Sardinian food culture with traditional recipes."
+    },
+    {
+     "title": "A Sardinian Cookbook",
+     "author": "Giovanni Pilu, Roberta Muir",
+     "note": "Sardinian recipes from a Sardinian-born chef working in Sydney."
+    }
+   ]
+  },
   "Cuisine of Sierra Leone": {
    "cookbooks": [
     {
@@ -858,6 +1320,49 @@
      "year": 2023,
      "isbn": "9781787137967",
      "note": "Sierra Leonean recipes from a UK based chef who grew up in Sierra Leone."
+    }
+   ]
+  },
+  "Cuisine of Veracruz": {
+   "cookbooks": [
+    {
+     "title": "Zarela's Veracruz",
+     "author": "Zarela Martínez with Anne Mendelson",
+     "year": 2004,
+     "isbn": "9780618444106",
+     "note": "Veracruz cooking and culture from a Mexican-born New York restaurateur whose mother was from the state."
+    }
+   ]
+  },
+  "Cuisine of the Midwestern United States": {
+   "cookbooks": [
+    {
+     "title": "Midwestern Food: A Chef's Guide to the Surprising History of a Great American Cuisine",
+     "author": "Paul Fehribach",
+     "isbn": "9780226819495",
+     "note": "History and recipes of Midwestern cooking from a Chicago chef, published by the University of Chicago Press."
+    },
+    {
+     "title": "Hot Dish Heaven: Classic Casseroles from Midwest Kitchens",
+     "author": "Ann Burckhardt",
+     "url": "https://shop.mnhs.org/products/hot-dish-heaven/",
+     "note": "Midwestern casseroles and hotdishes, published by the Minnesota Historical Society Press."
+    }
+   ]
+  },
+  "Cuisine of the Pennsylvania Dutch": {
+   "cookbooks": [
+    {
+     "title": "Pennsylvania Dutch Country Cooking",
+     "author": "William Woys Weaver",
+     "isbn": "9781558595682",
+     "note": "Traditional Pennsylvania Dutch recipes from a food historian of the region."
+    },
+    {
+     "title": "As American as Shoofly Pie: The Foodlore and Fakelore of Pennsylvania Dutch Cuisine",
+     "author": "William Woys Weaver",
+     "url": "https://www.degruyterbrill.com/document/doi/10.9783/9780812207712/html",
+     "note": "Food history of Pennsylvania Dutch cooking with recipes, published by the University of Pennsylvania Press."
     }
    ]
   },
@@ -910,6 +1415,31 @@
     }
    ]
   },
+  "Culture of Aruba#Cuisine": {
+   "cookbooks": [
+    {
+     "title": "This Is the Way We Cook! Asina Nos Ta Cushina",
+     "author": "Jewell Fenzi",
+     "note": "Recipes from home cooks of Aruba, Bonaire, and Curaçao."
+    }
+   ]
+  },
+  "Culture of Grenada#Cuisine": {
+   "sites": [
+    {
+     "name": "Caribbean Pot: Grenada",
+     "url": "https://caribbeanpot.com/tag/grenada-cooking/",
+     "type": "site",
+     "note": "Grenadian dishes on Chris De La Rosa's large Caribbean recipe site."
+    },
+    {
+     "name": "Spice Island Cooking",
+     "url": "https://spiceislandcooking.com/?p=618",
+     "type": "blog",
+     "note": "Blog of Grenadian home recipes."
+    }
+   ]
+  },
   "Culture of Guyana#Cuisine": {
    "sites": [
     {
@@ -930,6 +1460,17 @@
      "title": "Tastes Like Home: My Caribbean Cookbook",
      "author": "Cynthia Nelson",
      "note": "Guyanese and Caribbean home cooking by a Guyanese food writer, published by Ian Randle Publishers."
+    }
+   ]
+  },
+  "Culture of Martinique#Cuisine": {
+   "cookbooks": [
+    {
+     "title": "Sunshine Kitchen: Delicious Creole Recipes from the Heart of the Caribbean",
+     "author": "Vanessa Bolosier",
+     "isbn": "9781911682318",
+     "url": "https://www.pavilionbooks.com/products/sunshine-kitchen-delicious-creole-recipes-from-the-heart-of-the-caribbean-vanessa-bolosier-9781911682318/",
+     "note": "French Caribbean Creole home cooking by a Guadeloupe-born author, covering dishes shared with Martinique."
     }
    ]
   },
@@ -978,6 +1519,15 @@
      "isbn": "9781991016805",
      "url": "https://masseypress.ac.nz/books/eat-pacific",
      "note": "Pacific Island Food Revolution cookbook with a Cook Islands section."
+    }
+   ]
+  },
+  "Curaçao#Cuisine": {
+   "cookbooks": [
+    {
+     "title": "This Is the Way We Cook! Asina Nos Ta Cushina",
+     "author": "Jewell Fenzi",
+     "note": "Recipes from home cooks of Aruba, Bonaire, and Curaçao."
     }
    ]
   },
@@ -1038,6 +1588,15 @@
     }
    ]
   },
+  "Diet in Sikhism": {
+   "cookbooks": [
+    {
+     "title": "Menus and Memories from Punjab: Meals to Nourish Body and Soul",
+     "author": "Veronica Sidhu",
+     "note": "Punjabi family cookbook and memoir from a New Jersey Sikh household, with a glossary of food and religious terms."
+    }
+   ]
+  },
   "Dutch cuisine": {
    "sites": [
     {
@@ -1070,6 +1629,34 @@
      "url": "https://www.folger.edu/blogs/shakespeare-and-beyond/series/recipes",
      "type": "site",
      "note": "Folger blog series where staff and researchers cook and adapt recipes from 16th and 17th century manuscript cookbooks."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "Shakespeare's Kitchen: Renaissance Recipes for the Contemporary Cook",
+     "author": "Francine Segan",
+     "year": 2003,
+     "isbn": "9780375509179",
+     "note": "Food historian Francine Segan's adaptations of Elizabethan and Jacobean English recipes for modern kitchens."
+    }
+   ]
+  },
+  "Eastern Arabian cuisine": {
+   "sites": [
+    {
+     "name": "The Odehlicious (Khaleeji)",
+     "url": "https://theodehlicious.com/cuisines/khaleeji/",
+     "type": "blog",
+     "note": "Khaleeji section of a Middle Eastern home cooking blog."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "Cardamom and Lime: Recipes from the Arabian Gulf",
+     "author": "Sarah al-Hamad",
+     "isbn": "9781566567251",
+     "url": "https://www.simonandschuster.ca/books/Cardamom-and-Lime/Sarah-al-Hamad/9781566567251",
+     "note": "Recipes from across the Arabian Gulf states."
     }
    ]
   },
@@ -1212,6 +1799,16 @@
     }
    ]
   },
+  "Fasting and abstinence of the Coptic Orthodox Church": {
+   "sites": [
+    {
+     "name": "Vegetarian Resource Group: Vegan Recipes from Egypt",
+     "url": "https://www.vrg.org/blog/2011/02/02/vegan-recipes-from-egypt/",
+     "type": "site",
+     "note": "Coptic Orthodox writer Marie Henein's fasting-day dishes such as koshari and ful medames, with notes on the Coptic fasts."
+    }
+   ]
+  },
   "Fijian cuisine": {
    "cookbooks": [
     {
@@ -1263,6 +1860,16 @@
      "isbn": "9781419750380",
      "url": "https://www.abramsbooks.com/product/filipinx_9781419750380/",
      "note": "Filipino-American chef's take on heritage dishes."
+    }
+   ]
+  },
+  "Filipino cuisine#Visayas": {
+   "sites": [
+    {
+     "name": "Flavours of Iloilo",
+     "url": "https://flavoursofiloilo.blogspot.com/2013/05/how-about-some-chicken-binakol.html",
+     "type": "blog",
+     "note": "Blog of Ilonggo home dishes from Iloilo in the Western Visayas."
     }
    ]
   },
@@ -1486,6 +2093,16 @@
     }
    ]
   },
+  "Greenlandic cuisine": {
+   "cookbooks": [
+    {
+     "title": "Takanna: Delicious Food from Greenland",
+     "author": "Tupaarnaq Rosing Olsen",
+     "url": "https://milik.gl/en/book/takanna-delicious-food-from-greenland",
+     "note": "Greenlandic recipes from a Greenlandic author, illustrated by Nina Spore Kreutzmann and published by Milik in Greenland."
+    }
+   ]
+  },
   "Guatemalan cuisine": {
    "sites": [
     {
@@ -1509,6 +2126,26 @@
     }
    ]
   },
+  "Guizhou cuisine": {
+   "sites": [
+    {
+     "name": "Carolyn Phillips' blog: Guizhou cuisine",
+     "url": "https://carolynjphillips.blogspot.com/search/label/Guizhou%20cuisine",
+     "type": "blog",
+     "note": "Recipe posts on Guizhou dishes from the blog that appears to belong to the author of All Under Heaven."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "All Under Heaven: Recipes from the 35 Cuisines of China",
+     "author": "Carolyn Phillips",
+     "year": 2016,
+     "isbn": "9781607749820",
+     "url": "https://www.penguinrandomhouse.com/books/534780/all-under-heaven-by-carolyn-phillips/9781607749820/",
+     "note": "Regional survey of Chinese cooking that includes a section on Guizhou dishes."
+    }
+   ]
+  },
   "Gujarati cuisine": {
    "sites": [
     {
@@ -1525,6 +2162,26 @@
      "isbn": "9781911663867",
      "url": "https://www.pavilionbooks.com/products/from-gujarat-with-love-vina-patel-9781911663867/",
      "note": "Vegetarian Gujarati home cooking, published by Pavilion."
+    }
+   ]
+  },
+  "Hainan cuisine": {
+   "sites": [
+    {
+     "name": "Carolyn Phillips' blog: Hainan cuisine",
+     "url": "https://carolynjphillips.blogspot.com/search/label/Hainan%20cuisine",
+     "type": "blog",
+     "note": "Recipe posts on Hainan dishes from the blog that appears to belong to the author of All Under Heaven."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "All Under Heaven: Recipes from the 35 Cuisines of China",
+     "author": "Carolyn Phillips",
+     "year": 2016,
+     "isbn": "9781607749820",
+     "url": "https://www.penguinrandomhouse.com/books/534780/all-under-heaven-by-carolyn-phillips/9781607749820/",
+     "note": "Regional survey of Chinese cooking that includes a section on Hainan dishes."
     }
    ]
   },
@@ -1566,6 +2223,26 @@
      "year": 2016,
      "url": "https://wwnorton.com/books/Land-of-Fish-and-Rice/",
      "note": "Jiangnan cookbook that includes classic Hangzhou dishes."
+    }
+   ]
+  },
+  "Henan cuisine": {
+   "sites": [
+    {
+     "name": "Carolyn Phillips' blog: Henan cuisine",
+     "url": "https://carolynjphillips.blogspot.com/search/label/Henan%20cuisine",
+     "type": "blog",
+     "note": "Recipe posts on Henan dishes from the blog that appears to belong to the author of All Under Heaven."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "All Under Heaven: Recipes from the 35 Cuisines of China",
+     "author": "Carolyn Phillips",
+     "year": 2016,
+     "isbn": "9781607749820",
+     "url": "https://www.penguinrandomhouse.com/books/534780/all-under-heaven-by-carolyn-phillips/9781607749820/",
+     "note": "Regional survey of Chinese cooking that includes a section on Henan dishes."
     }
    ]
   },
@@ -1641,6 +2318,26 @@
     }
    ]
   },
+  "Hubei cuisine": {
+   "sites": [
+    {
+     "name": "Carolyn Phillips' blog: Hubei cuisine",
+     "url": "https://carolynjphillips.blogspot.com/search/label/Hubei%20cuisine",
+     "type": "blog",
+     "note": "Recipe posts on Hubei dishes from the blog that appears to belong to the author of All Under Heaven."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "All Under Heaven: Recipes from the 35 Cuisines of China",
+     "author": "Carolyn Phillips",
+     "year": 2016,
+     "isbn": "9781607749820",
+     "url": "https://www.penguinrandomhouse.com/books/534780/all-under-heaven-by-carolyn-phillips/9781607749820/",
+     "note": "Regional survey of Chinese cooking that includes a section on Hubei dishes."
+    }
+   ]
+  },
   "Hunan cuisine": {
    "cookbooks": [
     {
@@ -1701,6 +2398,16 @@
     }
    ]
   },
+  "Ilocano cuisine": {
+   "sites": [
+    {
+     "name": "The Quirino Kitchen (Ilocano)",
+     "url": "https://thequirinokitchen.com/tag/ilocano-recipes",
+     "type": "blog",
+     "note": "Filipino home cooking blog with an Ilocano recipes tag."
+    }
+   ]
+  },
   "Indian cuisine": {
    "sites": [
     {
@@ -1735,6 +2442,22 @@
     }
    ]
   },
+  "Indo Caribbean food": {
+   "sites": [
+    {
+     "name": "Cooking with Ria",
+     "url": "https://cookingwithria.com/category/indian-recipes/",
+     "type": "blog",
+     "note": "Trinidadian home cook's blog, with Indo-Trinidadian curries, roti and snacks."
+    },
+    {
+     "name": "Alica's Pepperpot",
+     "url": "https://www.alicaspepperpot.com/about/",
+     "type": "blog",
+     "note": "Guyanese-born Alica's blog of Guyanese recipes, including Indo-Guyanese dishes."
+    }
+   ]
+  },
   "Indonesian cuisine": {
    "sites": [
     {
@@ -1757,6 +2480,18 @@
      "author": "Sri Owen",
      "isbn": "9781623717186",
      "note": "Broad survey of Indonesian regional cooking by a longtime authority on the cuisine."
+    }
+   ]
+  },
+  "Inuit diet": {
+   "cookbooks": [
+    {
+     "title": "Niqiliurniq",
+     "author": "Micah Arreak, Annie Désilets, Lucy Kappianaq, Glenda Kripanik and Kanadaise Uyarasuk",
+     "year": 2019,
+     "isbn": "9781772272673",
+     "url": "https://49thshelf.com/Books/N/Niqiliurniq",
+     "note": "Inuktitut and English cookbook of Inuit cooking from Nunavut, published by Inhabit Media."
     }
    ]
   },
@@ -1929,6 +2664,22 @@
     }
    ]
   },
+  "Itameshi": {
+   "sites": [
+    {
+     "name": "Just One Cookbook: Wafu Pasta",
+     "url": "https://www.justonecookbook.com/popular-japanese-wafu-pasta-recipes",
+     "type": "blog",
+     "note": "Just One Cookbook's roundup of Japanese-style pasta recipes."
+    },
+    {
+     "name": "Sudachi Recipes: Wafu Pasta",
+     "url": "https://sudachirecipes.com/wafu-pasta-recipes/",
+     "type": "blog",
+     "note": "Japanese-style pasta recipes from Japanese cook Yuto Omura."
+    }
+   ]
+  },
   "Jamaican cuisine": {
    "sites": [
     {
@@ -1956,6 +2707,28 @@
      "author": "Craig McAnuff and Shaun McAnuff",
      "year": 2019,
      "note": "Jamaican-heritage brothers from London on Caribbean home cooking."
+    }
+   ]
+  },
+  "Japanese Chinese cuisine": {
+   "sites": [
+    {
+     "name": "Sudachi Recipes: Chuka Ryori",
+     "url": "https://sudachirecipes.com/chuka-ryori-recipes/",
+     "type": "blog",
+     "note": "Chuka recipes such as gyoza, ebi mayo and tantanmen from Japanese cook Yuto Omura."
+    },
+    {
+     "name": "Just One Cookbook: Japanese Chinese Recipes",
+     "url": "https://www.justonecookbook.com/japanese-chinese-food-recipes/",
+     "type": "blog",
+     "note": "Namiko Chen's collection of chuka dishes as cooked in Japanese homes."
+    },
+    {
+     "name": "No Recipes: Japanese Chinese",
+     "url": "https://norecipes.com/recipe/cuisine/japanese-chinese/",
+     "type": "blog",
+     "note": "Japanese Chinese recipe category on Marc Matsumoto's food site."
     }
    ]
   },
@@ -1997,6 +2770,26 @@
      "year": 2018,
      "url": "https://www.phaidon.com/en-us/products/japan-the-cookbook",
      "note": "Large Phaidon compendium of Japanese home recipes by a writer who has lived on a farm in Japan for decades."
+    }
+   ]
+  },
+  "Japanese regional cuisine": {
+   "sites": [
+    {
+     "name": "Kyodo Ryori: Japanese Regional Cuisine",
+     "url": "https://www.ny.us.emb-japan.go.jp/Foods/kyodoryori/index.html",
+     "type": "site",
+     "note": "Embassy of Japan in New York pages on local dishes by prefecture, with videos and PDF recipes."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "Hokkaido: Recipes from the Seas, Fields and Farmlands of Northern Japan",
+     "author": "Tim Anderson",
+     "year": 2024,
+     "isbn": "9781784885984",
+     "url": "https://www.penguin.co.uk/books/466881/hokkaido-by-tim-anderson/9781784885984",
+     "note": "Hardie Grant book on the regional cooking of Japan's northern island by a US-born chef in London."
     }
    ]
   },
@@ -2044,6 +2837,26 @@
     }
    ]
   },
+  "Jiangxi cuisine": {
+   "sites": [
+    {
+     "name": "Carolyn Phillips' blog: Jiangxi cuisine",
+     "url": "https://carolynjphillips.blogspot.com/search/label/Jiangxi%20cuisine",
+     "type": "blog",
+     "note": "Recipe posts on Jiangxi dishes from the blog that appears to belong to the author of All Under Heaven."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "All Under Heaven: Recipes from the 35 Cuisines of China",
+     "author": "Carolyn Phillips",
+     "year": 2016,
+     "isbn": "9781607749820",
+     "url": "https://www.penguinrandomhouse.com/books/534780/all-under-heaven-by-carolyn-phillips/9781607749820/",
+     "note": "Regional survey of Chinese cooking that includes a section on Jiangxi dishes."
+    }
+   ]
+  },
   "Kaiseki": {
    "cookbooks": [
     {
@@ -2053,6 +2866,43 @@
      "isbn": "9781568364421",
      "url": "https://penguinrandomhouse.com/books/563552/kaiseki-by-yoshihiro-murata-foreword-by-ferran-adria-foreword-by-nobu-matsuhisa-photographs-by-masashi-kuma",
      "note": "Seasonal kaiseki menus from the chef of Kyoto's Kikunoi, published by Kodansha."
+    }
+   ]
+  },
+  "Kapampangan cuisine": {
+   "sites": [
+    {
+     "name": "Kapampangan Kitchen",
+     "url": "https://kapampangankitchen.blogspot.com",
+     "type": "blog",
+     "note": "Blog dedicated to Kapampangan home recipes from Pampanga."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "Atching Lillian's Heirloom Recipes",
+     "author": "Lillian Mercado Lising Borromeo",
+     "note": "Heirloom recipes from a noted Pampanga culinary historian and cook."
+    }
+   ]
+  },
+  "Kashmiri cuisine": {
+   "sites": [
+    {
+     "name": "iKashmir Cookbook",
+     "url": "https://ikashmir.net/cookbook/recipes/index.html",
+     "type": "site",
+     "note": "Kashmiri Pandit community site with a collection of traditional recipes."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "On the Himalayan Trail: Recipes and Stories from Kashmir to Ladakh",
+     "author": "Romy Gill",
+     "year": 2022,
+     "isbn": "9781784884406",
+     "url": "https://www.penguin.co.uk/books/466438/on-the-himalayan-trail-by-romy-gill/9781784885083",
+     "note": "Kashmiri and Ladakhi recipes gathered by a British Indian chef."
     }
    ]
   },
@@ -2108,6 +2958,26 @@
      "title": "Coconut Lagoon: Recipes from a South Indian Kitchen",
      "author": "Joe Thottungal",
      "note": "Kerala dishes from the Ottawa restaurant Coconut Lagoon, published by Figure 1."
+    }
+   ]
+  },
+  "Kiribati#Cuisine": {
+   "sites": [
+    {
+     "name": "Boki ni Kuuka: Recipes from Kiribati (Live & Learn)",
+     "url": "https://livelearn.org/resources/boki-ni-kuuka-recipes-from-kiribati/",
+     "type": "site",
+     "note": "Free PDF cookbook of community recipes from Tarawa, Abaiang and Kiritimati, produced by the NGO Live & Learn."
+    }
+   ]
+  },
+  "Kodava people": {
+   "sites": [
+    {
+     "name": "Sailu's Kitchen (Kodava cuisine)",
+     "url": "https://www.sailusfood.com/indian-food-kodava-cuisine-coorgi-recipes",
+     "type": "blog",
+     "note": "Overview of Kodava (Coorgi) cooking with recipes on Sailaja's Indian food blog."
     }
    ]
   },
@@ -2185,6 +3055,16 @@
     }
    ]
   },
+  "Kosovan cuisine": {
+   "sites": [
+    {
+     "name": "Balkan Lunchbox: Kosovo recipes",
+     "url": "https://balkanlunchbox.com/category/country/kosovo-recipes",
+     "type": "blog",
+     "note": "Balkan home cooking blog with a section of Kosovar dishes."
+    }
+   ]
+  },
   "Kurdish cuisine": {
    "cookbooks": [
     {
@@ -2201,6 +3081,25 @@
     }
    ]
   },
+  "Kuwaiti cuisine": {
+   "sites": [
+    {
+     "name": "The Odehlicious (Khaleeji)",
+     "url": "https://theodehlicious.com/cuisines/khaleeji/",
+     "type": "blog",
+     "note": "Khaleeji section of a Middle Eastern home cooking blog."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "Cardamom and Lime: Recipes from the Arabian Gulf",
+     "author": "Sarah al-Hamad",
+     "isbn": "9781566567251",
+     "url": "https://www.simonandschuster.ca/books/Cardamom-and-Lime/Sarah-al-Hamad/9781566567251",
+     "note": "Home cooking from the Gulf states as a whole, not this country alone."
+    }
+   ]
+  },
   "Kyrgyz cuisine": {
    "cookbooks": [
     {
@@ -2208,6 +3107,16 @@
      "author": "Caroline Eden",
      "year": 2020,
      "note": "Travel writing and recipes across the five Central Asian republics, not this cuisine alone."
+    }
+   ]
+  },
+  "Lanna cuisine": {
+   "cookbooks": [
+    {
+     "title": "Lanna: Recipes from Northern Thailand & Beyond",
+     "author": "Chariya Khattiyot",
+     "isbn": "9781788797146",
+     "note": "Northern Thai dishes by a chef from the Lanna region."
     }
    ]
   },
@@ -2321,6 +3230,16 @@
     }
    ]
   },
+  "Lombard cuisine": {
+   "sites": [
+    {
+     "name": "Great Italian Chefs: Lombardian recipes",
+     "url": "https://greatitalianchefs.com/collections/lombardian-recipes",
+     "type": "site",
+     "note": "Collection of Lombard dishes from Italian chefs on an established recipe site."
+    }
+   ]
+  },
   "Louisiana Creole cuisine": {
    "sites": [
     {
@@ -2393,6 +3312,29 @@
     }
    ]
   },
+  "Maharashtrian cuisine": {
+   "sites": [
+    {
+     "name": "Shweta in the Kitchen (Maharashtrian)",
+     "url": "https://shwetainthekitchen.com/category/maharashtrian/",
+     "type": "blog",
+     "note": "Maharashtrian section of an Indian home cooking blog."
+    },
+    {
+     "name": "Tarla Dalal (Maharashtrian)",
+     "url": "https://www.tarladalal.com/recipes/category/Maharashtrian/?page=3",
+     "type": "site",
+     "note": "Maharashtrian category on Tarla Dalal's long-running recipe site."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "Ruchira: Selected Maharashtrian Vegetarian Recipes",
+     "author": "Kamalabai Ogale",
+     "note": "English edition of the best-known Marathi household cookbook."
+    }
+   ]
+  },
   "Malagasy cuisine": {
    "cookbooks": [
     {
@@ -2434,6 +3376,23 @@
     }
    ]
   },
+  "Maldivian cuisine": {
+   "sites": [
+    {
+     "name": "Lonumedhu",
+     "url": "https://lonumedhu.com/node/346",
+     "type": "site",
+     "note": "Maldivian recipe and food culture site, including reviews of Maldivian cookbooks."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "Dhivehi Kaanaa",
+     "author": "Zareena Ibrahim Didi",
+     "note": "Collection of traditional Maldivian home recipes."
+    }
+   ]
+  },
   "Maltese cuisine": {
    "cookbooks": [
     {
@@ -2447,6 +3406,22 @@
      "title": "Taste of Malta",
      "author": "Claudia M. Caruana",
      "note": "Hippocrene collection of traditional Maltese recipes."
+    }
+   ]
+  },
+  "Mangalorean Catholic Cuisine": {
+   "sites": [
+    {
+     "name": "Ruchik Randhap",
+     "url": "https://www.ruchikrandhap.com/recipes",
+     "type": "blog",
+     "note": "Mangalorean Catholic home cook's blog of Mangalorean and Konkani recipes."
+    },
+    {
+     "name": "Cook Like Cecilia",
+     "url": "https://cooklikececilia.com/category/mangalorean-recipes/page/3/",
+     "type": "blog",
+     "note": "Blog with a dedicated Mangalorean recipes category."
     }
    ]
   },
@@ -2465,6 +3440,16 @@
      "author": "Jane D'Souza",
      "year": 2004,
      "note": "Collection of 480 recipes, 109 of them Mangalorean Catholic; publisher not confirmed."
+    }
+   ]
+  },
+  "Marshallese cuisine": {
+   "sites": [
+    {
+     "name": "School and Community Garden Cookbook (TerraCircle)",
+     "url": "https://terracircle.org.au/?p=4913",
+     "type": "site",
+     "note": "2025 Marshall Islands recipe book from the Canvasback Wellness Centre in Majuro, with a downloadable PDF."
     }
    ]
   },
@@ -2566,6 +3551,62 @@
     }
    ]
   },
+  "Mexican-American cuisine": {
+   "sites": [
+    {
+     "name": "Muy Bueno",
+     "url": "https://muybuenoblog.com/?p=24",
+     "type": "blog",
+     "note": "Blog of Mexican-American family recipes."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "Chicano Eats: Recipes from My Mexican-American Kitchen",
+     "author": "Esteban Castillo",
+     "year": 2020,
+     "isbn": "9780062917379",
+     "note": "Mexican-American home cooking from the creator of the Chicano Eats blog."
+    }
+   ]
+  },
+  "Minnesotan cuisine": {
+   "cookbooks": [
+    {
+     "title": "A Cook's Tour of Minnesota",
+     "author": "Ann L. Burckhardt",
+     "isbn": "9780873514682",
+     "note": "Minnesota recipes and food history from a longtime Minneapolis food writer."
+    },
+    {
+     "title": "Hot Dish Heaven: Classic Casseroles from Midwest Kitchens",
+     "author": "Ann Burckhardt",
+     "url": "https://shop.mnhs.org/products/hot-dish-heaven/",
+     "note": "Hotdish and casserole recipes, published by the Minnesota Historical Society Press."
+    }
+   ]
+  },
+  "Mizrahi Jewish cuisine": {
+   "cookbooks": [
+    {
+     "title": "The New Mediterranean Jewish Table: Old World Recipes for the Modern Home",
+     "author": "Joyce Goldstein",
+     "year": 2016,
+     "isbn": "9780520284999",
+     "note": "Covers Mizrahi alongside Sephardic and Italian Jewish cooking; published by University of California Press."
+    }
+   ]
+  },
+  "Montenegrin cuisine": {
+   "sites": [
+    {
+     "name": "Balkan Lunchbox: Montenegro recipes",
+     "url": "https://balkanlunchbox.com/category/country/montenegro-recipes",
+     "type": "blog",
+     "note": "Balkan home cooking blog with a section of Montenegrin dishes."
+    }
+   ]
+  },
   "Moroccan cuisine": {
    "sites": [
     {
@@ -2610,6 +3651,16 @@
      "year": 2018,
      "isbn": "9781784723934",
      "note": "Traditional and modern Moroccan home recipes from the creator of My Moroccan Food."
+    }
+   ]
+  },
+  "Nagoya cuisine": {
+   "sites": [
+    {
+     "name": "Just One Cookbook: Nagoya Food",
+     "url": "https://www.justonecookbook.com/nagoya-food",
+     "type": "blog",
+     "note": "Just One Cookbook's guide to Nagoya specialties such as miso katsu and tebasaki."
     }
    ]
   },
@@ -2795,6 +3846,23 @@
     }
    ]
   },
+  "North East Indian cuisine": {
+   "sites": [
+    {
+     "name": "Brahmos Foodie",
+     "url": "https://brahmosfoodie.blogspot.com",
+     "type": "blog",
+     "note": "Blog of recipes from and inspired by North-East India."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "The Essential North-East Cookbook",
+     "author": "Hoihnu Hauzel",
+     "note": "Recipes from the seven northeastern states, published by Penguin India."
+    }
+   ]
+  },
   "Northeastern Chinese cuisine": {
    "sites": [
     {
@@ -2802,6 +3870,16 @@
      "url": "https://blog.themalamarket.com/category/regional-chinese-cuisines/northeast/",
      "type": "blog",
      "note": "Dongbei recipes and articles on a regional Chinese cooking blog from a US ingredient importer."
+    }
+   ]
+  },
+  "Northern Irish cuisine": {
+   "cookbooks": [
+    {
+     "title": "Paula McIntyre's Down to Earth Cookbook",
+     "author": "Paula McIntyre",
+     "isbn": "9781780730967",
+     "note": "Recipes built on Northern Irish produce by a Northern Irish chef and broadcaster."
     }
    ]
   },
@@ -2814,6 +3892,100 @@
      "isbn": "9783791384139",
      "url": "https://www.penguinrandomhouse.com/books/586680/north-wild-kitchen-by-nevada-berg/9783791384139/",
      "note": "Traditional Norwegian home cooking from the author of the North Wild Kitchen blog, published by Prestel."
+    }
+   ]
+  },
+  "Oaxacan cuisine": {
+   "cookbooks": [
+    {
+     "title": "Oaxaca: Home Cooking from the Heart of Mexico",
+     "author": "Bricia Lopez with Javier Cabral",
+     "year": 2019,
+     "note": "Oaxacan family recipes from the family behind Los Angeles restaurant Guelaguetza."
+    },
+    {
+     "title": "The Food of Oaxaca: Recipes and Stories from Mexico's Culinary Capital",
+     "author": "Alejandro Ruiz",
+     "isbn": "9780525657309",
+     "note": "Oaxacan cooking from the chef of Casa Oaxaca."
+    },
+    {
+     "title": "Oaxaca al gusto: An Infinite Gastronomy",
+     "author": "Diana Kennedy",
+     "url": "https://openlibrary.org/books/OL24437897M/Oaxaca_al_gusto_an_infinite_gastronomy",
+     "note": "Kennedy's in-depth survey of the food of Oaxaca's regions."
+    }
+   ]
+  },
+  "Odia cuisine": {
+   "sites": [
+    {
+     "name": "Away in the Kitchen (Odia home cooking)",
+     "url": "https://www.awayinthekitchen.com/odia-home-cooking",
+     "type": "blog",
+     "note": "Blog section devoted to Odia home recipes."
+    },
+    {
+     "name": "Archana's Kitchen (Oriya)",
+     "url": "https://archanaskitchen.com/cuisine/oriya",
+     "type": "site",
+     "note": "Odia cuisine section of Archana Doshi's large Indian recipe site."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "Odia Byanjana",
+     "author": "Debasish Patanaik",
+     "url": "https://www.alephbookcompany.com/book/odia-byanjana/",
+     "note": "Survey of Odisha's cooking traditions with recipes, published by Aleph."
+    }
+   ]
+  },
+  "Omani cuisine": {
+   "cookbooks": [
+    {
+     "title": "Bahari: Recipes From an Omani Kitchen and Beyond",
+     "author": "Dina Macki",
+     "year": 2024,
+     "isbn": "9780241632512",
+     "url": "https://www.penguin.com.au/books/bahari-9780241632512",
+     "note": "Omani family recipes by a London-based Omani-Zanzibari cook."
+    },
+    {
+     "title": "The Food of Oman: Recipes and Stories from the Gateway to Arabia",
+     "author": "Felicia Campbell",
+     "note": "Survey of Omani cooking and food culture with recipes."
+    },
+    {
+     "title": "Cardamom and Lime: Recipes from the Arabian Gulf",
+     "author": "Sarah al-Hamad",
+     "isbn": "9781566567251",
+     "url": "https://www.simonandschuster.ca/books/Cardamom-and-Lime/Sarah-al-Hamad/9781566567251",
+     "note": "Home cooking from the Gulf states as a whole, not this country alone."
+    }
+   ]
+  },
+  "Oriya cuisine": {
+   "sites": [
+    {
+     "name": "Away in the Kitchen (Odia home cooking)",
+     "url": "https://www.awayinthekitchen.com/odia-home-cooking",
+     "type": "blog",
+     "note": "Blog section devoted to Odia home recipes."
+    },
+    {
+     "name": "Archana's Kitchen (Oriya)",
+     "url": "https://archanaskitchen.com/cuisine/oriya",
+     "type": "site",
+     "note": "Odia cuisine section of Archana Doshi's large Indian recipe site."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "Odia Byanjana",
+     "author": "Debasish Patanaik",
+     "url": "https://www.alephbookcompany.com/book/odia-byanjana/",
+     "note": "Survey of Odisha's cooking traditions with recipes, published by Aleph."
     }
    ]
   },
@@ -2847,6 +4019,15 @@
      "isbn": "9781632170538",
      "url": "https://penguinrandomhouse.com/books/isbn/9781632170538",
      "note": "Seasonal vegetarian recipes built on Pacific Northwest produce."
+    }
+   ]
+  },
+  "Padang food": {
+   "cookbooks": [
+    {
+     "title": "Mini Spicy Padang Cooking",
+     "author": "William W. Wongso",
+     "note": "Short guide to Minang dishes by a noted Indonesian chef."
     }
    ]
   },
@@ -2891,6 +4072,16 @@
     }
    ]
   },
+  "Paraguayan cuisine": {
+   "sites": [
+    {
+     "name": "Camila Made: Top 15 Paraguayan Recipes",
+     "url": "https://camilamade.com/top-15-paraguayan-recipes/",
+     "type": "blog",
+     "note": "Paraguayan recipe roundup on a Latin American home cooking blog."
+    }
+   ]
+  },
   "Parsi cuisine": {
    "sites": [
     {
@@ -2906,6 +4097,31 @@
      "author": "Farokh Talati",
      "isbn": "9781472988690",
      "note": "Parsi home recipes and history by a London-based chef, published by Bloomsbury."
+    }
+   ]
+  },
+  "Peasant foods": {
+   "sites": [
+    {
+     "name": "Juls' Kitchen: Cucina povera",
+     "url": "https://julskitchen.substack.com/p/cucina-povera-cookbook",
+     "type": "blog",
+     "note": "Tuscan cook Giulia Scarpaleggia's newsletter post on the frugal Italian peasant cooking her cookbook covers."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "Cucina Povera: The Italian Way of Transforming Humble Ingredients into Unforgettable Meals",
+     "author": "Giulia Scarpaleggia",
+     "isbn": "9781648290565",
+     "url": "https://www.hachettebookgroup.com/titles/giulia-scarpaleggia/cucina-povera/9781648290565/",
+     "note": "Recipes from Italy's peasant tradition of cooking with bread, beans, greens and scraps."
+    },
+    {
+     "title": "Cucina Povera: Tuscan Peasant Cooking",
+     "author": "Pamela Sheldon Johns",
+     "isbn": "9781449402389",
+     "note": "Tuscan farmhouse recipes and stories gathered from rural cooks."
     }
    ]
   },
@@ -3051,6 +4267,41 @@
     }
    ]
   },
+  "Qatari cuisine": {
+   "sites": [
+    {
+     "name": "The Odehlicious (Khaleeji)",
+     "url": "https://theodehlicious.com/cuisines/khaleeji/",
+     "type": "blog",
+     "note": "Khaleeji section of a Middle Eastern home cooking blog."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "Cardamom and Lime: Recipes from the Arabian Gulf",
+     "author": "Sarah al-Hamad",
+     "isbn": "9781566567251",
+     "url": "https://www.simonandschuster.ca/books/Cardamom-and-Lime/Sarah-al-Hamad/9781566567251",
+     "note": "Home cooking from the Gulf states as a whole, not this country alone."
+    }
+   ]
+  },
+  "Rajasthani cuisine": {
+   "sites": [
+    {
+     "name": "My Ginger Garlic Kitchen (Rajasthani)",
+     "url": "https://www.mygingergarlickitchen.com/categories/rajasthani-recipes",
+     "type": "blog",
+     "note": "Rajasthani section of Anupama Paliwal's Indian home cooking blog."
+    },
+    {
+     "name": "Tarla Dalal (Rajasthani)",
+     "url": "https://cdn.tarladalal.com/recipes/category/Rajasthani-Food",
+     "type": "site",
+     "note": "Rajasthani category on the recipe site of the late Indian cookbook author Tarla Dalal."
+    }
+   ]
+  },
   "Roman cuisine": {
    "cookbooks": [
     {
@@ -3064,6 +4315,16 @@
      "author": "David Downie",
      "isbn": "9780062031099",
      "note": "Recipes from Roman home cooks and trattorias, with background on the city's food."
+    }
+   ]
+  },
+  "Romani cuisine": {
+   "cookbooks": [
+    {
+     "title": "Gypsy Feast: Recipes and Culinary Traditions of the Romany People",
+     "author": "Carol Wilson",
+     "isbn": "9780781810272",
+     "note": "Hippocrene collection of Romani recipes and food customs from across Europe."
     }
    ]
   },
@@ -3095,6 +4356,16 @@
     }
    ]
   },
+  "Saint Lucian cuisine": {
+   "cookbooks": [
+    {
+     "title": "Kwéyòl / Creole: Recipes, Stories, and Tings from a St. Lucian Chef's Journey",
+     "author": "Nina Compton",
+     "isbn": "9780593578971",
+     "note": "Saint Lucian and Creole cooking from a Saint Lucia-born New Orleans chef."
+    }
+   ]
+  },
   "Salvadoran cuisine": {
    "cookbooks": [
     {
@@ -3104,6 +4375,15 @@
      "isbn": "9781984861429",
      "url": "https://www.penguinrandomhouse.com/books/709592/the-salvisoul-cookbook-by-karla-t-vasquez/",
      "note": "Salvadoran home recipes collected from women cooks in El Salvador and the diaspora."
+    }
+   ]
+  },
+  "Sami cuisine": {
+   "cookbooks": [
+    {
+     "title": "Taste of Sápmi: Sámi Cuisine",
+     "author": "Victoria Harnesk",
+     "note": "Sámi recipes and food traditions, including reindeer and foraged ingredients."
     }
    ]
   },
@@ -3196,6 +4476,13 @@
      "year": 2021,
      "isbn": "9781644695319",
      "note": "Historian's recipe collection tracing Sephardic food from medieval Spain onward."
+    },
+    {
+     "title": "The New Mediterranean Jewish Table: Old World Recipes for the Modern Home",
+     "author": "Joyce Goldstein",
+     "year": 2016,
+     "isbn": "9780520284999",
+     "note": "Sephardic, Mizrahi and Italian Jewish recipes, published by University of California Press."
     }
    ]
   },
@@ -3297,6 +4584,29 @@
      "isbn": "9781784887520",
      "url": "https://penguin.co.uk/books/466272/recipes-from-sicily-by-katie-caldesi-and-giancarlo-caldesi/9781784887520",
      "note": "Sicilian home recipes gathered by the London Italian restaurateurs."
+    }
+   ]
+  },
+  "Sindhi cuisine": {
+   "sites": [
+    {
+     "name": "Tarla Dalal (Sindhi)",
+     "url": "https://cdn.tarladalal.com/recipes/category/Sindhi-vegetarian-",
+     "type": "site",
+     "note": "Sindhi vegetarian category on Tarla Dalal's recipe site; Dalal was herself Sindhi-born."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "Sindh: Sindhi Recipes and Stories from a Forgotten Land",
+     "author": "Sapna Ajwani",
+     "note": "Sindhi family recipes and migration stories."
+    },
+    {
+     "title": "The Essential Sindhi Cookbook",
+     "author": "Aroona Reejhsinghani",
+     "url": "https://www.penguin.co.in/book/the-essential-sindhi-cookbook/",
+     "note": "Penguin India collection of everyday Sindhi dishes."
     }
    ]
   },
@@ -3428,6 +4738,52 @@
     }
    ]
   },
+  "South Korean cuisine": {
+   "sites": [
+    {
+     "name": "Korean Bapsang",
+     "url": "https://www.koreanbapsang.com/category/recipes/",
+     "type": "blog",
+     "note": "Home-style Korean recipes from Hyosun, a Korean-American mom."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "The Korean Cookbook",
+     "author": "Junghyun Park and Jungyoon Choi",
+     "year": 2023,
+     "isbn": "9781838667542",
+     "note": "Large Phaidon collection of Korean recipes by chef Junghyun Park and Jungyoon Choi."
+    }
+   ]
+  },
+  "South Sudanese cuisine": {
+   "cookbooks": [
+    {
+     "title": "South Sudanese Family Cookbook",
+     "author": "Jibrine Akima Magdaline Jok",
+     "note": "Self published collection of more than 100 South Sudanese family recipes, released in Melbourne around 2018."
+    }
+   ]
+  },
+  "Southern Thai cuisine": {
+   "cookbooks": [
+    {
+     "title": "Kalaya's Southern Thai Kitchen",
+     "author": "Nok Suntaranon and Natalie Jesionka",
+     "year": 2024,
+     "isbn": "9780593580875",
+     "note": "Southern Thai recipes from the chef of Kalaya in Philadelphia."
+    },
+    {
+     "title": "The Food of Southern Thailand",
+     "author": "Austin Bush",
+     "isbn": "9780393541694",
+     "url": "https://wwnorton.co.uk/books/9780393541694-the-food-of-southern-thailand",
+     "note": "Recipes and photography documenting southern Thai regional cooking."
+    }
+   ]
+  },
   "Soviet cuisine": {
    "cookbooks": [
     {
@@ -3491,6 +4847,40 @@
      "author": "Omer Al Tijani",
      "url": "https://sudanese.kitchen/cookbook",
      "note": "Cookbook mapping Sudan's regional food traditions, published by the Almas Art Foundation."
+    }
+   ]
+  },
+  "Surinamese cuisine": {
+   "sites": [
+    {
+     "name": "Andrea Janssen: Surinamese Recipes",
+     "url": "https://www.byandreajanssen.com/dutch-recipes/surinamese-recipes/",
+     "type": "blog",
+     "note": "Surinamese recipes section on a Dutch food blogger's site."
+    },
+    {
+     "name": "Multiculticooking: Suriname",
+     "url": "https://multiculticooking.com/category/cuisines/americas/suriname/page/4/",
+     "type": "blog",
+     "note": "Netherlands-based blog with many Surinamese, including Surinamese-Javanese, recipes."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "The Taste of Suriname",
+     "author": "Diana Dubois",
+     "isbn": "9789075812084",
+     "note": "Dutch-published cookbook of Surinamese home cooking."
+    }
+   ]
+  },
+  "Swabian cuisine": {
+   "sites": [
+    {
+     "name": "Sabrina's Table: Swabian recipes",
+     "url": "https://sabrinastable.com/en/swabian-recipes/",
+     "type": "blog",
+     "note": "German food blogger's collection of Swabian dishes such as Maultaschen and Spätzle."
     }
    ]
   },
@@ -3614,6 +5004,35 @@
     }
    ]
   },
+  "Tamil cuisine": {
+   "sites": [
+    {
+     "name": "Cooking From Heart (Tamil Nadu)",
+     "url": "https://cookingfromheart.com/category/tamilnadu-special/",
+     "type": "blog",
+     "note": "Tamil Nadu section of a South Indian vegetarian home cooking blog."
+    },
+    {
+     "name": "Chitra's Food Book",
+     "url": "https://chitrasfoodbook.com/?p=5163",
+     "type": "blog",
+     "note": "Chennai-based home cook's blog of everyday Tamil vegetarian recipes."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "Samaithu Paar (Cook and See)",
+     "author": "S. Meenakshi Ammal",
+     "note": "Classic multi-volume guide to Tamil Brahmin vegetarian cooking, in print since the 1950s."
+    },
+    {
+     "title": "Annapurni: Heritage Cuisine From Tamil Nadu",
+     "author": "Sabita Radhakrishna",
+     "url": "https://rolibooks.com/?p=12410",
+     "note": "Heritage Tamil recipes and food lore, published by Roli Books."
+    }
+   ]
+  },
   "Tanzanian cuisine": {
    "cookbooks": [
     {
@@ -3626,6 +5045,34 @@
      "title": "Taste of Tanzania",
      "author": "Miriam R. Kinunda",
      "note": "Collection of Tanzanian recipes, reviewed by BellaNaija and GeekMom in 2014."
+    }
+   ]
+  },
+  "Telugu cuisine": {
+   "sites": [
+    {
+     "name": "Mahanandi",
+     "url": "https://nandyala.org/mahanandi/archives/2006/12/12/cooking-at-home-with-pedatha-cookbook-review-interview-and-recipe/",
+     "type": "blog",
+     "note": "Indira's long-running blog of Andhra vegetarian home cooking."
+    },
+    {
+     "name": "Spice Up The Curry (Andhra)",
+     "url": "https://www.spiceupthecurry.com/category/recipes-by-region/andhra-recipe/",
+     "type": "blog",
+     "note": "Andhra section of Kanan Patel's Indian vegetarian recipe blog."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "Five Morsels of Love",
+     "author": "Archana Pidathala",
+     "note": "Telugu family recipes adapted from the author's grandmother's cookbook."
+    },
+    {
+     "title": "Cooking at Home with Pedatha: Vegetarian Recipes from a Traditional Andhra Kitchen",
+     "author": "Jigyasa Giri and Pratibha Jain",
+     "note": "Traditional Andhra vegetarian recipes recorded from an elder home cook."
     }
    ]
   },
@@ -3756,6 +5203,12 @@
      "author": "Elizabeth Kelly",
      "url": "https://www.shambhala.com/tibetan-cooking-2688.html",
      "note": "Shambhala collection of everyday and festive Tibetan dishes."
+    },
+    {
+     "title": "Beyond the Great Wall: Recipes and Travels in the Other China",
+     "author": "Jeffrey Alford and Naomi Duguid",
+     "year": 2008,
+     "note": "Recipes and travel writing from China's outer regions, including Tibetan home cooking."
     }
    ]
   },
@@ -3888,6 +5341,16 @@
     }
    ]
   },
+  "Udupi cuisine": {
+   "sites": [
+    {
+     "name": "Udupi Recipes",
+     "url": "https://udupi-recipes.com/about-me",
+     "type": "blog",
+     "note": "Blog dedicated to traditional Udupi and coastal Karnataka vegetarian dishes."
+    }
+   ]
+  },
   "Ugandan cuisine": {
    "sites": [
     {
@@ -3954,6 +5417,24 @@
     }
    ]
   },
+  "Venetian cuisine": {
+   "cookbooks": [
+    {
+     "title": "Polpo: A Venetian Cookbook (of Sorts)",
+     "author": "Russell Norman",
+     "year": 2012,
+     "isbn": "9781408816790",
+     "note": "Venetian bacaro dishes from the London restaurateur behind Polpo."
+    },
+    {
+     "title": "Venice: Four Seasons of Home Cooking",
+     "author": "Skye McAlpine",
+     "isbn": "9780241299920",
+     "url": "https://www.penguin.com.au/books/venice-9780241299920",
+     "note": "Seasonal Venetian home cooking from a writer who grew up in Venice."
+    }
+   ]
+  },
   "Venezuelan cuisine": {
    "sites": [
     {
@@ -4007,6 +5488,16 @@
     }
    ]
   },
+  "Wallis and Futuna cuisine": {
+   "sites": [
+    {
+     "name": "Wallis and Futuna Tourism: Island savours",
+     "url": "https://www.wallis-futuna.travel/en/discover-our-islands/island-savours",
+     "type": "site",
+     "note": "Official tourism overview of local food such as umu earth-oven cooking, raw fish in coconut milk and faikai; no full recipes."
+    }
+   ]
+  },
   "Welsh cuisine": {
    "sites": [
     {
@@ -4024,6 +5515,17 @@
     }
    ]
   },
+  "Western Saharan cuisine": {
+   "cookbooks": [
+    {
+     "title": "Dining in Refugee Camps: The Art of Sahrawi Cooking",
+     "author": "Robin Kahn",
+     "year": 2010,
+     "isbn": "9781570272158",
+     "note": "Artist's book recording the recipes and meals of Sahrawi women living in refugee camps."
+    }
+   ]
+  },
   "Xinjiang cuisine": {
    "sites": [
     {
@@ -4031,6 +5533,14 @@
      "url": "https://www.farwestchina.com/cuisine/ugyhur-food-recipes-xinjiang/",
      "type": "site",
      "note": "Xinjiang travel and culture site with a section of Uyghur dish recipes."
+    }
+   ],
+   "cookbooks": [
+    {
+     "title": "Beyond the Great Wall: Recipes and Travels in the Other China",
+     "author": "Jeffrey Alford and Naomi Duguid",
+     "year": 2008,
+     "note": "Recipes and travel writing from China's outer regions, with substantial Uyghur coverage."
     }
    ]
   },

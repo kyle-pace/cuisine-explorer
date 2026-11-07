@@ -10,6 +10,18 @@
       }
     ]
   },
+  "Inuit diet": {
+    "cookbooks": [
+      {
+        "title": "Niqiliurniq",
+        "author": "Micah Arreak, Annie Désilets, Lucy Kappianaq, Glenda Kripanik and Kanadaise Uyarasuk",
+        "year": 2019,
+        "isbn": "9781772272673",
+        "url": "https://49thshelf.com/Books/N/Niqiliurniq",
+        "note": "Inuktitut and English cookbook of Inuit cooking from Nunavut, published by Inhabit Media."
+      }
+    ]
+  },
   "Canadian cuisine": {
     "sites": [
       {
@@ -31,6 +43,16 @@
         "author": "Lindsay Anderson and Dana VanVeller",
         "year": 2017,
         "note": "Recipes gathered on a cross-country trip through every Canadian province and territory."
+      }
+    ]
+  },
+  "Greenlandic cuisine": {
+    "cookbooks": [
+      {
+        "title": "Takanna: Delicious Food from Greenland",
+        "author": "Tupaarnaq Rosing Olsen",
+        "url": "https://milik.gl/en/book/takanna-delicious-food-from-greenland",
+        "note": "Greenlandic recipes from a Greenlandic author, illustrated by Nina Spore Kreutzmann and published by Milik in Greenland."
       }
     ]
   },
@@ -64,6 +86,79 @@
         "isbn": "9781631066931",
         "url": "https://www.quarto.com/books/9781631066931/mexican-home-kitchen",
         "note": "Home-style recipes from the author of the Mexico in My Kitchen blog."
+      }
+    ]
+  },
+  "Cuisine of Mexico City": {
+    "cookbooks": [
+      {
+        "title": "CDMX: The Food of Mexico City",
+        "author": "Rosa Cienfuegos",
+        "isbn": "9781922754585",
+        "note": "Mexico City street food and home dishes from a Mexico City-born chef."
+      },
+      {
+        "title": "Made in Mexico: The Cookbook",
+        "author": "Danny Mena",
+        "isbn": "9780847864690",
+        "note": "Classic and contemporary Mexico City recipes from a chef raised in the city."
+      },
+      {
+        "title": "Eat Mexico",
+        "author": "Lesley Téllez",
+        "note": "Mexico City street food and market recipes from a food writer who ran culinary tours there."
+      }
+    ]
+  },
+  "Oaxacan cuisine": {
+    "cookbooks": [
+      {
+        "title": "Oaxaca: Home Cooking from the Heart of Mexico",
+        "author": "Bricia Lopez with Javier Cabral",
+        "year": 2019,
+        "note": "Oaxacan family recipes from the family behind Los Angeles restaurant Guelaguetza."
+      },
+      {
+        "title": "The Food of Oaxaca: Recipes and Stories from Mexico's Culinary Capital",
+        "author": "Alejandro Ruiz",
+        "isbn": "9780525657309",
+        "note": "Oaxacan cooking from the chef of Casa Oaxaca."
+      },
+      {
+        "title": "Oaxaca al gusto: An Infinite Gastronomy",
+        "author": "Diana Kennedy",
+        "url": "https://openlibrary.org/books/OL24437897M/Oaxaca_al_gusto_an_infinite_gastronomy",
+        "note": "Kennedy's in-depth survey of the food of Oaxaca's regions."
+      }
+    ]
+  },
+  "Cuisine of Veracruz": {
+    "cookbooks": [
+      {
+        "title": "Zarela's Veracruz",
+        "author": "Zarela Martínez with Anne Mendelson",
+        "year": 2004,
+        "isbn": "9780618444106",
+        "note": "Veracruz cooking and culture from a Mexican-born New York restaurateur whose mother was from the state."
+      }
+    ]
+  },
+  "Mexican-American cuisine": {
+    "sites": [
+      {
+        "name": "Muy Bueno",
+        "url": "https://muybuenoblog.com/?p=24",
+        "type": "blog",
+        "note": "Blog of Mexican-American family recipes."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "Chicano Eats: Recipes from My Mexican-American Kitchen",
+        "author": "Esteban Castillo",
+        "year": 2020,
+        "isbn": "9780062917379",
+        "note": "Mexican-American home cooking from the creator of the Chicano Eats blog."
       }
     ]
   },
@@ -103,6 +198,98 @@
         "isbn": "9781401324261",
         "url": "https://www.hachettebookgroup.com/titles/lisa-fain/the-homesick-texan-cookbook/9781401324261",
         "note": "Texas home cooking with many Tex-Mex staples, from the Homesick Texan blog."
+      }
+    ]
+  },
+  "Cuisine of the Midwestern United States": {
+    "cookbooks": [
+      {
+        "title": "Midwestern Food: A Chef's Guide to the Surprising History of a Great American Cuisine",
+        "author": "Paul Fehribach",
+        "isbn": "9780226819495",
+        "note": "History and recipes of Midwestern cooking from a Chicago chef, published by the University of Chicago Press."
+      },
+      {
+        "title": "Hot Dish Heaven: Classic Casseroles from Midwest Kitchens",
+        "author": "Ann Burckhardt",
+        "url": "https://shop.mnhs.org/products/hot-dish-heaven/",
+        "note": "Midwestern casseroles and hotdishes, published by the Minnesota Historical Society Press."
+      }
+    ]
+  },
+  "Cuisine of Chicago": {
+    "cookbooks": [
+      {
+        "title": "Made in Chicago: Stories Behind 30 Great Hometown Bites",
+        "author": "Monica Eng",
+        "isbn": "9780252087059",
+        "note": "Origins and recipes of Chicago foods by a Chicago food journalist, published by the University of Illinois Press."
+      }
+    ]
+  },
+  "Minnesotan cuisine": {
+    "cookbooks": [
+      {
+        "title": "A Cook's Tour of Minnesota",
+        "author": "Ann L. Burckhardt",
+        "isbn": "9780873514682",
+        "note": "Minnesota recipes and food history from a longtime Minneapolis food writer."
+      },
+      {
+        "title": "Hot Dish Heaven: Classic Casseroles from Midwest Kitchens",
+        "author": "Ann Burckhardt",
+        "url": "https://shop.mnhs.org/products/hot-dish-heaven/",
+        "note": "Hotdish and casserole recipes, published by the Minnesota Historical Society Press."
+      }
+    ]
+  },
+  "Cuisine of New England": {
+    "sites": [
+      {
+        "name": "Yankee Magazine: Chowder Recipes",
+        "url": "https://newengland.com/food/soups-stews-chowders/favorite-chowder-recipes",
+        "type": "magazine",
+        "note": "Recipes from Yankee, the long-running New England regional magazine."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "The New England Clam Shack Cookbook",
+        "author": "Brooke Dojny",
+        "isbn": "9781580174732",
+        "note": "Recipes from New England clam shacks, lobster pounds, and chowder houses."
+      },
+      {
+        "title": "The New England Cookbook: 350 Recipes from Town and Country, Land and Sea, Hearth and Home",
+        "author": "Brooke Dojny",
+        "isbn": "9781558321397",
+        "note": "Broad collection of New England home cooking."
+      }
+    ]
+  },
+  "Cuisine of New York City": {
+    "cookbooks": [
+      {
+        "title": "Eat NYC: The Iconic Recipes That Feed the City",
+        "author": "Yasmin Newman",
+        "isbn": "9781922754233",
+        "note": "Home versions of well-known New York City dishes from bagels to street food."
+      }
+    ]
+  },
+  "Cuisine of the Pennsylvania Dutch": {
+    "cookbooks": [
+      {
+        "title": "Pennsylvania Dutch Country Cooking",
+        "author": "William Woys Weaver",
+        "isbn": "9781558595682",
+        "note": "Traditional Pennsylvania Dutch recipes from a food historian of the region."
+      },
+      {
+        "title": "As American as Shoofly Pie: The Foodlore and Fakelore of Pennsylvania Dutch Cuisine",
+        "author": "William Woys Weaver",
+        "url": "https://www.degruyterbrill.com/document/doi/10.9783/9780812207712/html",
+        "note": "Food history of Pennsylvania Dutch cooking with recipes, published by the University of Pennsylvania Press."
       }
     ]
   },
@@ -258,7 +445,32 @@
       }
     ]
   },
+  "California cuisine": {
+    "cookbooks": [
+      {
+        "title": "Chez Panisse Menu Cookbook",
+        "author": "Alice Waters",
+        "year": 1982,
+        "note": "Seasonal menus from the Berkeley restaurant central to California cuisine."
+      },
+      {
+        "title": "Chez Panisse Café Cookbook",
+        "author": "Alice Waters",
+        "year": 1999,
+        "isbn": "9780060175832",
+        "note": "Simpler ingredient-led dishes from the Chez Panisse upstairs café."
+      }
+    ]
+  },
   "Cuisine of Hawaii": {
+    "sites": [
+      {
+        "name": "Onolicious Hawaii",
+        "url": "https://onolicioushawaii.com",
+        "type": "blog",
+        "note": "Hawaii-based blog of local-style recipes."
+      }
+    ],
     "cookbooks": [
       {
         "title": "Aloha Kitchen: Recipes from Hawai'i",
@@ -353,6 +565,16 @@
         "year": 2021,
         "isbn": "9780593138007",
         "note": "Red-sauce classics and updates from the chefs of New York's Don Angie."
+      }
+    ]
+  },
+  "Belizean cuisine": {
+    "sites": [
+      {
+        "name": "Taking Belize: Belizean Recipes",
+        "url": "https://takingbelize.blogspot.com/p/belizean-recipes.html",
+        "type": "blog",
+        "note": "Collection of Belizean home recipes on a personal blog."
       }
     ]
   },
@@ -554,6 +776,16 @@
       }
     ]
   },
+  "Paraguayan cuisine": {
+    "sites": [
+      {
+        "name": "Camila Made: Top 15 Paraguayan Recipes",
+        "url": "https://camilamade.com/top-15-paraguayan-recipes/",
+        "type": "blog",
+        "note": "Paraguayan recipe roundup on a Latin American home cooking blog."
+      }
+    ]
+  },
   "Peruvian cuisine": {
     "sites": [
       {
@@ -586,6 +818,30 @@
       }
     ]
   },
+  "Surinamese cuisine": {
+    "sites": [
+      {
+        "name": "Andrea Janssen: Surinamese Recipes",
+        "url": "https://www.byandreajanssen.com/dutch-recipes/surinamese-recipes/",
+        "type": "blog",
+        "note": "Surinamese recipes section on a Dutch food blogger's site."
+      },
+      {
+        "name": "Multiculticooking: Suriname",
+        "url": "https://multiculticooking.com/category/cuisines/americas/suriname/page/4/",
+        "type": "blog",
+        "note": "Netherlands-based blog with many Surinamese, including Surinamese-Javanese, recipes."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "The Taste of Suriname",
+        "author": "Diana Dubois",
+        "isbn": "9789075812084",
+        "note": "Dutch-published cookbook of Surinamese home cooking."
+      }
+    ]
+  },
   "Venezuelan cuisine": {
     "sites": [
       {
@@ -602,6 +858,15 @@
         "isbn": "9781788795173",
         "url": "https://www.simonandschuster.ca/books/Arepa/Irena-Stein/9781788795173",
         "note": "Arepa-focused cookbook from the owner of Alma Cocina Latina in Baltimore."
+      }
+    ]
+  },
+  "Culture of Aruba#Cuisine": {
+    "cookbooks": [
+      {
+        "title": "This Is the Way We Cook! Asina Nos Ta Cushina",
+        "author": "Jewell Fenzi",
+        "note": "Recipes from home cooks of Aruba, Bonaire, and Curaçao."
       }
     ]
   },
@@ -637,6 +902,31 @@
         "author": "Nitza Villapol",
         "url": "https://openlibrary.org/books/OL5928903M/Cocina_al_minuto",
         "note": "Spanish-language standard of Cuban home cooking by the longtime Cuban TV cook."
+      }
+    ]
+  },
+  "Curaçao#Cuisine": {
+    "cookbooks": [
+      {
+        "title": "This Is the Way We Cook! Asina Nos Ta Cushina",
+        "author": "Jewell Fenzi",
+        "note": "Recipes from home cooks of Aruba, Bonaire, and Curaçao."
+      }
+    ]
+  },
+  "Culture of Grenada#Cuisine": {
+    "sites": [
+      {
+        "name": "Caribbean Pot: Grenada",
+        "url": "https://caribbeanpot.com/tag/grenada-cooking/",
+        "type": "site",
+        "note": "Grenadian dishes on Chris De La Rosa's large Caribbean recipe site."
+      },
+      {
+        "name": "Spice Island Cooking",
+        "url": "https://spiceislandcooking.com/?p=618",
+        "type": "blog",
+        "note": "Blog of Grenadian home recipes."
       }
     ]
   },
@@ -709,6 +999,16 @@
         "author": "Carmen Aboy Valldejuli",
         "url": "https://openlibrary.org/books/OL6181464M/Cocina_criolla.",
         "note": "Long-standing reference of Puerto Rican cooking, also published in English as Puerto Rican Cookery."
+      }
+    ]
+  },
+  "Saint Lucian cuisine": {
+    "cookbooks": [
+      {
+        "title": "Kwéyòl / Creole: Recipes, Stories, and Tings from a St. Lucian Chef's Journey",
+        "author": "Nina Compton",
+        "isbn": "9780593578971",
+        "note": "Saint Lucian and Creole cooking from a Saint Lucia-born New Orleans chef."
       }
     ]
   },

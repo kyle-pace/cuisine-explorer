@@ -378,7 +378,14 @@
         "note": "Xinjiang travel and culture site with a section of Uyghur dish recipes."
       }
     ],
-    "cookbooks": []
+    "cookbooks": [
+      {
+        "title": "Beyond the Great Wall: Recipes and Travels in the Other China",
+        "author": "Jeffrey Alford and Naomi Duguid",
+        "year": 2008,
+        "note": "Recipes and travel writing from China's outer regions, with substantial Uyghur coverage."
+      }
+    ]
   },
   "Yunnan cuisine": {
     "sites": [
@@ -473,6 +480,12 @@
         "author": "Elizabeth Kelly",
         "url": "https://www.shambhala.com/tibetan-cooking-2688.html",
         "note": "Shambhala collection of everyday and festive Tibetan dishes."
+      },
+      {
+        "title": "Beyond the Great Wall: Recipes and Travels in the Other China",
+        "author": "Jeffrey Alford and Naomi Duguid",
+        "year": 2008,
+        "note": "Recipes and travel writing from China's outer regions, including Tibetan home cooking."
       }
     ]
   },
@@ -616,5 +629,217 @@
       }
     ],
     "cookbooks": []
+  },
+  "Guizhou cuisine": {
+    "sites": [
+      {
+        "name": "Carolyn Phillips' blog: Guizhou cuisine",
+        "url": "https://carolynjphillips.blogspot.com/search/label/Guizhou%20cuisine",
+        "type": "blog",
+        "note": "Recipe posts on Guizhou dishes from the blog that appears to belong to the author of All Under Heaven."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "All Under Heaven: Recipes from the 35 Cuisines of China",
+        "author": "Carolyn Phillips",
+        "year": 2016,
+        "isbn": "9781607749820",
+        "url": "https://www.penguinrandomhouse.com/books/534780/all-under-heaven-by-carolyn-phillips/9781607749820/",
+        "note": "Regional survey of Chinese cooking that includes a section on Guizhou dishes."
+      }
+    ]
+  },
+  "Hainan cuisine": {
+    "sites": [
+      {
+        "name": "Carolyn Phillips' blog: Hainan cuisine",
+        "url": "https://carolynjphillips.blogspot.com/search/label/Hainan%20cuisine",
+        "type": "blog",
+        "note": "Recipe posts on Hainan dishes from the blog that appears to belong to the author of All Under Heaven."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "All Under Heaven: Recipes from the 35 Cuisines of China",
+        "author": "Carolyn Phillips",
+        "year": 2016,
+        "isbn": "9781607749820",
+        "url": "https://www.penguinrandomhouse.com/books/534780/all-under-heaven-by-carolyn-phillips/9781607749820/",
+        "note": "Regional survey of Chinese cooking that includes a section on Hainan dishes."
+      }
+    ]
+  },
+  "Hubei cuisine": {
+    "sites": [
+      {
+        "name": "Carolyn Phillips' blog: Hubei cuisine",
+        "url": "https://carolynjphillips.blogspot.com/search/label/Hubei%20cuisine",
+        "type": "blog",
+        "note": "Recipe posts on Hubei dishes from the blog that appears to belong to the author of All Under Heaven."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "All Under Heaven: Recipes from the 35 Cuisines of China",
+        "author": "Carolyn Phillips",
+        "year": 2016,
+        "isbn": "9781607749820",
+        "url": "https://www.penguinrandomhouse.com/books/534780/all-under-heaven-by-carolyn-phillips/9781607749820/",
+        "note": "Regional survey of Chinese cooking that includes a section on Hubei dishes."
+      }
+    ]
+  },
+  "Jiangxi cuisine": {
+    "sites": [
+      {
+        "name": "Carolyn Phillips' blog: Jiangxi cuisine",
+        "url": "https://carolynjphillips.blogspot.com/search/label/Jiangxi%20cuisine",
+        "type": "blog",
+        "note": "Recipe posts on Jiangxi dishes from the blog that appears to belong to the author of All Under Heaven."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "All Under Heaven: Recipes from the 35 Cuisines of China",
+        "author": "Carolyn Phillips",
+        "year": 2016,
+        "isbn": "9781607749820",
+        "url": "https://www.penguinrandomhouse.com/books/534780/all-under-heaven-by-carolyn-phillips/9781607749820/",
+        "note": "Regional survey of Chinese cooking that includes a section on Jiangxi dishes."
+      }
+    ]
+  },
+  "Henan cuisine": {
+    "sites": [
+      {
+        "name": "Carolyn Phillips' blog: Henan cuisine",
+        "url": "https://carolynjphillips.blogspot.com/search/label/Henan%20cuisine",
+        "type": "blog",
+        "note": "Recipe posts on Henan dishes from the blog that appears to belong to the author of All Under Heaven."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "All Under Heaven: Recipes from the 35 Cuisines of China",
+        "author": "Carolyn Phillips",
+        "year": 2016,
+        "isbn": "9781607749820",
+        "url": "https://www.penguinrandomhouse.com/books/534780/all-under-heaven-by-carolyn-phillips/9781607749820/",
+        "note": "Regional survey of Chinese cooking that includes a section on Henan dishes."
+      }
+    ]
+  },
+  "Japanese regional cuisine": {
+    "sites": [
+      {
+        "name": "Kyodo Ryori: Japanese Regional Cuisine",
+        "url": "https://www.ny.us.emb-japan.go.jp/Foods/kyodoryori/index.html",
+        "type": "site",
+        "note": "Embassy of Japan in New York pages on local dishes by prefecture, with videos and PDF recipes."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "Hokkaido: Recipes from the Seas, Fields and Farmlands of Northern Japan",
+        "author": "Tim Anderson",
+        "year": 2024,
+        "isbn": "9781784885984",
+        "url": "https://www.penguin.co.uk/books/466881/hokkaido-by-tim-anderson/9781784885984",
+        "note": "Hardie Grant book on the regional cooking of Japan's northern island by a US-born chef in London."
+      }
+    ]
+  },
+  "Nagoya cuisine": {
+    "sites": [
+      {
+        "name": "Just One Cookbook: Nagoya Food",
+        "url": "https://www.justonecookbook.com/nagoya-food",
+        "type": "blog",
+        "note": "Just One Cookbook's guide to Nagoya specialties such as miso katsu and tebasaki."
+      }
+    ],
+    "cookbooks": []
+  },
+  "Japanese Chinese cuisine": {
+    "sites": [
+      {
+        "name": "Sudachi Recipes: Chuka Ryori",
+        "url": "https://sudachirecipes.com/chuka-ryori-recipes/",
+        "type": "blog",
+        "note": "Chuka recipes such as gyoza, ebi mayo and tantanmen from Japanese cook Yuto Omura."
+      },
+      {
+        "name": "Just One Cookbook: Japanese Chinese Recipes",
+        "url": "https://www.justonecookbook.com/japanese-chinese-food-recipes/",
+        "type": "blog",
+        "note": "Namiko Chen's collection of chuka dishes as cooked in Japanese homes."
+      },
+      {
+        "name": "No Recipes: Japanese Chinese",
+        "url": "https://norecipes.com/recipe/cuisine/japanese-chinese/",
+        "type": "blog",
+        "note": "Japanese Chinese recipe category on Marc Matsumoto's food site."
+      }
+    ],
+    "cookbooks": []
+  },
+  "Itameshi": {
+    "sites": [
+      {
+        "name": "Just One Cookbook: Wafu Pasta",
+        "url": "https://www.justonecookbook.com/popular-japanese-wafu-pasta-recipes",
+        "type": "blog",
+        "note": "Just One Cookbook's roundup of Japanese-style pasta recipes."
+      },
+      {
+        "name": "Sudachi Recipes: Wafu Pasta",
+        "url": "https://sudachirecipes.com/wafu-pasta-recipes/",
+        "type": "blog",
+        "note": "Japanese-style pasta recipes from Japanese cook Yuto Omura."
+      }
+    ],
+    "cookbooks": []
+  },
+  "South Korean cuisine": {
+    "sites": [
+      {
+        "name": "Korean Bapsang",
+        "url": "https://www.koreanbapsang.com/category/recipes/",
+        "type": "blog",
+        "note": "Home-style Korean recipes from Hyosun, a Korean-American mom."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "The Korean Cookbook",
+        "author": "Junghyun Park and Jungyoon Choi",
+        "year": 2023,
+        "isbn": "9781838667542",
+        "note": "Large Phaidon collection of Korean recipes by chef Junghyun Park and Jungyoon Choi."
+      }
+    ]
+  },
+  "Chinese imperial cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Food for the Emperor: Recipes of Imperial China with a Dictionary of Chinese Cuisine",
+        "author": "John D. Keys",
+        "note": "Older English collection of recipes associated with the imperial kitchens, with a glossary of Chinese culinary terms."
+      }
+    ]
+  },
+  "Chinese aristocrat cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Recipes from the Garden of Contentment",
+        "author": "Yuan Mei, translated by Sean J. S. Chen",
+        "year": 2018,
+        "isbn": "9781614720430",
+        "note": "Annotated translation of an 18th-century Qing gourmet's recipe and dining manual from the scholar-official class."
+      }
+    ]
   }
 }

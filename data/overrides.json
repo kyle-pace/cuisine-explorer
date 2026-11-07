@@ -338,6 +338,302 @@
     "Niuean cuisine": "NIU",
     "Western Saharan cuisine": "ESH",
     "Kenyan cuisine": "KEN",
-    "Maasai cuisine": "KEN"
+    "Maasai cuisine": "KEN",
+    "New Mexican cuisine": "USA"
+  },
+  "_about_regions": "Hand-picked states or provinces for a regional cuisine's shape on the map, as COUNTRY:Name (ISO alpha-3 and the Natural Earth name, or a region name that groups provinces). Replaces the automatic match. An empty list means no shape.",
+  "regions": {
+    "Hebei cuisine": [
+      "CHN:Hebei"
+    ],
+    "Heilongjiang cuisine": [
+      "CHN:Heilongjiang"
+    ],
+    "Ningxia cuisine": [
+      "CHN:Ningxia"
+    ],
+    "Fuzhou cuisine": [
+      "CHN:Fujian"
+    ],
+    "Minnan cuisine": [
+      "CHN:Fujian"
+    ],
+    "Putian (Henghwa) cuisine": [
+      "CHN:Fujian"
+    ],
+    "Hangbang cuisine": [
+      "CHN:Zhejiang"
+    ],
+    "Ou cuisine": [
+      "CHN:Zhejiang"
+    ],
+    "Xuzhou cuisine": [
+      "CHN:Jiangsu"
+    ],
+    "Hakka cuisine": [
+      "CHN:Guangdong",
+      "CHN:Fujian",
+      "CHN:Jiangxi"
+    ],
+    "Manchu cuisine": [
+      "CHN:Liaoning",
+      "CHN:Jilin",
+      "CHN:Heilongjiang"
+    ],
+    "Zhuang cuisine": [
+      "CHN:Guangxi"
+    ],
+    "Tujia cuisine": [
+      "CHN:Hunan",
+      "CHN:Hubei"
+    ],
+    "Yi cuisine": [
+      "CHN:Sichuan",
+      "CHN:Yunnan"
+    ],
+    "Balinese cuisine": [
+      "IDN:Bali"
+    ],
+    "Betawi cuisine": [
+      "IDN:Jakarta Raya"
+    ],
+    "Javanese cuisine": [
+      "IDN:Jawa Tengah",
+      "IDN:Jawa Timur",
+      "IDN:Yogyakarta"
+    ],
+    "Sundanese cuisine": [
+      "IDN:Jawa Barat",
+      "IDN:Banten"
+    ],
+    "Padang food": [
+      "IDN:Sumatera Barat"
+    ],
+    "Palembang cuisine": [
+      "IDN:Sumatera Selatan"
+    ],
+    "Manado cuisine": [
+      "IDN:Sulawesi Utara"
+    ],
+    "Makassar cuisine": [
+      "IDN:Sulawesi Selatan"
+    ],
+    "Batak cuisine": [
+      "IDN:Sumatera Utara"
+    ],
+    "Banjar cuisine": [
+      "IDN:Kalimantan Selatan"
+    ],
+    "Madurese cuisine": [
+      "IDN:Jawa Timur"
+    ],
+    "Hyderabadi cuisine": [
+      "IND:Telangana"
+    ],
+    "Kashmiri cuisine": [
+      "IND:Jammu and Kashmir"
+    ],
+    "Tamil cuisine": [
+      "IND:Tamil Nadu"
+    ],
+    "Goan Catholic cuisine": [
+      "IND:Goa"
+    ],
+    "Udupi cuisine": [
+      "IND:Karnataka"
+    ],
+    "Mangalurean Catholic cuisine": [
+      "IND:Karnataka"
+    ],
+    "Kodava cuisine": [
+      "IND:Karnataka"
+    ],
+    "Meitei cuisine": [
+      "IND:Manipur"
+    ],
+    "Mizo cuisine": [
+      "IND:Mizoram"
+    ],
+    "Naga cuisine": [
+      "IND:Nagaland"
+    ],
+    "Tripuri cuisine": [
+      "IND:Tripura"
+    ],
+    "North East Indian cuisine": [
+      "IND:Assam",
+      "IND:Arunachal Pradesh",
+      "IND:Manipur",
+      "IND:Meghalaya",
+      "IND:Mizoram",
+      "IND:Nagaland",
+      "IND:Tripura",
+      "IND:Sikkim"
+    ],
+    "Bhojpuri cuisine": [
+      "IND:Bihar"
+    ],
+    "Maithil cuisine": [
+      "IND:Bihar"
+    ],
+    "Sindhi cuisine": [
+      "PAK:Sind"
+    ],
+    "Bengali cuisine": [
+      "IND:West Bengal"
+    ],
+    "Punjabi cuisine": [
+      "IND:Punjab",
+      "PAK:Punjab"
+    ],
+    "Balochi cuisine": [
+      "PAK:Baluchistan"
+    ],
+    "Ilocano cuisine": [
+      "PHL:Ilocos Norte",
+      "PHL:Ilocos Sur",
+      "PHL:La Union"
+    ],
+    "Kapampangan cuisine": [
+      "PHL:Pampanga"
+    ],
+    "Lanna cuisine": [
+      "THA:Chiang Mai",
+      "THA:Chiang Rai",
+      "THA:Lamphun",
+      "THA:Lampang",
+      "THA:Phayao",
+      "THA:Phrae",
+      "THA:Nan",
+      "THA:Mae Hong Son"
+    ],
+    "Southern Thai cuisine": [
+      "THA:Songkhla",
+      "THA:Phuket",
+      "THA:Surat Thani",
+      "THA:Nakhon Si Thammarat",
+      "THA:Krabi",
+      "THA:Trang",
+      "THA:Phangnga",
+      "THA:Ranong",
+      "THA:Chumphon",
+      "THA:Phatthalung",
+      "THA:Satun",
+      "THA:Pattani",
+      "THA:Yala",
+      "THA:Narathiwat"
+    ],
+    "Chechen cuisine": [
+      "RUS:Chechnya"
+    ],
+    "Dagestani cuisine": [
+      "RUS:Dagestan"
+    ],
+    "Tatar cuisine": [
+      "RUS:Tatarstan"
+    ],
+    "Sakha cuisine": [
+      "RUS:Sakha (Yakutia)"
+    ],
+    "Circassian cuisine": [
+      "RUS:Adygey",
+      "RUS:Karachay-Cherkess",
+      "RUS:Kabardin-Balkar"
+    ],
+    "Chukchi cuisine": [
+      "RUS:Chukchi Autonomous Okrug"
+    ],
+    "Cajun cuisine": [
+      "USA:Louisiana"
+    ],
+    "Cuisine of the Pennsylvania Dutch": [
+      "USA:Pennsylvania"
+    ],
+    "New Mexican cuisine": [
+      "USA:New Mexico"
+    ],
+    "Southern American cuisine": [
+      "USA:Alabama",
+      "USA:Arkansas",
+      "USA:Florida",
+      "USA:Georgia",
+      "USA:Kentucky",
+      "USA:Louisiana",
+      "USA:Mississippi",
+      "USA:North Carolina",
+      "USA:South Carolina",
+      "USA:Tennessee",
+      "USA:Virginia",
+      "USA:West Virginia",
+      "USA:Texas"
+    ],
+    "Cuisine of the Southern United States": [
+      "USA:Alabama",
+      "USA:Arkansas",
+      "USA:Florida",
+      "USA:Georgia",
+      "USA:Kentucky",
+      "USA:Louisiana",
+      "USA:Mississippi",
+      "USA:North Carolina",
+      "USA:South Carolina",
+      "USA:Tennessee",
+      "USA:Virginia",
+      "USA:West Virginia",
+      "USA:Texas"
+    ],
+    "Southwestern American cuisine": [
+      "USA:Arizona",
+      "USA:New Mexico"
+    ],
+    "Cuisine of the Southwestern United States": [
+      "USA:Arizona",
+      "USA:New Mexico"
+    ],
+    "Pacific Northwest cuisine": [
+      "USA:Washington",
+      "USA:Oregon",
+      "USA:Idaho"
+    ],
+    "Rocky Mountain cuisine": [
+      "USA:Colorado",
+      "USA:Wyoming",
+      "USA:Montana",
+      "USA:Utah",
+      "USA:Idaho"
+    ],
+    "Iron Range cuisine": [
+      "USA:Minnesota"
+    ],
+    "Cornish cuisine": [
+      "GBR:Cornwall"
+    ],
+    "Nagoya cuisine": [
+      "JPN:Aichi"
+    ],
+    "Ainu cuisine": [
+      "JPN:Hokkaidō"
+    ],
+    "Ancient Maya cuisine": [
+      "MEX:Yucatán",
+      "MEX:Campeche",
+      "MEX:Quintana Roo",
+      "MEX:Chiapas"
+    ],
+    "Minorcan cuisine": [
+      "ESP:Baleares"
+    ],
+    "Karen cuisine": [
+      "MMR:Kayin"
+    ],
+    "Mon cuisine": [
+      "MMR:Mon"
+    ],
+    "Cuisine of Monmouthshire": [
+      "GBR:Monmouthshire"
+    ],
+    "Latin American cuisine": [],
+    "Chinese Latin American cuisine#Cuba": [],
+    "Andorran cuisine": []
   }
 }

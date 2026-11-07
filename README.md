@@ -7,7 +7,7 @@ A [kylepace.net](https://kylepace.net) labs project.
 ## How it works
 
 - **Countries** are colored by continent, using the cuisine Wikipedia lists as that country's own.
-- **Regional cuisines** (Sichuan, Oaxacan, Lanna) are small points of light, placed with coordinates from Wikidata.
+- **Regional cuisines** (Sichuan, Oaxacan, Lanna) appear when you pick a country or zoom in: the provinces or states they come from are drawn as shapes, with a name label for each. Shapes come from matching Wikidata's "located in" places against Natural Earth's states and provinces (`scripts/build_regions.py`, `data/regions.geojson`).
 - **Diaspora routes** are arcs from where a cuisine came from to where it took root (Chinese to Peru, Italian to the U.S.), worked out from names like "Peruvian-Chinese cuisine."
 - **Beyond borders** collects what doesn't belong to one country: cuisines of peoples, religious diets, historical cuisines, and styles of cooking.
 
@@ -41,6 +41,7 @@ When the automatic match puts something in the wrong place, fix it in `data/over
 
 - `coords`: pin a cuisine to `[lat, lon]` (useful for peoples and historical cuisines Wikidata can't place).
 - `iso`: force a cuisine's country (ISO 3166 alpha-3).
+- `regions`: hand-pick the states or provinces for a regional cuisine's shape, as `COUNTRY:Name` (for example `"Lanna cuisine": ["THA:Chiang Mai", ...]`). An empty list means no shape.
 
 ## Files
 
@@ -49,6 +50,9 @@ When the automatic match puts something in the wrong place, fix it in `data/over
 | `index.html` | The whole explorer: one page, no build step |
 | `data/cuisines.json` | Generated index of ~640 cuisines |
 | `data/countries.geojson` | Country shapes (Natural Earth 1:50m, simplified) |
+| `data/regions.geojson` | Shapes for regional cuisines (Natural Earth 1:10m states and provinces) |
+| `data/summaries.json` | Each cuisine's Wikipedia intro, refreshed weekly |
+| `data/suggestions.json` | Researched recipe sites and cookbooks, not yet reviewed |
 | `data/picks.json` | Hand-picked cookbooks and recipe sites |
 | `data/overrides.json` | Hand fixes for places and countries |
 | `scripts/` | The data pipeline, plus `build_preview.py` for a single-file preview with data inlined |

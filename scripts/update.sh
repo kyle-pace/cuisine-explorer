@@ -27,3 +27,4 @@ json.dump(wd, open("raw/wikidata.json", "w"), ensure_ascii=False, indent=1)
 PY
 
 python3 scripts/build.py
+python3 scripts/build_regions.py

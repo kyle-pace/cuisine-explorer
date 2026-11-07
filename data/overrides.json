@@ -300,6 +300,10 @@
     "Karakalpak cuisine": [
       43.0,
       59.0
+    ],
+    "Tibetan cuisine": [
+      31.5,
+      88.5
     ]
   },
   "_about_iso": "Force a cuisine's country (ISO 3166 alpha-3) when the automatic match is wrong.",
@@ -341,7 +345,8 @@
     "Maasai cuisine": "KEN",
     "New Mexican cuisine": "USA",
     "Cuisine of Equatorial Guinea": "GNQ",
-    "Equatorial Guinea cuisine": "GNQ"
+    "Equatorial Guinea cuisine": "GNQ",
+    "Tibetan cuisine": "TIB"
   },
   "_about_regions": "Hand-picked states or provinces for a regional cuisine's shape on the map, as COUNTRY:Name (ISO alpha-3 and the Natural Earth name, or a region name that groups provinces). Replaces the automatic match. An empty list means no shape.",
   "regions": {
@@ -636,6 +641,8 @@
     ],
     "Latin American cuisine": [],
     "Chinese Latin American cuisine#Cuba": [],
-    "Andorran cuisine": []
-  }
+    "Andorran cuisine": [],
+    "Tibetan cuisine": []
+  },
+  "_about_tibet": "Tibet is drawn as its own area (scripts/simplify_countries.sh), with Tibetan cuisine as its cuisine."
 }

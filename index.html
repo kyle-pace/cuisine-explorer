@@ -78,7 +78,10 @@
   }
   .pin:hover, .pin.on { background: #fff; z-index: 2; }
   .pin.on { outline: 2px solid var(--accent, var(--saffron)); outline-offset: 1px; }
-  .pin[hidden] { display: none; }
+  .pin.off { opacity: 0; pointer-events: none; }
+  @media (prefers-reduced-motion: no-preference) {
+    .pin { transition: opacity 0.2s var(--ease); }
+  }
 
   /* The cuisine card: a side panel on wide screens, a bottom sheet on phones */
   .panel {
@@ -261,6 +264,7 @@
   };
   const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const isPhone = () => innerWidth <= 720;
+  const noHover = matchMedia("(hover: none)").matches;
 
   // Data: inlined in the preview build, fetched alongside the page otherwise
   async function load(id, path) {
@@ -405,6 +409,7 @@
     .polygonStrokeColor(f => isRegion(f) ? "rgba(255,248,236,0.85)" : "#1b1424")
     .polygonsTransitionDuration(reduceMotion ? 0 : 250)
     .polygonLabel(f => {
+      if (noHover) return "";
       if (isRegion(f)) {
         const names = f.properties.ids.map(id => byId.get(id).name);
         return `<div class="tooltip">${esc(names[0])}${names.length > 1 ? `<small>Also ${esc(names.slice(1).join(", "))}</small>` : "<small>Regional cuisine</small>"}</div>`;
@@ -429,7 +434,7 @@
     .htmlLat(c => placeOf(c)[0]).htmlLng(c => placeOf(c)[1]).htmlAltitude(0.035)
     .htmlElement(c => {
       const b = document.createElement("button");
-      b.className = "pin"; b.type = "button"; b.textContent = c.name.replace(/^Cuisine of (the )?/i, "").replace(/ (cuisine|food|diet)$/i, "");
+      b.className = "pin off"; b.type = "button"; b.textContent = c.name.replace(/^Cuisine of (the )?/i, "").replace(/ (cuisine|food|diet)$/i, "");
       b.title = c.name; b.dataset.id = c.id;
       b.addEventListener("click", e => { e.stopPropagation(); open(c); });
       return b;
@@ -448,14 +453,14 @@
     .arcDashLength(a => related(a) ? 0.35 : 1).arcDashGap(a => related(a) ? 0.15 : 0)
     .arcDashInitialGap(() => Math.random())
     .arcDashAnimateTime(a => related(a) && !reduceMotion ? 2600 : 0)
-    .arcLabel(a => `<div class="tooltip">${esc(a.c.name)}<small>${esc(a.from.name.replace(/ cuisine$/, ""))} to ${esc(isoName.get(a.to.iso3) || a.to.name)}</small></div>`)
+    .arcLabel(a => noHover ? "" : `<div class="tooltip">${esc(a.c.name)}<small>${esc(a.from.name.replace(/ cuisine$/, ""))} to ${esc(isoName.get(a.to.iso3) || a.to.name)}</small></div>`)
     .onArcClick(a => open(a.c));
 
   // Labels on the far side of the globe are hidden; the rest are decluttered
   const hasVis = typeof world.htmlElementVisibilityModifier === "function";
   if (hasVis) world.htmlElementVisibilityModifier((elm, visible) => {
     const v = visible ? "1" : "";
-    if (elm.dataset.front !== v) { elm.dataset.front = v; if (!visible) elm.hidden = true; scheduleDeclutter(); }
+    if (elm.dataset.front !== v) { elm.dataset.front = v; if (!visible) elm.classList.add("off"); }
   });
   let dq = false;
   function scheduleDeclutter() { if (!dq) { dq = true; requestAnimationFrame(() => { dq = false; declutter(); }); } }
@@ -485,15 +490,17 @@
     world.htmlElementsData([...focus].flatMap(iso => local.get(iso) || []));
     scheduleDeclutter();
   }
-  // Countries near the middle of the view that have regional cuisines to show:
-  // the one underneath first, then up to two of the nearest
-  function countriesNear(lat, lng, alt) {
+  // The country under the middle of the view, if it has regional cuisines to show
+  function countryUnder(lat, lng) {
     const under = land.find(f => contains(f, lng, lat));
-    const d = loc => Math.hypot(lat - loc[0], (lng - loc[1]) * Math.cos(lat * Math.PI / 180));
-    const near = [...nationalByIso].filter(([iso, n]) => n.loc && local.has(iso) && d(n.loc) < 16 * alt)
-      .sort((a, b) => d(a[1].loc) - d(b[1].loc)).map(([iso]) => iso);
-    const first = under && local.has(featIso(under)) ? [featIso(under)] : [];
-    return [...new Set(first.concat(near))].slice(0, 3);
+    return under && local.has(featIso(under)) ? featIso(under) : null;
+  }
+  function browseFocus() {
+    if (selected && selected.iso3) return;
+    const pov = world.pointOfView();
+    if (pov.altitude >= 1.3) return setFocus([]);
+    const iso = countryUnder(pov.lat, pov.lng);
+    if (iso) setFocus([iso]);      // over water or a country without regions: keep what's showing
   }
   // Hide labels that would overlap a more important one (more recipes, bigger region first)
   function declutter() {
@@ -507,24 +514,21 @@
     const kept = [".masthead", ".legend", ".panel.open"].map(sel => document.querySelector(sel))
       .filter(Boolean).map(n => { const r = n.getBoundingClientRect(); return [r.left - 6, r.top - 6, r.right + 6, r.bottom + 6]; });
     for (const { p } of ranked) {
-      p.hidden = false;
-      if (hasVis && !p.dataset.front) { p.hidden = true; continue; }
+      if (hasVis && !p.dataset.front) { p.classList.add("off"); continue; }
       const r = p.getBoundingClientRect();
       const box = [r.left - 4, r.top - 3, r.right + 4, r.bottom + 3];
-      if (r.width === 0 || kept.some(k => box[0] < k[2] && box[2] > k[0] && box[1] < k[3] && box[3] > k[1])) { p.hidden = true; continue; }
+      if (r.width === 0 || kept.some(k => box[0] < k[2] && box[2] > k[0] && box[1] < k[3] && box[3] > k[1])) { p.classList.add("off"); continue; }
+      p.classList.remove("off");
       kept.push(box);
     }
     pins.forEach(p => p.classList.toggle("on", !!selected && p.dataset.id === selected.id));
   }
+  // While moving, labels just ride along; once the globe settles, sort out which to
+  // show and which country's regions to show
   let settle = null;
   controls.addEventListener("change", () => {
-    scheduleDeclutter();
     clearTimeout(settle);
-    settle = setTimeout(() => {
-      if (selected && selected.iso3) return;
-      const pov = world.pointOfView();
-      setFocus(pov.altitude < 1.5 ? countriesNear(pov.lat, pov.lng, pov.altitude) : []);
-    }, 180);
+    settle = setTimeout(() => { browseFocus(); declutter(); }, 220);
   });
 
   // --- Layer toggles ------------------------------------------------------------
@@ -560,8 +564,8 @@
     selected = null;
     refresh();
     if (location.hash) setHash("");
-    const pov = world.pointOfView();
-    setFocus(pov.altitude < 1.5 ? countriesNear(pov.lat, pov.lng, pov.altitude) : []);
+    setFocus([]);
+    browseFocus();
   }
   function refresh() {
     world.polygonAltitude(world.polygonAltitude())
@@ -689,7 +693,7 @@
 
   function render(c) {
     const col = colorOf(c);
-    const parent = (c.parents || []).map(p => byId.get(p)).find(Boolean);
+    const parent = (c.parents || []).map(p => byId.get(p)).find(p => p && !(c.kind === "national" && p.iso3 !== c.iso3));
     const trail = [];
     if ((c.region || [])[0]) trail.push(CONTINENT[c.region[0]] || c.region[0]);
     if (parent && parent !== c) trail.push(`<button data-id="${attr(parent.id)}">${esc(parent.name)}</button>`);
@@ -704,19 +708,22 @@
     const sug = suggestions[c.id] || {};
     const sites = merge(p && p.sites, sug.sites, "url");
     const books = merge(p && p.cookbooks, sug.cookbooks, "title");
-    // Nothing of its own yet: borrow from the nearest parent cuisine that has some
-    let from = null, fromSites = [], fromBooks = [];
-    if (!sites.length && !books.length) {
+    // A section with nothing of its own borrows from the nearest parent cuisine that has some
+    function borrow(kind, key, n) {
+      if (c.kind === "national") return null;
       for (let cur = c, i = 0; cur && i < 4; i++) {
-        cur = (cur.parents || []).map(id => byId.get(id)).find(Boolean) || (cur.kind !== "national" && cur.iso3 ? nationalByIso.get(cur.iso3) : null);
+        cur = (cur.parents || []).map(id => byId.get(id)).find(p => p && p.iso3 === c.iso3) || (cur.kind !== "national" && cur.iso3 ? nationalByIso.get(cur.iso3) : null);
         if (!cur || cur === c) break;
-        const cp = picks[cur.id] || {}, cs = suggestions[cur.id] || {};
-        fromSites = merge(cp.sites, cs.sites, "url").slice(0, 3);
-        fromBooks = merge(cp.cookbooks, cs.cookbooks, "title").slice(0, 4);
-        if (fromSites.length || fromBooks.length) { from = cur; break; }
+        const items = merge((picks[cur.id] || {})[kind], (suggestions[cur.id] || {})[kind], key).slice(0, n);
+        if (items.length) return { from: cur, items };
       }
+      return null;
     }
-    const kids = (c.children || []).map(k => byId.get(k)).filter(Boolean);
+    const bSites = sites.length ? null : borrow("sites", "url", 3);
+    const bBooks = books.length ? null : borrow("cookbooks", "title", 4);
+    const short = x => esc(x.name.replace(/ cuisine$/, ""));
+    const fromNote = b => `<p class="empty">Nothing specific to ${short(c)} cooking yet, so here's ${b.items.length > 1 ? "where" : "one place"} to start from <button class="link" data-id="${attr(b.from.id)}">${esc(b.from.name)}</button>.</p>`;
+    const kids = (c.children || []).map(k => byId.get(k)).filter(k => k && k.kind !== "national");
     const others = c.kind === "national" ? (local.get(c.iso3) || []).filter(o => !(c.children || []).includes(o.id)) : [];
     const sameArea = (regionOf.get(c.id)?.properties.ids || []).filter(id => id !== c.id).map(id => byId.get(id));
     // Routes out of and into this country (or this cuisine)
@@ -736,15 +743,14 @@
       <div class="intro" id="intro"></div>
       ${p && p.note ? `<p class="intro"><em>${esc(p.note)}</em></p>` : ""}
 
-      ${from ? `
-      <h3>Start with ${esc(from.name.replace(/ cuisine$/, ""))} cooking</h3>
-      <p class="empty">Nothing specific to ${esc(c.name.replace(/ cuisine$/, ""))} cooking here yet, so here's where to start from <button class="link" data-id="${attr(from.id)}">${esc(from.name)}</button>.</p>
-      ${fromSites.length ? `<ul class="sites" style="margin-top:10px">${fromSites.map(site).join("")}</ul>` : ""}
-      ${fromBooks.length ? `<div class="books" style="margin-top:12px">${fromBooks.map(book).join("")}</div>` : ""}
-      ` : `
       <h3>Recipe sites</h3>
-      ${sites.length ? `<ul class="sites">${sites.map(site).join("")}</ul>` : `<p class="empty">No recipe sites for this one yet.</p>`}
-      ${books.length ? `<h3>Cookbooks</h3><div class="books">${books.map(book).join("")}</div>` : ""}`}
+      ${sites.length ? `<ul class="sites">${sites.map(site).join("")}</ul>`
+        : bSites ? `${fromNote(bSites)}<ul class="sites" style="margin-top:10px">${bSites.items.map(site).join("")}</ul>`
+        : `<p class="empty">No recipe sites for this one yet.</p>`}
+
+      ${books.length ? `<h3>Cookbooks</h3><div class="books">${books.map(book).join("")}</div>`
+        : bBooks ? `<h3>Cookbooks</h3>${bSites && bSites.from === bBooks.from ? "" : fromNote(bBooks)}<div class="books" style="margin-top:12px">${bBooks.items.map(book).join("")}</div>`
+        : ""}
 
       <a class="wiki-btn" href="${attr(c.url)}" target="_blank" rel="noopener">Read the full article on Wikipedia ${ARROW}</a>
       <p class="source">Summary from Wikipedia, shared under CC BY-SA.</p>

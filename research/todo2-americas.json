@@ -1,0 +1,366 @@
+[
+{
+"id": "Latin American cuisine",
+"name": "Latin American cuisine",
+"kind": "peoples",
+"country": null,
+"parent": null
+},
+{
+"id": "Tlingit cuisine",
+"name": "Tlingit cuisine",
+"kind": "peoples",
+"country": null,
+"parent": "Native American cuisine"
+},
+{
+"id": "Canadian Chinese cuisine",
+"name": "Canadian Chinese cuisine",
+"kind": "diaspora",
+"country": "CAN",
+"parent": "Canadian cuisine"
+},
+{
+"id": "Cuisine of the Maritimes",
+"name": "Cuisine of the Maritimes",
+"kind": "regional",
+"country": "CAN",
+"parent": "Canadian cuisine"
+},
+{
+"id": "Cuisine of Quebec",
+"name": "Cuisine of Quebec",
+"kind": "regional",
+"country": "CAN",
+"parent": "Canadian cuisine"
+},
+{
+"id": "Cuisine of Toronto",
+"name": "Cuisine of Toronto",
+"kind": "regional",
+"country": "CAN",
+"parent": "Canadian cuisine"
+},
+{
+"id": "Cuisine of Chiapas",
+"name": "Cuisine of Chiapas",
+"kind": "regional",
+"country": "MEX",
+"parent": "Mexican cuisine"
+},
+{
+"id": "Mesoamerican cuisine",
+"name": "Mesoamerican cuisine",
+"kind": "regional",
+"country": "MEX",
+"parent": "Mexican cuisine"
+},
+{
+"id": "Ancient Maya cuisine",
+"name": "Ancient Maya cuisine",
+"kind": "regional",
+"country": "MEX",
+"parent": "Mesoamerican cuisine"
+},
+{
+"id": "Aztec cuisine",
+"name": "Aztec cuisine",
+"kind": "regional",
+"country": "MEX",
+"parent": "Mesoamerican cuisine"
+},
+{
+"id": "Cuisine of California#Latino_and_Hispanic_influence",
+"name": "Cali-Mex cuisine",
+"kind": "regional",
+"country": "USA",
+"parent": "Mexican-American cuisine"
+},
+{
+"id": "Korean-Mexican fusion",
+"name": "Korean-Mexican fusion",
+"kind": "diaspora",
+"country": "USA",
+"parent": "Cuisine of California#Latino_and_Hispanic_influence"
+},
+{
+"id": "Cuisine of North Dakota",
+"name": "Cuisine of North Dakota",
+"kind": "regional",
+"country": "USA",
+"parent": "Cuisine of the Midwestern United States"
+},
+{
+"id": "Cuisine of Omaha",
+"name": "Cuisine of Omaha",
+"kind": "regional",
+"country": "USA",
+"parent": "Cuisine of the Midwestern United States"
+},
+{
+"id": "Cuisine of St. Louis",
+"name": "Cuisine of St. Louis",
+"kind": "regional",
+"country": "USA",
+"parent": "Cuisine of the Midwestern United States"
+},
+{
+"id": "Cuisine of Wisconsin",
+"name": "Cuisine of Wisconsin",
+"kind": "regional",
+"country": "USA",
+"parent": "Cuisine of the Midwestern United States"
+},
+{
+"id": "Iron Range cuisine",
+"name": "Iron Range cuisine",
+"kind": "regional",
+"country": "USA",
+"parent": "Minnesotan cuisine"
+},
+{
+"id": "Cuisine of the Mid-Atlantic United States",
+"name": "Cuisine of the Mid-Atlantic United States",
+"kind": "regional",
+"country": "USA",
+"parent": "American cuisine"
+},
+{
+"id": "Culture of Baltimore#Food",
+"name": "Cuisine of Baltimore",
+"kind": "regional",
+"country": "USA",
+"parent": "Cuisine of the Mid-Atlantic United States"
+},
+{
+"id": "Cuisine of New Jersey",
+"name": "Cuisine of New Jersey",
+"kind": "regional",
+"country": "USA",
+"parent": "Cuisine of the Mid-Atlantic United States"
+},
+{
+"id": "Cuisine of Philadelphia",
+"name": "Cuisine of Philadelphia",
+"kind": "regional",
+"country": "USA",
+"parent": "Cuisine of the Mid-Atlantic United States"
+},
+{
+"id": "Cuisine of Pittsburgh",
+"name": "Cuisine of Pittsburgh",
+"kind": "regional",
+"country": "USA",
+"parent": "Cuisine of the Mid-Atlantic United States"
+},
+{
+"id": "Cuisine of Atlanta",
+"name": "Cuisine of Atlanta",
+"kind": "regional",
+"country": "USA",
+"parent": "Cuisine of the Southern United States"
+},
+{
+"id": "Floribbean cuisine",
+"name": "Floribbean cuisine",
+"kind": "regional",
+"country": "USA",
+"parent": "Cuisine of the Southern United States"
+},
+{
+"id": "Cuisine of Kentucky",
+"name": "Cuisine of Kentucky",
+"kind": "regional",
+"country": "USA",
+"parent": "Cuisine of the Southern United States"
+},
+{
+"id": "Cuisine of the Southwestern United States",
+"name": "Southwestern American cuisine",
+"kind": "regional",
+"country": "USA",
+"parent": "American cuisine"
+},
+{
+"id": "Cuisine of the Western United States",
+"name": "Western American cuisine",
+"kind": "regional",
+"country": "USA",
+"parent": "American cuisine"
+},
+{
+"id": "Cuisine of California",
+"name": "Cuisine of California",
+"kind": "regional",
+"country": "USA",
+"parent": "Cuisine of the Western United States"
+},
+{
+"id": "Rocky Mountain cuisine",
+"name": "Rocky Mountain cuisine",
+"kind": "regional",
+"country": "USA",
+"parent": "Cuisine of the Western United States"
+},
+{
+"id": "Fusion cuisine",
+"name": "Fusion cuisine",
+"kind": "diaspora",
+"country": "USA",
+"parent": "American cuisine"
+},
+{
+"id": "Greek-American cuisine",
+"name": "Greek-American cuisine",
+"kind": "regional",
+"country": "USA",
+"parent": "Fusion cuisine"
+},
+{
+"id": "Indian-American cuisine",
+"name": "Indian-American cuisine",
+"kind": "diaspora",
+"country": "USA",
+"parent": "Fusion cuisine"
+},
+{
+"id": "Japanese-American cuisine",
+"name": "Japanese-American cuisine",
+"kind": "diaspora",
+"country": "USA",
+"parent": "Fusion cuisine"
+},
+{
+"id": "Korean Americans#Cuisine",
+"name": "Korean-American cuisine",
+"kind": "diaspora",
+"country": "USA",
+"parent": "Fusion cuisine"
+},
+{
+"id": "Cali-Mex cuisine",
+"name": "Cali-Mex cuisine",
+"kind": "regional",
+"country": "USA",
+"parent": "Mexican-American cuisine"
+},
+{
+"id": "Thai-American cuisine",
+"name": "Thai-American cuisine",
+"kind": "diaspora",
+"country": "USA",
+"parent": "Fusion cuisine"
+},
+{
+"id": "Vietnamese Americans#Cuisine",
+"name": "Vietnamese-American cuisine",
+"kind": "diaspora",
+"country": "USA",
+"parent": "Fusion cuisine"
+},
+{
+"id": "New American cuisine",
+"name": "New American cuisine",
+"kind": "regional",
+"country": "USA",
+"parent": "Fusion cuisine"
+},
+{
+"id": "Muisca cuisine",
+"name": "Muisca cuisine",
+"kind": "regional",
+"country": "COL",
+"parent": "Colombian cuisine"
+},
+{
+"id": "Cuisine of Asunción",
+"name": "Cuisine of Asunción",
+"kind": "regional",
+"country": "PRY",
+"parent": "Paraguayan cuisine"
+},
+{
+"id": "Chifa",
+"name": "Peruvian-Chinese cuisine",
+"kind": "diaspora",
+"country": "PER",
+"parent": "Peruvian cuisine"
+},
+{
+"id": "Nikkei cuisine",
+"name": "Peruvian-Japanese cuisine",
+"kind": "diaspora",
+"country": "PER",
+"parent": "Peruvian cuisine"
+},
+{
+"id": "Amazonian cuisine",
+"name": "Amazonian cuisine",
+"kind": "regional",
+"country": "PER",
+"parent": "Peruvian cuisine"
+},
+{
+"id": "Arequipan cuisine",
+"name": "Arequipan cuisine",
+"kind": "regional",
+"country": "PER",
+"parent": "Peruvian cuisine"
+},
+{
+"id": "Inca cuisine",
+"name": "Inca cuisine",
+"kind": "regional",
+"country": "PER",
+"parent": "Peruvian cuisine"
+},
+{
+"id": "Cuisine of Montevideo",
+"name": "Cuisine of Montevideo",
+"kind": "regional",
+"country": "URY",
+"parent": "Uruguayan cuisine"
+},
+{
+"id": "Dominican Republic cuisine",
+"name": "Dominican Republic cuisine",
+"kind": "regional",
+"country": "DMA",
+"parent": null
+},
+{
+"id": "Chinese Latin American cuisine#Cuba",
+"name": "Cuban Chinese cuisine",
+"kind": "regional",
+"country": "CUB",
+"parent": "Chinese Latin American cuisine"
+},
+{
+"id": "Puerto Rican Chinese cuisine",
+"name": "Puerto Rican Chinese cuisine",
+"kind": "regional",
+"country": "USA",
+"parent": "Chinese Latin American cuisine"
+},
+{
+"id": "Cuisine of the Mariana Islands",
+"name": "Mariana Islands cuisine",
+"kind": "regional",
+"country": "USA",
+"parent": null
+},
+{
+"id": "Culture of Guam#Cuisine",
+"name": "Guamanian cuisine",
+"kind": "regional",
+"country": "USA",
+"parent": "Cuisine of the Mariana Islands"
+},
+{
+"id": "Pascuense cuisine",
+"name": "Pascuense (Easter Island) cuisine",
+"kind": "regional",
+"country": "CHL",
+"parent": null
+}
+]

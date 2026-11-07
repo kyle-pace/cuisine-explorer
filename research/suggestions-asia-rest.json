@@ -451,6 +451,22 @@
         "isbn": "9781529103205",
         "url": "https://www.penguin.co.uk/books/1117247/the-rangoon-sisters/9781529103205",
         "note": "Burmese family recipes from two London supper club hosts."
+      },
+      {
+        "title": "Burma: Rivers of Flavor",
+        "author": "Naomi Duguid",
+        "year": 2012,
+        "isbn": "9781579654139",
+        "url": "https://www.hachettebookgroup.com/titles/naomi-duguid/burma/9781579654139/?lens=artisan",
+        "note": "Recipes and travel writing from across Burma, published by Artisan."
+      },
+      {
+        "title": "Burma Superstar",
+        "author": "Desmond Tan and Kate Leahy",
+        "year": 2017,
+        "isbn": "9781607749509",
+        "url": "https://www.penguinrandomhouse.com/books/532612/burma-superstar-by-tan-desmond/9781607749509",
+        "note": "Burmese recipes from the San Francisco restaurant of the same name."
       }
     ]
   },
@@ -653,6 +669,14 @@
         "author": "Feride Buyuran",
         "year": 2015,
         "note": "Large collection of Azerbaijani recipes with cultural background."
+      },
+      {
+        "title": "Kaukasis: A Culinary Journey through Georgia, Azerbaijan & Beyond",
+        "author": "Olia Hercules",
+        "year": 2017,
+        "isbn": "9781681883038",
+        "url": "https://www.simonandschuster.ca/books/Kaukasis/Olia-Hercules/9781681883038",
+        "note": "Recipes gathered across the Caucasus, mostly Georgia and Azerbaijan."
       }
     ]
   },
@@ -1503,5 +1527,409 @@
       }
     ],
     "cookbooks": []
+  },
+  "Bengali cuisine": {
+    "sites": [
+      {
+        "name": "Playful Cooking (Bengali cuisine)",
+        "url": "https://www.playfulcooking.com/category/bengali-cuisine",
+        "type": "blog",
+        "note": "Bengali section of Kankana Saxena's home cooking blog."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "Bong Mom's Cookbook",
+        "author": "Sandeepa Mukherjee Datta",
+        "note": "Bengali home cooking and family stories, grown out of the author's long-running blog."
+      },
+      {
+        "title": "The Bengali Five Spice Chronicles",
+        "author": "Rinku Bhattacharya",
+        "url": "https://www.hippocrenebooks.com/store/p477/TheBengaliFiveSpiceChronicles.html",
+        "note": "Bengali family recipes adapted for American kitchens, published by Hippocrene."
+      }
+    ]
+  },
+  "South Indian cuisine": {
+    "sites": [
+      {
+        "name": "Subbu's Kitchen",
+        "url": "https://www.subbuskitchen.com/about-us",
+        "type": "blog",
+        "note": "Family-run blog of traditional Tamil and South Indian vegetarian recipes."
+      },
+      {
+        "name": "Yummy Tummy Aarthi (South Indian)",
+        "url": "https://yummytummyaarthi.com/recipes/southindian",
+        "type": "blog",
+        "note": "South Indian section of Aarthi's large home cooking blog."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "Curried Favors: Family Recipes from South India",
+        "author": "Maya Kaimal",
+        "year": 1996,
+        "note": "Family recipes from Kerala and Tamil Nadu by a Kerala-American food writer."
+      },
+      {
+        "title": "Dakshin: Vegetarian Cuisine from South India",
+        "author": "Chandra Padmanabhan",
+        "note": "Vegetarian recipes from the four southern states."
+      }
+    ]
+  },
+  "Malay cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "The Malay Cook: Everyday Malaysian Recipes from Grandma's Kitchen to Mine",
+        "author": "Ranie Saidi",
+        "isbn": "9781788797481",
+        "url": "https://publishing.hardiegrant.com/en-au/books/the-malay-cook-by-ranie-saidi/9781788797481",
+        "note": "Malay family home cooking by a Malaysian-born cook."
+      }
+    ]
+  },
+  "North Indian cuisine": {
+    "sites": [
+      {
+        "name": "Hebbar's Kitchen (North Indian)",
+        "url": "https://hebbarskitchen.com/cuisines/north-indian/",
+        "type": "blog",
+        "note": "North Indian section of Archana Hebbar's large vegetarian recipe site."
+      }
+    ],
+    "cookbooks": []
+  },
+  "Karnataka cuisine": {
+    "sites": [
+      {
+        "name": "Dassana's Veg Recipes (Karnataka)",
+        "url": "https://www.vegrecipesofindia.com/recipes/karnataka-cuisine/",
+        "type": "blog",
+        "note": "Karnataka section of Dassana Amit's Indian vegetarian recipe blog."
+      },
+      {
+        "name": "Chitra's Food Book (Karnataka)",
+        "url": "https://www.chitrasfoodbook.com/recipes/karnataka-recipes",
+        "type": "blog",
+        "note": "Karnataka recipes on a South Indian home cook's vegetarian blog."
+      }
+    ],
+    "cookbooks": []
+  },
+  "Malaysian Chinese cuisine": {
+    "sites": [
+      {
+        "name": "Malaysian Chinese Kitchen",
+        "url": "https://www.malaysianchinesekitchen.com/about",
+        "type": "blog",
+        "note": "Blog dedicated to Malaysian Chinese home cooking, with recipes and videos."
+      }
+    ],
+    "cookbooks": []
+  },
+  "Goan Catholic cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "The Essential Goa Cookbook",
+        "author": "Maria Teresa Menezes",
+        "url": "https://www.penguin.co.in/book/essential-goa-cookbook/",
+        "note": "Penguin India collection strong on Goan Catholic dishes such as xacuti, sorpotel and bebinca."
+      }
+    ]
+  },
+  "Naga cuisine": {
+    "sites": [
+      {
+        "name": "Roots and Leisure (Naga cuisine)",
+        "url": "https://rootsandleisure.com/tag/naga-cuisine/",
+        "type": "site",
+        "note": "Northeast India food and culture site, with Naga recipes and profiles of Naga cooks."
+      },
+      {
+        "name": "Archana's Kitchen (Nagaland)",
+        "url": "https://www.archanaskitchen.com/cuisine/nagaland",
+        "type": "site",
+        "note": "Nagaland section of Archana Doshi's Indian recipe site."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "Naga Cuisine: Ethnic Flavours",
+        "author": "Rovi Chasie",
+        "note": "Traditional Naga recipes by a Nagaland chef, reissued in a new edition in 2023."
+      }
+    ]
+  },
+  "Manipuri cuisine": {
+    "sites": [
+      {
+        "name": "Lukthel",
+        "url": "https://lukthel.com/blog/15/exploring-the-culinary-delights-of-manipuri-cuisine",
+        "type": "site",
+        "note": "Recipe site dedicated to Manipuri dishes, organized by community of origin."
+      }
+    ],
+    "cookbooks": []
+  },
+  "Meitei cuisine": {
+    "sites": [
+      {
+        "name": "Lukthel (Meetei recipes)",
+        "url": "https://lukthel.com/recipe/category/origin/meetei",
+        "type": "site",
+        "note": "Meetei-origin category on a Manipuri recipe site."
+      }
+    ],
+    "cookbooks": []
+  },
+  "Bihari cuisine": {
+    "sites": [
+      {
+        "name": "Archana's Kitchen (Bihari)",
+        "url": "https://archanaskitchen.com/cuisine/bihari",
+        "type": "site",
+        "note": "Bihari section of Archana Doshi's Indian recipe site."
+      },
+      {
+        "name": "Chef Kunal Kapur (Bihari)",
+        "url": "https://www.chefkunalkapur.com/tag/bihari",
+        "type": "site",
+        "note": "Bihari-tagged recipes on chef Kunal Kapur's site."
+      }
+    ],
+    "cookbooks": []
+  },
+  "Sarawakian cuisine": {
+    "sites": [
+      {
+        "name": "Guai Shu Shu (Sarawakian cuisines)",
+        "url": "https://www.guaishushu1.com/special-compilation-of-sarawakian-cuisines/",
+        "type": "blog",
+        "note": "Sarawak-born home cook Kenneth Goh's blog, with a compilation of Sarawakian dishes."
+      },
+      {
+        "name": "House of Annie",
+        "url": "https://houseofannie.com/category/recipes/page/4",
+        "type": "blog",
+        "note": "Food blog by a couple with Sarawak roots, known for Sarawakian recipes."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "Tamu: A Guest at the Bornean Table",
+        "author": "Bryan Koh",
+        "note": "Recipes shared by families across Borneo, not this region alone."
+      }
+    ]
+  },
+  "Sabahan cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Tamu: A Guest at the Bornean Table",
+        "author": "Bryan Koh",
+        "note": "Recipes shared by families across Borneo, not this region alone."
+      }
+    ]
+  },
+  "Syrian Jewish cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Aromas of Aleppo: The Legendary Cuisine of Syrian Jews",
+        "author": "Poopa Dweck and Michael J. Cohen",
+        "year": 2007,
+        "isbn": "9780060888183",
+        "url": "https://www.harpercollins.ca/9780060888183/aromas-of-aleppo",
+        "note": "Recipes and traditions of the Aleppo Jewish community and its Brooklyn diaspora."
+      }
+    ]
+  },
+  "Indo-Fijian food": {
+    "sites": [
+      {
+        "name": "Indo Fijian Recipes",
+        "url": "https://indofijianrecipes.blogspot.com",
+        "type": "blog",
+        "note": "Blog of home-style Indo-Fijian curries, chutneys and sweets."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "Annapurna: Gastronomic Delights from My Fiji Indian Childhood",
+        "author": "Nalini Naidu",
+        "note": "Fiji Indian family recipes and childhood memories."
+      }
+    ]
+  },
+  "Shan cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Burma: Rivers of Flavor",
+        "author": "Naomi Duguid",
+        "year": 2012,
+        "isbn": "9781579654139",
+        "url": "https://www.hachettebookgroup.com/titles/naomi-duguid/burma/9781579654139/?lens=artisan",
+        "note": "Burma-wide cookbook with substantial coverage of Shan State dishes, not Shan food alone."
+      }
+    ]
+  },
+  "Sikkimese cuisine": {
+    "sites": [
+      {
+        "name": "Taste of Sikkim",
+        "url": "https://tasteofsikkim.blogspot.com",
+        "type": "blog",
+        "note": "Blog dedicated to Sikkimese home recipes."
+      }
+    ],
+    "cookbooks": []
+  },
+  "Mizo cuisine": {
+    "sites": [
+      {
+        "name": "Roots and Leisure (Mizo dishes)",
+        "url": "https://rootsandleisure.com/tag/mizo-dish/",
+        "type": "site",
+        "note": "Northeast India food and culture site, with Mizo recipes."
+      }
+    ],
+    "cookbooks": []
+  },
+  "Eurasian cuisine of Singapore and Malaysia": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "The Eurasian Cookbook",
+        "author": "Mary Gomes",
+        "note": "Collection of Singapore Eurasian family dishes such as devil's curry and feng."
+      }
+    ]
+  },
+  "Indo cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Indo Dutch Kitchen Secrets: Stories and Favorite Family Recipes",
+        "author": "Jeff Keasberry",
+        "note": "Three generations of Indo (Dutch-Indonesian) family recipes; also published in Dutch as Indische keukengeheimen."
+      }
+    ]
+  },
+  "Indian fast food": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Chaat: Recipes from the Kitchens, Markets, and Railways of India",
+        "author": "Maneet Chauhan and Jody Eddy",
+        "year": 2020,
+        "isbn": "9781984823885",
+        "note": "Indian street snacks and chaat gathered on a train journey across India."
+      },
+      {
+        "title": "India Local: Classic Street Food Recipes",
+        "author": "Sonal Ved",
+        "isbn": "9789392130427",
+        "note": "Regional Indian street food recipes by a Mumbai-based food writer."
+      }
+    ]
+  },
+  "Jain vegetarianism": {
+    "sites": [
+      {
+        "name": "Spice Up The Curry (Jain recipes)",
+        "url": "https://www.spiceupthecurry.com/category/jain-recipes/",
+        "type": "blog",
+        "note": "Jain (no onion, no garlic) category on Kanan Patel's Indian vegetarian blog."
+      },
+      {
+        "name": "Tarla Dalal (Jain recipes)",
+        "url": "https://cdn.tarladalal.com/recipes-for-jain-34",
+        "type": "site",
+        "note": "Large Jain recipe category on Tarla Dalal's recipe site."
+      }
+    ],
+    "cookbooks": []
+  },
+  "Muhajir cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "The Karachi Kitchen: Classic and Contemporary Flavors of Pakistan",
+        "author": "Kausar Ahmed",
+        "year": 2017,
+        "note": "Home cooking from Karachi, the center of Muhajir food culture."
+      }
+    ]
+  },
+  "Caucasian cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Kaukasis: A Culinary Journey through Georgia, Azerbaijan & Beyond",
+        "author": "Olia Hercules",
+        "year": 2017,
+        "isbn": "9781681883038",
+        "url": "https://www.simonandschuster.ca/books/Kaukasis/Olia-Hercules/9781681883038",
+        "note": "Recipes gathered across the Caucasus, mostly Georgia and Azerbaijan."
+      }
+    ]
+  },
+  "Cuisine of Uttar Pradesh": {
+    "sites": [
+      {
+        "name": "Archana's Kitchen (Uttar Pradesh)",
+        "url": "https://www.archanaskitchen.com/cuisine/uttar-pradesh",
+        "type": "site",
+        "note": "Uttar Pradesh section of Archana Doshi's Indian recipe site."
+      },
+      {
+        "name": "Dassana's Veg Recipes (Uttar Pradesh)",
+        "url": "https://www.vegrecipesofindia.com/recipes/uttar-pradesh",
+        "type": "blog",
+        "note": "Uttar Pradesh section of Dassana Amit's Indian vegetarian recipe blog."
+      }
+    ],
+    "cookbooks": []
+  },
+  "Caspian cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Cooking in Iran: Regional Recipes & Kitchen Secrets",
+        "author": "Najmieh Batmanglij",
+        "url": "https://www.najmieh.com/?p=87",
+        "note": "Region-by-region survey of Iranian cooking, including the Caspian provinces of Gilan and Mazandaran."
+      }
+    ]
+  },
+  "Jharkhandi cuisine": {
+    "sites": [
+      {
+        "name": "Flavours of Jharkhand",
+        "url": "https://flavoursandreceipesofindia-jharkhand.blogspot.com",
+        "type": "blog",
+        "note": "Blog dedicated to traditional Jharkhand dishes such as dhuska and chilka roti."
+      }
+    ],
+    "cookbooks": []
+  },
+  "Ancient Israelite cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Cooking with the Bible: Biblical Food, Feasts, and Lore",
+        "author": "Anthony F. Chiffolo and Rayner W. Hesse",
+        "year": 2006,
+        "isbn": "9780313334108",
+        "note": "Reconstructed meals from biblical texts with historical background on ancient Israelite food."
+      }
+    ]
   }
 }

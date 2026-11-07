@@ -668,5 +668,73 @@
       }
     ],
     "cookbooks": []
+  },
+  "Australian Chinese cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Chopsticks or Fork? Recipes and Stories from Australia's Regional Chinese Restaurants",
+        "author": "Jennifer Wong and Lin Jie Kong",
+        "year": 2024,
+        "isbn": "9781743799390",
+        "note": "Hardie Grant companion to the ABC series, profiling ten families running regional Chinese restaurants, with 32 classic Australian-Chinese recipes."
+      }
+    ]
+  },
+  "Bush tucker": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Mabu Mabu",
+        "author": "Nornie Bero",
+        "year": 2021,
+        "isbn": "9781743797280",
+        "url": "https://publishing.hardiegrant.com/en-us/books/mabu-mabu-by-nornie-bero/9781743797280",
+        "note": "Home cooking with native Australian ingredients by Torres Strait Islander chef Nornie Bero."
+      },
+      {
+        "title": "Native Ingredients Everyday",
+        "author": "Nornie Bero",
+        "url": "https://publishing.hardiegrant.com/en-gb/books/native-ingredients-everyday-by-nornie-bero/9781761452048",
+        "isbn": "9781761452048",
+        "note": "Nornie Bero's follow-up on using native Australian ingredients in everyday meals, from Hardie Grant."
+      },
+      {
+        "title": "The Australian Ingredients Kitchen: Simple Recipes Using Bush Foods",
+        "author": "Bruno Dann and Tahlia Mandie",
+        "isbn": "9781761500510",
+        "url": "https://www.hardiegrantgift.com.au/books/australian-ingredients-kitchen-simple-recipes-using-bush-foods-9781761500510",
+        "note": "Simple recipes built around Australian bush foods, from Hardie Grant."
+      }
+    ]
+  },
+  "Tasmanian cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "A Kitchen in the Valley: 140 Delicious Recipes from a Tasmanian Farmhouse",
+        "author": "Sally Wise",
+        "note": "Sally Wise's recipes from her Tasmanian farmhouse kitchen."
+      },
+      {
+        "title": "The Tasmania Pantry",
+        "author": "Eloise Emmett",
+        "isbn": "9780994341693",
+        "note": "Tasmanian cookbook by Eloise Emmett; a second volume followed."
+      }
+    ]
+  },
+  "Papua New Guinean cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Eat Pacific: The Pacific Island Food Revolution Cookbook",
+        "author": "Robert Oliver (ed.)",
+        "year": 2024,
+        "isbn": "9781991016805",
+        "url": "https://masseypress.ac.nz/books/eat-pacific",
+        "note": "Pacific Island Food Revolution cookbook with a Papua New Guinea section."
+      }
+    ]
   }
 }

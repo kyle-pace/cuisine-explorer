@@ -1,0 +1,37 @@
+[
+{
+"id": "Australian Chinese cuisine",
+"name": "Australian Chinese cuisine",
+"kind": "diaspora",
+"country": "AUS",
+"parent": "Chinese cuisine"
+},
+{
+"id": "Christmas Island cuisine",
+"name": "Christmas Island cuisine",
+"kind": "regional",
+"country": "AUS",
+"parent": null
+},
+{
+"id": "Bush tucker",
+"name": "Bush tucker",
+"kind": "regional",
+"country": "AUS",
+"parent": "Australian cuisine"
+},
+{
+"id": "Tasmanian cuisine",
+"name": "Tasmanian cuisine",
+"kind": "regional",
+"country": "AUS",
+"parent": "Australian cuisine"
+},
+{
+"id": "Papua New Guinean cuisine",
+"name": "Papua New Guinean cuisine",
+"kind": "regional",
+"country": "PNG",
+"parent": null
+}
+]

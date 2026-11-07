@@ -1,0 +1,58 @@
+[
+{
+"id": "Cuisine of Equatorial Guinea",
+"name": "Equatorial Guinea cuisine",
+"kind": "regional",
+"country": "GIN",
+"parent": null
+},
+{
+"id": "Ethiopian Jewish cuisine",
+"name": "Ethiopian Jewish cuisine",
+"kind": "regional",
+"country": "ETH",
+"parent": "Ethiopian cuisine"
+},
+{
+"id": "Maasai cuisine",
+"name": "Maasai cuisine",
+"kind": "regional",
+"country": "KEN",
+"parent": null
+},
+{
+"id": "Zanzibari cuisine",
+"name": "Zanzibari cuisine",
+"kind": "regional",
+"country": "TZA",
+"parent": "Tanzanian cuisine"
+},
+{
+"id": "Berber cuisine",
+"name": "Berber cuisine",
+"kind": "peoples",
+"country": null,
+"parent": null
+},
+{
+"id": "Afrikaner cuisine",
+"name": "Afrikaner cuisine",
+"kind": "regional",
+"country": "ZAF",
+"parent": "South African cuisine"
+},
+{
+"id": "Yoruba cuisine",
+"name": "Yoruba cuisine",
+"kind": "peoples",
+"country": null,
+"parent": null
+},
+{
+"id": "Indian South Africans#Cuisine",
+"name": "Indo-South African food",
+"kind": "diaspora",
+"country": "ZAF",
+"parent": "Indian cuisine"
+}
+]

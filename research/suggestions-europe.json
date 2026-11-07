@@ -1148,5 +1148,221 @@
         "note": "Recipes built on Northern Irish produce by a Northern Irish chef and broadcaster."
       }
     ]
+  },
+  "Romanian cuisine": {
+    "sites": [
+      {
+        "name": "Notes from Irina's Kitchen",
+        "url": "https://irinageorgescu.substack.com/about",
+        "type": "blog",
+        "note": "Newsletter of Romanian recipes and food stories from cookbook author Irina Georgescu."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "Carpathia: Food from the Heart of Romania",
+        "author": "Irina Georgescu",
+        "year": 2020,
+        "isbn": "9780711241824",
+        "url": "https://www.quarto.com/books/9780711241824/carpathia",
+        "note": "Romanian-born author's survey of traditional Romanian home cooking."
+      }
+    ]
+  },
+  "Viennese cuisine": {
+    "sites": [
+      {
+        "name": "Plachutta: original recipes",
+        "url": "https://www.plachutta.at/en/recipes/",
+        "type": "site",
+        "note": "Recipes from the Plachutta family's Viennese restaurants, known for Tafelspitz."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "Plachutta: Viennese Cuisine",
+        "author": "Ewald Plachutta, Mario Plachutta",
+        "url": "https://www.plachutta.at/en/shop-books/produkt/3/plachutta-viennese-cuisine-authentic-austrian-recipes.html",
+        "note": "English edition of the Plachutta family's collection of classic Viennese dishes."
+      },
+      {
+        "title": "The Viennese Kitchen: Tante Hertha's Book of Family Recipes",
+        "author": "Monica Meehan, Maria von Baich",
+        "isbn": "9781504800709",
+        "note": "Family recipes of a Viennese household, from schnitzel to tortes."
+      }
+    ]
+  },
+  "New Nordic cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Noma: Time and Place in Nordic Cuisine",
+        "author": "René Redzepi",
+        "year": 2010,
+        "note": "The Copenhagen restaurant's landmark book that defined the New Nordic movement, published by Phaidon."
+      },
+      {
+        "title": "Cook: Natural Flavours from a Nordic Kitchen",
+        "author": "Mikkel Karstad",
+        "isbn": "9781908337245",
+        "note": "Seasonal home cooking in the New Nordic style by a Danish chef."
+      }
+    ]
+  },
+  "Balkan cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "The Balkan Kitchen: Recipes and Stories from the Heart of the Balkans",
+        "author": "Irina Janakievska",
+        "isbn": "9781784886851",
+        "url": "https://publishing.hardiegrant.com/en-gb/books/the-balkan-kitchen-by-irina-janakievska/9781784886851",
+        "note": "Macedonian-born author's recipes from across the Balkan region, published by Hardie Grant."
+      }
+    ]
+  },
+  "Cuisine of Odesa": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Cuisines of Odesa: A Ukrainian Cookbook",
+        "author": "Maria Kalenska",
+        "isbn": "9798886741735",
+        "url": "https://insighteditions.com/products/cuisines-of-odesa",
+        "note": "Recipes and stories reflecting the many cultures of the port city of Odesa."
+      }
+    ]
+  },
+  "Franconian cuisine": {
+    "sites": [
+      {
+        "name": "Nuremberg Tourism: Franconian specialties",
+        "url": "https://tourismus.nuernberg.de/en/food-drink/nurembergs-specialties/franconian-specialties/recipe-franconian-schaeuferle-pork-shoulder-in-beer-sauce-1/",
+        "type": "site",
+        "note": "Nuremberg's official tourism site, with a section of Franconian specialty recipes such as Schäufele."
+      }
+    ],
+    "cookbooks": []
+  },
+  "Haute cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Escoffier: The Complete Guide to the Art of Modern Cookery",
+        "author": "Auguste Escoffier",
+        "year": 1903,
+        "isbn": "9780470900277",
+        "note": "English translation of Le Guide Culinaire, the codification of classic French haute cuisine."
+      }
+    ]
+  },
+  "Nouvelle cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Michel Guérard's Cuisine Minceur",
+        "author": "Michel Guérard",
+        "year": 1976,
+        "note": "Lighter, sauce-reduced French cooking by one of the founders of nouvelle cuisine."
+      }
+    ]
+  },
+  "Occitan cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "The Cooking of Southwest France",
+        "author": "Paula Wolfert",
+        "year": 1983,
+        "isbn": "9780764576027",
+        "url": "https://openroadmedia.com/ebook/the-cooking-of-southwest-france/9780544186019",
+        "note": "Classic study of the rustic cooking of Gascony, Languedoc and the wider Occitan south, including cassoulet."
+      }
+    ]
+  },
+  "Faroese cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Koks: Faroe Islands Flavour",
+        "author": "Poul Andrias Ziska, Tim Ecott",
+        "note": "Book from the Faroese restaurant Koks on traditional Faroese ingredients and techniques."
+      }
+    ]
+  },
+  "Channel Islands cuisine": {
+    "sites": [
+      {
+        "name": "Visit Guernsey: traditional Guernsey recipes",
+        "url": "https://www.visitguernsey.com/articles/2020/5-traditional-guernsey-recipes-to-try-at-home/",
+        "type": "site",
+        "note": "Guernsey's official tourism site with traditional island recipes such as bean jar."
+      },
+      {
+        "name": "Channel Islands Co-op: Liberation Day recipes",
+        "url": "https://www.channelislands.coop/food/recipes/liberation-day-recipes/",
+        "type": "site",
+        "note": "Local co-operative's collection of traditional Channel Islands dishes."
+      }
+    ],
+    "cookbooks": []
+  },
+  "Cuisine of Devon": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "The Devon Cook Book",
+        "author": "Kate Reeves-Brown",
+        "isbn": "9781910863244",
+        "url": "https://mezepublishing.co.uk/?p=284",
+        "note": "Recipes from Devon restaurants, producers and food businesses, published by Meze."
+      }
+    ]
+  },
+  "Cuisine of Basilicata": {
+    "sites": [
+      {
+        "name": "Inside the Rustic Kitchen: Basilicata recipes",
+        "url": "https://www.insidetherustickitchen.com/category/basilicata-recipes",
+        "type": "blog",
+        "note": "Italian home-cooking blog's dedicated section of dishes from Basilicata."
+      }
+    ],
+    "cookbooks": []
+  },
+  "Cuisine of the Ionian Islands": {
+    "sites": [
+      {
+        "name": "Greek Recipe: Corfu",
+        "url": "https://greek-recipe.com/category/regional/corfu",
+        "type": "site",
+        "note": "Regional category of Corfiot dishes such as pastitsada on a Greek recipe site."
+      }
+    ],
+    "cookbooks": []
+  },
+  "British Chinese cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Chinese Takeaway Cookbook",
+        "author": "Kwoklyn Wan",
+        "isbn": "9781787133679",
+        "url": "https://www.penguin.co.uk/books/467289/chinese-takeaway-cookbook-by-kwoklyn-wan/9781787133679",
+        "note": "British Chinese takeaway classics from a chef raised in his family's UK takeaway, published by Quadrille."
+      }
+    ]
+  },
+  "German cuisine#Thuringia": {
+    "sites": [
+      {
+        "name": "Quick German Recipes: Thuringia",
+        "url": "https://www.quick-german-recipes.com/thuringia.html",
+        "type": "blog",
+        "note": "Thuringia page on German-born cook Gerhild Fulson's long-running German recipe site."
+      }
+    ],
+    "cookbooks": []
   }
 }

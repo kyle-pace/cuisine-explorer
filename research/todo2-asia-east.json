@@ -1,0 +1,282 @@
+[
+{
+"id": "Caribbean Chinese cuisine",
+"name": "Caribbean Chinese cuisine",
+"kind": "diaspora",
+"country": "CHN",
+"parent": "Chinese cuisine"
+},
+{
+"id": "Koryo-saram cuisine",
+"name": "Koryo-saram cuisine",
+"kind": "regional",
+"country": "KOR",
+"parent": "Korean cuisine"
+},
+{
+"id": "Ainu cuisine",
+"name": "Ainu cuisine",
+"kind": "regional",
+"country": "JPN",
+"parent": "Japanese cuisine"
+},
+{
+"id": "Okinawan cuisine",
+"name": "Okinawan cuisine",
+"kind": "regional",
+"country": "JPN",
+"parent": "Japanese cuisine"
+},
+{
+"id": "Shippoku",
+"name": "Shippoku",
+"kind": "regional",
+"country": "JPN",
+"parent": "Japanese Chinese cuisine"
+},
+{
+"id": "Korean regional cuisine",
+"name": "Korean regional cuisine",
+"kind": "regional",
+"country": "KOR",
+"parent": "Korean cuisine"
+},
+{
+"id": "Sakhalin Korean cuisine",
+"name": "Sakhalin Korean cuisine",
+"kind": "regional",
+"country": "KOR",
+"parent": "Korean cuisine"
+},
+{
+"id": "Hebei#Cuisine",
+"name": "Hebei cuisine",
+"kind": "regional",
+"country": "CHN",
+"parent": "Chinese cuisine"
+},
+{
+"id": "Heilongjiang cuisine",
+"name": "Heilongjiang cuisine",
+"kind": "regional",
+"country": "CHN",
+"parent": "Northeastern Chinese cuisine"
+},
+{
+"id": "Jilin cuisine",
+"name": "Jilin cuisine",
+"kind": "regional",
+"country": "CHN",
+"parent": "Northeastern Chinese cuisine"
+},
+{
+"id": "Liaoning cuisine",
+"name": "Liaoning cuisine",
+"kind": "regional",
+"country": "CHN",
+"parent": "Northeastern Chinese cuisine"
+},
+{
+"id": "Manchu cuisine",
+"name": "Manchu cuisine",
+"kind": "regional",
+"country": "CHN",
+"parent": "Northeastern Chinese cuisine"
+},
+{
+"id": "Shandong cuisine",
+"name": "Shandong cuisine",
+"kind": "regional",
+"country": "CHN",
+"parent": "Chinese cuisine"
+},
+{
+"id": "Shanxi cuisine",
+"name": "Shanxi cuisine",
+"kind": "regional",
+"country": "CHN",
+"parent": "Chinese cuisine"
+},
+{
+"id": "Tianjin cuisine",
+"name": "Tianjin cuisine",
+"kind": "regional",
+"country": "CHN",
+"parent": "Chinese cuisine"
+},
+{
+"id": "Xuzhou cuisine",
+"name": "Xuzhou cuisine",
+"kind": "regional",
+"country": "CHN",
+"parent": "Chinese cuisine"
+},
+{
+"id": "Anhui cuisine",
+"name": "Anhui cuisine",
+"kind": "regional",
+"country": "CHN",
+"parent": "Chinese cuisine"
+},
+{
+"id": "Haipai cuisine",
+"name": "Haipai cuisine",
+"kind": "regional",
+"country": "CHN",
+"parent": "Shanghai cuisine"
+},
+{
+"id": "Ningxia cuisine",
+"name": "Ningxia cuisine",
+"kind": "regional",
+"country": "CHN",
+"parent": "Chinese cuisine"
+},
+{
+"id": "Qinghai cuisine",
+"name": "Qinghai cuisine",
+"kind": "regional",
+"country": "CHN",
+"parent": "Chinese cuisine"
+},
+{
+"id": "Guilin cuisine",
+"name": "Guilin cuisine",
+"kind": "regional",
+"country": "CHN",
+"parent": "Chinese cuisine"
+},
+{
+"id": "Tujia cuisine",
+"name": "Tujia cuisine",
+"kind": "regional",
+"country": "CHN",
+"parent": "Chinese cuisine"
+},
+{
+"id": "Guangxi cuisine",
+"name": "Guangxi cuisine",
+"kind": "regional",
+"country": "CHN",
+"parent": "Cantonese cuisine"
+},
+{
+"id": "Fujian cuisine",
+"name": "Min cuisine",
+"kind": "regional",
+"country": "CHN",
+"parent": "Chinese cuisine"
+},
+{
+"id": "Fuzhou cuisine",
+"name": "Fuzhou cuisine",
+"kind": "regional",
+"country": "CHN",
+"parent": "Fujian cuisine"
+},
+{
+"id": "Minnan cuisine",
+"name": "Minnan cuisine",
+"kind": "regional",
+"country": "CHN",
+"parent": "Fujian cuisine"
+},
+{
+"id": "Putian cuisine",
+"name": "Putian (Henghwa) cuisine",
+"kind": "regional",
+"country": "CHN",
+"parent": "Fujian cuisine"
+},
+{
+"id": "Ou cuisine",
+"name": "Ou cuisine",
+"kind": "regional",
+"country": "CHN",
+"parent": "Chinese cuisine"
+},
+{
+"id": "Hlai cuisine",
+"name": "Hlai cuisine",
+"kind": "regional",
+"country": "CHN",
+"parent": "Chinese cuisine"
+},
+{
+"id": "Kachin cuisine",
+"name": "Kachin cuisine",
+"kind": "regional",
+"country": "CHN",
+"parent": "Chinese cuisine"
+},
+{
+"id": "Miao cuisine",
+"name": "Miao cuisine",
+"kind": "regional",
+"country": "CHN",
+"parent": "Chinese cuisine"
+},
+{
+"id": "Wa cuisine",
+"name": "Wa cuisine",
+"kind": "regional",
+"country": "CHN",
+"parent": "Chinese cuisine"
+},
+{
+"id": "Yao cuisine",
+"name": "Yao cuisine",
+"kind": "regional",
+"country": "CHN",
+"parent": "Chinese cuisine"
+},
+{
+"id": "Yi cuisine",
+"name": "Yi cuisine",
+"kind": "regional",
+"country": "CHN",
+"parent": "Chinese cuisine"
+},
+{
+"id": "Zhuang cuisine",
+"name": "Zhuang cuisine",
+"kind": "regional",
+"country": "CHN",
+"parent": "Chinese cuisine"
+},
+{
+"id": "Chinese Islamic cuisine",
+"name": "Chinese Islamic cuisine",
+"kind": "regional",
+"country": "CHN",
+"parent": "Chinese cuisine"
+},
+{
+"id": "Taoist diet",
+"name": "Taoist diet",
+"kind": "regional",
+"country": "CHN",
+"parent": "Chinese cuisine"
+},
+{
+"id": "List of Sino-Mauritian dishes",
+"name": "Mauritian Chinese cuisine",
+"kind": "regional",
+"country": "CHN",
+"parent": "Chinese cuisine"
+},
+{
+"id": "Buryat cuisine",
+"name": "Buryat cuisine",
+"kind": "regional",
+"country": "MNG",
+"parent": "Mongolian cuisine"
+},
+{
+"id": "Kalmyk cuisine",
+"name": "Kalmyk cuisine",
+"kind": "regional",
+"country": "MNG",
+"parent": "Mongolian cuisine"
+}
+]

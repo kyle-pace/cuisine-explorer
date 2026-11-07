@@ -633,10 +633,10 @@
   "Guizhou cuisine": {
     "sites": [
       {
-        "name": "Carolyn Phillips' blog: Guizhou cuisine",
+        "name": "Madame Huang's Kitchen: Guizhou cuisine",
         "url": "https://carolynjphillips.blogspot.com/search/label/Guizhou%20cuisine",
         "type": "blog",
-        "note": "Recipe posts on Guizhou dishes from the blog that appears to belong to the author of All Under Heaven."
+        "note": "Recipe posts on Guizhou dishes from Carolyn Phillips' blog, Madame Huang's Kitchen."
       }
     ],
     "cookbooks": [
@@ -653,10 +653,10 @@
   "Hainan cuisine": {
     "sites": [
       {
-        "name": "Carolyn Phillips' blog: Hainan cuisine",
+        "name": "Madame Huang's Kitchen: Hainan cuisine",
         "url": "https://carolynjphillips.blogspot.com/search/label/Hainan%20cuisine",
         "type": "blog",
-        "note": "Recipe posts on Hainan dishes from the blog that appears to belong to the author of All Under Heaven."
+        "note": "Recipe posts on Hainan dishes from Carolyn Phillips' blog, Madame Huang's Kitchen."
       }
     ],
     "cookbooks": [
@@ -673,10 +673,10 @@
   "Hubei cuisine": {
     "sites": [
       {
-        "name": "Carolyn Phillips' blog: Hubei cuisine",
+        "name": "Madame Huang's Kitchen: Hubei cuisine",
         "url": "https://carolynjphillips.blogspot.com/search/label/Hubei%20cuisine",
         "type": "blog",
-        "note": "Recipe posts on Hubei dishes from the blog that appears to belong to the author of All Under Heaven."
+        "note": "Recipe posts on Hubei dishes from Carolyn Phillips' blog, Madame Huang's Kitchen."
       }
     ],
     "cookbooks": [
@@ -693,10 +693,10 @@
   "Jiangxi cuisine": {
     "sites": [
       {
-        "name": "Carolyn Phillips' blog: Jiangxi cuisine",
+        "name": "Madame Huang's Kitchen: Jiangxi cuisine",
         "url": "https://carolynjphillips.blogspot.com/search/label/Jiangxi%20cuisine",
         "type": "blog",
-        "note": "Recipe posts on Jiangxi dishes from the blog that appears to belong to the author of All Under Heaven."
+        "note": "Recipe posts on Jiangxi dishes from Carolyn Phillips' blog, Madame Huang's Kitchen."
       }
     ],
     "cookbooks": [
@@ -713,10 +713,10 @@
   "Henan cuisine": {
     "sites": [
       {
-        "name": "Carolyn Phillips' blog: Henan cuisine",
+        "name": "Madame Huang's Kitchen: Henan cuisine",
         "url": "https://carolynjphillips.blogspot.com/search/label/Henan%20cuisine",
         "type": "blog",
-        "note": "Recipe posts on Henan dishes from the blog that appears to belong to the author of All Under Heaven."
+        "note": "Recipe posts on Henan dishes from Carolyn Phillips' blog, Madame Huang's Kitchen."
       }
     ],
     "cookbooks": [
@@ -839,6 +839,29 @@
         "year": 2018,
         "isbn": "9781614720430",
         "note": "Annotated translation of an 18th-century Qing gourmet's recipe and dining manual from the scholar-official class."
+      }
+    ]
+  },
+  "Taoist diet": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "A Taoist Cookbook: With Meditations Taken from the Laozi Daode Jing",
+        "author": "Michael R. Saso",
+        "note": "Vegetarian recipes paired with readings from the Daode Jing, by a scholar of Taoist religion."
+      }
+    ]
+  },
+  "Wa cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "The Yunnan Cookbook: Recipes from China's Land of Ethnic Diversity",
+        "author": "Annabel Jackson",
+        "year": 2013,
+        "isbn": "9789881613974",
+        "url": "https://blacksmithbooks.com/2016/11/wa-cheesemaker-excerpt-recipe-yunnan-cookbook",
+        "note": "Yunnan cookbook covering the province's minority groups; the linked publisher post is a Wa recipe excerpt."
       }
     ]
   }

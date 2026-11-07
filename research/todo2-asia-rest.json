@@ -1,0 +1,660 @@
+[
+{
+"id": "Hazara cuisine",
+"name": "Hazara cuisine",
+"kind": "regional",
+"country": "AFG",
+"parent": "Afghan cuisine"
+},
+{
+"id": "Pashtun cuisine",
+"name": "Pashtun cuisine",
+"kind": "regional",
+"country": "AFG",
+"parent": "Afghan cuisine"
+},
+{
+"id": "Balochi cuisine",
+"name": "Balochi cuisine",
+"kind": "regional",
+"country": "PAK",
+"parent": "Pakistani cuisine"
+},
+{
+"id": "Bashkir cuisine",
+"name": "Bashkir cuisine",
+"kind": "regional",
+"country": "RUS",
+"parent": "Russian cuisine"
+},
+{
+"id": "Dagestani cuisine",
+"name": "Dagestani cuisine",
+"kind": "regional",
+"country": "RUS",
+"parent": "Caucasian cuisine"
+},
+{
+"id": "Caspian cuisine",
+"name": "Caspian cuisine",
+"kind": "regional",
+"country": "IRN",
+"parent": "Iranian cuisine"
+},
+{
+"id": "Karakalpak cuisine",
+"name": "Karakalpak cuisine",
+"kind": "peoples",
+"country": null,
+"parent": null
+},
+{
+"id": "Tatar cuisine",
+"name": "Tatar cuisine",
+"kind": "regional",
+"country": "RUS",
+"parent": "Russian cuisine"
+},
+{
+"id": "Burmese Chinese cuisine",
+"name": "Burmese Chinese cuisine",
+"kind": "diaspora",
+"country": "MMR",
+"parent": "Chinese cuisine"
+},
+{
+"id": "Cambodian Chinese cuisine",
+"name": "Cambodian Chinese cuisine",
+"kind": "regional",
+"country": "KHM",
+"parent": "Chinese cuisine"
+},
+{
+"id": "Filipino Chinese cuisine",
+"name": "Filipino Chinese cuisine",
+"kind": "regional",
+"country": "PHL",
+"parent": "Chinese cuisine"
+},
+{
+"id": "French Chinese cuisine",
+"name": "French Chinese cuisine",
+"kind": "diaspora",
+"country": "FRA",
+"parent": "Chinese cuisine"
+},
+{
+"id": "Indian Chinese cuisine",
+"name": "Indian Chinese cuisine",
+"kind": "diaspora",
+"country": "IND",
+"parent": "Chinese cuisine"
+},
+{
+"id": "Chinese Indonesian cuisine",
+"name": "Indonesian Chinese cuisine",
+"kind": "diaspora",
+"country": "IDN",
+"parent": "Chinese cuisine"
+},
+{
+"id": "Mexican Chinese cuisine",
+"name": "Mexican Chinese cuisine",
+"kind": "diaspora",
+"country": "MEX",
+"parent": "Chinese Latin American cuisine"
+},
+{
+"id": "Malaysian Chinese cuisine",
+"name": "Malaysian Chinese cuisine",
+"kind": "regional",
+"country": "MYS",
+"parent": "Chinese cuisine"
+},
+{
+"id": "New Zealand Chinese cuisine",
+"name": "New Zealand Chinese cuisine",
+"kind": "regional",
+"country": "NZL",
+"parent": "Chinese cuisine"
+},
+{
+"id": "Pakistani Chinese cuisine",
+"name": "Pakistani Chinese cuisine",
+"kind": "regional",
+"country": "PAK",
+"parent": "Chinese cuisine"
+},
+{
+"id": "Singaporean cuisine#Chinese-inspired",
+"name": "Singaporean Chinese cuisine",
+"kind": "regional",
+"country": "SGP",
+"parent": "Chinese cuisine"
+},
+{
+"id": "Thai Chinese cuisine",
+"name": "Thai Chinese cuisine",
+"kind": "diaspora",
+"country": "THA",
+"parent": "Chinese cuisine"
+},
+{
+"id": "Vietnamese Chinese cuisine",
+"name": "Vietnamese Chinese cuisine",
+"kind": "diaspora",
+"country": "VNM",
+"parent": "Chinese cuisine"
+},
+{
+"id": "Sikkimese cuisine",
+"name": "Sikkimese cuisine",
+"kind": "regional",
+"country": "IND",
+"parent": "North East Indian cuisine"
+},
+{
+"id": "Tuvan cuisine",
+"name": "Tuvan cuisine",
+"kind": "peoples",
+"country": null,
+"parent": null
+},
+{
+"id": "Chukchi cuisine",
+"name": "Chukchi cuisine",
+"kind": "regional",
+"country": "RUS",
+"parent": "Russian cuisine"
+},
+{
+"id": "Cuisine of Commander Islands",
+"name": "Cuisine of Commander Islands",
+"kind": "regional",
+"country": "RUS",
+"parent": "Russian cuisine"
+},
+{
+"id": "Sakha cuisine",
+"name": "Sakha cuisine",
+"kind": "regional",
+"country": "RUS",
+"parent": "Russian cuisine"
+},
+{
+"id": "Yamal cuisine",
+"name": "Yamal cuisine",
+"kind": "regional",
+"country": "RUS",
+"parent": "Russian cuisine"
+},
+{
+"id": "Yup'ik cuisine",
+"name": "Yup'ik cuisine",
+"kind": "regional",
+"country": "RUS",
+"parent": "Russian cuisine"
+},
+{
+"id": "Bengali cuisine",
+"name": "Bengali cuisine",
+"kind": "regional",
+"country": "BGD",
+"parent": "Bangladeshi cuisine"
+},
+{
+"id": "Newari cuisine",
+"name": "Newari cuisine",
+"kind": "regional",
+"country": "NPL",
+"parent": "Nepalese cuisine"
+},
+{
+"id": "Goan Catholic cuisine",
+"name": "Goan Catholic cuisine",
+"kind": "regional",
+"country": "IND",
+"parent": "Goan cuisine"
+},
+{
+"id": "Hridhaansh cuisine",
+"name": "Hridhaansh cuisine",
+"kind": "regional",
+"country": "IND",
+"parent": "Maharashtrian cuisine"
+},
+{
+"id": "Malvani cuisine",
+"name": "Malvani cuisine",
+"kind": "regional",
+"country": "IND",
+"parent": "Indian cuisine"
+},
+{
+"id": "Vansh cuisine",
+"name": "Vansh cuisine",
+"kind": "regional",
+"country": "IND",
+"parent": "Rajasthani cuisine"
+},
+{
+"id": "North Indian cuisine",
+"name": "North Indian cuisine",
+"kind": "regional",
+"country": "IND",
+"parent": "Indian cuisine"
+},
+{
+"id": "Bhojpuri cuisine",
+"name": "Bhojpuri cuisine",
+"kind": "regional",
+"country": "IND",
+"parent": "North Indian cuisine"
+},
+{
+"id": "Maithil cuisine",
+"name": "Maithil cuisine",
+"kind": "regional",
+"country": "IND",
+"parent": "North Indian cuisine"
+},
+{
+"id": "Mughlai cuisine",
+"name": "Mughlai cuisine",
+"kind": "regional",
+"country": "IND",
+"parent": "North Indian cuisine"
+},
+{
+"id": "Cuisine of Uttar Pradesh",
+"name": "Uttar Pradesh cuisine",
+"kind": "regional",
+"country": "IND",
+"parent": "North Indian cuisine"
+},
+{
+"id": "South Indian cuisine",
+"name": "South Indian cuisine",
+"kind": "regional",
+"country": "IND",
+"parent": "Indian cuisine"
+},
+{
+"id": "Karnataka cuisine",
+"name": "Karnataka cuisine",
+"kind": "regional",
+"country": "IND",
+"parent": "South Indian cuisine"
+},
+{
+"id": "South Karnataka",
+"name": "Dakshina Karnataka cuisine",
+"kind": "regional",
+"country": "IND",
+"parent": "Karnataka cuisine"
+},
+{
+"id": "North Karnataka",
+"name": "Uttara Karnataka cuisine",
+"kind": "regional",
+"country": "IND",
+"parent": "Karnataka cuisine"
+},
+{
+"id": "Manipuri cuisine",
+"name": "Manipuri cuisine",
+"kind": "regional",
+"country": "IND",
+"parent": "North East Indian cuisine"
+},
+{
+"id": "Meitei cuisine",
+"name": "Meitei cuisine",
+"kind": "regional",
+"country": "IND",
+"parent": "Manipuri cuisine"
+},
+{
+"id": "Mizo cuisine",
+"name": "Mizo cuisine",
+"kind": "regional",
+"country": "IND",
+"parent": "North East Indian cuisine"
+},
+{
+"id": "Naga cuisine",
+"name": "Naga cuisine",
+"kind": "regional",
+"country": "IND",
+"parent": "North East Indian cuisine"
+},
+{
+"id": "Tripuri cuisine",
+"name": "Tripuri cuisine",
+"kind": "regional",
+"country": "IND",
+"parent": "North East Indian cuisine"
+},
+{
+"id": "East India#Cuisine",
+"name": "East Indian cuisine",
+"kind": "regional",
+"country": "IND",
+"parent": "Indian cuisine"
+},
+{
+"id": "Bihari cuisine",
+"name": "Bihari cuisine",
+"kind": "regional",
+"country": "IND",
+"parent": "East India#Cuisine"
+},
+{
+"id": "Jharkhandi cuisine",
+"name": "Jharkhandi cuisine",
+"kind": "regional",
+"country": "IND",
+"parent": "East India#Cuisine"
+},
+{
+"id": "Indian fast food",
+"name": "Indian fast food",
+"kind": "regional",
+"country": "IND",
+"parent": "Indian cuisine"
+},
+{
+"id": "Indo-Fijian food",
+"name": "Indo-Fijian food",
+"kind": "diaspora",
+"country": "FJI",
+"parent": "Indian cuisine"
+},
+{
+"id": "Jain vegetarianism",
+"name": "Jain cuisine",
+"kind": "regional",
+"country": "IND",
+"parent": "Indian cuisine"
+},
+{
+"id": "Malaysian Indian cuisine",
+"name": "Malaysian Indian cuisine",
+"kind": "regional",
+"country": "MYS",
+"parent": "Indian cuisine"
+},
+{
+"id": "Muhajir cuisine",
+"name": "Muhajir cuisine",
+"kind": "regional",
+"country": "PAK",
+"parent": "Pakistani cuisine"
+},
+{
+"id": "Lahori cuisine",
+"name": "Lahori cuisine",
+"kind": "regional",
+"country": "IND",
+"parent": "Punjabi cuisine"
+},
+{
+"id": "Saraiki cuisine",
+"name": "Saraiki cuisine",
+"kind": "regional",
+"country": "IND",
+"parent": "Punjabi cuisine"
+},
+{
+"id": "Cham cuisine",
+"name": "Cham cuisine",
+"kind": "regional",
+"country": "VNM",
+"parent": null
+},
+{
+"id": "Karen cuisine",
+"name": "Karen cuisine",
+"kind": "regional",
+"country": "THA",
+"parent": null
+},
+{
+"id": "Mon cuisine",
+"name": "Mon cuisine",
+"kind": "regional",
+"country": "THA",
+"parent": null
+},
+{
+"id": "Shan cuisine",
+"name": "Shan cuisine",
+"kind": "regional",
+"country": "THA",
+"parent": "Thai cuisine"
+},
+{
+"id": "Thai-Chinese cuisine",
+"name": "Thai-Chinese cuisine",
+"kind": "diaspora",
+"country": "THA",
+"parent": "Thai cuisine"
+},
+{
+"id": "Filipino cuisine#Mindanao",
+"name": "Mindanao cuisine",
+"kind": "regional",
+"country": "PHL",
+"parent": "Filipino cuisine"
+},
+{
+"id": "Tagalog cuisine",
+"name": "Tagalog cuisine",
+"kind": "regional",
+"country": "PHL",
+"parent": "Filipino cuisine"
+},
+{
+"id": "Arab cuisine",
+"name": "Arab cuisine",
+"kind": "regional",
+"country": "MYS",
+"parent": "Malaysian cuisine"
+},
+{
+"id": "Eurasian cuisine of Singapore and Malaysia",
+"name": "Eurasian cuisine",
+"kind": "regional",
+"country": "MYS",
+"parent": "Malaysian cuisine"
+},
+{
+"id": "Malay cuisine",
+"name": "Malay cuisine",
+"kind": "regional",
+"country": "MYS",
+"parent": "Malaysian cuisine"
+},
+{
+"id": "Sabahan cuisine",
+"name": "Sabahan cuisine",
+"kind": "regional",
+"country": "MYS",
+"parent": "Malaysian cuisine"
+},
+{
+"id": "Sarawakian cuisine",
+"name": "Sarawakian cuisine",
+"kind": "regional",
+"country": "MYS",
+"parent": "Malaysian cuisine"
+},
+{
+"id": "Acehnese cuisine",
+"name": "Acehnese cuisine",
+"kind": "regional",
+"country": "IDN",
+"parent": "Indonesian cuisine"
+},
+{
+"id": "Banjar cuisine",
+"name": "Banjar cuisine",
+"kind": "regional",
+"country": "IDN",
+"parent": "Indonesian cuisine"
+},
+{
+"id": "Batak cuisine",
+"name": "Batak cuisine",
+"kind": "regional",
+"country": "IDN",
+"parent": "Indonesian cuisine"
+},
+{
+"id": "Indo cuisine",
+"name": "Indo cuisine",
+"kind": "diaspora",
+"country": "IDN",
+"parent": "Indonesian cuisine"
+},
+{
+"id": "Indonesian Arab cuisine",
+"name": "Indonesian Arab cuisine",
+"kind": "diaspora",
+"country": "IDN",
+"parent": "Indonesian cuisine"
+},
+{
+"id": "Indonesian Chinese cuisine",
+"name": "Indonesian Chinese cuisine",
+"kind": "diaspora",
+"country": "IDN",
+"parent": "Indonesian cuisine"
+},
+{
+"id": "Indonesian Indian cuisine",
+"name": "Indonesian Indian cuisine",
+"kind": "diaspora",
+"country": "IDN",
+"parent": "Indonesian cuisine"
+},
+{
+"id": "Javanese cuisine",
+"name": "Javanese cuisine",
+"kind": "regional",
+"country": "IDN",
+"parent": "Indonesian cuisine"
+},
+{
+"id": "Betawi cuisine",
+"name": "Betawi cuisine",
+"kind": "regional",
+"country": "IDN",
+"parent": "Javanese cuisine"
+},
+{
+"id": "Madurese cuisine",
+"name": "Madurese cuisine",
+"kind": "regional",
+"country": "IDN",
+"parent": "Javanese cuisine"
+},
+{
+"id": "Sundanese cuisine",
+"name": "Sundanese cuisine",
+"kind": "regional",
+"country": "IDN",
+"parent": "Javanese cuisine"
+},
+{
+"id": "Makassar cuisine",
+"name": "Makassar cuisine",
+"kind": "regional",
+"country": "IDN",
+"parent": "Indonesian cuisine"
+},
+{
+"id": "Manado cuisine",
+"name": "Manado cuisine",
+"kind": "regional",
+"country": "IDN",
+"parent": "Indonesian cuisine"
+},
+{
+"id": "Palembang cuisine",
+"name": "Palembang cuisine",
+"kind": "regional",
+"country": "IDN",
+"parent": "Padang food"
+},
+{
+"id": "Ancient Israelite cuisine",
+"name": "Ancient Israelite cuisine",
+"kind": "regional",
+"country": "ISR",
+"parent": "Israeli cuisine"
+},
+{
+"id": "Syrian Jewish cuisine",
+"name": "Syrian Jewish cuisine",
+"kind": "regional",
+"country": "SYR",
+"parent": "Syrian cuisine"
+},
+{
+"id": "Caucasian cuisine",
+"name": "Caucasian cuisine",
+"kind": "peoples",
+"country": null,
+"parent": null
+},
+{
+"id": "Chechen cuisine",
+"name": "Chechen cuisine",
+"kind": "regional",
+"country": "RUS",
+"parent": "Caucasian cuisine"
+},
+{
+"id": "Circassian cuisine",
+"name": "Circassian cuisine",
+"kind": "regional",
+"country": "RUS",
+"parent": "Caucasian cuisine"
+},
+{
+"id": "Ossetian cuisine",
+"name": "Ossetian cuisine",
+"kind": "peoples",
+"country": null,
+"parent": "Caucasian cuisine"
+},
+{
+"id": "Pontic Greek cuisine",
+"name": "Pontic Greek cuisine",
+"kind": "regional",
+"country": "TUR",
+"parent": "Turkish cuisine"
+},
+{
+"id": "Komi cuisine",
+"name": "Komi cuisine",
+"kind": "regional",
+"country": "RUS",
+"parent": "Russian cuisine"
+},
+{
+"id": "Mordovian cuisine",
+"name": "Mordovian cuisine",
+"kind": "regional",
+"country": "RUS",
+"parent": "Russian cuisine"
+},
+{
+"id": "Udmurt cuisine",
+"name": "Udmurt cuisine",
+"kind": "regional",
+"country": "RUS",
+"parent": "Russian cuisine"
+}
+]

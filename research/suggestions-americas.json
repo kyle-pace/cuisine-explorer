@@ -162,6 +162,27 @@
       }
     ]
   },
+  "Cuisine of California#Latino_and_Hispanic_influence": {
+    "cookbooks": [
+      {
+        "title": "Fast and Fresh Cal-Mex Cooking: West Coast-Inspired Dinners in 30 Minutes or Less",
+        "author": "Caitlin Prettyman",
+        "isbn": "9798890030306",
+        "note": "Quick Cal-Mex weeknight dishes."
+      }
+    ]
+  },
+  "Korean-Mexican fusion": {
+    "cookbooks": [
+      {
+        "title": "L.A. Son: My Life, My City, My Food",
+        "author": "Roy Choi with Tien Nguyen and Natasha Phan",
+        "year": 2013,
+        "isbn": "9780062202635",
+        "note": "Memoir and recipes from the Los Angeles chef behind the Kogi Korean taco trucks."
+      }
+    ]
+  },
   "New Mexican cuisine": {
     "sites": [
       {
@@ -227,6 +248,18 @@
       }
     ]
   },
+  "Cuisine of Wisconsin": {
+    "cookbooks": [
+      {
+        "title": "Wisconsin Supper Club Cookbook: Iconic Fare and Nostalgia from Landmark Eateries",
+        "author": "Mary Bergin",
+        "year": 2015,
+        "isbn": "9781493006342",
+        "url": "https://www.simonandschuster.ca/books/Wisconsin-Supper-Club-Cookbook/Mary-Bergin/9781493006342",
+        "note": "Recipes and stories from Wisconsin's supper clubs by a Madison food and travel writer."
+      }
+    ]
+  },
   "Minnesotan cuisine": {
     "cookbooks": [
       {
@@ -240,6 +273,24 @@
         "author": "Ann Burckhardt",
         "url": "https://shop.mnhs.org/products/hot-dish-heaven/",
         "note": "Hotdish and casserole recipes, published by the Minnesota Historical Society Press."
+      }
+    ]
+  },
+  "Iron Range cuisine": {
+    "cookbooks": [
+      {
+        "title": "Come, You Taste: Family Recipes from the Iron Range",
+        "author": "B. J. Carpenter",
+        "year": 2015,
+        "isbn": "9780873519694",
+        "url": "https://shop.mnhs.org/products/come-you-taste",
+        "note": "Immigrant family recipes from Minnesota's Iron Range, published by the Minnesota Historical Society Press."
+      },
+      {
+        "title": "End of the Road Cookbook: Traditional Favorites from the Iron Range",
+        "author": "Crystal Schlueter",
+        "url": "https://shop.mnhs.org/products/end-of-the-road-cookbook-traditional-favorites-from-the-iron-range",
+        "note": "Traditional Iron Range dishes such as porketta, potica, and pasties."
       }
     ]
   },
@@ -267,6 +318,46 @@
       }
     ]
   },
+  "Cuisine of the Mid-Atlantic United States": {
+    "cookbooks": [
+      {
+        "title": "Chesapeake Bay Cooking with John Shields",
+        "author": "John Shields",
+        "year": 1998,
+        "isbn": "9780767900287",
+        "note": "Regional seafood and home cooking of the Chesapeake Bay, from Maryland to Virginia."
+      }
+    ]
+  },
+  "Culture of Baltimore#Food": {
+    "cookbooks": [
+      {
+        "title": "Chesapeake Bay Cooking with John Shields",
+        "author": "John Shields",
+        "year": 1998,
+        "isbn": "9780767900287",
+        "note": "Crab, oyster, and other Chesapeake dishes from a Baltimore chef and TV host."
+      }
+    ]
+  },
+  "Cuisine of New Jersey": {
+    "cookbooks": [
+      {
+        "title": "Dishing Up New Jersey: 150 Recipes from the Garden State",
+        "author": "John Holl",
+        "isbn": "9781612126661",
+        "url": "https://specialsales.hbgusa.com/titles/john-holl/dishing-up%c2%ae-new-jersey/9781612126661",
+        "note": "New Jersey recipes from diners, farms, and shore towns."
+      },
+      {
+        "title": "The Jersey Shore Cookbook: Fresh Summer Flavors from the Boardwalk and Beyond",
+        "author": "Deborah Smith",
+        "isbn": "9781594748721",
+        "url": "https://www.quirkbooks.com/9781594748721/the-jersey-shore-cookbook/",
+        "note": "Summer recipes from Jersey Shore restaurants and boardwalks."
+      }
+    ]
+  },
   "Cuisine of New York City": {
     "cookbooks": [
       {
@@ -290,6 +381,17 @@
         "author": "William Woys Weaver",
         "url": "https://www.degruyterbrill.com/document/doi/10.9783/9780812207712/html",
         "note": "Food history of Pennsylvania Dutch cooking with recipes, published by the University of Pennsylvania Press."
+      }
+    ]
+  },
+  "Cuisine of Philadelphia": {
+    "cookbooks": [
+      {
+        "title": "The Philadelphia Chef's Table: Extraordinary Recipes from the City of Brotherly Love",
+        "author": "April White",
+        "isbn": "9780762789443",
+        "url": "https://www.simonandschuster.ca/books/Philadelphia-Chefs-Table/April-White/Chefs-Table/9780762789443",
+        "note": "Recipes from Philadelphia restaurants and chefs."
       }
     ]
   },
@@ -320,6 +422,26 @@
         "author": "Matt Lee and Ted Lee",
         "year": 2006,
         "note": "Charleston-raised brothers on Southern recipes and food traditions."
+      }
+    ]
+  },
+  "Floribbean cuisine": {
+    "cookbooks": [
+      {
+        "title": "Norman Van Aken's Florida Kitchen",
+        "author": "Norman Van Aken",
+        "isbn": "9780813054506",
+        "note": "Florida cooking from the Key West chef closely tied to the Floribbean style."
+      }
+    ]
+  },
+  "Cuisine of Kentucky": {
+    "cookbooks": [
+      {
+        "title": "Burgoo, Barbecue, and Bourbon: A Kentucky Culinary Trinity",
+        "author": "Albert W. Schmid",
+        "isbn": "9780813169897",
+        "note": "History and recipes of three Kentucky food traditions, from the University Press of Kentucky."
       }
     ]
   },
@@ -425,6 +547,22 @@
       }
     ]
   },
+  "Cuisine of the Southwestern United States": {
+    "cookbooks": [
+      {
+        "title": "Coyote Cafe",
+        "author": "Mark Miller",
+        "year": 1989,
+        "note": "Southwestern recipes from the influential Santa Fe restaurant."
+      },
+      {
+        "title": "Authentic Recipes from Santa Fe",
+        "author": "Dave DeWitt and Nancy Gerlach",
+        "url": "https://tuttlepublishing.com/other/authentic-recipes-from-santa-fe-9780804859844",
+        "note": "Illustrated collection of Santa Fe and American Southwest dishes."
+      }
+    ]
+  },
   "Texan cuisine": {
     "sites": [
       {
@@ -504,6 +642,17 @@
       }
     ]
   },
+  "Rocky Mountain cuisine": {
+    "cookbooks": [
+      {
+        "title": "Open Range: Steaks, Chops, and More from Big Sky Country",
+        "author": "Jay Bentley",
+        "isbn": "9780762441532",
+        "url": "https://perseusbooks.com/titles/jay-bentley/open-range/9780762441532",
+        "note": "Montana-style ranch and meat cooking."
+      }
+    ]
+  },
   "American Jewish cuisine": {
     "cookbooks": [
       {
@@ -557,6 +706,17 @@
       }
     ]
   },
+  "Indian-American cuisine": {
+    "cookbooks": [
+      {
+        "title": "Indian-ish: Recipes and Antics from a Modern American Family",
+        "author": "Priya Krishna with Ritu Krishna",
+        "year": 2019,
+        "isbn": "9781328482471",
+        "note": "Indian American home cooking from a Texas-raised food writer and her mother."
+      }
+    ]
+  },
   "Italian-American cuisine": {
     "cookbooks": [
       {
@@ -565,6 +725,75 @@
         "year": 2021,
         "isbn": "9780593138007",
         "note": "Red-sauce classics and updates from the chefs of New York's Don Angie."
+      }
+    ]
+  },
+  "Japanese-American cuisine": {
+    "cookbooks": [
+      {
+        "title": "Love Japan: Recipes from Our Japanese American Kitchen",
+        "author": "Sawako Okochi and Aaron Israel",
+        "isbn": "9781984860521",
+        "note": "Japanese American home cooking from the couple behind Brooklyn's Shalom Japan, published by Ten Speed Press."
+      }
+    ]
+  },
+  "Korean Americans#Cuisine": {
+    "cookbooks": [
+      {
+        "title": "Korean American: Food That Tastes Like Home",
+        "author": "Eric Kim",
+        "year": 2022,
+        "isbn": "9780593233498",
+        "url": "https://randomhousebooks.com/books/669403",
+        "note": "Korean American home cooking from a New York Times food writer raised in Atlanta."
+      }
+    ]
+  },
+  "Cali-Mex cuisine": {
+    "cookbooks": [
+      {
+        "title": "Fast and Fresh Cal-Mex Cooking: West Coast-Inspired Dinners in 30 Minutes or Less",
+        "author": "Caitlin Prettyman",
+        "isbn": "9798890030306",
+        "note": "Quick Cal-Mex weeknight dishes."
+      }
+    ]
+  },
+  "Thai-American cuisine": {
+    "cookbooks": [
+      {
+        "title": "Night + Market: Delicious Thai Food to Facilitate Drinking and Fun-Having Amongst Friends",
+        "author": "Kris Yenbamroong with Garrett Snyder",
+        "year": 2017,
+        "isbn": "9780451497871",
+        "url": "https://penguinrandomhouse.com/books/547465/night--market-by-kris-yenbamroong",
+        "note": "Thai cooking from the Los Angeles restaurant run by a Thai American chef."
+      }
+    ]
+  },
+  "Vietnamese Americans#Cuisine": {
+    "sites": [
+      {
+        "name": "Viet World Kitchen",
+        "url": "https://vietworldkitchen.com/?p=6967",
+        "type": "blog",
+        "note": "Andrea Nguyen's long-running site on Vietnamese cooking in American kitchens."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "Vietnamese Food Any Day: Simple Recipes for True, Fresh Flavors",
+        "author": "Andrea Nguyen",
+        "year": 2019,
+        "isbn": "9780399580352",
+        "note": "Vietnamese dishes adapted to ingredients from ordinary American grocery stores."
+      },
+      {
+        "title": "The Memory of Taste: Vietnamese American Recipes from Phú Quốc, Oakland, and the Spaces Between",
+        "author": "Tu David Phu",
+        "isbn": "9781984861917",
+        "note": "Vietnamese American cooking from an Oakland-born chef with family roots in Phú Quốc."
       }
     ]
   },
@@ -818,6 +1047,43 @@
       }
     ]
   },
+  "Chifa": {
+    "sites": [
+      {
+        "name": "Eat Peru: Chifa",
+        "url": "https://www.eatperu.com/peruvian-chinese-food-chifa/",
+        "type": "site",
+        "note": "Guide to Peruvian-Chinese chifa dishes on a Peruvian food site."
+      },
+      {
+        "name": "Cecilia Tupac: Chifa",
+        "url": "https://en.ceciliatupac.com/chifa-peruano",
+        "type": "site",
+        "note": "Chifa recipes from a Peruvian cook and cooking teacher."
+      }
+    ]
+  },
+  "Nikkei cuisine": {
+    "cookbooks": [
+      {
+        "title": "Nikkei Cuisine: Japanese Food the South American Way",
+        "author": "Luiz Hara",
+        "year": 2015,
+        "isbn": "9781910254202",
+        "note": "Japanese-Peruvian and Japanese-Brazilian dishes from a London-based cook of Japanese-Brazilian descent."
+      }
+    ]
+  },
+  "Amazonian cuisine": {
+    "sites": [
+      {
+        "name": "Peru.travel: Amazonian Cuisine",
+        "url": "https://www.peru.travel/gastronomy/en/peruvian-cuisine/amazonian-cuisine.html",
+        "type": "site",
+        "note": "Section on Peruvian Amazon dishes and ingredients from Peru's official tourism board."
+      }
+    ]
+  },
   "Surinamese cuisine": {
     "sites": [
       {
@@ -1062,6 +1328,32 @@
       }
     ]
   },
+  "Cuisine of the Mariana Islands": {
+    "sites": [
+      {
+        "name": "Annie's Chamorro Kitchen",
+        "url": "https://www.annieschamorrokitchen.com/?p=5054",
+        "type": "blog",
+        "note": "Blog of Chamorro home recipes, the shared cuisine of Guam and the Northern Mariana Islands."
+      }
+    ]
+  },
+  "Culture of Guam#Cuisine": {
+    "sites": [
+      {
+        "name": "Annie's Chamorro Kitchen",
+        "url": "https://www.annieschamorrokitchen.com/?p=5054",
+        "type": "blog",
+        "note": "Blog of Chamorro home recipes from Guam."
+      },
+      {
+        "name": "Guampedia: Chamorro Dishes",
+        "url": "https://www.guampedia.com/category/food/chamorro-dishes/page/2",
+        "type": "site",
+        "note": "Chamorro recipes and food history in Guam's online encyclopedia."
+      }
+    ]
+  },
   "American cuisine": {
     "cookbooks": [
       {
@@ -1075,6 +1367,52 @@
         "title": "The Cook's Country Cookbook",
         "author": "Cook's Country (America's Test Kitchen)",
         "note": "Tested versions of classic, regional, and heirloom American home recipes."
+      }
+    ]
+  },
+  "Cuisine of the Maritimes": {
+    "cookbooks": [
+      {
+        "title": "Maritime Flavours: Guidebook and Cookbook",
+        "author": "Virginia Lee and Elaine Elliot",
+        "url": "https://formac.ca/product/maritime-flavours",
+        "note": "Recipes from inns and restaurants across Nova Scotia, New Brunswick, and Prince Edward Island."
+      }
+    ]
+  },
+  "Cuisine of Toronto": {
+    "cookbooks": [
+      {
+        "title": "Toronto Eats: 100 Signature Recipes from the City's Best Restaurants",
+        "author": "Amy Rosen",
+        "isbn": "9781773270036",
+        "url": "https://shop.figure1publishing.com/products/toronto-eats",
+        "note": "Recipes from Toronto restaurants, collected by a Toronto food writer."
+      }
+    ]
+  },
+  "Dominican Republic cuisine": {
+    "sites": [
+      {
+        "name": "Dominican Cooking",
+        "url": "https://www.dominicancooking.com/start",
+        "type": "site",
+        "note": "Long-running Dominican recipe site run by Clara González."
+      },
+      {
+        "name": "My Dominican Kitchen",
+        "url": "https://mydominicankitchen.com/category/recipes/main-dishes/",
+        "type": "blog",
+        "note": "Blog of Dominican home recipes."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "The Dominican Kitchen: Homestyle Recipes That Celebrate the Flavors, Traditions, and Culture of the Dominican Republic",
+        "author": "Vanessa Mota",
+        "isbn": "9781631068874",
+        "url": "https://www.quarto.com/books/9781631068874/the-dominican-kitchen",
+        "note": "Dominican home-style recipes with background on the island's food culture."
       }
     ]
   }

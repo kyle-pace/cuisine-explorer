@@ -111,6 +111,7 @@
   .source { font-size: 0.78rem; color: var(--muted); margin: 0; text-align: center; }
   .panel h3 { font-weight: 700; font-size: 1.15rem; margin: 26px 0 10px; }
   .empty { color: var(--muted); font-size: 0.9rem; margin: 0; }
+  .link { background: none; border: 0; padding: 0; color: var(--rice); text-decoration: underline; text-underline-offset: 2px; cursor: pointer; font-size: inherit; }
 
   /* Recipe sites: the main thing to do next, so they're big tappable cards */
   .sites { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
@@ -503,7 +504,7 @@
       return { p, c, score: (c === selected ? 1e6 : 0) + shelfSize(c) * 10 + (regionOf.has(c.id) ? 50 : 0) - c.name.length };
     }).sort((a, b) => b.score - a.score);
     // Don't put labels under the search box, the controls or the card
-    const kept = [".masthead", ".toggles", ".panel.open"].map(sel => document.querySelector(sel))
+    const kept = [".masthead", ".legend", ".panel.open"].map(sel => document.querySelector(sel))
       .filter(Boolean).map(n => { const r = n.getBoundingClientRect(); return [r.left - 6, r.top - 6, r.right + 6, r.bottom + 6]; });
     for (const { p } of ranked) {
       p.hidden = false;
@@ -703,6 +704,18 @@
     const sug = suggestions[c.id] || {};
     const sites = merge(p && p.sites, sug.sites, "url");
     const books = merge(p && p.cookbooks, sug.cookbooks, "title");
+    // Nothing of its own yet: borrow from the nearest parent cuisine that has some
+    let from = null, fromSites = [], fromBooks = [];
+    if (!sites.length && !books.length) {
+      for (let cur = c, i = 0; cur && i < 4; i++) {
+        cur = (cur.parents || []).map(id => byId.get(id)).find(Boolean) || (cur.kind !== "national" && cur.iso3 ? nationalByIso.get(cur.iso3) : null);
+        if (!cur || cur === c) break;
+        const cp = picks[cur.id] || {}, cs = suggestions[cur.id] || {};
+        fromSites = merge(cp.sites, cs.sites, "url").slice(0, 3);
+        fromBooks = merge(cp.cookbooks, cs.cookbooks, "title").slice(0, 4);
+        if (fromSites.length || fromBooks.length) { from = cur; break; }
+      }
+    }
     const kids = (c.children || []).map(k => byId.get(k)).filter(Boolean);
     const others = c.kind === "national" ? (local.get(c.iso3) || []).filter(o => !(c.children || []).includes(o.id)) : [];
     const sameArea = (regionOf.get(c.id)?.properties.ids || []).filter(id => id !== c.id).map(id => byId.get(id));
@@ -723,10 +736,15 @@
       <div class="intro" id="intro"></div>
       ${p && p.note ? `<p class="intro"><em>${esc(p.note)}</em></p>` : ""}
 
+      ${from ? `
+      <h3>Start with ${esc(from.name.replace(/ cuisine$/, ""))} cooking</h3>
+      <p class="empty">Nothing specific to ${esc(c.name.replace(/ cuisine$/, ""))} cooking here yet, so here's where to start from <button class="link" data-id="${attr(from.id)}">${esc(from.name)}</button>.</p>
+      ${fromSites.length ? `<ul class="sites" style="margin-top:10px">${fromSites.map(site).join("")}</ul>` : ""}
+      ${fromBooks.length ? `<div class="books" style="margin-top:12px">${fromBooks.map(book).join("")}</div>` : ""}
+      ` : `
       <h3>Recipe sites</h3>
       ${sites.length ? `<ul class="sites">${sites.map(site).join("")}</ul>` : `<p class="empty">No recipe sites for this one yet.</p>`}
-
-      ${books.length ? `<h3>Cookbooks</h3><div class="books">${books.map(book).join("")}</div>` : ""}
+      ${books.length ? `<h3>Cookbooks</h3><div class="books">${books.map(book).join("")}</div>` : ""}`}
 
       <a class="wiki-btn" href="${attr(c.url)}" target="_blank" rel="noopener">Read the full article on Wikipedia ${ARROW}</a>
       <p class="source">Summary from Wikipedia, shared under CC BY-SA.</p>

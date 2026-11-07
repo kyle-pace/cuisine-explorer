@@ -1,0 +1,464 @@
+[
+{
+"id": "German Americans#Cuisine",
+"name": "German-American cuisine",
+"kind": "regional",
+"country": "DEU",
+"parent": "Fusion cuisine"
+},
+{
+"id": "French Guianan cuisine",
+"name": "French Guianan cuisine",
+"kind": "regional",
+"country": "FRA",
+"parent": null
+},
+{
+"id": "British Chinese cuisine",
+"name": "British Chinese cuisine",
+"kind": "diaspora",
+"country": "GBR",
+"parent": "Chinese cuisine"
+},
+{
+"id": "Viennese cuisine",
+"name": "Viennese cuisine",
+"kind": "regional",
+"country": "AUT",
+"parent": "Austrian cuisine"
+},
+{
+"id": "Moravian cuisine",
+"name": "Moravian cuisine",
+"kind": "regional",
+"country": "CZE",
+"parent": "Czech cuisine"
+},
+{
+"id": "Silesian cuisine",
+"name": "Silesian cuisine",
+"kind": "regional",
+"country": "POL",
+"parent": "Polish cuisine"
+},
+{
+"id": "Baden cuisine",
+"name": "Baden cuisine",
+"kind": "regional",
+"country": "DEU",
+"parent": "German cuisine"
+},
+{
+"id": "Brandenburg cuisine",
+"name": "Brandenburg cuisine",
+"kind": "regional",
+"country": "DEU",
+"parent": "German cuisine"
+},
+{
+"id": "Franconian cuisine",
+"name": "Franconian cuisine",
+"kind": "regional",
+"country": "DEU",
+"parent": "German cuisine"
+},
+{
+"id": "Cuisine of Hamburg",
+"name": "Hamburg cuisine",
+"kind": "regional",
+"country": "DEU",
+"parent": "German cuisine"
+},
+{
+"id": "Hessian cuisine",
+"name": "Hessian cuisine",
+"kind": "regional",
+"country": "DEU",
+"parent": "German cuisine"
+},
+{
+"id": "Lower Saxon cuisine",
+"name": "Lower Saxon cuisine",
+"kind": "regional",
+"country": "DEU",
+"parent": "German cuisine"
+},
+{
+"id": "Mecklenburg cuisine",
+"name": "Mecklenburg cuisine",
+"kind": "regional",
+"country": "DEU",
+"parent": "German cuisine"
+},
+{
+"id": "Palatine cuisine",
+"name": "Palatine cuisine",
+"kind": "regional",
+"country": "DEU",
+"parent": "German cuisine"
+},
+{
+"id": "Pomeranian cuisine",
+"name": "Pomeranian cuisine",
+"kind": "regional",
+"country": "DEU",
+"parent": "German cuisine"
+},
+{
+"id": "Rhenish-Hessian cuisine",
+"name": "Rhenish-Hessian cuisine",
+"kind": "regional",
+"country": "DEU",
+"parent": "German cuisine"
+},
+{
+"id": "Saxon cuisine",
+"name": "Saxon cuisine",
+"kind": "regional",
+"country": "DEU",
+"parent": "German cuisine"
+},
+{
+"id": "Schleswig-Holstein cuisine",
+"name": "Schleswig-Holstein cuisine",
+"kind": "regional",
+"country": "DEU",
+"parent": "German cuisine"
+},
+{
+"id": "German cuisine#Thuringia",
+"name": "Thuringian cuisine",
+"kind": "regional",
+"country": "DEU",
+"parent": "German cuisine"
+},
+{
+"id": "Cossack cuisine",
+"name": "Cossack cuisine",
+"kind": "peoples",
+"country": null,
+"parent": null
+},
+{
+"id": "Crimean Tatar cuisine",
+"name": "Crimean Tatar cuisine",
+"kind": "regional",
+"country": "UKR",
+"parent": "Ukrainian cuisine"
+},
+{
+"id": "Cuisine of Odesa",
+"name": "Odesite cuisine",
+"kind": "regional",
+"country": "UKR",
+"parent": "Ukrainian cuisine"
+},
+{
+"id": "Livonian cuisine",
+"name": "Livonian cuisine",
+"kind": "regional",
+"country": "LVA",
+"parent": null
+},
+{
+"id": "Faroese cuisine",
+"name": "Faroese cuisine",
+"kind": "regional",
+"country": "DNK",
+"parent": "Danish cuisine"
+},
+{
+"id": "New Nordic cuisine",
+"name": "New Nordic cuisine",
+"kind": "regional",
+"country": "DNK",
+"parent": "Danish cuisine"
+},
+{
+"id": "Balkan cuisine",
+"name": "Balkan cuisine",
+"kind": "peoples",
+"country": null,
+"parent": null
+},
+{
+"id": "Aromanian cuisine",
+"name": "Aromanian cuisine",
+"kind": "peoples",
+"country": null,
+"parent": "Balkan cuisine"
+},
+{
+"id": "Gagauz cuisine",
+"name": "Gagauz cuisine",
+"kind": "regional",
+"country": "MDA",
+"parent": "Balkan cuisine"
+},
+{
+"id": "Romanian cuisine",
+"name": "Romanian cuisine",
+"kind": "regional",
+"country": "ROU",
+"parent": null
+},
+{
+"id": "Transylvanian Saxon cuisine",
+"name": "Transylvanian Saxon cuisine",
+"kind": "regional",
+"country": "ROU",
+"parent": "Romanian cuisine"
+},
+{
+"id": "Macedonian cuisine (Greek)",
+"name": "Macedonian cuisine (Greek)",
+"kind": "regional",
+"country": "GRC",
+"parent": "Greek cuisine"
+},
+{
+"id": "Cuisine of the Ionian Islands",
+"name": "Cuisine of the Ionian Islands",
+"kind": "regional",
+"country": "GRC",
+"parent": "Greek cuisine"
+},
+{
+"id": "Epirotic cuisine",
+"name": "Epirotic cuisine",
+"kind": "regional",
+"country": "GRC",
+"parent": "Greek cuisine"
+},
+{
+"id": "Cappadocian Greeks#Cuisine",
+"name": "Cappadocian Greek cuisine",
+"kind": "regional",
+"country": "GRC",
+"parent": "Greek cuisine"
+},
+{
+"id": "Arbëreshë cuisine",
+"name": "Arbëreshë cuisine",
+"kind": "regional",
+"country": "ITA",
+"parent": "Italian cuisine"
+},
+{
+"id": "Cuisine of Basilicata",
+"name": "Basilicatan (Lucanian) cuisine",
+"kind": "regional",
+"country": "ITA",
+"parent": "Italian cuisine"
+},
+{
+"id": "Cuisine of Mantua",
+"name": "Mantuan cuisine",
+"kind": "regional",
+"country": "ITA",
+"parent": "Lombard cuisine"
+},
+{
+"id": "Apulian cuisine",
+"name": "Pugliese cuisine",
+"kind": "regional",
+"country": "ITA",
+"parent": "Italian cuisine"
+},
+{
+"id": "Occitan cuisine",
+"name": "Occitan cuisine",
+"kind": "regional",
+"country": "FRA",
+"parent": "French cuisine"
+},
+{
+"id": "Asturian cuisine",
+"name": "Asturian cuisine",
+"kind": "regional",
+"country": "ESP",
+"parent": "Spanish cuisine"
+},
+{
+"id": "Aragonese cuisine",
+"name": "Aragonese cuisine",
+"kind": "regional",
+"country": "ESP",
+"parent": "Spanish cuisine"
+},
+{
+"id": "Canarian cuisine",
+"name": "Canarian cuisine",
+"kind": "regional",
+"country": "ESP",
+"parent": "Spanish cuisine"
+},
+{
+"id": "Cantabrian cuisine",
+"name": "Cantabrian cuisine",
+"kind": "regional",
+"country": "ESP",
+"parent": "Spanish cuisine"
+},
+{
+"id": "Castilian-Leonese cuisine",
+"name": "Castilian-Leonese cuisine",
+"kind": "regional",
+"country": "ESP",
+"parent": "Spanish cuisine"
+},
+{
+"id": "Castilian-Manchego cuisine",
+"name": "Castilian-Manchego cuisine",
+"kind": "regional",
+"country": "ESP",
+"parent": "Spanish cuisine"
+},
+{
+"id": "Andorran cuisine",
+"name": "Andorran cuisine",
+"kind": "regional",
+"country": "ESP",
+"parent": "Catalan cuisine"
+},
+{
+"id": "Extremaduran cuisine",
+"name": "Extremaduran cuisine",
+"kind": "regional",
+"country": "ESP",
+"parent": "Spanish cuisine"
+},
+{
+"id": "Galician cuisine",
+"name": "Galician cuisine",
+"kind": "regional",
+"country": "ESP",
+"parent": "Spanish cuisine"
+},
+{
+"id": "Leonese cuisine",
+"name": "Leonese cuisine",
+"kind": "regional",
+"country": "ESP",
+"parent": "Spanish cuisine"
+},
+{
+"id": "Cuisine of the Community of Madrid",
+"name": "Madrid cuisine",
+"kind": "regional",
+"country": "ESP",
+"parent": "Spanish cuisine"
+},
+{
+"id": "Cuisine of Minorca",
+"name": "Minorcan cuisine",
+"kind": "regional",
+"country": "ESP",
+"parent": "Spanish cuisine"
+},
+{
+"id": "Valencian cuisine",
+"name": "Valencian cuisine",
+"kind": "regional",
+"country": "ESP",
+"parent": "Spanish cuisine"
+},
+{
+"id": "Frisian cuisine",
+"name": "Frisian cuisine",
+"kind": "regional",
+"country": "DEU",
+"parent": "Dutch cuisine"
+},
+{
+"id": "Limburgian cuisine",
+"name": "Limburgian cuisine",
+"kind": "regional",
+"country": "BEL",
+"parent": "Dutch cuisine"
+},
+{
+"id": "Haute cuisine",
+"name": "Haute cuisine",
+"kind": "regional",
+"country": "FRA",
+"parent": "French cuisine"
+},
+{
+"id": "Lyonnaise cuisine",
+"name": "Lyonnaise cuisine",
+"kind": "regional",
+"country": "FRA",
+"parent": "French cuisine"
+},
+{
+"id": "Nouvelle cuisine",
+"name": "Nouvelle cuisine",
+"kind": "regional",
+"country": "FRA",
+"parent": "French cuisine"
+},
+{
+"id": "Channel Islands cuisine",
+"name": "Channel Islands cuisine",
+"kind": "regional",
+"country": "GBR",
+"parent": "British cuisine"
+},
+{
+"id": "Cuisine of Devon",
+"name": "Devonian cuisine",
+"kind": "regional",
+"country": "GBR",
+"parent": "English cuisine"
+},
+{
+"id": "Cuisine of Dorset",
+"name": "Dorset cuisine",
+"kind": "regional",
+"country": "GBR",
+"parent": "English cuisine"
+},
+{
+"id": "Cuisine of Carmarthenshire",
+"name": "Cuisine of Carmarthenshire",
+"kind": "regional",
+"country": "GBR",
+"parent": "Welsh cuisine"
+},
+{
+"id": "Cuisine of Ceredigion",
+"name": "Cuisine of Ceredigion",
+"kind": "regional",
+"country": "GBR",
+"parent": "Welsh cuisine"
+},
+{
+"id": "Cuisine of Gower",
+"name": "Cuisine of Gower",
+"kind": "regional",
+"country": "GBR",
+"parent": "Welsh cuisine"
+},
+{
+"id": "Cuisine of Monmouthshire",
+"name": "Cuisine of Monmouthshire",
+"kind": "regional",
+"country": "GBR",
+"parent": "Welsh cuisine"
+},
+{
+"id": "Cuisine of Pembrokeshire",
+"name": "Cuisine of Pembrokeshire",
+"kind": "regional",
+"country": "GBR",
+"parent": "Welsh cuisine"
+},
+{
+"id": "French Polynesia#Cuisine",
+"name": "French Polynesian cuisine",
+"kind": "regional",
+"country": "FRA",
+"parent": null
+}
+]

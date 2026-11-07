@@ -519,5 +519,57 @@
         "note": "Artist's book recording the recipes and meals of Sahrawi women living in refugee camps."
       }
     ]
+  },
+  "Ethiopian Jewish cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Gursha: Timeless Recipes for Modern Kitchens, from Ethiopia, Israel, Harlem, and Beyond",
+        "author": "Beejhy Barhany with Elisa Ung",
+        "year": 2025,
+        "isbn": "9780593536674",
+        "note": "Beta Israel family cooking from a Harlem based Ethiopian Israeli chef, following the community from Ethiopia to Israel and New York."
+      }
+    ]
+  },
+  "Zanzibari cuisine": {
+    "sites": [
+      {
+        "name": "Zanzibar Recipes",
+        "url": "https://zanzibarrecipes.blogspot.com/p/about-us.html",
+        "type": "blog",
+        "note": "Blog collecting Zanzibar and Swahili coast recipes such as urojo and pilau; authors unnamed."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "KITAMU",
+        "author": "Chumbe Island",
+        "url": "https://chumbeisland.com/cookbook/",
+        "note": "Short Zanzibari Swahili cookbook from the Chumbe Island coral park, with community recipes and a sustainable seafood guide."
+      }
+    ]
+  },
+  "Afrikaner cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Kook en Geniet",
+        "author": "S.J.A. de Villiers",
+        "year": 1951,
+        "note": "The standard Afrikaans household cookbook, in print for decades; an English edition is titled Cook and Enjoy It."
+      }
+    ]
+  },
+  "Indian South Africans#Cuisine": {
+    "sites": [],
+    "cookbooks": [
+      {
+        "title": "Durban Curry: So Much of Flavour, People, Places & Secret Recipes",
+        "author": "Erica Platter and Clinton Friedman (eds.), with Devi Sankaree Govender",
+        "isbn": "9780620609814",
+        "note": "Durban Indian curries, bunny chow and family recipes from local cooks, with the stories behind them."
+      }
+    ]
   }
 }

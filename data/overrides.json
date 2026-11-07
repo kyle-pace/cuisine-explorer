@@ -339,7 +339,9 @@
     "Western Saharan cuisine": "ESH",
     "Kenyan cuisine": "KEN",
     "Maasai cuisine": "KEN",
-    "New Mexican cuisine": "USA"
+    "New Mexican cuisine": "USA",
+    "Cuisine of Equatorial Guinea": "GNQ",
+    "Equatorial Guinea cuisine": "GNQ"
   },
   "_about_regions": "Hand-picked states or provinces for a regional cuisine's shape on the map, as COUNTRY:Name (ISO alpha-3 and the Natural Earth name, or a region name that groups provinces). Replaces the automatic match. An empty list means no shape.",
   "regions": {

@@ -1,0 +1,77 @@
+{
+  "Indian cuisine": {
+    "sites": [
+      {
+        "name": "Swasthi's Recipes",
+        "url": "https://www.indianhealthyrecipes.com/about/",
+        "type": "blog",
+        "note": "Swasthi Shreekanth's long-running blog of everyday Indian home cooking from across the regions."
+      },
+      {
+        "name": "Hari Ghotra",
+        "url": "https://www.harighotra.co.uk/indian-recipes",
+        "type": "site",
+        "note": "UK-based cook Hari Ghotra's recipe library and videos of home-style Indian dishes."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "Madhur Jaffrey's Indian Cookery",
+        "author": "Madhur Jaffrey",
+        "year": 1982,
+        "isbn": "9780593802960",
+        "url": "https://penguinrandomhouse.ca/books/761108/indian-cookery-by-madhur-jaffrey/9780593802960",
+        "note": "Classic introduction to Indian home cooking, reissued by Knopf in 2024."
+      },
+      {
+        "title": "Made in India: Recipes from an Indian Family Kitchen",
+        "author": "Meera Sodha",
+        "year": 2014,
+        "isbn": "9781250071019",
+        "url": "https://openlibrary.org/books/OL27193672M",
+        "note": "Gujarati-rooted family recipes from a British Indian home kitchen."
+      }
+    ]
+  },
+  "Thai cuisine": {
+    "sites": [
+      {
+        "name": "Hot Thai Kitchen",
+        "url": "https://hot-thai-kitchen.com",
+        "type": "youtube",
+        "note": "Pailin Chongchitnant's recipes and videos, with background on technique and ingredients."
+      },
+      {
+        "name": "SheSimmers",
+        "url": "https://shesimmers.com/who-is-shesimmers",
+        "type": "blog",
+        "note": "Bangkok-born writer Leela Punyaratabandhu's blog on Thai home cooking."
+      }
+    ],
+    "cookbooks": [
+      {
+        "title": "Thai Food",
+        "author": "David Thompson",
+        "year": 2002,
+        "isbn": "9781580084628",
+        "url": "https://www.penguinrandomhouse.com/books/198298/thai-food-by-david-thompson/9781580084628/",
+        "note": "Encyclopedic reference on Thai cooking and its history."
+      },
+      {
+        "title": "Hot Thai Kitchen",
+        "author": "Pailin Chongchitnant",
+        "year": 2016,
+        "isbn": "9780147529923",
+        "url": "https://penguinrandomhouse.com/books/258501/hot-thai-kitchen-by-pailin-chongchitnant",
+        "note": "Companion book to the YouTube channel, explaining Thai flavor building."
+      },
+      {
+        "title": "Simple Thai Food",
+        "author": "Leela Punyaratabandhu",
+        "year": 2014,
+        "isbn": "9781607745235",
+        "note": "Classic dishes from the Thai home kitchen by the SheSimmers author."
+      }
+    ]
+  }
+}

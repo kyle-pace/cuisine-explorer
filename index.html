@@ -91,7 +91,8 @@
   .empty { color: var(--muted); font-size: 0.92rem; margin: 0; padding: 14px 16px; border: 1px dashed var(--line); border-radius: 12px; }
   .books { display: grid; grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); gap: 14px; }
   .book { text-decoration: none; display: block; }
-  .cover { aspect-ratio: 2 / 3; border-radius: 3px 6px 6px 3px; overflow: hidden; position: relative; background: var(--panel-2); box-shadow: inset 6px 0 0 rgba(0,0,0,0.18); display: flex; align-items: flex-end; padding: 10px 8px 10px 14px; font-family: var(--serif); font-size: 0.9rem; line-height: 1.15; }
+  .cover { aspect-ratio: 2 / 3; border-radius: 3px 6px 6px 3px; overflow: hidden; position: relative; background: color-mix(in srgb, var(--accent, #4a3f57) 38%, var(--panel-2)); box-shadow: inset 6px 0 0 rgba(0,0,0,0.18); display: flex; align-items: flex-end; padding: 10px 8px 10px 14px; font-family: var(--serif); font-size: 0.9rem; line-height: 1.15; }
+  .cover span { position: relative; text-shadow: 0 1px 2px rgba(0,0,0,0.4); }
   .cover img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
   .book .meta { font-size: 0.8rem; color: var(--muted); margin-top: 6px; }
   .sites { list-style: none; padding: 0; margin: 0; }
@@ -100,6 +101,8 @@
   .sites a { font-weight: 600; text-decoration: none; }
   .sites a:hover { text-decoration: underline; }
   .sites small { color: var(--muted); display: block; }
+  .suggested { margin-top: 4px; }
+  .suggested-note { font-size: 0.78rem; color: var(--muted); margin: 8px 0 0; }
   .chips { display: flex; flex-wrap: wrap; gap: 6px; }
   .chip { border: 1px solid var(--line); background: none; border-radius: 16px; padding: 4px 11px; cursor: pointer; font-size: 0.88rem; text-align: left; }
   .chip:hover { background: var(--panel-2); }
@@ -195,11 +198,13 @@
     const r = await fetch(path);
     return r.json();
   }
-  const [data, countries, picksFile] = await Promise.all([
+  const [data, countries, picksFile, suggestionsFile] = await Promise.all([
     load("data-cuisines", "data/cuisines.json"),
     load("data-countries", "data/countries.geojson"),
     load("data-picks", "data/picks.json"),
+    load("data-suggestions", "data/suggestions.json").catch(() => ({})),
   ]);
+  const suggestions = suggestionsFile.cuisines || {};
   const picks = picksFile.cuisines || {};
   const all = data.cuisines;
   const byId = new Map(all.map(c => [c.id, c]));
@@ -248,25 +253,18 @@
   const world = Globe({ animateIn: !reduceMotion })(el)
     .backgroundColor("#1b1424")
     .showAtmosphere(true).atmosphereColor("#6f5690").atmosphereAltitude(0.12)
-    // Countries as a scatter of fine dots, in muted spice colors
-    .hexPolygonsData(land)
-    .hexPolygonResolution(3).hexPolygonMargin(0.42).hexPolygonUseDots(true).hexPolygonAltitude(0.004)
-    .hexPolygonColor(f => { const c = featColor(f); return c ? mix(c, 0.78) : "#3d3349"; })
-    // Invisible country shapes on top, for hover, click, and the selected glow
+    // Countries as solid, muted fills with clear borders; brighter on hover and select
     .polygonsData(land)
-    .polygonAltitude(f => featIso(f) === selIso() ? 0.012 : 0.008)
+    .polygonAltitude(f => featIso(f) === selIso() ? 0.014 : featIso(f) === hoverIso ? 0.01 : 0.006)
     .polygonCapColor(f => {
       const c = featColor(f), iso = featIso(f);
-      if (!c) return iso === hoverIso ? "rgba(237,230,218,0.06)" : "rgba(0,0,0,0)";
-      if (iso === selIso()) return c + "59";
-      return iso === hoverIso ? c + "33" : "rgba(0,0,0,0)";
+      if (!c) return iso === hoverIso ? "#463b52" : "#3a3045";
+      if (iso === selIso()) return c;
+      return mix(c, iso === hoverIso ? 0.85 : 0.6);
     })
-    .polygonSideColor(() => "rgba(0,0,0,0)")
-    .polygonStrokeColor(f => {
-      const iso = featIso(f);
-      if (iso === selIso() || iso === hoverIso) return featColor(f) || "#a99fb5";
-      return "rgba(237,230,218,0.07)";
-    })
+    .polygonSideColor(f => { const c = featColor(f); return c && featIso(f) === selIso() ? mix(c, 0.5) : "rgba(27,20,36,0.9)"; })
+    .polygonStrokeColor(() => "#1b1424")
+    .polygonsTransitionDuration(reduceMotion ? 0 : 250)
     .polygonLabel(f => {
       const n = nationalByIso.get(featIso(f));
       const more = n ? inCountry(n.iso3).length : 0;
@@ -274,7 +272,7 @@
     })
     .onPolygonHover(f => {
       hoverIso = f ? featIso(f) : null;
-      world.polygonCapColor(world.polygonCapColor()).polygonStrokeColor(world.polygonStrokeColor());
+      world.polygonAltitude(world.polygonAltitude()).polygonCapColor(world.polygonCapColor());
       el.style.cursor = f && nationalByIso.get(featIso(f)) ? "pointer" : "grab";
     })
     .onPolygonClick(f => { const n = nationalByIso.get(featIso(f)); if (n) open(n, { fly: false }); })
@@ -400,6 +398,7 @@
       : esc(KIND_LABEL[c.kind] || "") + (country && c.kind !== "national" ? ` in ${esc(country)}` : country ? ` of ${esc(country)}` : "");
 
     const p = picks[c.id] || c.picks || null;
+    const sug = suggestions[c.id] || {};
     const kids = (c.children || []).map(k => byId.get(k)).filter(Boolean);
     const others = c.kind === "national" ? inCountry(c.iso3).filter(o => !(c.children || []).includes(o.id) && o.kind !== "diaspora") : [];
     // Routes out of and into this country (or this cuisine)
@@ -411,6 +410,7 @@
     const routeList = (rs, side) => `<ul class="connections">${rs.map(r =>
       `<li><button data-id="${attr(r.cuisine.id)}"><span>${esc(r.cuisine.name)}</span> <span>${side === "to" ? "in " + esc(isoName.get(r.to) || "") : "from " + esc(isoName.get(r.from) || "")}</span></button></li>`).join("")}</ul>`;
 
+    body.style.setProperty("--accent", col);
     body.innerHTML = `
       <h2>${esc(c.name)}</h2>
       <div class="accent-bar" style="background:${col}"></div>
@@ -419,12 +419,10 @@
       <p class="source">From Wikipedia. <a href="${attr(c.url)}" target="_blank" rel="noopener">Read the full article</a></p>
 
       <h3>Cookbooks</h3>
-      ${p && p.cookbooks && p.cookbooks.length ? `<div class="books">${p.cookbooks.map(book).join("")}</div>`
-        : `<p class="empty">No cookbooks picked for this cuisine yet.</p>`}
+      ${shelf(p && p.cookbooks, sug.cookbooks, b => `<div class="books">${b.map(book).join("")}</div>`, "No cookbooks for this cuisine yet.")}
 
       <h3>Recipe sites</h3>
-      ${p && p.sites && p.sites.length ? `<ul class="sites">${p.sites.map(site).join("")}</ul>`
-        : `<p class="empty">No recipe sites picked for this cuisine yet.</p>`}
+      ${shelf(p && p.sites, sug.sites, x => `<ul class="sites">${x.map(site).join("")}</ul>`, "No recipe sites for this cuisine yet.")}
 
       ${kids.length ? `<h3>Within ${esc(c.name.replace(/ cuisine$/, ""))} cooking</h3><div class="chips">${kids.map(chip).join("")}</div>` : ""}
       ${others.length ? `<h3>More from ${esc(country)}</h3><div class="chips">${others.map(chip).join("")}</div>` : ""}
@@ -468,9 +466,15 @@
     if (b) open(byId.get(b.dataset.id));
   });
 
+  // Hand picks first; research suggestions after, marked as not yet reviewed
+  function shelf(mine, suggested, draw, emptyText) {
+    const have = mine && mine.length, sug = (suggested || []).filter(x => !(mine || []).some(m => (m.url && m.url === x.url) || (m.title && m.title === x.title)));
+    if (!have && !sug.length) return `<p class="empty">${emptyText}</p>`;
+    return (have ? draw(mine) : "") + (sug.length ? `<div class="suggested">${draw(sug)}<p class="suggested-note">Suggested, not yet reviewed</p></div>` : "");
+  }
   function chip(c) { return `<button class="chip" data-id="${attr(c.id)}">${esc(c.name)}</button>`; }
   function book(b) {
-    const cover = b.isbn ? `<img alt="" loading="lazy" src="https://covers.openlibrary.org/b/isbn/${attr(b.isbn)}-M.jpg?default=false" onerror="this.remove()">` : "";
+    const cover = b.isbn ? `<img alt="" loading="lazy" src="https://covers.openlibrary.org/b/isbn/${attr(b.isbn)}-M.jpg?default=false" onload="this.nextElementSibling.hidden=true" onerror="this.remove()">` : "";
     const href = b.url || (b.isbn ? `https://openlibrary.org/isbn/${b.isbn}` : null);
     const inner = `<div class="cover">${cover}<span>${esc(b.title)}</span></div><div class="meta">${esc(b.author || "")}${b.year ? `, ${b.year}` : ""}</div>${b.note ? `<div class="meta">${esc(b.note)}</div>` : ""}`;
     return href ? `<a class="book" href="${attr(href)}" target="_blank" rel="noopener">${inner}</a>` : `<div class="book">${inner}</div>`;

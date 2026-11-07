@@ -43,7 +43,7 @@
   #globe canvas { display: block; }
 
   /* Top-left: title and search */
-  .masthead { position: fixed; top: 24px; left: 28px; width: min(380px, calc(100vw - 56px)); z-index: 5; }
+  .masthead { position: fixed; top: 24px; left: 28px; width: min(380px, calc(100vw - 56px)); z-index: 7; }
   .masthead h1 { font-weight: 800; font-size: 2.5rem; line-height: 1; margin: 0 0 10px; letter-spacing: -0.02em; }
   .masthead p { margin: 0 0 16px; color: var(--muted); font-size: 0.95rem; max-width: 34ch; }
   .search { position: relative; }
@@ -56,6 +56,7 @@
   .search svg { position: absolute; left: 15px; top: 13px; width: 16px; height: 16px; stroke: var(--muted); z-index: 1; pointer-events: none; }
   .results { list-style: none; margin: 6px 0 0; padding: 6px; background: var(--panel); border: 1px solid var(--line); border-radius: 14px; max-height: 50vh; overflow: auto; display: none; }
   .results.open { display: block; }
+  .results { max-height: 60vh; }
   .results li { padding: 9px 10px; border-radius: 8px; cursor: pointer; display: flex; justify-content: space-between; gap: 12px; }
   .results li small { color: var(--muted); white-space: nowrap; }
   .results li[aria-selected="true"], .results li:hover { background: var(--panel-2); }
@@ -139,6 +140,28 @@
   .book .meta { font-size: 0.78rem; color: var(--muted); margin-top: 6px; line-height: 1.3; }
   .book .meta b { color: var(--rice); font-weight: 600; display: block; }
 
+  .chip.ing { border-style: dashed; }
+  .chip small, .results small.n { color: var(--muted); }
+  .more-chip { color: var(--muted); }
+  .more-n { color: var(--muted); font-size: 0.85rem; align-self: center; }
+  .where { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+  .where li { border-top: 1px solid var(--line); padding-top: 10px; }
+  .where li:first-child { border-top: 0; padding-top: 0; }
+  .where-c { background: none; border: 0; padding: 0; cursor: pointer; font-weight: 700; font-size: 1rem; text-align: left; }
+  .where-c:hover { text-decoration: underline; }
+  .where .n { color: var(--muted); font-size: 0.85rem; }
+  .where .chips { margin-top: 6px; }
+  .tabs { display: flex; gap: 4px; padding: 4px; background: var(--panel-2); border-radius: 12px; margin: 8px 0 16px; }
+  .tabs button { flex: 1; border: 0; background: none; border-radius: 9px; padding: 9px 6px; cursor: pointer; font-weight: 600; color: var(--muted); }
+  .tabs button[aria-selected="true"] { background: var(--rice); color: var(--night); }
+  .small-h { font-size: 1rem !important; margin-top: 18px !important; }
+  .surprise { margin-top: 4px; }
+  .results .group { padding: 10px 10px 4px; font-size: 0.78rem; font-weight: 700; color: var(--muted); cursor: default; }
+  .results .group:hover { background: none; }
+  .results .filters { display: flex; gap: 6px; padding: 4px 4px 6px; cursor: default; flex-wrap: wrap; }
+  .results .filters:hover { background: none; }
+  .results .filters button { border: 1px solid var(--line); background: none; border-radius: 999px; padding: 5px 11px; font-size: 0.82rem; cursor: pointer; }
+  .results .filters button[aria-pressed="true"] { background: var(--rice); color: var(--night); border-color: var(--rice); }
   .chips { display: flex; flex-wrap: wrap; gap: 6px; }
   .chip { border: 1px solid var(--line); background: none; border-radius: 16px; padding: 6px 12px; cursor: pointer; font-size: 0.9rem; text-align: left; }
   .chip:hover { background: var(--panel-2); }
@@ -204,9 +227,9 @@
   <p>Spin the globe, pick a place, and see what's cooking there. Every cuisine links back to Wikipedia.</p>
   <div class="search" role="search">
     <svg viewBox="0 0 24 24" fill="none" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-    <input id="q" type="search" placeholder="Search 600+ cuisines" autocomplete="off" enterkeyhint="go"
-           aria-label="Search cuisines" role="combobox" aria-expanded="false" aria-controls="results" aria-autocomplete="list">
-    <ul class="results" id="results" role="listbox" aria-label="Matching cuisines"></ul>
+    <input id="q" type="search" placeholder="Search cuisines, dishes, ingredients" autocomplete="off" enterkeyhint="go"
+           aria-label="Search cuisines, dishes and ingredients" role="combobox" aria-expanded="false" aria-controls="results" aria-autocomplete="list">
+    <ul class="results" id="results" role="listbox" aria-label="Matching cuisines, dishes and ingredients"></ul>
   </div>
 </header>
 
@@ -220,9 +243,9 @@
   </div>
   <div class="toggles">
     <button class="chip-btn" id="t-arcs" aria-pressed="true">Diaspora routes</button>
-    <button class="chip-btn" id="t-beyond" aria-pressed="false">Beyond borders</button>
+    <button class="chip-btn" id="t-explore" aria-pressed="false">Explore</button>
   </div>
-  <p class="hint">Pick a country, or zoom in, to see its regional cuisines.</p>
+  <p class="hint">Search a cuisine, dish or ingredient. Pick a country, or zoom in, to see its regional cuisines.</p>
 </div>
 
 <aside class="panel" id="panel" aria-label="Cuisine details" tabindex="-1">
@@ -274,13 +297,17 @@
     if (!r.ok) throw new Error(path);
     return r.json();
   }
-  const [data, countries, picksFile, suggestionsFile, regionsFile] = await Promise.all([
+  const [data, countries, picksFile, suggestionsFile, regionsFile, food] = await Promise.all([
     load("data-cuisines", "data/cuisines.json"),
     load("data-countries", "data/countries.geojson"),
     load("data-picks", "data/picks.json").catch(() => ({})),
     load("data-suggestions", "data/suggestions.json").catch(() => ({})),
     load("data-regions", "data/regions.geojson").catch(() => ({ features: [] })),
+    load("data-food", "data/food.json").catch(() => ({ dishes: [], ingredients: [] })),
   ]);
+  // Short intros for dishes and ingredients, loaded in the background
+  let foodSummaries = {};
+  load("data-food_summaries", "data/food_summaries.json").then(d => { foodSummaries = d || {}; }).catch(() => {});
   const suggestions = suggestionsFile.cuisines || {};
   const picks = picksFile.cuisines || {};
   // Full Wikipedia intros, built weekly; loaded in the background
@@ -292,6 +319,30 @@
   const slug = s => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
   const bySlug = new Map(all.map(c => [slug(c.id), c]));
   const nationalByIso = new Map(all.filter(c => c.kind === "national").map(c => [c.iso3, c]));
+
+  // --- Dishes and ingredients -----------------------------------------------------
+  const dishes = (food.dishes || []).map(d => ({ ...d, type: "dish", cuisines: d.cuisines.filter(id => byId.has(id)) }))
+    .filter(d => d.cuisines.length);
+  const ingredients = (food.ingredients || []).map(i => ({ ...i, type: "ingredient", dishList: [] }));
+  const dishById = new Map(dishes.map(d => [d.id, d]));
+  const ingById = new Map(ingredients.map(i => [i.id, i]));
+  const dishesOf = new Map();   // cuisine id -> dishes
+  for (const d of dishes) {
+    d.ingredients = d.ingredients.filter(id => ingById.has(id));
+    d.ingredients.forEach(id => ingById.get(id).dishList.push(d));
+    d.cuisines.forEach(id => { if (!dishesOf.has(id)) dishesOf.set(id, []); dishesOf.get(id).push(d); });
+  }
+  for (const i of ingredients) i.dishes = i.dishList.length;
+  const usedIngredients = ingredients.filter(i => i.dishes).sort((a, b) => b.dishes - a.dishes);
+  const dishSlug = new Map(dishes.map(d => ["dish-" + slug(d.id), d]));
+  const ingSlug = new Map(usedIngredients.map(i => ["ingredient-" + slug(i.id), i]));
+  const hashOf = x => x.type === "dish" ? "dish-" + slug(x.id) : x.type === "ingredient" ? "ingredient-" + slug(x.id) : slug(x.id);
+  // Ingredients a cuisine leans on most, by how many of its dishes use them
+  function keyIngredients(list, n) {
+    const count = new Map();
+    for (const d of list) for (const id of d.ingredients) count.set(id, (count.get(id) || 0) + 1);
+    return [...count].sort((a, b) => b[1] - a[1]).slice(0, n).map(([id, k]) => ({ ing: ingById.get(id), k }));
+  }
   const colorOf = c => COLORS[(c.region || [])[0]] || (c.iso3 && nationalByIso.get(c.iso3) && COLORS[(nationalByIso.get(c.iso3).region || [])[0]]) || NEUTRAL;
   const inCountry = iso => all.filter(c => c.iso3 === iso && c.kind !== "national");
   const featIso = f => {
@@ -380,21 +431,47 @@
     return `rgb(${ch(16)},${ch(8)},${ch(0)})`;
   };
   const selIso = () => selected ? selected.iso3 : null;
+  // When a dish or ingredient is open, the globe shows where it's cooked: every cuisine
+  // that has it, with countries shaded by how many of its dishes are from there
+  let lit = null;
+  function litFor(dishList, kind) {
+    const byCuisine = new Map(), byIso = new Map();
+    for (const d of dishList) for (const cid of d.cuisines) {
+      byCuisine.set(cid, (byCuisine.get(cid) || 0) + 1);
+      const iso = byId.get(cid).iso3;
+      if (iso) { if (!byIso.has(iso)) byIso.set(iso, new Set()); byIso.get(iso).add(d.id); }
+    }
+    const isoCount = new Map([...byIso].map(([iso, set]) => [iso, set.size]));
+    return { kind, byCuisine, byIso: isoCount, max: Math.max(1, ...isoCount.values()) };
+  }
+  const heat = n => mix("#ede6da", 0.28 + 0.72 * Math.sqrt(n / lit.max));
   const related = a => !!selected && (selected === a.c || selected === a.from || selected === a.to ||
     (selected.kind === "national" && (a.from.iso3 === selected.iso3 || a.to.iso3 === selected.iso3)));
   const isRegion = f => !!f.properties.ids;
   const regionSelected = f => selected && f.properties.ids.includes(selected.id);
+  const regionLit = f => lit ? Math.max(0, ...f.properties.ids.map(id => lit.byCuisine.get(id) || 0)) : 0;
 
   const world = Globe({ animateIn: !reduceMotion })(el)
     .backgroundColor("#1b1424")
     .showAtmosphere(true).atmosphereColor("#6f5690").atmosphereAltitude(0.12)
     .polygonsData(land)
     .polygonAltitude(f => {
+      if (lit) {
+        if (isRegion(f)) return regionLit(f) ? 0.022 : 0.016;
+        return lit.byIso.has(featIso(f)) ? 0.012 : 0.006;
+      }
       if (isRegion(f)) return (regionSelected(f) ? 0.03 : f === hoverRegion ? 0.026 : 0.02) + Math.max(0, 0.008 - f.properties.size / 2000);
       const iso = featIso(f);
       return iso === selIso() ? 0.012 : iso === hoverIso ? 0.01 : 0.006;
     })
     .polygonCapColor(f => {
+      if (lit) {
+        // Regions get a fill only for a dish; for an ingredient, the country's shade carries it
+        if (isRegion(f)) return regionLit(f) && lit.kind === "dish" ? "#fff3dc" : "rgba(0,0,0,0)";
+        const n = lit.byIso.get(featIso(f));
+        if (!n) return featIso(f) === hoverIso ? "#3a3045" : "#2e2639";
+        return lit.kind === "dish" ? (featColor(f) || "#ede6da") : heat(n);
+      }
       if (isRegion(f)) {
         const c = colorOf(byId.get(f.properties.ids[0]));
         if (regionSelected(f)) return "#fff3dc";
@@ -405,8 +482,8 @@
       if (iso === selIso()) return selected.kind !== "national" ? mix(c, 0.7) : c;
       return mix(c, iso === hoverIso ? 0.85 : 0.6);
     })
-    .polygonSideColor(f => isRegion(f) ? "rgba(237,230,218,0.25)" : (featColor(f) && featIso(f) === selIso() ? mix(featColor(f), 0.5) : "rgba(27,20,36,0.9)"))
-    .polygonStrokeColor(f => isRegion(f) ? "rgba(255,248,236,0.85)" : "#1b1424")
+    .polygonSideColor(f => lit ? "rgba(27,20,36,0.9)" : isRegion(f) ? "rgba(237,230,218,0.25)" : (featColor(f) && featIso(f) === selIso() ? mix(featColor(f), 0.5) : "rgba(27,20,36,0.9)"))
+    .polygonStrokeColor(f => isRegion(f) ? (lit && !regionLit(f) ? "rgba(0,0,0,0)" : "rgba(255,248,236,0.85)") : "#1b1424")
     .polygonsTransitionDuration(reduceMotion ? 0 : 250)
     .polygonLabel(f => {
       if (noHover) return "";
@@ -415,6 +492,10 @@
         return `<div class="tooltip">${esc(names[0])}${names.length > 1 ? `<small>Also ${esc(names.slice(1).join(", "))}</small>` : "<small>Regional cuisine</small>"}</div>`;
       }
       const n = nationalByIso.get(featIso(f));
+      if (lit) {
+        const k = lit.byIso.get(featIso(f));
+        return `<div class="tooltip">${esc(f.properties.NAME)}<small>${k ? `${k} ${k === 1 ? "dish" : "dishes"}` : "None listed"}</small></div>`;
+      }
       const more = n ? (local.get(n.iso3) || []).length : 0;
       return `<div class="tooltip">${esc(n ? n.name : f.properties.NAME)}${n && more ? `<small>${more} regional ${more === 1 ? "cuisine" : "cuisines"} inside</small>` : n ? "" : "<small>Not on Wikipedia's list yet</small>"}</div>`;
     })
@@ -434,7 +515,10 @@
     .htmlLat(c => placeOf(c)[0]).htmlLng(c => placeOf(c)[1]).htmlAltitude(0.035)
     .htmlElement(c => {
       const b = document.createElement("button");
-      b.className = "pin off"; b.type = "button"; b.textContent = c.name.replace(/^Cuisine of (the )?/i, "").replace(/ (cuisine|food|diet)$/i, "");
+      b.className = "pin off"; b.type = "button";
+      const label = c.name.replace(/^Cuisine of (the )?/i, "").replace(/ (cuisine|food|diet)$/i, "");
+      const k = lit && lit.kind === "ingredient" ? lit.byCuisine.get(c.id) : 0;
+      b.textContent = k ? `${label} ${k}` : label;
       b.title = c.name; b.dataset.id = c.id;
       b.addEventListener("click", e => { e.stopPropagation(); open(c); });
       return b;
@@ -444,6 +528,7 @@
     .arcStartLat(a => a.start[0]).arcStartLng(a => a.start[1])
     .arcEndLat(a => a.end[0]).arcEndLng(a => a.end[1])
     .arcColor(a => {
+      if (lit) return "rgba(0,0,0,0)";
       if (related(a)) return [colorOf(a.from), colorOf(a.to)];
       const alpha = selected ? "14" : "40";
       return [colorOf(a.from) + alpha, colorOf(a.to) + alpha];
@@ -482,9 +567,9 @@
   // --- Focus: which country's regions are showing -----------------------------
   // The selected cuisine's country, or, when nothing is selected, whatever country
   // is in the middle of the view once you've zoomed in.
-  function setFocus(isos) {
+  function setFocus(isos, force) {
     const next = new Set((isos || []).filter(Boolean));
-    if (next.size === focus.size && [...next].every(i => focus.has(i))) return;
+    if (!force && next.size === focus.size && [...next].every(i => focus.has(i))) return;
     focus = next;
     world.polygonsData(focus.size ? land.concat(regions.filter(r => focus.has(r.properties.iso))) : land);
     world.htmlElementsData([...focus].flatMap(iso => local.get(iso) || []));
@@ -495,8 +580,15 @@
     const under = land.find(f => contains(f, lng, lat));
     return under && local.has(featIso(under)) ? featIso(under) : null;
   }
+  // A dish or ingredient: show every cuisine that has it, as shapes and labels
+  function applyLit() {
+    focus = new Set(["lit"]);
+    world.polygonsData(land.concat(regions.filter(r => r.properties.ids.some(id => lit.byCuisine.has(id)))));
+    world.htmlElementsData([...lit.byCuisine.keys()].map(id => byId.get(id)).filter(c => placeOf(c)));
+    refresh();
+  }
   function browseFocus() {
-    if (selected && selected.iso3) return;
+    if (lit || (selected && selected.iso3)) return;
     const pov = world.pointOfView();
     if (pov.altitude >= 1.3) return setFocus([]);
     const iso = countryUnder(pov.lat, pov.lng);
@@ -508,6 +600,7 @@
     if (!pins.length) return;
     const ranked = pins.map(p => {
       const c = byId.get(p.dataset.id);
+      if (lit) return { p, c, score: (lit.byCuisine.get(c.id) || 0) * 100 + (c.kind === "national" ? 50 : 0) - c.name.length };
       return { p, c, score: (c === selected ? 1e6 : 0) + shelfSize(c) * 10 + (regionOf.has(c.id) ? 50 : 0) - c.name.length };
     }).sort((a, b) => b.score - a.score);
     // Don't put labels under the search box, the controls or the card
@@ -538,10 +631,10 @@
     arcsBtn.setAttribute("aria-pressed", String(v));
     world.arcsData(v ? arcs : []);
   });
-  const beyondBtn = document.getElementById("t-beyond");
-  beyondBtn.addEventListener("click", () => {
-    const v = beyondBtn.getAttribute("aria-pressed") !== "true";
-    if (v) showBeyond(); else closePanel();
+  const exploreBtn = document.getElementById("t-explore");
+  exploreBtn.addEventListener("click", () => {
+    const v = exploreBtn.getAttribute("aria-pressed") !== "true";
+    if (v) showExplore("ingredients"); else closePanel();
   });
 
   // --- Panel / sheet ------------------------------------------------------------
@@ -560,11 +653,11 @@
   function closePanel() {
     panel.classList.remove("open", "full");
     document.body.classList.remove("sheet-open");
-    beyondBtn.setAttribute("aria-pressed", "false");
-    selected = null;
+    exploreBtn.setAttribute("aria-pressed", "false");
+    selected = null; lit = null; current = null; trail.length = 0;
     refresh();
     if (location.hash) setHash("");
-    setFocus([]);
+    setFocus([], true);
     browseFocus();
   }
   function refresh() {
@@ -664,16 +757,37 @@
     liveIntro(c).then(t => { if (t && selected === c && document.getElementById("intro") === intro) show(t); });
   }
 
-  function open(c, { fly = true } = {}) {
+  // The trail: where you've been in the card, so you can step back
+  let current = null;
+  const trail = [];
+  function remember(x, push) {
+    if (push !== false && current && current !== x) { trail.push(current); if (trail.length > 30) trail.shift(); }
+    current = x;
+  }
+  function goBack() {
+    const prev = trail.pop();
+    if (!prev) return;
+    if (prev.type === "dish") openDish(prev, { push: false });
+    else if (prev.type === "ingredient") openIngredient(prev, { push: false });
+    else open(prev, { push: false });
+  }
+  const CHEVRON = `<svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" style="vertical-align:-2px"><path d="m15 6-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+  const backCrumb = () => trail.length ? `<button data-back>${CHEVRON} Back to ${esc(trail[trail.length - 1].name)}</button>` : "";
+
+  function open(c, { fly = true, push } = {}) {
     if (!c) return;
+    remember(c, push);
+    const wasLit = !!lit;
+    lit = null;
+    if (wasLit) setFocus([], true);
     selected = c;
-    beyondBtn.setAttribute("aria-pressed", "false");
+    exploreBtn.setAttribute("aria-pressed", "false");
     controls.autoRotate = false;
     if (c.iso3) setFocus([c.iso3]);
     render(c);
     showPanel();
     refresh();
-    const s = slug(c.id);
+    const s = hashOf(c);
     if (location.hash.slice(1) !== s) setHash(s);
     const target = placeOf(c) || (c.arc && nationalByIso.get(c.arc.to)?.loc) || (c.iso3 && nationalByIso.get(c.iso3)?.loc);
     if (!target || !fly) return;
@@ -694,10 +808,10 @@
   function render(c) {
     const col = colorOf(c);
     const parent = (c.parents || []).map(p => byId.get(p)).find(p => p && !(c.kind === "national" && p.iso3 !== c.iso3));
-    const trail = [];
-    if ((c.region || [])[0]) trail.push(CONTINENT[c.region[0]] || c.region[0]);
-    if (parent && parent !== c) trail.push(`<button data-id="${attr(parent.id)}">${esc(parent.name)}</button>`);
-    crumbs.innerHTML = trail.join(" / ");
+    const trailBits = [];
+    if ((c.region || [])[0]) trailBits.push(CONTINENT[c.region[0]] || c.region[0]);
+    if (parent && parent !== c) trailBits.push(`<button data-id="${attr(parent.id)}">${esc(parent.name)}</button>`);
+    crumbs.innerHTML = backCrumb() || trailBits.join(" / ");
 
     const country = c.iso3 && isoName.get(c.iso3);
     const kindLine = c.kind === "diaspora" && c.arc
@@ -723,6 +837,8 @@
     const bBooks = books.length ? null : borrow("cookbooks", "title", 4);
     const short = x => esc(x.name.replace(/ cuisine$/, ""));
     const fromNote = b => `<p class="empty">Nothing specific to ${short(c)} cooking yet, so here's ${b.items.length > 1 ? "where" : "one place"} to start from <button class="link" data-id="${attr(b.from.id)}">${esc(b.from.name)}</button>.</p>`;
+    const myDishes = (dishesOf.get(c.id) || []).slice().sort((a, b) => (b.ingredients.length > 0) - (a.ingredients.length > 0) || a.name.localeCompare(b.name));
+    const keyIngs = keyIngredients(myDishes, 10);
     const kids = (c.children || []).map(k => byId.get(k)).filter(k => k && k.kind !== "national");
     const others = c.kind === "national" ? (local.get(c.iso3) || []).filter(o => !(c.children || []).includes(o.id)) : [];
     const sameArea = (regionOf.get(c.id)?.properties.ids || []).filter(id => id !== c.id).map(id => byId.get(id));
@@ -752,6 +868,9 @@
         : bBooks ? `<h3>Cookbooks</h3>${bSites && bSites.from === bBooks.from ? "" : fromNote(bBooks)}<div class="books" style="margin-top:12px">${bBooks.items.map(book).join("")}</div>`
         : ""}
 
+      ${myDishes.length ? `<h3>Dishes</h3>${chipList(myDishes, dishChip, 24)}` : ""}
+      ${keyIngs.length ? `<h3>Key ingredients</h3><p class="empty" style="margin-bottom:8px">Pick one to see where else in the world it's cooked with.</p><div class="chips">${keyIngs.map(x => ingChip(x.ing)).join("")}</div>` : ""}
+
       <a class="wiki-btn" href="${attr(c.url)}" target="_blank" rel="noopener">Read the full article on Wikipedia ${ARROW}</a>
       <p class="source">Summary from Wikipedia, shared under CC BY-SA.</p>
 
@@ -764,11 +883,117 @@
     fillIntro(c);
   }
 
-  function showBeyond() {
+  // --- Dishes and ingredients: cards and their maps --------------------------------
+  const wikiUrl = t => "https://en.wikipedia.org/wiki/" + encodeURIComponent(t.replace(/ /g, "_"));
+  const shortName = c => c.name.replace(/^Cuisine of (the )?/i, "").replace(/ cuisine$/i, "");
+  const R = Math.PI / 180;
+  function flyToPlaces(pts, minAlt) {
+    if (!pts.length) return;
+    let x = 0, y = 0, z = 0;
+    for (const [la, lo] of pts) { x += Math.cos(la * R) * Math.cos(lo * R); y += Math.cos(la * R) * Math.sin(lo * R); z += Math.sin(la * R); }
+    const lat = Math.atan2(z, Math.hypot(x, y)) / R, lng = Math.atan2(y, x) / R;
+    const dist = ([a, b]) => 2 * Math.asin(Math.sqrt(Math.sin((a - lat) * R / 2) ** 2 + Math.cos(a * R) * Math.cos(lat * R) * Math.sin((b - lng) * R / 2) ** 2)) / R;
+    const spread = Math.max(0, ...pts.map(dist));
+    const alt = Math.min(2.6, Math.max(minAlt || 1.1, 0.7 + spread / 32));
+    const phone = isPhone();
+    world.pointOfView({ lat: lat - (phone ? alt * 11 : 0), lng: lng + (phone ? 0 : alt * 9), altitude: alt }, reduceMotion ? 0 : 1100);
+  }
+  function showLit(list, kind) {
     selected = null;
-    refresh();
-    beyondBtn.setAttribute("aria-pressed", "true");
+    lit = litFor(list, kind);
+    applyLit();
+    flyToPlaces([...lit.byCuisine.keys()].map(id => placeOf(byId.get(id))).filter(Boolean), kind === "dish" ? 1.2 : 1.4);
+  }
+  function fillFoodIntro(x) {
+    const intro = document.getElementById("intro");
+    if (!intro) return;
+    const title = x.type === "dish" ? x.id : x.title;
+    const show = text => {
+      if (current !== x) return;
+      const shortText = shortIntro(text, isPhone() ? 220 : 300);
+      intro.innerHTML = `<p>${esc(shortText)}</p>`;
+    };
+    if (foodSummaries[title]) return show(foodSummaries[title]);
+    intro.innerHTML = "";
+    liveIntro({ id: "food:" + title, title }).then(t => { if (t) show(t); });
+  }
+  function openDish(d, { push } = {}) {
+    if (!d) return;
+    remember(d, push);
+    exploreBtn.setAttribute("aria-pressed", "false");
+    controls.autoRotate = false;
+    const homes = d.cuisines.map(id => byId.get(id));
+    const col = colorOf(homes[0]);
+    // Recipe sites from the first of its cuisines that has some
+    let cook = null;
+    for (const c of homes) {
+      const sites = merge((picks[c.id] || {}).sites, (suggestions[c.id] || {}).sites, "url");
+      if (sites.length) { cook = { c, sites: sites.slice(0, 2) }; break; }
+    }
+    const siblings = (dishesOf.get(homes[0].id) || []).filter(x => x !== d);
+    crumbs.innerHTML = backCrumb() || "Dish";
+    panel.style.setProperty("--accent", col);
+    body.style.setProperty("--accent", col);
+    body.innerHTML = `
+      <h2>${esc(d.name)}</h2>
+      <p class="kind"><i style="background:${col}"></i>${homes.length === 1 ? `Dish from ${esc(homes[0].name)}` : `Dish found in ${homes.length} cuisines`}</p>
+      <div class="intro" id="intro"></div>
+      ${d.ingredients.length ? `<h3>Ingredients</h3><p class="empty" style="margin-bottom:8px">Pick one to see where in the world it's cooked with.</p><div class="chips">${d.ingredients.map(id => ingChip(ingById.get(id))).join("")}</div>` : ""}
+      <h3>Where it's from</h3>
+      <div class="chips">${homes.map(chip).join("")}</div>
+      ${cook ? `<h3>Cook it</h3><p class="empty" style="margin-bottom:10px">Recipe sites for <button class="link" data-id="${attr(cook.c.id)}">${esc(cook.c.name)}</button>.</p><ul class="sites">${cook.sites.map(site).join("")}</ul>` : ""}
+      <a class="wiki-btn" href="${attr(wikiUrl(d.id))}" target="_blank" rel="noopener">Read about ${esc(d.name)} on Wikipedia ${ARROW}</a>
+      <p class="source">Summary from Wikipedia, shared under CC BY-SA.</p>
+      ${siblings.length ? `<h3>More from ${esc(homes[0].name)}</h3>${chipList(siblings, dishChip, 16)}` : ""}
+    `;
+    showPanel();
+    fillFoodIntro(d);
+    if (location.hash.slice(1) !== hashOf(d)) setHash(hashOf(d));
+    showLit([d], "dish");
+  }
+  function openIngredient(i, { push } = {}) {
+    if (!i) return;
+    remember(i, push);
+    exploreBtn.setAttribute("aria-pressed", "false");
+    controls.autoRotate = false;
+    // Cuisines that cook with it, most dishes first, each with a few of those dishes
+    const byC = new Map();
+    for (const d of i.dishList) for (const cid of d.cuisines) { if (!byC.has(cid)) byC.set(cid, []); byC.get(cid).push(d); }
+    const rows = [...byC].sort((a, b) => b[1].length - a[1].length);
+    const pairs = new Map();
+    for (const d of i.dishList) for (const o of d.ingredients) if (o !== i.id) pairs.set(o, (pairs.get(o) || 0) + 1);
+    const paired = [...pairs].sort((a, b) => b[1] - a[1]).slice(0, 10).map(([id]) => ingById.get(id));
+    crumbs.innerHTML = backCrumb() || "Ingredient";
+    panel.style.setProperty("--accent", "#ede6da");
+    body.style.setProperty("--accent", "#ede6da");
+    body.innerHTML = `
+      <h2>${esc(i.name)}</h2>
+      <p class="kind"><i style="background:#ede6da"></i>Ingredient in ${i.dishes} ${i.dishes === 1 ? "dish" : "dishes"} across ${rows.length} ${rows.length === 1 ? "cuisine" : "cuisines"}</p>
+      <div class="intro" id="intro"></div>
+      <h3>Where it's cooked with</h3>
+      <p class="empty" style="margin-bottom:10px">The brighter a place on the globe, the more of its dishes use it.</p>
+      <ul class="where">${rows.slice(0, 14).map(([cid, ds]) => `<li>
+        <button class="where-c" data-id="${attr(cid)}">${esc(byId.get(cid).name)}</button> <span class="n">${ds.length}</span>
+        <div class="chips">${ds.slice(0, 5).map(dishChip).join("")}${ds.length > 5 ? `<span class="more-n">and ${ds.length - 5} more</span>` : ""}</div></li>`).join("")}</ul>
+      ${rows.length > 14 ? `<p class="empty">Also in ${rows.slice(14).map(([cid]) => `<button class="link" data-id="${attr(cid)}">${esc(shortName(byId.get(cid)))}</button>`).join(", ")}.</p>` : ""}
+      ${paired.length ? `<h3>Often cooked with</h3><div class="chips">${paired.map(x => ingChip(x)).join("")}</div>` : ""}
+      <a class="wiki-btn" href="${attr(wikiUrl(i.title))}" target="_blank" rel="noopener">Read about ${esc(i.name.toLowerCase())} on Wikipedia ${ARROW}</a>
+      <p class="source">Summary from Wikipedia, shared under CC BY-SA.</p>
+    `;
+    showPanel();
+    fillFoodIntro(i);
+    if (location.hash.slice(1) !== hashOf(i)) setHash(hashOf(i));
+    showLit(i.dishList, "ingredient");
+  }
+
+  // --- Explore: browse when you don't know what to search for ---------------------
+  function showExplore(tab) {
+    exploreBtn.setAttribute("aria-pressed", "true");
     crumbs.textContent = "";
+    panel.style.setProperty("--accent", "var(--rice)");
+    const tabs = [["ingredients", "Ingredients"], ["dishes", "Dishes"], ["cuisines", "Cuisines"]];
+    const nationals = all.filter(c => c.kind === "national").sort((a, b) => (dishesOf.get(b.id) || []).length - (dishesOf.get(a.id) || []).length);
+    const shared = dishes.filter(d => d.cuisines.length > 1).sort((a, b) => b.cuisines.length - a.cuisines.length || a.name.localeCompare(b.name));
     const groups = [
       ["peoples", "Peoples and places without their own country"],
       ["diaspora", "Diaspora and fusion"],
@@ -776,21 +1001,49 @@
       ["historical", "Historical cuisines"],
       ["style", "Styles of cooking"],
     ];
-    panel.style.setProperty("--accent", "var(--rice)");
+    const content = {
+      ingredients: `<p class="intro">Pick an ingredient and the globe becomes a map of where it's cooked with.</p>
+        <h3>Most-used ingredients</h3><div class="chips">${usedIngredients.slice(0, 60).map(x => ingChip(x, true)).join("")}</div>`,
+      dishes: `<p class="intro">${dishes.length.toLocaleString()} dishes from Wikipedia, each tied to the cuisines it belongs to.</p>
+        <button class="chip-btn surprise" data-surprise>Show me a random dish</button>
+        <h3>Shared across borders</h3><p class="empty" style="margin-bottom:8px">Dishes claimed by more than one cuisine.</p>${chipList(shared, dishChip, 40)}`,
+      cuisines: `<h3>Cuisines with the most dishes listed</h3>${chipList(nationals.filter(c => dishesOf.has(c.id)), chip, 30)}
+        <h3>Beyond borders</h3><p class="empty" style="margin-bottom:4px">Cooking that doesn't fit inside one country: carried by people, shaped by faith, or from empires that no longer exist.</p>
+        ${groups.map(([k, label]) => {
+          const items = beyond.filter(c => c.kind === k).sort((a, b) => a.name.localeCompare(b.name));
+          return items.length ? `<h3 class="small-h">${label}</h3><div class="chips">${items.map(chip).join("")}</div>` : "";
+        }).join("")}`,
+    };
     body.innerHTML = `
-      <h2>Beyond borders</h2>
-      <p class="intro">Plenty of the world's cooking doesn't fit inside one country: food carried by people across borders, shaped by faith, or from empires that no longer exist.</p>
-      ${groups.map(([k, label]) => {
-        const items = beyond.filter(c => c.kind === k).sort((a, b) => a.name.localeCompare(b.name));
-        return items.length ? `<h3>${label}</h3><div class="chips">${items.map(chip).join("")}</div>` : "";
-      }).join("")}`;
+      <h2>Explore</h2>
+      <div class="tabs" role="tablist">${tabs.map(([k, label]) => `<button role="tab" aria-selected="${k === tab}" data-tab="${k}">${label}</button>`).join("")}</div>
+      <div role="tabpanel">${content[tab]}</div>`;
+    body.scrollTop = 0;
     showPanel();
   }
 
   panel.addEventListener("click", e => {
-    const b = e.target.closest("[data-id]");
-    if (b) open(byId.get(b.dataset.id));
+    const t = e.target.closest("[data-id], [data-dish], [data-ing], [data-back], [data-tab], [data-more], [data-surprise]");
+    if (!t) return;
+    if (t.dataset.back !== undefined) return goBack();
+    if (t.dataset.tab) return showExplore(t.dataset.tab);
+    if (t.dataset.surprise !== undefined) return openDish(dishes[Math.floor(Math.random() * dishes.length)]);
+    if (t.dataset.more) { const box = t.closest(".chips"); box.innerHTML = moreLists.get(t.dataset.more) || ""; return; }
+    if (t.dataset.dish) return openDish(dishById.get(t.dataset.dish));
+    if (t.dataset.ing) return openIngredient(ingById.get(t.dataset.ing));
+    open(byId.get(t.dataset.id));
   });
+  // Long chip lists show a few, with a button for the rest
+  const moreLists = new Map();
+  let moreN = 0;
+  function chipList(items, draw, n) {
+    if (items.length <= n) return `<div class="chips">${items.map(draw).join("")}</div>`;
+    const key = "m" + (++moreN);
+    moreLists.set(key, items.map(draw).join(""));
+    return `<div class="chips">${items.slice(0, n).map(draw).join("")}<button class="chip more-chip" data-more="${key}">Show all ${items.length}</button></div>`;
+  }
+  function dishChip(d) { return `<button class="chip" data-dish="${attr(d.id)}">${esc(d.name)}</button>`; }
+  function ingChip(i, count) { return `<button class="chip ing" data-ing="${attr(i.id)}">${esc(i.name)}${count ? ` <small>${i.dishes}</small>` : ""}</button>`; }
 
   // Hand picks first, then research suggestions (tagged), without duplicates
   function merge(mine, suggested, key) {
@@ -817,45 +1070,74 @@
   function attr(s) { return esc(s); }
   function capital(s) { return s.charAt(0).toUpperCase() + s.slice(1).replace(/\.$/, ""); }
 
-  // --- Search -------------------------------------------------------------------
+  // --- Search: cuisines, dishes and ingredients in one box, grouped by type ---------
   const q = document.getElementById("q");
   const list = document.getElementById("results");
   const norm = s => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
-  const index = all.map(c => ({ c, n: norm(c.name), place: norm(c.iso3 ? (isoName.get(c.iso3) || "") : "") }));
-  let matches = [], active = -1;
+  const index = [
+    ...all.map(c => ({ x: c, type: "cuisine", n: norm(c.name), alt: norm(c.iso3 ? (isoName.get(c.iso3) || "") : ""), sub: c.iso3 ? (isoName.get(c.iso3) || "") : KIND_LABEL[c.kind], weight: c.kind === "national" ? 2 : 0 })),
+    ...dishes.map(d => ({ x: d, type: "dish", n: norm(d.name), alt: "", sub: shortName(byId.get(d.cuisines[0])) + (d.cuisines.length > 1 ? ` and ${d.cuisines.length - 1} more` : ""), weight: d.ingredients.length ? 1 : 0 })),
+    ...usedIngredients.map(i => ({ x: i, type: "ingredient", n: norm(i.name), alt: norm(i.title), sub: `in ${i.dishes} ${i.dishes === 1 ? "dish" : "dishes"}`, weight: Math.min(3, i.dishes / 10) })),
+  ];
+  const GROUPS = [["all", "All"], ["cuisine", "Cuisines"], ["dish", "Dishes"], ["ingredient", "Ingredients"]];
+  let filter = "all", matches = [], active = -1;
   function search() {
     const t = norm(q.value.trim());
     if (!t) { list.classList.remove("open"); q.setAttribute("aria-expanded", "false"); return; }
-    matches = index
-      .map(x => ({ x, s: x.n.startsWith(t) ? 0 : x.n.includes(" " + t) ? 1 : x.n.includes(t) ? 2 : x.place.startsWith(t) ? 3 : 9 }))
+    const scored = index
+      .filter(e => filter === "all" || e.type === filter)
+      .map(e => ({ e, s: e.n.startsWith(t) ? 0 : e.n.includes(" " + t) ? 1 : e.n.includes(t) ? 2 : e.alt.startsWith(t) ? 3 : 9 }))
       .filter(m => m.s < 9)
-      .sort((a, b) => a.s - b.s || (a.x.c.kind === "national" ? -1 : 0) - (b.x.c.kind === "national" ? -1 : 0) || a.x.n.length - b.x.n.length)
-      .slice(0, 8).map(m => m.x.c);
+      .sort((a, b) => a.s - b.s || b.e.weight - a.e.weight || a.e.n.length - b.e.n.length);
+    // A few of each type when showing all; more of one type when filtered
+    const per = filter === "all" ? 4 : 12;
+    const counts = {};
+    matches = [];
+    for (const m of scored) {
+      counts[m.e.type] = (counts[m.e.type] || 0) + 1;
+      if (counts[m.e.type] <= per) matches.push(m.e);
+    }
+    const order = ["cuisine", "dish", "ingredient"];
+    matches.sort((a, b) => order.indexOf(a.type) - order.indexOf(b.type));
     active = matches.length ? 0 : -1;
-    list.innerHTML = matches.length
-      ? matches.map((c, i) => `<li role="option" id="opt-${i}" aria-selected="${i === active}" data-i="${i}">${esc(c.name)}<small>${esc(c.iso3 ? (isoName.get(c.iso3) || "") : KIND_LABEL[c.kind])}</small></li>`).join("")
-      : `<li role="option" aria-disabled="true">No cuisine by that name. Try a country or region.</li>`;
+    const head = { cuisine: "Cuisines", dish: "Dishes", ingredient: "Ingredients" };
+    let html = `<li class="filters" role="presentation">${GROUPS.map(([k, label]) => `<button type="button" data-filter="${k}" aria-pressed="${k === filter}">${label}${k !== "all" && counts[k] ? ` <small>${counts[k]}</small>` : ""}</button>`).join("")}</li>`;
+    let last = null;
+    matches.forEach((e, i) => {
+      if (e.type !== last) { html += `<li class="group" role="presentation">${head[e.type]}</li>`; last = e.type; }
+      html += `<li role="option" id="opt-${i}" aria-selected="${i === active}" data-i="${i}">${esc(e.x.name)}<small>${esc(e.sub)}</small></li>`;
+    });
+    if (!matches.length) html += `<li role="option" aria-disabled="true">Nothing by that name. Try a country, a dish or an ingredient.</li>`;
+    list.innerHTML = html;
     list.classList.add("open"); q.setAttribute("aria-expanded", "true");
     q.setAttribute("aria-activedescendant", active >= 0 ? "opt-0" : "");
   }
-  function pick(i) { const c = matches[i]; if (!c) return; q.value = ""; search(); q.blur(); open(c); }
+  function openAny(x) { x.type === "dish" ? openDish(x) : x.type === "ingredient" ? openIngredient(x) : open(x); }
+  function pick(i) { const e = matches[i]; if (!e) return; q.value = ""; search(); q.blur(); openAny(e.x); }
   q.addEventListener("input", search);
   q.addEventListener("keydown", e => {
     if (e.key === "ArrowDown" || e.key === "ArrowUp") {
       e.preventDefault(); if (!matches.length) return;
       active = (active + (e.key === "ArrowDown" ? 1 : -1) + matches.length) % matches.length;
-      [...list.children].forEach((li, i) => li.setAttribute("aria-selected", String(i === active)));
+      list.querySelectorAll("[data-i]").forEach(li => li.setAttribute("aria-selected", String(+li.dataset.i === active)));
       q.setAttribute("aria-activedescendant", "opt-" + active);
     } else if (e.key === "Enter") { e.preventDefault(); pick(active); }
     else if (e.key === "Escape") { q.value = ""; search(); }
   });
-  list.addEventListener("mousedown", e => { const li = e.target.closest("[data-i]"); if (li) { e.preventDefault(); pick(+li.dataset.i); } });
+  list.addEventListener("mousedown", e => {
+    const f = e.target.closest("[data-filter]");
+    if (f) { e.preventDefault(); filter = f.dataset.filter; search(); return; }
+    const li = e.target.closest("[data-i]");
+    if (li) { e.preventDefault(); pick(+li.dataset.i); }
+  });
   q.addEventListener("blur", () => setTimeout(() => list.classList.remove("open"), 120));
 
   // Deep links: #thai-cuisine
+  // #thai-cuisine, #dish-pad-thai, #ingredient-fish-sauce
   function fromHash() {
-    const c = bySlug.get(location.hash.slice(1));
-    if (c && c !== selected) open(c);
+    const h = location.hash.slice(1);
+    const x = dishSlug.get(h) || ingSlug.get(h) || bySlug.get(h);
+    if (x && x !== current) openAny(x);
   }
   addEventListener("hashchange", fromHash);
   fromHash();

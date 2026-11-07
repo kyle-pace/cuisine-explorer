@@ -1,0 +1,27 @@
+{
+  "_about": "Kyle's hand-picked cookbooks and recipe sites. Key each cuisine by its Wikipedia page title (the same id used in cuisines.json, e.g. \"Thai cuisine\"). Every field except title/name and url is optional. Cookbook covers load from Open Library by ISBN when one is given. Copy the shape in _example.",
+  "_example": {
+    "Example cuisine": {
+      "note": "One line on why these picks, in your voice.",
+      "cookbooks": [
+        {
+          "title": "Book title",
+          "author": "Author name",
+          "year": 2020,
+          "isbn": "9780000000000",
+          "url": "https://openlibrary.org/isbn/9780000000000",
+          "note": "Why it's worth owning."
+        }
+      ],
+      "sites": [
+        {
+          "name": "Site or channel name",
+          "url": "https://example.com",
+          "type": "blog",
+          "note": "What to cook from it first."
+        }
+      ]
+    }
+  },
+  "cuisines": {}
+}

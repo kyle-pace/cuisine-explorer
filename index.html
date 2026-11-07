@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cuisine Explorer</title>
+<meta name="description" content="Spin the globe and explore the world's cuisines, with Wikipedia as the guide and hand-picked cookbooks and recipe sites for each.">
+<meta property="og:title" content="Cuisine Explorer">
+<meta property="og:description" content="Explore the world's cuisines on a globe, with hand-picked cookbooks and recipe sites for each.">
+<meta property="og:image" content="https://kylepace.net/labs/cuisines/og.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --night: #1b1424;      /* aubergine: ocean and page */
+    --panel: #241b2f;
+    --panel-2: #2e2439;
+    --land: #3b3146;
+    --line: #4a3f57;
+    --rice: #ede6da;       /* text */
+    --muted: #a99fb5;
+    --saffron: #f0b340;    /* Asia */
+    --beet: #cf5f87;       /* Europe */
+    --chili: #e46a3f;      /* Africa */
+    --tomatillo: #94bd5c;  /* Americas */
+    --seaglass: #55b8ad;   /* Oceania */
+    --serif: "Young Serif", Georgia, serif;
+    --sans: "Figtree", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: var(--night); color: var(--rice); font-family: var(--sans); font-size: 16px; line-height: 1.5; }
+  body { overflow: hidden; }
+  a { color: inherit; }
+  button { font: inherit; color: inherit; }
+  :focus-visible { outline: 2px solid var(--saffron); outline-offset: 2px; border-radius: 4px; }
+
+  #globe { position: fixed; inset: 0; }
+  #globe canvas { display: block; }
+
+  /* Top-left: title and search */
+  .masthead { position: fixed; top: 24px; left: 28px; width: min(380px, calc(100vw - 56px)); z-index: 5; }
+  .masthead h1 { font-family: var(--serif); font-weight: 400; font-size: 2.6rem; line-height: 1; margin: 0 0 10px; letter-spacing: -0.01em; }
+  .masthead p { margin: 0 0 16px; color: var(--muted); font-size: 0.95rem; max-width: 34ch; }
+  .search { position: relative; }
+  .search input {
+    width: 100%; padding: 11px 14px 11px 40px; border-radius: 22px; border: 1px solid var(--line);
+    background: rgba(36, 27, 47, 0.88); color: var(--rice); font: inherit; backdrop-filter: blur(6px);
+  }
+  .search input::placeholder { color: var(--muted); }
+  .search svg { position: absolute; left: 15px; top: 13px; width: 16px; height: 16px; stroke: var(--muted); z-index: 1; pointer-events: none; }
+  .results { list-style: none; margin: 6px 0 0; padding: 6px; background: var(--panel); border: 1px solid var(--line); border-radius: 14px; max-height: 50vh; overflow: auto; display: none; }
+  .results.open { display: block; }
+  .results li { padding: 8px 10px; border-radius: 8px; cursor: pointer; display: flex; justify-content: space-between; gap: 12px; }
+  .results li small { color: var(--muted); white-space: nowrap; }
+  .results li[aria-selected="true"], .results li:hover { background: var(--panel-2); }
+
+  /* Bottom-left: legend and layer toggles */
+  .legend { position: fixed; left: 28px; bottom: 24px; z-index: 5; font-size: 0.85rem; color: var(--muted); }
+  .swatches { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-bottom: 12px; max-width: 360px; }
+  .swatches span { display: inline-flex; align-items: center; gap: 6px; }
+  .swatches i { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+  .toggles { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip-btn { border: 1px solid var(--line); background: rgba(36, 27, 47, 0.85); border-radius: 18px; padding: 6px 12px; cursor: pointer; font-size: 0.85rem; }
+  .chip-btn[aria-pressed="true"] { background: var(--rice); color: var(--night); border-color: var(--rice); }
+
+  /* Right: cuisine panel */
+  .panel {
+    position: fixed; top: 16px; right: 16px; bottom: 16px; width: min(420px, calc(100vw - 32px)); z-index: 6;
+    background: var(--panel); border: 1px solid var(--line); border-radius: 20px;
+    transform: translateX(calc(100% + 24px)); transition: transform 0.35s cubic-bezier(.2,.8,.2,1);
+    display: flex; flex-direction: column; overflow: hidden;
+  }
+  .panel.open { transform: none; }
+  .panel-top { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px 0 24px; }
+  .crumbs { font-size: 0.8rem; color: var(--muted); }
+  .crumbs button { background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
+  .close { background: none; border: 0; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; font-size: 1.4rem; line-height: 1; color: var(--muted); }
+  .close:hover { background: var(--panel-2); color: var(--rice); }
+  .panel-body { overflow-y: auto; padding: 8px 24px 28px; }
+  .panel h2 { font-family: var(--serif); font-weight: 400; font-size: 2.1rem; line-height: 1.1; margin: 4px 0 6px; }
+  .accent-bar { height: 4px; width: 48px; border-radius: 2px; margin: 0 0 16px; }
+  .kind { color: var(--muted); font-size: 0.9rem; margin: 0 0 14px; }
+  .intro { font-size: 0.98rem; color: var(--rice); max-width: 62ch; }
+  .intro p { margin: 0 0 10px; }
+  .source { font-size: 0.85rem; color: var(--muted); margin: 0 0 4px; }
+  .source a { color: var(--rice); }
+  .panel h3 { font-family: var(--serif); font-weight: 400; font-size: 1.25rem; margin: 28px 0 10px; }
+  .empty { color: var(--muted); font-size: 0.92rem; margin: 0; padding: 14px 16px; border: 1px dashed var(--line); border-radius: 12px; }
+  .books { display: grid; grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); gap: 14px; }
+  .book { text-decoration: none; display: block; }
+  .cover { aspect-ratio: 2 / 3; border-radius: 3px 6px 6px 3px; overflow: hidden; position: relative; background: var(--panel-2); box-shadow: inset 6px 0 0 rgba(0,0,0,0.18); display: flex; align-items: flex-end; padding: 10px 8px 10px 14px; font-family: var(--serif); font-size: 0.9rem; line-height: 1.15; }
+  .cover img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .book .meta { font-size: 0.8rem; color: var(--muted); margin-top: 6px; }
+  .sites { list-style: none; padding: 0; margin: 0; }
+  .sites li { padding: 10px 0; border-top: 1px solid var(--line); }
+  .sites li:first-child { border-top: 0; }
+  .sites a { font-weight: 600; text-decoration: none; }
+  .sites a:hover { text-decoration: underline; }
+  .sites small { color: var(--muted); display: block; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip { border: 1px solid var(--line); background: none; border-radius: 16px; padding: 4px 11px; cursor: pointer; font-size: 0.88rem; text-align: left; }
+  .chip:hover { background: var(--panel-2); }
+  .connections { list-style: none; margin: 0; padding: 0; }
+  .connections li { margin: 0 0 6px; }
+  .connections button { background: none; border: 0; padding: 0; cursor: pointer; text-align: left; font-size: 0.95rem; }
+  .connections button:hover span:first-child { text-decoration: underline; }
+  .connections span + span { color: var(--muted); }
+
+  .tooltip { font-family: var(--sans); background: var(--panel); border: 1px solid var(--line); color: var(--rice); padding: 6px 10px; border-radius: 8px; font-size: 0.85rem; }
+  .tooltip small { color: var(--muted); display: block; }
+
+  .loading { position: fixed; inset: 0; display: grid; place-items: center; color: var(--muted); z-index: 1; }
+
+  @media (max-width: 720px) {
+    .masthead { top: 16px; left: 16px; width: calc(100vw - 32px); }
+    .masthead h1 { font-size: 2rem; }
+    .masthead p { display: none; }
+    .legend { left: 16px; bottom: 16px; }
+    .swatches { display: none; }
+    .panel { top: auto; left: 8px; right: 8px; bottom: 8px; width: auto; height: 58vh; transform: translateY(calc(100% + 16px)); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .panel { transition: none; }
+  }
+</style>
+</head>
+<body>
+<div id="globe" aria-hidden="true"></div>
+<div class="loading" id="loading">Setting the table…</div>
+
+<header class="masthead">
+  <h1>Cuisine Explorer</h1>
+  <p>Spin the globe, pick a place, and see what's cooking there. Every cuisine links back to Wikipedia.</p>
+  <div class="search" role="search">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+    <input id="q" type="search" placeholder="Search 600+ cuisines" autocomplete="off"
+           aria-label="Search cuisines" role="combobox" aria-expanded="false" aria-controls="results" aria-autocomplete="list">
+    <ul class="results" id="results" role="listbox" aria-label="Matching cuisines"></ul>
+  </div>
+</header>
+
+<div class="legend">
+  <div class="swatches" aria-hidden="true">
+    <span><i style="background:var(--chili)"></i>Africa</span>
+    <span><i style="background:var(--tomatillo)"></i>Americas</span>
+    <span><i style="background:var(--saffron)"></i>Asia</span>
+    <span><i style="background:var(--beet)"></i>Europe</span>
+    <span><i style="background:var(--seaglass)"></i>Oceania</span>
+  </div>
+  <div class="toggles">
+    <button class="chip-btn" id="t-regional" aria-pressed="true">Regional cuisines</button>
+    <button class="chip-btn" id="t-arcs" aria-pressed="true">Diaspora routes</button>
+    <button class="chip-btn" id="t-beyond" aria-pressed="false">Beyond borders</button>
+  </div>
+</div>
+
+<aside class="panel" id="panel" aria-label="Cuisine details" tabindex="-1">
+  <div class="panel-top">
+    <div class="crumbs" id="crumbs"></div>
+    <button class="close" id="close" aria-label="Close">×</button>
+  </div>
+  <div class="panel-body" id="panel-body"></div>
+</aside>
+
+<script src="https://cdn.jsdelivr.net/npm/globe.gl@2.46.2/dist/globe.gl.min.js"></script>
+<!--INLINE_DATA-->
+<script>
+(async function () {
+  const COLORS = {
+    "African cuisine": "#e46a3f",
+    "Cuisine of the Americas": "#94bd5c",
+    "Asian cuisine": "#f0b340",
+    "European cuisine": "#cf5f87",
+    "Oceanic cuisine": "#55b8ad",
+  };
+  const CONTINENT = {
+    "African cuisine": "Africa", "Cuisine of the Americas": "The Americas",
+    "Asian cuisine": "Asia", "European cuisine": "Europe", "Oceanic cuisine": "Oceania",
+  };
+  const NEUTRAL = "#a99fb5";
+  const KIND_LABEL = {
+    national: "National cuisine", regional: "Regional cuisine", diaspora: "Diaspora cuisine",
+    peoples: "Cuisine of a people", religious: "Religious cuisine or diet",
+    historical: "Historical cuisine", style: "Style of cooking",
+  };
+  const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // Data: inlined in the preview build, fetched alongside the page otherwise
+  async function load(id, path) {
+    const el = document.getElementById(id);
+    if (el) return JSON.parse(el.textContent);
+    const r = await fetch(path);
+    return r.json();
+  }
+  const [data, countries, picksFile] = await Promise.all([
+    load("data-cuisines", "data/cuisines.json"),
+    load("data-countries", "data/countries.geojson"),
+    load("data-picks", "data/picks.json"),
+  ]);
+  const picks = picksFile.cuisines || {};
+  const all = data.cuisines;
+  const byId = new Map(all.map(c => [c.id, c]));
+  const slug = s => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  const bySlug = new Map(all.map(c => [slug(c.id), c]));
+  const nationalByIso = new Map(all.filter(c => c.kind === "national").map(c => [c.iso3, c]));
+  const colorOf = c => COLORS[(c.region || [])[0]] || (c.iso3 && nationalByIso.get(c.iso3) && COLORS[(nationalByIso.get(c.iso3).region || [])[0]]) || NEUTRAL;
+  const inCountry = iso => all.filter(c => c.iso3 === iso && c.kind !== "national");
+  const featIso = f => {
+    const p = f.properties;
+    for (const code of [p.ISO_A3_EH, p.ADM0_A3]) if (nationalByIso.has(code)) return code;
+    return p.ISO_A3_EH !== "-99" ? p.ISO_A3_EH : p.ADM0_A3;
+  };
+  const isoName = new Map(countries.features.map(f => [featIso(f), f.properties.NAME]));
+
+  // Arcs: diaspora (origin country -> host country) and influence (parent -> regional)
+  const arcs = [];
+  for (const c of all) {
+    if (c.arc) {
+      const a = nationalByIso.get(c.arc.from), b = nationalByIso.get(c.arc.to);
+      if (a && b && a.loc && b.loc) arcs.push({ c, from: a, to: b, start: a.loc, end: b.loc });
+    }
+    for (const p of c.links || []) {
+      const pc = byId.get(p);
+      if (pc && pc.loc && c.loc) arcs.push({ c, from: pc, to: c, start: pc.loc, end: c.loc });
+    }
+  }
+  const points = all.filter(c => c.loc && c.kind !== "national" && !["religious", "style"].includes(c.kind));
+  const beyond = all.filter(c => ["religious", "historical", "style", "peoples"].includes(c.kind) || (c.kind === "diaspora" && !c.arc));
+
+  // Globe
+  const el = document.getElementById("globe");
+  let hoverIso = null, selected = null;
+  const land = countries.features.filter(f => f.properties.ADM0_A3 !== "ATA");
+  const featColor = f => { const n = nationalByIso.get(featIso(f)); return n ? (COLORS[(n.region || [])[0]] || NEUTRAL) : null; };
+  // Mix a color toward the night background so the dots read as muted spice
+  const mix = (hex, amt) => {
+    const a = parseInt(hex.slice(1), 16), b = 0x1b1424;
+    const ch = s => Math.round(((a >> s) & 255) * amt + ((b >> s) & 255) * (1 - amt));
+    return `rgb(${ch(16)},${ch(8)},${ch(0)})`;
+  };
+  const selIso = () => selected ? selected.iso3 : null;
+  const related = a => !!selected && (selected === a.c || selected === a.from || selected === a.to ||
+    (selected.kind === "national" && (a.from.iso3 === selected.iso3 || a.to.iso3 === selected.iso3)));
+
+  const world = Globe({ animateIn: !reduceMotion })(el)
+    .backgroundColor("#1b1424")
+    .showAtmosphere(true).atmosphereColor("#6f5690").atmosphereAltitude(0.12)
+    // Countries as a scatter of fine dots, in muted spice colors
+    .hexPolygonsData(land)
+    .hexPolygonResolution(3).hexPolygonMargin(0.42).hexPolygonUseDots(true).hexPolygonAltitude(0.004)
+    .hexPolygonColor(f => { const c = featColor(f); return c ? mix(c, 0.78) : "#3d3349"; })
+    // Invisible country shapes on top, for hover, click, and the selected glow
+    .polygonsData(land)
+    .polygonAltitude(f => featIso(f) === selIso() ? 0.012 : 0.008)
+    .polygonCapColor(f => {
+      const c = featColor(f), iso = featIso(f);
+      if (!c) return iso === hoverIso ? "rgba(237,230,218,0.06)" : "rgba(0,0,0,0)";
+      if (iso === selIso()) return c + "59";
+      return iso === hoverIso ? c + "33" : "rgba(0,0,0,0)";
+    })
+    .polygonSideColor(() => "rgba(0,0,0,0)")
+    .polygonStrokeColor(f => {
+      const iso = featIso(f);
+      if (iso === selIso() || iso === hoverIso) return featColor(f) || "#a99fb5";
+      return "rgba(237,230,218,0.07)";
+    })
+    .polygonLabel(f => {
+      const n = nationalByIso.get(featIso(f));
+      const more = n ? inCountry(n.iso3).length : 0;
+      return `<div class="tooltip">${esc(n ? n.name : f.properties.NAME)}${n && more ? `<small>${more} more from ${esc(f.properties.NAME)}</small>` : n ? "" : "<small>Not on Wikipedia's list yet</small>"}</div>`;
+    })
+    .onPolygonHover(f => {
+      hoverIso = f ? featIso(f) : null;
+      world.polygonCapColor(world.polygonCapColor()).polygonStrokeColor(world.polygonStrokeColor());
+      el.style.cursor = f && nationalByIso.get(featIso(f)) ? "pointer" : "grab";
+    })
+    .onPolygonClick(f => { const n = nationalByIso.get(featIso(f)); if (n) open(n, { fly: false }); })
+    // Regional cuisines: small points of light
+    .pointsData(points)
+    .pointLat(c => c.loc[0]).pointLng(c => c.loc[1])
+    .pointColor(c => selected && (c === selected || c.iso3 === selIso()) ? "#fff8ec" : "rgba(237,230,218,0.72)")
+    .pointAltitude(0.011).pointRadius(c => c === selected ? 0.38 : 0.2).pointResolution(10)
+    .pointLabel(c => `<div class="tooltip">${esc(c.name)}<small>${esc(KIND_LABEL[c.kind] || "")}</small></div>`)
+    .onPointClick(c => open(c, { fly: false }))
+    // Routes: faint threads until a country or cuisine is selected
+    .arcsData(arcs)
+    .arcStartLat(a => a.start[0]).arcStartLng(a => a.start[1])
+    .arcEndLat(a => a.end[0]).arcEndLng(a => a.end[1])
+    .arcColor(a => {
+      if (related(a)) return [colorOf(a.from), colorOf(a.to)];
+      const alpha = selected ? "14" : "40";
+      return [colorOf(a.from) + alpha, colorOf(a.to) + alpha];
+    })
+    .arcStroke(a => related(a) ? 0.55 : 0.22)
+    .arcAltitudeAutoScale(0.4)
+    .arcDashLength(a => related(a) ? 0.35 : 1).arcDashGap(a => related(a) ? 0.15 : 0)
+    .arcDashInitialGap(() => Math.random())
+    .arcDashAnimateTime(a => related(a) && !reduceMotion ? 2600 : 0)
+    .arcLabel(a => `<div class="tooltip">${esc(a.c.name)}<small>${esc(a.from.name.replace(/ cuisine$/, ""))} to ${esc(isoName.get(a.to.iso3) || a.to.name)}</small></div>`)
+    .onArcClick(a => open(a.c, { fly: false }));
+
+  world.globeMaterial().color.set("#231a2e");
+  world.globeMaterial().shininess = 2;
+  const controls = world.controls();
+  controls.autoRotate = !reduceMotion;
+  controls.autoRotateSpeed = 0.35;
+  controls.enableDamping = true;
+  const stopSpin = () => { controls.autoRotate = false; };
+  el.addEventListener("pointerdown", stopSpin);
+  el.addEventListener("wheel", stopSpin, { passive: true });
+  world.pointOfView({ lat: 22, lng: 20, altitude: innerWidth > 720 ? 2.1 : 2.8 }, 0);
+  const resize = () => world.width(innerWidth).height(innerHeight);
+  addEventListener("resize", resize); resize();
+  document.getElementById("loading").remove();
+
+  // Layer toggles
+  const layer = (id, on, off) => {
+    const b = document.getElementById(id);
+    b.addEventListener("click", () => {
+      const v = b.getAttribute("aria-pressed") !== "true";
+      b.setAttribute("aria-pressed", String(v));
+      v ? on() : off();
+    });
+  };
+  layer("t-regional", () => world.pointsData(points), () => world.pointsData([]));
+  layer("t-arcs", () => world.arcsData(arcs), () => world.arcsData([]));
+  const beyondBtn = document.getElementById("t-beyond");
+  beyondBtn.addEventListener("click", () => {
+    const v = beyondBtn.getAttribute("aria-pressed") !== "true";
+    if (v) showBeyond(); else closePanel();
+  });
+
+  // Panel
+  const panel = document.getElementById("panel");
+  const body = document.getElementById("panel-body");
+  const crumbs = document.getElementById("crumbs");
+  document.getElementById("close").addEventListener("click", closePanel);
+  addEventListener("keydown", e => { if (e.key === "Escape" && panel.classList.contains("open")) closePanel(); });
+
+  function closePanel() {
+    panel.classList.remove("open");
+    beyondBtn.setAttribute("aria-pressed", "false");
+    selected = null; refresh();
+    if (location.hash) history.replaceState(null, "", location.pathname + location.search);
+  }
+  function refresh() {
+    world.polygonAltitude(world.polygonAltitude())
+      .polygonCapColor(world.polygonCapColor())
+      .polygonStrokeColor(world.polygonStrokeColor())
+      .pointColor(world.pointColor()).pointRadius(world.pointRadius())
+      .arcColor(world.arcColor()).arcStroke(world.arcStroke())
+      .arcDashLength(world.arcDashLength()).arcDashGap(world.arcDashGap())
+      .arcDashAnimateTime(world.arcDashAnimateTime());
+  }
+
+  const summaryCache = new Map();
+  async function wikiSummary(c) {
+    if (summaryCache.has(c.id)) return summaryCache.get(c.id);
+    const p = (async () => {
+      try {
+        const r = await fetch("https://en.wikipedia.org/api/rest_v1/page/summary/" + encodeURIComponent(c.title.replace(/ /g, "_")), { headers: { "Api-User-Agent": "CuisineExplorer/0.1 (https://kylepace.net/labs)" } });
+        if (!r.ok) throw new Error(r.status);
+        return await r.json();
+      } catch (e) { return null; }
+    })();
+    summaryCache.set(c.id, p);
+    return p;
+  }
+
+  function open(c, { fly = true } = {}) {
+    selected = c;
+    beyondBtn.setAttribute("aria-pressed", "false");
+    controls.autoRotate = false;
+    render(c);
+    panel.classList.add("open");
+    refresh();
+    const s = slug(c.id);
+    if (location.hash.slice(1) !== s) history.replaceState(null, "", "#" + s);
+    const target = c.loc || (c.arc && nationalByIso.get(c.arc.to)?.loc) || (c.iso3 && nationalByIso.get(c.iso3)?.loc);
+    // Keep the place clear of the panel: shift right of it on desktop, above it on phones
+    const wide = innerWidth > 720;
+    if (target && fly) world.pointOfView({ lat: target[0] - (wide ? 0 : 24), lng: target[1] + (wide ? 14 : 0), altitude: c.kind === "national" ? 1.7 : 1.2 }, reduceMotion ? 0 : 1200);
+  }
+
+  function render(c) {
+    const col = colorOf(c);
+    const nat = c.kind === "national" ? c : (c.iso3 ? nationalByIso.get(c.iso3) : null);
+    const parent = (c.parents || []).map(p => byId.get(p)).find(Boolean);
+    const trail = [];
+    if ((c.region || [])[0]) trail.push(CONTINENT[c.region[0]] || c.region[0]);
+    if (parent && parent !== c) trail.push(`<button data-id="${attr(parent.id)}">${esc(parent.name)}</button>`);
+    crumbs.innerHTML = trail.join(" / ");
+
+    const country = c.iso3 && isoName.get(c.iso3);
+    const kindLine = c.kind === "diaspora" && c.arc
+      ? `Diaspora cuisine, from ${esc(isoName.get(c.arc.from) || c.arc.from)} to ${esc(isoName.get(c.arc.to) || c.arc.to)}`
+      : esc(KIND_LABEL[c.kind] || "") + (country && c.kind !== "national" ? ` in ${esc(country)}` : country ? ` of ${esc(country)}` : "");
+
+    const p = picks[c.id] || c.picks || null;
+    const kids = (c.children || []).map(k => byId.get(k)).filter(Boolean);
+    const others = c.kind === "national" ? inCountry(c.iso3).filter(o => !(c.children || []).includes(o.id) && o.kind !== "diaspora") : [];
+    // Routes out of and into this country (or this cuisine)
+    const iso = c.kind === "national" ? c.iso3 : null;
+    const routeOf = a => ({ cuisine: a.c, from: a.from.iso3, to: a.to.iso3 });
+    const routes = arcs.filter(a => a.c !== c && (a.from === c || a.to === c || (iso && (a.from.iso3 === iso || a.to.iso3 === iso)))).map(routeOf);
+    const carried = routes.filter(r => iso ? r.from === iso : r.from === c.iso3);
+    const arrived = routes.filter(r => !carried.includes(r));
+    const routeList = (rs, side) => `<ul class="connections">${rs.map(r =>
+      `<li><button data-id="${attr(r.cuisine.id)}"><span>${esc(r.cuisine.name)}</span> <span>${side === "to" ? "in " + esc(isoName.get(r.to) || "") : "from " + esc(isoName.get(r.from) || "")}</span></button></li>`).join("")}</ul>`;
+
+    body.innerHTML = `
+      <h2>${esc(c.name)}</h2>
+      <div class="accent-bar" style="background:${col}"></div>
+      <p class="kind">${kindLine}</p>
+      <div class="intro" id="intro">${c.desc ? `<p>${esc(capital(c.desc))}.</p>` : ""}</div>
+      <p class="source">From Wikipedia. <a href="${attr(c.url)}" target="_blank" rel="noopener">Read the full article</a></p>
+
+      <h3>Cookbooks</h3>
+      ${p && p.cookbooks && p.cookbooks.length ? `<div class="books">${p.cookbooks.map(book).join("")}</div>`
+        : `<p class="empty">No cookbooks picked for this cuisine yet.</p>`}
+
+      <h3>Recipe sites</h3>
+      ${p && p.sites && p.sites.length ? `<ul class="sites">${p.sites.map(site).join("")}</ul>`
+        : `<p class="empty">No recipe sites picked for this cuisine yet.</p>`}
+
+      ${kids.length ? `<h3>Within ${esc(c.name.replace(/ cuisine$/, ""))} cooking</h3><div class="chips">${kids.map(chip).join("")}</div>` : ""}
+      ${others.length ? `<h3>More from ${esc(country)}</h3><div class="chips">${others.map(chip).join("")}</div>` : ""}
+      ${carried.length ? `<h3>Carried abroad</h3>${routeList(carried, "to")}` : ""}
+      ${arrived.length ? `<h3>Arrived from elsewhere</h3>${routeList(arrived, "from")}` : ""}
+    `;
+    if (p && p.note) body.querySelector(".source").insertAdjacentHTML("afterend", `<p class="intro"><em>${esc(p.note)}</em></p>`);
+    panel.scrollTop = 0; body.scrollTop = 0;
+
+    wikiSummary(c).then(s => {
+      if (selected !== c || !s || !s.extract) return;
+      const intro = document.getElementById("intro");
+      if (intro) intro.innerHTML = `<p>${esc(trimIntro(s.extract))}</p>`;
+    });
+  }
+
+  function showBeyond() {
+    selected = null; refresh();
+    beyondBtn.setAttribute("aria-pressed", "true");
+    crumbs.textContent = "";
+    const groups = [
+      ["peoples", "Peoples and places without their own country"],
+      ["diaspora", "Diaspora and fusion"],
+      ["religious", "Religious cuisines and diets"],
+      ["historical", "Historical cuisines"],
+      ["style", "Styles of cooking"],
+    ];
+    body.innerHTML = `
+      <h2>Beyond borders</h2>
+      <div class="accent-bar" style="background:var(--rice)"></div>
+      <p class="intro">Plenty of the world's cooking doesn't fit inside one country: food carried by people across borders, shaped by faith, or from empires that no longer exist.</p>
+      ${groups.map(([k, label]) => {
+        const items = beyond.filter(c => c.kind === k).sort((a, b) => a.name.localeCompare(b.name));
+        return items.length ? `<h3>${label}</h3><div class="chips">${items.map(chip).join("")}</div>` : "";
+      }).join("")}`;
+    panel.classList.add("open");
+  }
+
+  panel.addEventListener("click", e => {
+    const b = e.target.closest("[data-id]");
+    if (b) open(byId.get(b.dataset.id));
+  });
+
+  function chip(c) { return `<button class="chip" data-id="${attr(c.id)}">${esc(c.name)}</button>`; }
+  function book(b) {
+    const cover = b.isbn ? `<img alt="" loading="lazy" src="https://covers.openlibrary.org/b/isbn/${attr(b.isbn)}-M.jpg?default=false" onerror="this.remove()">` : "";
+    const href = b.url || (b.isbn ? `https://openlibrary.org/isbn/${b.isbn}` : null);
+    const inner = `<div class="cover">${cover}<span>${esc(b.title)}</span></div><div class="meta">${esc(b.author || "")}${b.year ? `, ${b.year}` : ""}</div>${b.note ? `<div class="meta">${esc(b.note)}</div>` : ""}`;
+    return href ? `<a class="book" href="${attr(href)}" target="_blank" rel="noopener">${inner}</a>` : `<div class="book">${inner}</div>`;
+  }
+  function site(s) {
+    return `<li><a href="${attr(s.url)}" target="_blank" rel="noopener">${esc(s.name)}</a>${s.note ? `<small>${esc(s.note)}</small>` : ""}</li>`;
+  }
+  function esc(s) { return String(s ?? "").replace(/[&<>"']/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch])); }
+  function attr(s) { return esc(s); }
+  // First few sentences of the Wikipedia lead, up to about 420 characters
+  function trimIntro(t) {
+    const first = t.split(/\n+/)[0];
+    const sentences = first.match(/[^.!?]+[.!?]+(\s|$)/g) || [first];
+    let out = "";
+    for (const s of sentences) { if (out && (out + s).length > 420) break; out += s; }
+    return out.trim();
+  }
+  function capital(s) { return s.charAt(0).toUpperCase() + s.slice(1).replace(/\.$/, ""); }
+
+  // Search
+  const q = document.getElementById("q");
+  const list = document.getElementById("results");
+  const norm = s => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+  const index = all.map(c => ({ c, n: norm(c.name), place: norm(c.iso3 ? (isoName.get(c.iso3) || "") : "") }));
+  let matches = [], active = -1;
+  function search() {
+    const t = norm(q.value.trim());
+    if (!t) { list.classList.remove("open"); q.setAttribute("aria-expanded", "false"); return; }
+    matches = index
+      .map(x => ({ x, s: x.n.startsWith(t) ? 0 : x.n.includes(" " + t) ? 1 : x.n.includes(t) ? 2 : x.place.startsWith(t) ? 3 : 9 }))
+      .filter(m => m.s < 9)
+      .sort((a, b) => a.s - b.s || (a.x.c.kind === "national" ? -1 : 0) - (b.x.c.kind === "national" ? -1 : 0) || a.x.n.length - b.x.n.length)
+      .slice(0, 8).map(m => m.x.c);
+    active = matches.length ? 0 : -1;
+    list.innerHTML = matches.length
+      ? matches.map((c, i) => `<li role="option" id="opt-${i}" aria-selected="${i === active}" data-i="${i}">${esc(c.name)}<small>${esc(c.iso3 ? (isoName.get(c.iso3) || "") : KIND_LABEL[c.kind])}</small></li>`).join("")
+      : `<li role="option" aria-disabled="true">No cuisine by that name. Try a country or region.</li>`;
+    list.classList.add("open"); q.setAttribute("aria-expanded", "true");
+    q.setAttribute("aria-activedescendant", active >= 0 ? "opt-0" : "");
+  }
+  function pick(i) { const c = matches[i]; if (!c) return; q.value = ""; search(); q.blur(); open(c); }
+  q.addEventListener("input", search);
+  q.addEventListener("keydown", e => {
+    if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+      e.preventDefault(); if (!matches.length) return;
+      active = (active + (e.key === "ArrowDown" ? 1 : -1) + matches.length) % matches.length;
+      [...list.children].forEach((li, i) => li.setAttribute("aria-selected", String(i === active)));
+      q.setAttribute("aria-activedescendant", "opt-" + active);
+    } else if (e.key === "Enter") { e.preventDefault(); pick(active); }
+    else if (e.key === "Escape") { q.value = ""; search(); }
+  });
+  list.addEventListener("mousedown", e => { const li = e.target.closest("[data-i]"); if (li) { e.preventDefault(); pick(+li.dataset.i); } });
+  q.addEventListener("blur", () => setTimeout(() => list.classList.remove("open"), 120));
+
+  // Deep links: #thai-cuisine
+  function fromHash() {
+    const c = bySlug.get(location.hash.slice(1));
+    if (c && c !== selected) open(c);
+  }
+  addEventListener("hashchange", fromHash);
+  fromHash();
+})();
+</script>
+</body>
+</html>

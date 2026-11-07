@@ -1,0 +1,343 @@
+{
+  "_about": "Hand pins for cuisines Wikidata can't place (peoples, historical cuisines, pages that are redirects). Coordinates are approximate centers [lat, lon]. Add or fix freely; anything listed here beats the automatic lookup.",
+  "coords": {
+    "Ainu cuisine": [
+      43.5,
+      142.8
+    ],
+    "Berber cuisine": [
+      31.5,
+      -5.5
+    ],
+    "Hakka cuisine": [
+      24.3,
+      116.1
+    ],
+    "Assyrian cuisine": [
+      36.5,
+      43.2
+    ],
+    "Kurdish cuisine": [
+      36.8,
+      43.8
+    ],
+    "Hmong cuisine": [
+      20.5,
+      103.5
+    ],
+    "Cajun cuisine": [
+      30.2,
+      -92.0
+    ],
+    "Cuisine of the Pennsylvania Dutch": [
+      40.1,
+      -76.3
+    ],
+    "Maasai cuisine": [
+      -2.5,
+      36.5
+    ],
+    "Sami cuisine": [
+      68.5,
+      22.0
+    ],
+    "Inuit diet": [
+      64.0,
+      -68.0
+    ],
+    "Aztec cuisine": [
+      19.4,
+      -99.1
+    ],
+    "Maya cuisine": [
+      17.2,
+      -89.6
+    ],
+    "Ancient Maya cuisine": [
+      17.2,
+      -89.6
+    ],
+    "Inca cuisine": [
+      -13.5,
+      -72.0
+    ],
+    "Ottoman cuisine": [
+      41.0,
+      29.0
+    ],
+    "Byzantine cuisine": [
+      41.0,
+      28.9
+    ],
+    "Ancient Roman cuisine": [
+      41.9,
+      12.5
+    ],
+    "Ancient Greek cuisine": [
+      37.9,
+      23.7
+    ],
+    "Ancient Egyptian cuisine": [
+      26.0,
+      32.0
+    ],
+    "Ancient Israelite cuisine": [
+      31.8,
+      35.2
+    ],
+    "Soviet cuisine": [
+      55.7,
+      37.6
+    ],
+    "Crimean Tatar cuisine": [
+      45.0,
+      34.1
+    ],
+    "Chechen cuisine": [
+      43.3,
+      45.7
+    ],
+    "Circassian cuisine": [
+      44.0,
+      41.5
+    ],
+    "Buryat cuisine": [
+      52.0,
+      108.0
+    ],
+    "Bashkir cuisine": [
+      54.5,
+      56.0
+    ],
+    "Chukchi cuisine": [
+      66.0,
+      172.0
+    ],
+    "Balinese cuisine": [
+      -8.4,
+      115.2
+    ],
+    "Batak cuisine": [
+      2.5,
+      99.0
+    ],
+    "Balochi cuisine": [
+      28.5,
+      65.0
+    ],
+    "Bhojpuri cuisine": [
+      26.0,
+      84.0
+    ],
+    "Hazara cuisine": [
+      34.5,
+      66.5
+    ],
+    "Native American cuisine": [
+      39.0,
+      -100.0
+    ],
+    "Tex-Mex cuisine": [
+      29.4,
+      -98.5
+    ],
+    "Cuisine of Chicago": [
+      41.88,
+      -87.63
+    ],
+    "Cuisine of Pittsburgh": [
+      40.44,
+      -80.0
+    ],
+    "Kenyan cuisine": [
+      0.2,
+      37.9
+    ],
+    "Zimbabwean cuisine": [
+      -19.0,
+      29.8
+    ],
+    "Samoan cuisine": [
+      -13.8,
+      -172.1
+    ],
+    "Surinamese cuisine": [
+      4.0,
+      -56.0
+    ],
+    "Andorran cuisine": [
+      42.5,
+      1.5
+    ],
+    "Cuisine of Albania": [
+      41.2,
+      20.0
+    ],
+    "Cuisine of Sierra Leone": [
+      8.5,
+      -11.8
+    ],
+    "Cuisine of East Timor": [
+      -8.8,
+      125.7
+    ],
+    "Cuisine of Dominica": [
+      15.4,
+      -61.4
+    ],
+    "Guinea-Bissauan cuisine": [
+      12.0,
+      -15.0
+    ],
+    "Centrafrican cuisine": [
+      6.6,
+      20.9
+    ],
+    "New Caledonian cuisine": [
+      -21.3,
+      165.5
+    ],
+    "Wallis and Futuna cuisine": [
+      -13.3,
+      -176.2
+    ],
+    "Taiwan cuisine": [
+      23.7,
+      121.0
+    ],
+    "Telugu cuisine": [
+      16.5,
+      79.5
+    ],
+    "Odia cuisine": [
+      20.5,
+      84.5
+    ],
+    "Oriya cuisine": [
+      20.5,
+      84.5
+    ],
+    "Cuisine of Uttar Pradesh": [
+      26.8,
+      80.9
+    ],
+    "Newari cuisine": [
+      27.7,
+      85.3
+    ],
+    "Meitei cuisine": [
+      24.8,
+      93.9
+    ],
+    "Lanna cuisine": [
+      18.8,
+      98.98
+    ],
+    "Southern Thai cuisine": [
+      7.9,
+      98.4
+    ],
+    "Padang food": [
+      -0.95,
+      100.35
+    ],
+    "Ilocano cuisine": [
+      17.6,
+      120.6
+    ],
+    "Tagalog cuisine": [
+      14.6,
+      121.0
+    ],
+    "Heilongjiang cuisine": [
+      47.0,
+      128.0
+    ],
+    "Ningxia cuisine": [
+      37.3,
+      106.2
+    ],
+    "Guilin cuisine": [
+      25.27,
+      110.29
+    ],
+    "Hangbang cuisine": [
+      31.23,
+      121.47
+    ],
+    "Minnan cuisine": [
+      24.5,
+      118.1
+    ],
+    "Calabrian cuisine": [
+      39.0,
+      16.5
+    ],
+    "Cuisine of Abruzzo": [
+      42.2,
+      13.8
+    ],
+    "Cuisine of Minorca": [
+      39.95,
+      4.1
+    ],
+    "Tasmanian cuisine": [
+      -42.0,
+      146.6
+    ],
+    "Dagestani cuisine": [
+      42.9,
+      47.5
+    ],
+    "Kalmyk cuisine": [
+      46.3,
+      45.3
+    ],
+    "Tuvan cuisine": [
+      51.7,
+      94.4
+    ],
+    "Karakalpak cuisine": [
+      43.0,
+      59.0
+    ]
+  },
+  "_about_iso": "Force a cuisine's country (ISO 3166 alpha-3) when the automatic match is wrong.",
+  "iso": {
+    "Dutch cuisine": "NLD",
+    "Swiss cuisine": "CHE",
+    "British cuisine": "GBR",
+    "Cuisine of Luxembourg": "LUX",
+    "Emirati cuisine": "ARE",
+    "Ivorian cuisine": "CIV",
+    "Filipino cuisine": "PHL",
+    "Congolese cuisine": "COD",
+    "Centrafrican cuisine": "CAF",
+    "Santomean cuisine": "STP",
+    "Kosovan cuisine": "XKX",
+    "Hong Kong cuisine": "HKG",
+    "Macanese cuisine": "MAC",
+    "Puerto Rican cuisine": "PRI",
+    "South Sudanese cuisine": "SSD",
+    "British Virgin Islands cuisine": "VGB",
+    "Cuisine of the British Virgin Islands": "VGB",
+    "Cayman Islands cuisine": "CYM",
+    "US Virgin Islands cuisine": "VIR",
+    "Cuisine of the United States Virgin Islands": "VIR",
+    "Turks and Caicos cuisine": "TCA",
+    "St. Kitts and Nevis cuisine": "KNA",
+    "Culture of St. Kitts and Nevis": "KNA",
+    "Cook Islands cuisine": "COK",
+    "Culture of the Cook Islands": "COK",
+    "Pitcairn Islands cuisine": "PCN",
+    "Wallis and Futuna cuisine": "WLF",
+    "East Timor cuisine": "TLS",
+    "Cuisine of East Timor": "TLS",
+    "Gibraltarian cuisine": "GIB",
+    "Bougainville cuisine": "PNG",
+    "Niuean cuisine": "NIU",
+    "Western Saharan cuisine": "ESH",
+    "Kenyan cuisine": "KEN",
+    "Maasai cuisine": "KEN"
+  }
+}

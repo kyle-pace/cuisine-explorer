@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Cuisine Explorer share card</title>
+<link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  html, body { margin: 0; width: 1200px; height: 630px; overflow: hidden; background: #1b1424; color: #ede6da; }
+  #globe { position: absolute; left: 470px; top: -150px; width: 930px; height: 930px; }
+  .copy { position: absolute; left: 72px; top: 0; bottom: 0; width: 520px; display: flex; flex-direction: column; justify-content: center; font-family: "Figtree", sans-serif; }
+  h1 { font-family: "Young Serif", serif; font-weight: 400; font-size: 92px; line-height: 0.98; margin: 0 0 26px; letter-spacing: -0.01em; }
+  p { font-size: 27px; line-height: 1.4; color: #a99fb5; margin: 0; max-width: 20ch; }
+  .dots { display: flex; gap: 12px; margin-top: 40px; }
+  .dots i { width: 14px; height: 14px; border-radius: 50%; display: block; }
+  .site { position: absolute; left: 72px; bottom: 48px; font-family: "Figtree", sans-serif; font-size: 20px; color: #a99fb5; }
+</style>
+</head>
+<body>
+<div id="globe"></div>
+<div class="copy">
+  <h1>Cuisine Explorer</h1>
+  <p>600+ of the world's cuisines on one globe, with cookbooks and recipe sites for each.</p>
+  <div class="dots"><i style="background:#e46a3f"></i><i style="background:#94bd5c"></i><i style="background:#f0b340"></i><i style="background:#cf5f87"></i><i style="background:#55b8ad"></i></div>
+</div>
+<div class="site">kylepace.net/labs</div>
+<script src="https://cdn.jsdelivr.net/npm/globe.gl@2.46.2/dist/globe.gl.min.js"></script>
+<!--INLINE_DATA-->
+<script>
+  const data = JSON.parse(document.getElementById("data-cuisines").textContent);
+  const countries = JSON.parse(document.getElementById("data-countries").textContent);
+  const COLORS = { "African cuisine": "#e46a3f", "Cuisine of the Americas": "#94bd5c", "Asian cuisine": "#f0b340", "European cuisine": "#cf5f87", "Oceanic cuisine": "#55b8ad" };
+  const nat = new Map(data.cuisines.filter(c => c.kind === "national").map(c => [c.iso3, c]));
+  const iso = f => [f.properties.ISO_A3_EH, f.properties.ADM0_A3].find(c => nat.has(c));
+  const mix = (hex, amt) => { const a = parseInt(hex.slice(1), 16), b = 0x1b1424; const ch = s => Math.round(((a >> s) & 255) * amt + ((b >> s) & 255) * (1 - amt)); return `rgb(${ch(16)},${ch(8)},${ch(0)})`; };
+  const arcs = [];
+  for (const c of data.cuisines) if (c.arc) { const a = nat.get(c.arc.from), b = nat.get(c.arc.to); if (a && b && a.loc && b.loc) arcs.push({ a, b }); }
+  const g = Globe({ animateIn: false })(document.getElementById("globe"))
+    .width(930).height(930).backgroundColor("#1b1424")
+    .atmosphereColor("#6f5690").atmosphereAltitude(0.12)
+    .hexPolygonsData(countries.features.filter(f => f.properties.ADM0_A3 !== "ATA"))
+    .hexPolygonResolution(3).hexPolygonMargin(0.42).hexPolygonUseDots(true).hexPolygonAltitude(0.004)
+    .hexPolygonColor(f => { const n = nat.get(iso(f)); return n ? mix(COLORS[n.region[0]] || "#a99fb5", 0.85) : "#3d3349"; })
+    .arcsData(arcs)
+    .arcStartLat(d => d.a.loc[0]).arcStartLng(d => d.a.loc[1]).arcEndLat(d => d.b.loc[0]).arcEndLng(d => d.b.loc[1])
+    .arcColor(d => [COLORS[d.a.region[0]] + "aa", COLORS[d.b.region[0]] + "aa"]).arcStroke(0.35).arcAltitudeAutoScale(0.4);
+  g.globeMaterial().color.set("#231a2e");
+  g.controls().autoRotate = false;
+  g.pointOfView({ lat: 26, lng: 60, altitude: 1.9 }, 0);
+</script>
+</body>
+</html>

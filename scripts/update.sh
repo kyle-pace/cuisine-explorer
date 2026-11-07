@@ -28,3 +28,9 @@ PY
 
 python3 scripts/build.py
 python3 scripts/build_regions.py
+
+# Dishes and ingredients: Wikidata first, then infobox ingredients, then again to merge them
+python3 scripts/fetch_dishes.py
+python3 scripts/fetch_infobox_ingredients.py
+python3 scripts/fetch_dishes.py
+python3 scripts/fetch_food_summaries.py

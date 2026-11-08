@@ -30,9 +30,10 @@ struct CuisinesApp: App {
 @MainActor @Observable
 final class AppState {
     static let shared = AppState()
-    enum Tab: Hashable { case explore, map, search }
-    var tab: Tab = .map
+    enum Tab: Hashable { case explore, map, wander, search }
+    var tab: Tab = .explore
     var explorePath: [Route] = []
+    var wanderPath: [Route] = []
     var searchPath: [Route] = []
     var mapFocus: String?
     var searchQuery = ""
@@ -113,6 +114,7 @@ struct RootView: View {
         if let ref = args.string(forKey: "walk") { app.tab = .explore; app.explorePath = [.walk(ref)] }
         if let ref = args.string(forKey: "hub") { app.tab = .explore; app.explorePath = [.hub(ref)] }
         if args.string(forKey: "tab") == "browse" { app.tab = .explore }
+        if args.string(forKey: "tab") == "wander" { app.tab = .wander }
         if args.string(forKey: "tab") == "map" { app.tab = .map }
         if let ref = args.string(forKey: "map") { app.showOnMap(ref) }
     }
@@ -120,12 +122,15 @@ struct RootView: View {
     private var tabs: some View {
         @Bindable var app = app
         return TabView(selection: $app.tab) {
-            // The same two ways in as the web: the map for discovery by place, Browse for reading
+            // Browse for reading, the map for discovery by place (as on the web), Wander for walk mode
+            Tab("Browse", systemImage: "fork.knife", value: AppState.Tab.explore) {
+                Stack(path: $app.explorePath) { ExploreView() }
+            }
             Tab("Map", systemImage: "globe.americas", value: AppState.Tab.map) {
                 MapScreen()
             }
-            Tab("Browse", systemImage: "fork.knife", value: AppState.Tab.explore) {
-                Stack(path: $app.explorePath) { ExploreView() }
+            Tab("Wander", systemImage: "point.3.connected.trianglepath.dotted", value: AppState.Tab.wander) {
+                Stack(path: $app.wanderPath) { WanderScreen() }
             }
             Tab(value: AppState.Tab.search, role: .search) {
                 Stack(path: $app.searchPath) { SearchView() }

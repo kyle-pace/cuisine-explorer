@@ -64,7 +64,7 @@ struct WalkView: View {
             panel
         }
         .background(Theme.ground)
-        .navigationTitle("Connections")
+        .navigationTitle("Wander")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
@@ -311,5 +311,36 @@ struct NeighborsSheet: View {
             .toolbar { ToolbarItem(placement: .confirmationAction) { Button("Done") { dismiss() } } }
         }
         .presentationDetents([.medium, .large])
+    }
+}
+
+/// The Wander tab: walk mode from a cuisine picked at random, with a way to start somewhere new
+struct WanderScreen: View {
+    @Environment(Store.self) private var store
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @State private var start: String?
+
+    var body: some View {
+        Group {
+            if let start {
+                WalkView(start: start)
+                    .id(start)
+                    .toolbar {
+                        ToolbarItem(placement: .topBarLeading) {
+                            Button("Somewhere new", systemImage: "shuffle") { pick() }
+                        }
+                    }
+            } else {
+                Color.clear.onAppear(perform: pick)
+            }
+        }
+        .sensoryFeedback(.impact(weight: .light), trigger: start)
+    }
+
+    private func pick() {
+        // A cuisine with a photo and a few links makes a good starting point
+        let candidates = store.nodes.filter { $0.type == .cuisine && store.hasPhoto($0.ref) && store.linkCount($0.ref) >= 4 }
+        guard let n = candidates.filter({ $0.ref != start }).randomElement() ?? candidates.first else { return }
+        withAnimation(Theme.motion(reduceMotion)) { start = n.ref }
     }
 }

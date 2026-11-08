@@ -23,6 +23,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - name: Install PyYAML (for the notes in content/)
+        run: pip install pyyaml
       - name: Rebuild the cuisine index
         run: ./scripts/update.sh
       - name: Commit if anything changed

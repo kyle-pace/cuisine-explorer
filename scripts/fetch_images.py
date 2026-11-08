@@ -152,7 +152,10 @@ def main():
             lic = plain(meta.get("LicenseShortName"), 40)
             if not FREE.match(lic) or str(meta.get("NonFree", "")).lower() == "true" or plain(meta.get("Restrictions")):
                 continue
-            thumb = info.get("thumburl") or info.get("url") or ""
+            # Drop the tracking query Wikimedia adds; keep originals only when they're small
+            thumb = (info.get("thumburl") or info.get("url") or "").split("?", 1)[0]
+            if "/thumb/" not in thumb and (info.get("width") or 0) > WIDTH:
+                continue
             m = re.match(r"https://upload\.wikimedia\.org/wikipedia/commons/(.+)$", thumb)
             if not m or (info.get("thumbwidth") and info["thumbwidth"] not in (WIDTH, info.get("width"))):
                 continue

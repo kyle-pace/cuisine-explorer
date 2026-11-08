@@ -28,8 +28,13 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Install PyYAML (for the notes in content/)
-        run: pip install pyyaml
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install PyYAML (notes) and d3-force (graph layout)
+        run: |
+          pip install pyyaml
+          npm ci
       - name: Rebuild the cuisine index
         run: ./scripts/update.sh
       - name: Commit if anything changed

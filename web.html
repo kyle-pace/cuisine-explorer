@@ -132,6 +132,9 @@
   .full-bar .chip[aria-pressed="false"] { opacity: 0.55; }
   .full-bar .chip svg { width: 11px; height: 11px; }
   .full-bar .close { margin-left: auto; }
+  .seg { display: inline-flex; gap: 2px; padding: 3px; background: var(--panel-2); border-radius: 999px; margin-left: 8px; vertical-align: middle; }
+  .seg button { border: 0; background: none; border-radius: 999px; padding: 5px 12px; cursor: pointer; font-size: 0.85rem; font-weight: 600; color: var(--muted); }
+  .seg button[aria-pressed="true"] { background: var(--rice); color: var(--night); }
   .full-hint { position: absolute; left: 20px; bottom: 16px; z-index: 2; color: var(--muted); font-size: 0.85rem; margin: 0; max-width: 46ch; }
   .tip { position: fixed; z-index: 12; pointer-events: none; background: var(--rice); color: var(--night); font-weight: 600; font-size: 0.85rem; padding: 4px 10px; border-radius: 999px; display: none; white-space: nowrap; }
   .loading { padding: 80px 28px; text-align: center; color: var(--muted); }
@@ -186,7 +189,7 @@
     <button class="btn close" id="close-graph" type="button">Close</button>
   </div>
   <div id="graph" aria-hidden="true"></div>
-  <p class="full-hint">Drag to move, scroll or pinch to zoom, pick a dot to open its page. Every connection here is also listed as a link on its page.</p>
+  <p class="full-hint">Drag to move around, scroll or pinch to zoom, pick a dot to open its page. Dishes and ingredients are off to start; turn them on above. Every connection here is also listed as a link on its page.</p>
 </div>
 <div class="tip" id="tip"></div>
 
@@ -639,66 +642,74 @@
     localGraph.graphData({ nodes: gNodes, links: gLinks });
   }
 
-  // The whole web
+  // The whole web. Positions come from data/graph.json, laid out once in the weekly
+  // rebuild (scripts/build_graph.mjs), so it opens settled and holds still.
   const full = document.getElementById("full"), graphEl = document.getElementById("graph");
-  let fullGraph = null, fullOpen = false, fullHover = null;
-  const shown = { cuisine: true, dish: true, ingredient: true, site: true, book: true };
+  let fullGraph = null, fullOpen = false, fullHover = null, positions = null, layoutKind = "continent";
+  const shown = { cuisine: true, site: true, book: true, dish: false, ingredient: false };
   let near = new Set();
   function highlight() { near = current ? new Set([current, ...[...current.out.values()].map(e => e.node)]) : new Set(); }
+  const fullCache = new Map();
+  function place(g) {
+    const p = positions[g.n.key];
+    if (!p) return;
+    const [x, y] = layoutKind === "links" ? [p[0], p[1]] : [p[2], p[3]];
+    g.x = g.fx = x; g.y = g.fy = y;
+  }
   function fullData() {
-    const keep = nodeList.filter(n => shown[n.type]);
+    const keep = nodeList.filter(n => shown[n.type] && positions[n.key]);
     const set = new Set(keep);
     const gl = [];
     for (const a of keep) for (const [k, e] of a.out) if (set.has(e.node) && a.key < k) gl.push({ source: a.key, target: k });
-    return { nodes: keep.map(n => fullCache.get(n.key) || (fullCache.set(n.key, { n, id: n.key }), fullCache.get(n.key))), links: gl };
+    const gn = keep.map(n => { let g = fullCache.get(n.key); if (!g) fullCache.set(n.key, g = { n, id: n.key }); place(g); return g; });
+    return { nodes: gn, links: gl };
   }
-  const fullCache = new Map();
-  function openFull() {
+  async function openFull() {
     fullOpen = true; full.classList.add("open"); highlight();
     document.body.style.overflow = "hidden";
+    document.getElementById("close-graph").focus();
+    if (!positions) {
+      positions = (await load("data-graph", "data/graph.json").catch(() => ({ nodes: {} }))).nodes;
+    }
     if (!fullGraph) {
       fullGraph = ForceGraph()(graphEl)
         .backgroundColor("#1b1424")
         .width(innerWidth).height(innerHeight)
         .nodeId("id")
-        .linkColor(l => near.has(l.source.n) && near.has(l.target.n) && (l.source.n === current || l.target.n === current) ? "rgba(237,230,218,0.75)" : "rgba(169,159,181,0.09)")
+        .cooldownTicks(0).warmupTicks(0)
+        .linkColor(l => (l.source.n === current || l.target.n === current) ? "rgba(237,230,218,0.75)"
+          : fullHover && (l.source.n === fullHover || l.target.n === fullHover) ? "rgba(237,230,218,0.5)" : "rgba(169,159,181,0.1)")
         .nodeCanvasObject((g, ctx, scale) => {
           const n = g.n, me = n === current, lit = !near.size || near.has(n);
           const r = me ? 8 : size(n);
           shape(ctx, n, g.x, g.y, r);
-          ctx.globalAlpha = lit ? 1 : 0.28;
+          ctx.globalAlpha = lit ? 1 : 0.3;
           ctx.fillStyle = n.color; ctx.fill();
           ctx.globalAlpha = 1;
           if (me) { ctx.lineWidth = 2.5 / scale; ctx.strokeStyle = "#fff"; ctx.stroke(); }
-          const label = me || n === fullHover || (near.has(n) && scale > 0.9) || (n.type === "cuisine" && n.c.kind === "national" && scale > 1.6) || scale > 4.5;
+          const label = me || n === fullHover || (near.has(n) && scale > 0.9) || (n.type === "cuisine" && n.c.kind === "national" && scale > 1.4) || scale > 4;
           if (label) {
             const fs = Math.max(11 / scale, 1.2);
             ctx.font = `${me ? 700 : 400} ${fs}px Atkinson Hyperlegible Next, system-ui, sans-serif`;
             ctx.textAlign = "center"; ctx.textBaseline = "top";
             ctx.fillStyle = lit ? "#ede6da" : "rgba(237,230,218,0.5)";
-            ctx.fillText(n.name, g.x, g.y + r + 1.5 / scale);
+            ctx.fillText(n.name.replace(/ cuisine$/, ""), g.x, g.y + r + 1.5 / scale);
           }
         })
         .nodePointerAreaPaint((g, color, ctx) => { ctx.fillStyle = color; shape(ctx, g.n, g.x, g.y, size(g.n) + 2); ctx.fill(); })
         .onNodeHover(g => { fullHover = g ? g.n : null; graphEl.style.cursor = g ? "pointer" : ""; hover(fullHover); })
         .onNodeClick(g => { hover(null); closeFull(); location.hash = g.n.href; })
-        .d3AlphaDecay(0.045)
-        .d3VelocityDecay(0.4)
-        .warmupTicks(reduceMotion ? 300 : 60)
-        .cooldownTicks(reduceMotion ? 0 : 240);
-      fullGraph.d3Force("charge").strength(-14).distanceMax(260);
-      fullGraph.d3Force("link").distance(18);
+        // Dragging a dot moves it; it stays where you drop it
+        .onNodeDragEnd(g => { g.fx = g.x; g.fy = g.y; });
       addEventListener("resize", () => fullOpen && fullGraph.width(innerWidth).height(innerHeight));
       fullGraph.graphData(fullData());
-      fullGraph.onEngineStop(() => { if (fullOpen) focusCurrent(400); fullGraph.onEngineStop(() => {}); });
     }
     focusCurrent(0);
-    document.getElementById("close-graph").focus();
   }
   function focusCurrent(ms) {
     const g = current && fullCache.get(current.key);
-    if (g && g.x != null) { fullGraph.centerAt(g.x, g.y, reduceMotion ? 0 : ms); fullGraph.zoom(2.2, reduceMotion ? 0 : ms); }
-    else fullGraph.zoomToFit(reduceMotion ? 0 : ms, 40);
+    if (g && g.x != null && shown[current.type]) { fullGraph.centerAt(g.x, g.y, reduceMotion ? 0 : ms); fullGraph.zoom(2.4, reduceMotion ? 0 : ms); }
+    else fullGraph.zoomToFit(reduceMotion ? 0 : ms, 60);
   }
   function closeFull() {
     fullOpen = false; full.classList.remove("open"); document.body.style.overflow = ""; hover(null);
@@ -708,10 +719,17 @@
   document.getElementById("close-graph").addEventListener("click", closeFull);
   addEventListener("keydown", e => { if (e.key === "Escape" && fullOpen) closeFull(); });
   const filters = document.getElementById("filters");
-  filters.innerHTML = Object.keys(shown).map(t => `<button class="chip" type="button" data-t="${t}" aria-pressed="true">${keySvg(t)}${PLURAL[t]}</button>`).join(" ");
+  filters.innerHTML = Object.keys(shown).map(t => `<button class="chip" type="button" data-t="${t}" aria-pressed="${shown[t]}">${keySvg(t)}${PLURAL[t]}</button>`).join(" ")
+    + `<span class="seg" role="group" aria-label="Layout"><button type="button" data-layout="continent" aria-pressed="true">By continent</button><button type="button" data-layout="links" aria-pressed="false">By links</button></span>`;
   filters.addEventListener("click", e => {
-    const b = e.target.closest("[data-t]");
-    if (!b) return;
+    const b = e.target.closest("[data-t], [data-layout]");
+    if (!b || !fullGraph) return;
+    if (b.dataset.layout) {
+      layoutKind = b.dataset.layout;
+      filters.querySelectorAll("[data-layout]").forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+      fullGraph.graphData(fullData());
+      return focusCurrent(0);
+    }
     shown[b.dataset.t] = !shown[b.dataset.t];
     b.setAttribute("aria-pressed", String(shown[b.dataset.t]));
     fullGraph.graphData(fullData());

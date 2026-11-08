@@ -1,0 +1,12 @@
+{
+  "name": "cuisine-explorer",
+  "private": true,
+  "type": "module",
+  "description": "Data pipeline helpers for the cuisine explorer",
+  "scripts": {
+    "graph": "node scripts/build_graph.mjs"
+  },
+  "dependencies": {
+    "d3-force": "3.0.0"
+  }
+}

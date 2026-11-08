@@ -112,6 +112,9 @@
   }
   .wiki-btn:hover { background: #fff8ec; }
   .wiki-btn svg, .site svg { width: 18px; height: 18px; flex: none; }
+  .page-link { display: inline-block; color: var(--muted); font-size: 0.88rem; margin: 2px 0 4px; text-underline-offset: 2px; }
+  .page-link:hover { color: var(--rice); }
+  .chip-btn[href] { text-decoration: none; color: var(--rice); }
   .names { color: var(--muted); font-size: 0.9rem; margin: -8px 0 12px; }
   .source.note-src { text-align: left; margin: 2px 0 6px; }
   .nw { white-space: nowrap; }
@@ -248,6 +251,7 @@
   <div class="toggles">
     <button class="chip-btn" id="t-arcs" aria-pressed="true">Diaspora routes</button>
     <button class="chip-btn" id="t-explore" aria-pressed="false">Explore</button>
+    <a class="chip-btn" id="t-web" href="web.html#/">Browse as a web</a>
   </div>
   <p class="hint">Search a cuisine, dish or ingredient. Pick a country, or zoom in, to see its regional cuisines.</p>
 </div>
@@ -267,6 +271,7 @@
 (async function () {
   const embedded = new URLSearchParams(location.search).has("embed");
   if (embedded) document.documentElement.classList.add("embed");
+  if (embedded) document.getElementById("t-web").target = "_top";
   // When embedded on the same site, keep the parent page's address in step so links can be shared
   const setHash = h => {
     history.replaceState(null, "", h ? "#" + h : location.pathname + location.search);
@@ -324,6 +329,8 @@
     s.sites = (n.sites || []).concat(s.sites || []);
     s.cookbooks = (n.cookbooks || []).concat(s.cookbooks || []);
   }
+  // Every cuisine, dish and ingredient also has a page in the web view
+  const pageLink = (type, id) => `<a class="page-link" href="web.html#/${type}/${slug(id)}"${embedded ? ' target="_top"' : ""}>Open as a page, with everything it links to</a>`;
   const CORRECT = "https://github.com/kyle-pace/cuisine-explorer/issues/new?title=";
   // Our own text, with [[links]] turned into buttons that open what they point to
   function noteHtml(n) {
@@ -899,6 +906,7 @@
       ${cNote && cNote.names ? `<p class="names">${esc(cNote.names)}</p>` : ""}
       <div class="intro" id="intro"></div>
       ${cNote ? noteSources(cNote, c.name) : ""}
+      ${pageLink("cuisine", c.id)}
       ${p && p.note ? `<p class="intro"><em>${esc(p.note)}</em></p>` : ""}
 
       <h3>Recipe sites</h3>
@@ -984,6 +992,7 @@
       <h2>${esc(d.name)}</h2>
       <p class="kind"><i style="background:${col}"></i>${homes.length === 1 ? `Dish from ${esc(homes[0].name)}` : `Dish found in ${homes.length} cuisines`}</p>
       <div class="intro" id="intro"></div>
+      ${pageLink("dish", d.id)}
       ${d.ingredients.length ? `<h3>Ingredients</h3><p class="empty" style="margin-bottom:8px">Pick one to see where in the world it's cooked with.</p><div class="chips">${d.ingredients.map(id => ingChip(ingById.get(id))).join("")}</div>` : ""}
       <h3>Where it's from</h3>
       <div class="chips">${homes.map(chip).join("")}</div>
@@ -1018,6 +1027,7 @@
       <h2>${esc(i.name)}</h2>
       <p class="kind"><i style="background:#ede6da"></i>Ingredient in ${i.dishes} ${i.dishes === 1 ? "dish" : "dishes"} across ${rows.length} ${rows.length === 1 ? "cuisine" : "cuisines"}</p>
       <div class="intro" id="intro"></div>
+      ${pageLink("ingredient", i.id)}
       <h3>Where it's cooked with</h3>
       <p class="empty" style="margin-bottom:10px">The brighter a place on the globe, the more of its dishes use it. This counts dishes listed on Wikipedia, so well-documented cuisines show up brighter.</p>
       <ul class="where">${rows.slice(0, 14).map(([cid, ds]) => `<li>

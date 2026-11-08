@@ -1,7 +1,7 @@
 ---
 // World cuisine: frames the globe (index.html, served at /world-cuisine/app/) with the
 // site's header and credits, and passes #cuisine links through to it.
-import Base from '../../layouts/Base.astro';
+import DevLayout from 'kp-design/layouts/DevLayout.astro';
 import { StatusBadge } from 'kp-design';
 
 // The data files at the repo root; picks and suggestions are optional
@@ -19,7 +19,7 @@ const shelved = new Set([...Object.keys(picks), ...Object.keys(suggestions)]).si
 const round = (n: number) => Math.floor(n / 10) * 10;
 ---
 
-<Base
+<DevLayout
   title="World cuisine"
   description="More than 600 of the world's cuisines, 2,400 dishes and their ingredients on one globe. Search an ingredient to see where it's cooked with."
   accent="tangerine"
@@ -63,7 +63,7 @@ const round = (n: number) => Math.floor(n / 10) * 10;
     <p>The code and data are <a href="https://github.com/kyle-pace/world-cuisine">on GitHub</a>.</p>
     <p><a href="https://kylepace.dev/">More experiments</a></p>
   </div>
-</Base>
+</DevLayout>
 
 <script>
   // Load the globe, passing through a #cuisine link (kylepace.dev/world-cuisine/#thai-cuisine)

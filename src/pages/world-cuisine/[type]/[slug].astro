@@ -10,7 +10,7 @@
 // Kept out of search engines (noindex): only /world-cuisine/ itself is indexed, so these
 // pages don't outnumber everything else on kylepace.dev in search.
 import { env } from 'cloudflare:workers';
-import Base from '../../../layouts/Base.astro';
+import DevLayout from 'kp-design/layouts/DevLayout.astro';
 // @ts-expect-error: plain JS shared with web.html
 import { renderItem, bucketOf, summaryOf } from '../../../../render_item.js';
 
@@ -53,7 +53,7 @@ const shareImage = item?.img?.src ?? '/world-cuisine/share.png';
 const shareAlt = item?.img ? `Photo of ${item.img.of ?? item.n}` : 'World cuisine: a dark globe with countries colored by continent and thin routes arcing between them.';
 ---
 
-<Base
+<DevLayout
   title={title}
   description={description}
   accent="tangerine"
@@ -76,7 +76,7 @@ const shareAlt = item?.img ? `Photo of ${item.img.of ?? item.n}` : 'World cuisin
       <p>Try <a href={`${app}#/`}>browsing every cuisine</a> or the <a href="/world-cuisine/">globe</a>.</p>
     </article>
   )}
-</Base>
+</DevLayout>
 
 <style is:global>
   .cx-top { max-width: var(--measure); margin: var(--space-8) auto 0; padding: 0 var(--space-4); font-size: var(--step--1); color: var(--ink-muted); display: flex; gap: var(--space-2); }

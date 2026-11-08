@@ -98,7 +98,7 @@ A globe and a linked-page browser for the world's cuisines, with Wikipedia as th
   - `src/pages/world-cuisine/img/[...path].ts`: the photo route. Fetches each listed Wikimedia photo once and keeps it in the R2 bucket `kylepace-cuisine-images` (binding `CUISINE_IMAGES`).
   - `scripts/stage-app.mjs` copies the explorer into `public/world-cuisine/app/` before every build (gitignored). A new top-level file the pages need has to be added there too.
 - **Everything this site serves lives under `/world-cuisine/`.** Don't use Astro's `base` option; with the Cloudflare adapter it serves files from the wrong folder.
-- **Header, footer, tokens and display settings come from [kp-design](https://github.com/kyle-pace/kp-design)**, pinned to a commit in package.json; links in `src/layouts/Base.astro` match the hub's. Analytics goes to the shared kylepace.dev Amplitude project (`src/lib/analytics.ts`).
+- **The page shell comes from [kp-design](https://github.com/kyle-pace/kp-design)** (`DevLayout`: header, footer, tokens, display settings and analytics to the shared kylepace.dev Amplitude project), pinned to a commit in package.json.
 - **Search:** only `/world-cuisine/` is indexed. The full-screen app (`public/_headers`), item pages and photos are noindex so they don't swamp kylepace.dev in search.
 - The iOS app in `ios/` links to `kylepace.dev/world-cuisine/<type>/<slug>/` for sharing.
 - The font (Atkinson Hyperlegible Next) and the graph libraries (globe.gl, force-graph) are self-hosted in `vendor/`. Change versions in `scripts/update-vendor.sh` and run it; don't link to a CDN.

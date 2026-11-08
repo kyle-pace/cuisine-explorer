@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Cuisine Explorer: the web</title>
+<title>Cuisine Explorer: browse</title>
 <meta name="description" content="Every cuisine, dish, ingredient, recipe site and cookbook in the Cuisine Explorer as linked pages, with backlinks and a graph.">
-<meta property="og:title" content="Cuisine Explorer: the web">
+<meta property="og:title" content="Cuisine Explorer: browse">
 <meta property="og:description" content="The world's cuisines, dishes and ingredients as a web of linked pages.">
 <meta property="og:image" content="https://kylepace.net/labs/cuisines/share.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -150,7 +150,8 @@
   .trail a[aria-current="page"] { color: var(--rice); font-weight: 700; text-decoration: none; }
   .trail span { color: var(--line); }
   .walk-body { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) min(440px, 40vw); }
-  #walk-graph { min-width: 0; min-height: 0; position: relative; }
+  .walk-graph-wrap { position: relative; min-width: 0; min-height: 0; }
+  #walk-graph { position: absolute; inset: 0; }
   .walk-page { overflow-y: auto; padding: 24px 28px 48px; border-left: 1px solid var(--line); background: var(--panel); max-width: none; }
   .walk-page h1 { font-size: 2rem; }
   .walk-page .actions .walk-open { }
@@ -169,6 +170,10 @@
     .walk-page { border-left: 0; border-top: 1px solid var(--line); padding: 16px 18px 32px; }
     .walk-tools { margin-left: 0; }
   }
+  .side-note { color: var(--muted); font-size: 0.85rem; margin: -4px 0 10px; }
+  .walk-hint { position: absolute; left: 20px; bottom: 16px; margin: 0; max-width: 46ch; color: var(--muted); font-size: 0.85rem; pointer-events: none; }
+  .walk-hint b { color: var(--rice); font-weight: 600; }
+  @media (max-width: 720px) { .walk-hint { left: 14px; right: 14px; bottom: 10px; font-size: 0.8rem; } }
   .tip small { display: block; font-weight: 400; max-width: 34ch; white-space: normal; margin-top: 2px; line-height: 1.35; }
   .tip { position: fixed; z-index: 12; pointer-events: none; background: var(--rice); color: var(--night); font-weight: 600; font-size: 0.85rem; padding: 4px 10px; border-radius: 999px; display: none; white-space: nowrap; }
   .loading { padding: 80px 28px; text-align: center; color: var(--muted); }
@@ -193,7 +198,7 @@
   <a class="brand" href="#/">Cuisine Explorer</a>
   <nav class="views" aria-label="Views">
     <a id="to-globe" href="./">Globe</a>
-    <a href="#/" aria-current="page">Web</a>
+    <a href="#/" aria-current="page">Browse</a>
   </nav>
   <div class="search" role="search">
     <svg viewBox="0 0 24 24" fill="none" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
@@ -203,43 +208,47 @@
   </div>
   <button class="btn" id="open-graph" type="button">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="5" cy="6" r="2.5"/><circle cx="18" cy="5" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M7.3 7.2 10.6 16M16.5 7.1 13.2 15.9M7.5 6h8"/></svg>
-    Graph</button>
+    Connections</button>
 </header>
 
 <div class="layout" id="layout">
   <main class="page" id="page" tabindex="-1"><p class="loading">Setting the table…</p></main>
   <aside class="side" id="side" aria-label="Connections">
     <h2>Connections</h2>
+    <p class="side-note">Everything linked to this page. Pick a dot to go there.</p>
     <div class="local" id="local" aria-hidden="true"></div>
     <div class="key" id="key" aria-hidden="true"></div>
-    <button class="btn solid" id="walk-here" type="button">Walk the web from here</button>
-    <button class="btn" id="open-graph-2" type="button" style="margin-top:8px">See the whole web</button>
+    <button class="btn solid" id="walk-here" type="button">Explore connections</button>
+    <button class="btn" id="open-graph-2" type="button" style="margin-top:8px">See everything at once</button>
   </aside>
 </div>
 
-<div class="full" id="full" role="dialog" aria-modal="true" aria-label="The whole web">
+<div class="full" id="full" role="dialog" aria-modal="true" aria-label="Everything at once">
   <div class="full-bar">
-    <h2>The whole web</h2>
+    <h2>Everything at once</h2>
     <span id="filters"></span>
     <button class="btn close" id="close-graph" type="button">Close</button>
   </div>
   <div id="graph" aria-hidden="true"></div>
-  <p class="full-hint">Drag to move around, scroll or pinch to zoom, pick a dot to open its page. Dishes and ingredients are off to start; turn them on above. Every connection here is also listed as a link on its page.</p>
+  <p class="full-hint">Each dot is a cuisine, recipe site or cookbook, and each line links two of them. Drag to move, scroll or pinch to zoom, and pick a dot to explore from there. Dishes and ingredients are hidden at first; turn them on above.</p>
 </div>
-<div class="walk" id="walk" role="dialog" aria-label="Walk the web">
+<div class="walk" id="walk" role="dialog" aria-label="Explore connections">
   <div class="walk-bar">
-    <button class="btn" id="walk-close" type="button" aria-label="Close and go to this page">← Page</button>
+    <button class="btn" id="walk-close" type="button" >← Back to page</button>
     <nav class="trail" id="trail" aria-label="Where you've been"></nav>
     <div class="walk-tools">
-      <span class="seg" role="group" aria-label="How far to look">
-        <button type="button" data-depth="1" aria-pressed="true">1 step</button><button type="button" data-depth="2" aria-pressed="false">2 steps</button><button type="button" data-depth="3" aria-pressed="false">3 steps</button>
+      <span class="seg" role="group" aria-label="How far out to show">
+        <button type="button" data-depth="1" aria-pressed="true">Direct links</button><button type="button" data-depth="2" aria-pressed="false">2 away</button><button type="button" data-depth="3" aria-pressed="false">3 away</button>
       </span>
       <span id="walk-filters"></span>
-      <button class="btn" id="walk-whole" type="button">Whole web</button>
+      <button class="btn" id="walk-whole" type="button">See everything</button>
     </div>
   </div>
   <div class="walk-body">
-    <div id="walk-graph" aria-hidden="true"></div>
+    <div class="walk-graph-wrap">
+      <div id="walk-graph" aria-hidden="true"></div>
+      <p class="walk-hint" id="walk-hint">Each dot is something linked to <b id="walk-name"></b>. Pick one to move there, and its own links appear around it. Hover for a preview.</p>
+    </div>
     <section class="walk-page page" id="walk-page" aria-live="polite"></section>
   </div>
 </div>
@@ -322,7 +331,7 @@
     if (token !== renderToken) return;
     target.dataset.ref = n.ref;
     if (!m) { target.innerHTML = `<h1>${esc(n.name)}</h1><p class="empty">This page didn't load. Check your connection and try again.</p>`; return; }
-    const shareable = location.hostname.endsWith("kylepace.net") ? `<a class="btn" href="/labs/cuisines/${n.ref}/">Page link</a>` : "";
+    const shareable = location.hostname.endsWith("kylepace.net") ? `<button class="btn" type="button" data-copy="https://kylepace.net/labs/cuisines/${n.ref}/">Copy link</button>` : "";
     target.innerHTML = renderItem(m, { ...renderOpts, extraActions: shareable });
     const box = target.querySelector("#intro");
     if (box && !box.textContent.trim() && box.dataset.wiki) liveIntro(box.dataset.wiki).then(t => {
@@ -339,8 +348,8 @@
     const shared = ofType("dish").filter(n => neighbors(n, "cuisine").length > 1).sort((a, b) => neighbors(b, "cuisine").length - neighbors(a, "cuisine").length).slice(0, 40);
     page.dataset.ref = "";
     page.innerHTML = `
-      <h1>The web of cuisines</h1>
-      <div class="intro"><p>The same cuisines, dishes and ingredients as the globe, laid out as linked pages. Every page lists what it connects to, and you can walk the web from any of them. Follow any link to keep going.</p></div>
+      <h1>Browse every cuisine</h1>
+      <div class="intro"><p>The same cuisines, dishes and ingredients as the globe, as pages you can read and follow. Every page links to what it's connected to: a cuisine to its dishes, a dish to its ingredients, an ingredient to everywhere it's cooked. Pick "Connections" on any page to see those links as a map you can move through.</p></div>
       <ul class="stats">${stat("cuisine", "cuisines")}${stat("dish", "dishes")}${stat("ingredient", "ingredients")}${stat("site", "recipe sites")}${stat("book", "cookbooks")}</ul>
       ${section("Cuisines by region", byContinent(nationals))}
       ${section("Indigenous foodways", linkList(indigenous), indigenous.length)}
@@ -361,11 +370,11 @@
     const shown = long ? list.filter(n => norm(n.name).charAt(0).toUpperCase() === pick) : list;
     const base = "#/" + INDEX_PATH[type];
     const body = type === "cuisine"
-      ? byContinent(list.filter(n => !n.beyond)) + `<h3 id="beyond-borders">Beyond borders</h3>${linkList(list.filter(n => n.beyond))}`
+      ? byContinent(list.filter(n => !n.beyond)) + `<h3 id="beyond-borders">Not tied to one country</h3>${linkList(list.filter(n => n.beyond))}`
       : linkList(shown);
     page.dataset.ref = "";
     page.innerHTML = `
-      <p class="crumb"><a href="#/">The web</a></p>
+      <p class="crumb"><a href="#/">Browse</a></p>
       <h1>${PLURAL[type]}</h1>
       <p class="sub">${list.length.toLocaleString()} in all${long ? `, ${shown.length} starting with ${pick}` : ""}</p>
       ${long ? `<nav class="letters" aria-label="By first letter">${letters.map(ch => `<a href="${base}/${ch}" aria-current="${ch === pick}">${ch}</a>`).join("")}</nav>` : ""}
@@ -392,7 +401,7 @@
       if (!n) { page.dataset.ref = ""; page.innerHTML = `<h1>Not found</h1><p class="empty">Nothing here by that name. <a href="#/">Back to the web</a>.</p>`; }
       else { current = n; itemPage(n); }
     }
-    document.title = (current ? current.name + " · " : "") + "Cuisine Explorer: the web";
+    document.title = (current ? current.name + " · " : "") + "Cuisine Explorer: browse";
     document.getElementById("to-globe").href = "./" + (current && globeHash(current) ? "#" + globeHash(current) : "");
     if (walking && current) { showWalk(current); return; }
     if (walking) { location.replace("#/"); return; }
@@ -571,7 +580,7 @@
   addEventListener("keydown", e => { if (e.key === "Escape" && fullOpen) closeFull(); });
   const filters = document.getElementById("filters");
   filters.innerHTML = Object.keys(shown).map(t => `<button class="chip" type="button" data-t="${t}" aria-pressed="${shown[t]}">${keySvg(t)}${PLURAL[t]}</button>`).join(" ")
-    + `<span class="seg" role="group" aria-label="Layout"><button type="button" data-layout="continent" aria-pressed="true">By continent</button><button type="button" data-layout="links" aria-pressed="false">By links</button></span>`;
+    + `<span class="seg" role="group" aria-label="Arrange the dots"><button type="button" data-layout="continent" aria-pressed="true">Arrange by continent</button><button type="button" data-layout="links" aria-pressed="false">Arrange by connections</button></span>`;
   filters.addEventListener("click", e => {
     const b = e.target.closest("[data-t], [data-layout]");
     if (!b || !fullGraph) return;
@@ -700,6 +709,7 @@
     const prev = walkCenter && walkNodes.get(walkCenter.key);
     if (prev) { prev.fx = prev.fy = undefined; }
     walkCenter = n;
+    document.getElementById("walk-name").textContent = n.name;
     if (opening && !walkNodes.has(n.key)) walkNodes.clear();
     walkGraph.graphData(walkData());
     const g = walkNodes.get(n.key);
@@ -715,7 +725,7 @@
     if (trailList.length > 8) trailList.shift();
     document.getElementById("trail").innerHTML = trailList.map(t => `<a href="${walkHref(t)}"${t === n ? ' aria-current="page"' : ""}>${esc(t.name)}</a>`).join("<span>›</span>");
     walkPage.scrollTop = 0;
-    document.title = n.name + " · Walk · Cuisine Explorer";
+    document.title = n.name + " · Connections · Cuisine Explorer";
   }
   function hideWalk() {
     if (!walkEl.classList.contains("open")) return;
@@ -746,6 +756,13 @@
     walkShown[b.dataset.wt] = !walkShown[b.dataset.wt];
     b.setAttribute("aria-pressed", String(walkShown[b.dataset.wt]));
     walkGraph.graphData(walkData()); walkFit = true;
+  });
+
+  // Copy a page's shareable address
+  document.addEventListener("click", e => {
+    const b = e.target.closest("[data-copy]");
+    if (!b) return;
+    navigator.clipboard?.writeText(b.dataset.copy).then(() => { b.textContent = "Copied"; setTimeout(() => { b.textContent = "Copy link"; }, 1600); }).catch(() => { location.href = b.dataset.copy; });
   });
 
   // --- Search ----------------------------------------------------------------------

@@ -8,7 +8,7 @@ enum DataSource {
 
 /// Fetches data files, revalidating with the server when online and falling back to the
 /// on-disk cache when not, so anything already seen opens offline.
-final class Remote {
+final class Remote: Sendable {
     static let shared = Remote()
     private let session: URLSession
 
@@ -22,14 +22,14 @@ final class Remote {
         session = URLSession(configuration: config)
     }
 
-    func json(_ path: String) async -> Any? {
+    /// The file's bytes, or nil when it can't be fetched and isn't cached
+    func data(_ path: String) async -> Data? {
         let url = DataSource.base.appendingPathComponent(path)
         for policy in [URLRequest.CachePolicy.useProtocolCachePolicy, .returnCacheDataDontLoad] {
             let request = URLRequest(url: url, cachePolicy: policy)
             if let (data, response) = try? await session.data(for: request),
-               (response as? HTTPURLResponse)?.statusCode ?? 200 == 200,
-               let object = try? JSONSerialization.jsonObject(with: data) {
-                return object
+               (response as? HTTPURLResponse)?.statusCode ?? 200 == 200 {
+                return data
             }
         }
         return nil

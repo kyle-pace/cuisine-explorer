@@ -3,6 +3,7 @@ import UIKit
 
 /// Loads photos from Wikimedia Commons with a User-Agent that says who's asking (their
 /// policy asks for one), and keeps them on disk so each photo is fetched once.
+@MainActor
 final class ImageLoader {
     static let shared = ImageLoader()
     private let memory = NSCache<NSURL, UIImage>()

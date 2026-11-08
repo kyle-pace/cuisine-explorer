@@ -3,7 +3,7 @@ import CoreLocation
 
 /// Everything the app knows, read from the bundled data (see scripts/sync-data.mjs).
 /// The skeleton is small and loaded at launch; page models are read one bucket at a time.
-@Observable
+@MainActor @Observable
 final class Store {
     struct Node: Identifiable, Hashable {
         let ref: String
@@ -54,17 +54,16 @@ final class Store {
     @ObservationIgnored private var pages: [String: Page] = [:]
 
     /// Loads the skeleton (every page's name, type and color) and the app index
-    @MainActor
     func start() async {
         state = .loading
-        async let skeleton = Remote.shared.json("skeleton.json")
-        async let extras = Remote.shared.json("app.json")
-        guard let s = await skeleton as? [String: Any], let e = await extras as? [String: Any] else {
+        async let skeleton = Remote.shared.data("skeleton.json")
+        async let extras = Remote.shared.data("app.json")
+        guard let s = Self.object(await skeleton), let e = Self.object(await extras) else {
             state = .failed
             return
         }
         var nodes: [Node] = [], index: [String: Int] = [:]
-        let palette = (s["colors"] as? [String] ?? []).map { Color(hex: $0) }
+        let palette = (s["colors"] as? [String] ?? []).map { Color(hexString: $0) }
         for case let n as [Any] in s["nodes"] as? [Any] ?? [] {
             guard n.count >= 6, let ref = n[0] as? String, let name = n[1] as? String,
                   let t = n[2] as? Int, let kind = Kind(rawValue: t) else { continue }
@@ -89,6 +88,10 @@ final class Store {
         state = .ready
     }
 
+    private static func object(_ data: Data?) -> [String: Any]? {
+        data.flatMap { try? JSONSerialization.jsonObject(with: $0) as? [String: Any] }
+    }
+
     // MARK: Lookups
 
     func node(_ ref: String) -> Node? { index[ref].map { nodes[$0] } }
@@ -108,12 +111,11 @@ final class Store {
     func cachedPage(_ ref: String) -> Page? { pages[ref] }
 
     /// The page model for an item, fetching its bucket the first time; nil for hubs like "cuisines#asia"
-    @MainActor
     func page(_ ref: String) async -> Page? {
         if let p = pages[ref] { return p }
         let b = Self.bucketOf(ref)
         if buckets[b] == nil {
-            guard let bucket = await Remote.shared.json("items/\(b).json") as? [String: Any] else { return nil }
+            guard let bucket = Self.object(await Remote.shared.data("items/\(b).json")) else { return nil }
             buckets[b] = bucket
         }
         guard let raw = buckets[b]?[ref] as? [String: Any] else { return nil }

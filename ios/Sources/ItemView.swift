@@ -23,7 +23,7 @@ struct ItemView: View {
                 ProgressView().tint(Theme.muted).frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }
-        .background(Theme.night)
+        .background(Theme.ground)
         .navigationTitle(page?.name ?? store.node(ref)?.name ?? "")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
@@ -59,7 +59,7 @@ struct PageContent: View {
             }
             Text(page.name)
                 .font(Theme.title)
-                .foregroundStyle(Theme.rice)
+                .foregroundStyle(Theme.ink)
                 .fixedSize(horizontal: false, vertical: true)
                 .accessibilityAddTraits(.isHeader)
             HStack(spacing: 8) {
@@ -77,7 +77,7 @@ struct PageContent: View {
             ForEach(Array(page.intro.enumerated()), id: \.offset) { _, para in
                 Text(attributed(para))
                     .font(Theme.bodyLarge)
-                    .foregroundStyle(Theme.rice)
+                    .foregroundStyle(Theme.ink)
                     .lineSpacing(3)
                     .fixedSize(horizontal: false, vertical: true)
                     .padding(.top, 16)
@@ -128,19 +128,21 @@ struct PageContent: View {
     }
 
     private var actions: some View {
-        FlowLayout(spacing: 10, lineSpacing: 10) {
+        FlowLayout(spacing: Space.s) {
             if store.place(page.ref) != nil {
-                Button { app.showOnMap(page.ref) } label: { Pill(text: "Show on the map", icon: "map") }
+                Button("Show on the map", systemImage: "map") { app.showOnMap(page.ref) }
             }
             ForEach(page.actions.filter { $0.kind != "globe" }, id: \.self) { a in
                 if let url = a.url {
                     Link(destination: url) {
-                        Pill(text: a.kind == "wiki" ? "Wikipedia" : (a.label ?? "Open"), icon: "arrow.up.right")
+                        Label(a.kind == "wiki" ? "Wikipedia" : (a.label ?? "Open"), systemImage: "arrow.up.right")
                     }
                 }
             }
         }
-        .buttonStyle(.plain)
+        .buttonStyle(.bordered)
+        .buttonBorderShape(.capsule)
+        .font(Theme.callout600)
     }
 }
 
@@ -149,27 +151,10 @@ func linked(_ l: Page.Link, underline: Bool = true) -> AttributedString {
     var a = AttributedString(l.name)
     if let ref = l.ref, let url = AppLink.url(ref) {
         a.link = url
-        a.foregroundColor = Theme.rice
+        a.foregroundColor = Theme.ink
         if underline { a.underlineStyle = .single }
     }
     return a
-}
-
-struct Pill: View {
-    let text: String
-    var icon: String?
-    var body: some View {
-        HStack(spacing: 6) {
-            Text(text)
-            if let icon { Image(systemName: icon).font(.caption.weight(.semibold)) }
-        }
-        .font(Theme.callout600)
-        .foregroundStyle(Theme.rice)
-        .padding(.horizontal, 16).padding(.vertical, 10)
-        .background(Theme.panel, in: Capsule())
-        .overlay(Capsule().stroke(Theme.line))
-        .contentShape(Capsule())
-    }
 }
 
 struct PhotoView: View {
@@ -180,7 +165,7 @@ struct PhotoView: View {
         VStack(alignment: .leading, spacing: 8) {
             RemoteImage(url: photo.url)
                 .aspectRatio(max(0.6, min(2.2, photo.width / max(photo.height, 1))), contentMode: .fit)
-                .clipShape(RoundedRectangle(cornerRadius: 16))
+                .clipShape(RoundedRectangle(cornerRadius: Radius.large))
                 .accessibilityLabel("Photo of \(photo.pictured ?? name)")
             Text(credit).font(Theme.caption).foregroundStyle(Theme.muted)
         }
@@ -206,7 +191,7 @@ struct SectionView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack(alignment: .firstTextBaseline, spacing: 8) {
-                Text(section.title).font(Theme.heading).foregroundStyle(Theme.rice)
+                Text(section.title).font(Theme.heading).foregroundStyle(Theme.ink)
                 if let n = section.count { Text("\(n)").font(Theme.callout).foregroundStyle(Theme.muted) }
             }
             .accessibilityAddTraits(.isHeader)
@@ -253,7 +238,7 @@ struct RowCard: View {
             Mark(color: row.color, square: !row.isCuisine).padding(.top, 6)
             VStack(alignment: .leading, spacing: 3) {
                 HStack(spacing: 6) {
-                    Text(row.name).font(Theme.callout600).foregroundStyle(Theme.rice)
+                    Text(row.name).font(Theme.callout600).foregroundStyle(Theme.ink)
                         .multilineTextAlignment(.leading)
                     if row.suggested { Tag(text: "Suggested") }
                 }
@@ -272,8 +257,8 @@ struct RowCard: View {
             }
         }
         .padding(14)
-        .background(Theme.panel, in: RoundedRectangle(cornerRadius: 12))
-        .overlay(RoundedRectangle(cornerRadius: 12).stroke(Theme.line))
+        .background(Theme.surface, in: RoundedRectangle(cornerRadius: Radius.medium))
+        .overlay(RoundedRectangle(cornerRadius: Radius.medium).stroke(Theme.line))
         .overlay {
             if let ref = row.ref {
                 NavigationLink(value: store.route(ref)) { Color.clear }
@@ -289,7 +274,7 @@ struct LinkChips: View {
     let links: [Page.Link]
 
     var body: some View {
-        FlowLayout(spacing: 8, lineSpacing: 8) {
+        FlowLayout(spacing: 8) {
             ForEach(Array(links.enumerated()), id: \.offset) { _, l in
                 if let ref = l.ref {
                     NavigationLink(value: store.route(ref)) { chip(l.name, linked: true) }.buttonStyle(.plain)
@@ -303,9 +288,9 @@ struct LinkChips: View {
     private func chip(_ name: String, linked: Bool) -> some View {
         Text(name)
             .font(Theme.callout)
-            .foregroundStyle(linked ? Theme.rice : Theme.muted)
+            .foregroundStyle(linked ? Theme.ink : Theme.muted)
             .padding(.horizontal, 12).padding(.vertical, 7)
-            .background(linked ? Theme.panel : .clear, in: Capsule())
+            .background(linked ? Theme.surface : .clear, in: Capsule())
             .overlay(Capsule().stroke(Theme.line))
     }
 }
@@ -324,7 +309,7 @@ struct GroupBlock: View {
                 withAnimation(Theme.motion(reduceMotion)) { open.toggle() }
             } label: {
                 HStack {
-                    Text(head.name).font(Theme.callout600).foregroundStyle(Theme.rice)
+                    Text(head.name).font(Theme.callout600).foregroundStyle(Theme.ink)
                     Text("\(links.count)").font(Theme.caption).foregroundStyle(Theme.muted)
                     Spacer()
                     Image(systemName: "chevron.down").rotationEffect(.degrees(open ? 180 : 0))
@@ -337,7 +322,7 @@ struct GroupBlock: View {
             if open {
                 if let ref = head.ref {
                     NavigationLink(value: store.route(ref)) {
-                        Text("Open \(head.name)").font(Theme.caption).underline().foregroundStyle(Theme.rice)
+                        Text("Open \(head.name)").font(Theme.caption).underline().foregroundStyle(Theme.ink)
                     }
                     .buttonStyle(.plain)
                 }
@@ -361,10 +346,10 @@ struct GrownChart: View {
                     HStack {
                         if let ref = item.0.ref {
                             NavigationLink(value: store.route(ref)) {
-                                Text(item.0.name).underline().foregroundStyle(Theme.rice)
+                                Text(item.0.name).underline().foregroundStyle(Theme.ink)
                             }.buttonStyle(.plain)
                         } else {
-                            Text(item.0.name).foregroundStyle(Theme.rice)
+                            Text(item.0.name).foregroundStyle(Theme.ink)
                         }
                         Spacer()
                         Text(Self.tonnes(item.1)).foregroundStyle(Theme.muted)

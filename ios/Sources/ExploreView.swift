@@ -4,6 +4,7 @@ import SwiftUI
 struct ExploreView: View {
     @Environment(Store.self) private var store
     @State private var featured: [Store.Node] = []
+    @State private var settings = false
 
     var body: some View {
         ScrollView {
@@ -11,7 +12,7 @@ struct ExploreView: View {
                 VStack(alignment: .leading, spacing: 8) {
                     Text("The world’s cuisines")
                         .font(Theme.title)
-                        .foregroundStyle(Theme.rice)
+                        .foregroundStyle(Theme.ink)
                     Text("\(count(.cuisine)) cuisines, \(count(.dish)) dishes and \(count(.ingredient)) ingredients, each linked to the others.")
                         .font(Theme.body)
                         .foregroundStyle(Theme.muted)
@@ -20,7 +21,7 @@ struct ExploreView: View {
 
                 VStack(alignment: .leading, spacing: 12) {
                     HStack {
-                        SectionTitle("Start somewhere")
+                        SectionHeader("Start somewhere")
                         Spacer()
                         Button("Shuffle", systemImage: "shuffle") { pickFeatured() }
                             .font(Theme.callout600)
@@ -42,7 +43,7 @@ struct ExploreView: View {
                 }
 
                 VStack(alignment: .leading, spacing: 12) {
-                    SectionTitle("Cuisines by continent")
+                    SectionHeader("Cuisines by continent")
                     LazyVGrid(columns: [GridItem(.flexible(), spacing: 12), GridItem(.flexible(), spacing: 12)], spacing: 12) {
                         ForEach(Store.continents, id: \.slug) { c in
                             NavigationLink(value: Route.hub("cuisines#\(c.slug)")) {
@@ -52,7 +53,7 @@ struct ExploreView: View {
                             .buttonStyle(.plain)
                         }
                         NavigationLink(value: Route.hub("x:beyond")) {
-                            ContinentTile(name: "Beyond borders", color: Theme.muted,
+                            ContinentTile(name: "Beyond borders", color: Theme.elsewhere,
                                           count: store.hub("x:beyond").nodes.count)
                         }
                         .buttonStyle(.plain)
@@ -61,26 +62,26 @@ struct ExploreView: View {
                         HStack(spacing: 12) {
                             Mark(color: Theme.tomatillo, size: 12)
                             VStack(alignment: .leading, spacing: 2) {
-                                Text("Indigenous foodways").font(Theme.callout600).foregroundStyle(Theme.rice)
+                                Text("Indigenous foodways").font(Theme.callout600).foregroundStyle(Theme.ink)
                                 Text("Peoples of Alaska, the Americas and beyond").font(Theme.caption).foregroundStyle(Theme.muted)
                             }
                             Spacer()
                             Image(systemName: "chevron.right").foregroundStyle(Theme.muted).font(.footnote.weight(.semibold))
                         }
                         .padding(16)
-                        .background(Theme.panel, in: RoundedRectangle(cornerRadius: 14))
-                        .overlay(RoundedRectangle(cornerRadius: 14).stroke(Theme.line))
+                        .background(Theme.surface, in: RoundedRectangle(cornerRadius: Radius.medium))
+                        .overlay(RoundedRectangle(cornerRadius: Radius.medium).stroke(Theme.line))
                     }
                     .buttonStyle(.plain)
                 }
                 .padding(.horizontal, 20)
 
                 VStack(alignment: .leading, spacing: 4) {
-                    SectionTitle("Everything")
+                    SectionHeader("Everything")
                     ForEach([Store.Kind.dish, .ingredient, .book, .site], id: \.self) { kind in
                         NavigationLink(value: Route.hub(kind.hub)) {
                             HStack {
-                                Text(kind.plural).font(Theme.body).foregroundStyle(Theme.rice)
+                                Text(kind.plural).font(Theme.body).foregroundStyle(Theme.ink)
                                 Spacer()
                                 Text("\(count(kind))").font(Theme.callout).foregroundStyle(Theme.muted)
                                 Image(systemName: "chevron.right").foregroundStyle(Theme.muted).font(.footnote.weight(.semibold))
@@ -102,9 +103,15 @@ struct ExploreView: View {
             }
             .padding(.top, 8)
         }
-        .background(Theme.night)
-        .toolbarBackground(Theme.night, for: .navigationBar)
+        .background(Theme.ground)
+        .toolbarBackground(Theme.ground, for: .navigationBar)
         .onAppear { if featured.isEmpty { pickFeatured() } }
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button("Settings", systemImage: "gearshape") { settings = true }
+            }
+        }
+        .sheet(isPresented: $settings) { SettingsView() }
     }
 
     private func count(_ kind: Store.Kind) -> Int { store.nodes.lazy.filter { $0.type == kind }.count }
@@ -112,14 +119,6 @@ struct ExploreView: View {
     private func pickFeatured() {
         let withPhotos = store.nodes.filter { $0.type == .cuisine && store.hasPhoto($0.ref) }
         featured = Array(withPhotos.shuffled().prefix(8))
-    }
-}
-
-struct SectionTitle: View {
-    let text: String
-    init(_ text: String) { self.text = text }
-    var body: some View {
-        Text(text).font(Theme.heading).foregroundStyle(Theme.rice).accessibilityAddTraits(.isHeader)
     }
 }
 
@@ -135,16 +134,16 @@ struct FeatureCard: View {
             VStack(alignment: .leading, spacing: 4) {
                 HStack(spacing: 8) {
                     Mark(color: node.color)
-                    Text(node.name).font(Theme.callout600).foregroundStyle(Theme.rice).lineLimit(1)
+                    Text(node.name).font(Theme.callout600).foregroundStyle(Theme.ink).lineLimit(1)
                 }
                 Text(node.sub).font(Theme.caption).foregroundStyle(Theme.muted).lineLimit(1)
             }
             .padding(12)
             .frame(width: 240, alignment: .leading)
         }
-        .background(Theme.panel)
-        .clipShape(RoundedRectangle(cornerRadius: 16))
-        .overlay(RoundedRectangle(cornerRadius: 16).stroke(Theme.line))
+        .background(Theme.surface)
+        .clipShape(RoundedRectangle(cornerRadius: Radius.large))
+        .overlay(RoundedRectangle(cornerRadius: Radius.large).stroke(Theme.line))
         .accessibilityElement(children: .combine)
     }
 }
@@ -158,15 +157,15 @@ struct ContinentTile: View {
         VStack(alignment: .leading, spacing: 6) {
             Circle().fill(color).frame(width: 14, height: 14)
             Spacer(minLength: 12)
-            Text(name).font(Theme.callout600).foregroundStyle(Theme.rice)
+            Text(name).font(Theme.callout600).foregroundStyle(Theme.ink)
             Text("\(count) cuisines").font(Theme.caption).foregroundStyle(Theme.muted)
         }
         .frame(maxWidth: .infinity, minHeight: 104, alignment: .leading)
         .padding(14)
         .background(
-            LinearGradient(colors: [color.opacity(0.22), Theme.panel], startPoint: .topLeading, endPoint: .bottomTrailing),
-            in: RoundedRectangle(cornerRadius: 14))
-        .overlay(RoundedRectangle(cornerRadius: 14).stroke(Theme.line))
+            LinearGradient(colors: [color.opacity(0.22), Theme.surface], startPoint: .topLeading, endPoint: .bottomTrailing),
+            in: RoundedRectangle(cornerRadius: Radius.medium))
+        .overlay(RoundedRectangle(cornerRadius: Radius.medium).stroke(Theme.line))
         .accessibilityElement(children: .combine)
     }
 }
@@ -183,12 +182,12 @@ struct HubView: View {
             : hub.nodes.filter { $0.name.localizedCaseInsensitiveContains(filter) }
         List(list) { n in
             NavigationLink(value: Route.item(n.ref)) { NodeRow(node: n) }
-                .listRowBackground(Theme.night)
+                .listRowBackground(Theme.ground)
                 .listRowSeparatorTint(Theme.line)
         }
         .listStyle(.plain)
         .scrollContentBackground(.hidden)
-        .background(Theme.night)
+        .background(Theme.ground)
         .searchable(text: $filter, placement: .navigationBarDrawer(displayMode: .automatic), prompt: "Filter \(hub.title)")
         .navigationTitle(hub.title)
         .overlay { if list.isEmpty { ContentUnavailableView.search(text: filter) } }
@@ -202,13 +201,13 @@ struct NodeRow: View {
     var body: some View {
         HStack(spacing: 12) {
             if let thumb = store.thumbnail(node.ref) {
-                RemoteImage(url: thumb).frame(width: 44, height: 44).clipShape(RoundedRectangle(cornerRadius: 8))
+                RemoteImage(url: thumb).frame(width: 44, height: 44).clipShape(RoundedRectangle(cornerRadius: Radius.small))
             } else {
-                ZStack { RoundedRectangle(cornerRadius: 8).fill(Theme.panel); Mark(color: node.color, square: node.type != .cuisine) }
+                ZStack { RoundedRectangle(cornerRadius: Radius.small).fill(Theme.surface); Mark(color: node.color, square: node.type != .cuisine) }
                     .frame(width: 44, height: 44)
             }
             VStack(alignment: .leading, spacing: 2) {
-                Text(node.name).font(Theme.body).foregroundStyle(Theme.rice)
+                Text(node.name).font(Theme.body).foregroundStyle(Theme.ink)
                 Text(node.sub.isEmpty ? node.type.singular : node.sub)
                     .font(Theme.caption).foregroundStyle(Theme.muted).lineLimit(1)
             }
@@ -227,12 +226,12 @@ struct SearchView: View {
         let results = store.search(query)
         List(results) { n in
             NavigationLink(value: Route.item(n.ref)) { NodeRow(node: n) }
-                .listRowBackground(Theme.night)
+                .listRowBackground(Theme.ground)
                 .listRowSeparatorTint(Theme.line)
         }
         .listStyle(.plain)
         .scrollContentBackground(.hidden)
-        .background(Theme.night)
+        .background(Theme.ground)
         .navigationTitle("Search")
         .searchable(text: $query, prompt: "Cuisines, dishes, ingredients")
         .overlay {

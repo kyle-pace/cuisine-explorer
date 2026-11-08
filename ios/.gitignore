@@ -1,4 +1,3 @@
-CuisineExplorer/Fonts/
-CuisineExplorer/Info.plist
-CuisineExplorer.xcodeproj/
+Cuisines.xcodeproj/
 build/
+build.log

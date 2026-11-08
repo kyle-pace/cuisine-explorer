@@ -1,23 +1,28 @@
 import SwiftUI
 
 @main
-struct CuisineExplorerApp: App {
+struct CuisinesApp: App {
     @State private var store = Store()
     @State private var app = AppState()
 
     var body: some Scene {
         WindowGroup {
             RootView()
+                .kitchenAppearance()
                 .environment(store)
                 .environment(app)
-                .preferredColorScheme(.dark)
-                .tint(Theme.saffron)
+                .tint(Theme.accent)
         }
+    }
+
+    init() {
+        KitchenUI.registerFonts()
+        Palette.use(.saffron, neutrals: .aubergine)   // the globe's colors: saffron on aubergine
     }
 }
 
 /// Which tab is open, each tab's navigation path, and where the map should look
-@Observable
+@MainActor @Observable
 final class AppState {
     enum Tab: Hashable { case explore, map, search }
     var tab: Tab = .explore
@@ -44,7 +49,7 @@ struct RootView: View {
                 Text("Setting the table…").font(Theme.callout).foregroundStyle(Theme.muted)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(Theme.night)
+            .background(Theme.ground)
             .task { await store.start() }
         case .failed:
             ContentUnavailableView {
@@ -54,7 +59,7 @@ struct RootView: View {
             } actions: {
                 Button("Try again") { Task { await store.start() } }.buttonStyle(.borderedProminent)
             }
-            .background(Theme.night)
+            .background(Theme.ground)
         }
     }
 

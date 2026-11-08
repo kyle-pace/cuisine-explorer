@@ -43,7 +43,7 @@ struct Page {
         type = m["t"] as? String ?? ""
         name = m["n"] as? String ?? ""
         sub = m["sub"] as? String ?? ""
-        dot = Color(hex: (m["dot"] as? String) ?? (m["c"] as? String) ?? "#a99fb5")
+        dot = Color(hexString: (m["dot"] as? String) ?? (m["c"] as? String) ?? "#a99fb5")
         square = m["square"] as? Bool ?? false
         suggested = m["suggested"] as? Bool ?? false
         crumb = (m["crumb"] as? [Any] ?? []).compactMap(Page.link)
@@ -83,7 +83,7 @@ struct Page {
             body = .rows(rows.map { r in
                 let url = (r["url"] as? String).flatMap { $0.isEmpty ? nil : URL(string: $0) }
                 return Row(name: r["name"] as? String ?? "", ref: r["ref"] as? String,
-                           color: Color(hex: r["color"] as? String ?? "#a99fb5"),
+                           color: Color(hexString: r["color"] as? String ?? "#a99fb5"),
                            isCuisine: r["shape"] as? String == "cuisine",
                            sub: r["sub"] as? String ?? "", note: r["note"] as? String,
                            url: url, suggested: r["suggested"] as? Bool ?? false)
@@ -140,13 +140,5 @@ struct Photo {
     static func wikimediaURL(_ path: String) -> URL? {
         let host = path.hasPrefix("thumb/") ? "thumb.wikimedia.org" : "upload.wikimedia.org"
         return URL(string: "https://\(host)/wikipedia/commons/\(path)")
-    }
-}
-
-extension Color {
-    init(hex: String) {
-        var v: UInt64 = 0
-        Scanner(string: hex.trimmingCharacters(in: CharacterSet(charactersIn: "#"))).scanHexInt64(&v)
-        self.init(red: Double((v >> 16) & 255) / 255, green: Double((v >> 8) & 255) / 255, blue: Double(v & 255) / 255)
     }
 }

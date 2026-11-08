@@ -21,7 +21,7 @@ struct MapScreen: View {
                             Circle()
                                 .fill(color(p.ref))
                                 .frame(width: dotSize(n), height: dotSize(n))
-                                .overlay(Circle().stroke(selected == p.ref ? Theme.rice : Theme.night.opacity(0.7),
+                                .overlay(Circle().stroke(selected == p.ref ? Theme.ink : Theme.ground.opacity(0.7),
                                                          lineWidth: selected == p.ref ? 3 : 1.5))
                                 .scaleEffect(selected == p.ref ? 1.5 : 1)
                                 .padding(10)
@@ -94,16 +94,16 @@ struct PlaceCard: View {
     var body: some View {
         HStack(spacing: 14) {
             if let url = store.photo(node.ref) {
-                RemoteImage(url: url).frame(width: 76, height: 76).clipShape(RoundedRectangle(cornerRadius: 12))
+                RemoteImage(url: url).frame(width: 76, height: 76).clipShape(RoundedRectangle(cornerRadius: Radius.medium))
             }
             VStack(alignment: .leading, spacing: 4) {
-                Text(node.name).font(Theme.callout600).foregroundStyle(Theme.rice)
+                Text(node.name).font(Theme.callout600).foregroundStyle(Theme.ink)
                 Text(node.sub).font(Theme.caption).foregroundStyle(Theme.muted).lineLimit(2)
                 Button(action: open) {
                     Text("Open").font(Theme.callout600)
                         .padding(.horizontal, 14).padding(.vertical, 6)
-                        .background(Theme.rice, in: Capsule())
-                        .foregroundStyle(Theme.night)
+                        .background(Theme.ink, in: Capsule())
+                        .foregroundStyle(Theme.ground)
                 }
                 .buttonStyle(.plain)
                 .padding(.top, 4)
@@ -118,9 +118,9 @@ struct PlaceCard: View {
         }
         .padding(12)
         .fixedSize(horizontal: false, vertical: true)
-        .background(Theme.panel, in: RoundedRectangle(cornerRadius: 20))
-        .overlay(RoundedRectangle(cornerRadius: 20).stroke(Theme.line))
-        .contentShape(RoundedRectangle(cornerRadius: 20))
+        .background(Theme.surface, in: RoundedRectangle(cornerRadius: Radius.large))
+        .overlay(RoundedRectangle(cornerRadius: Radius.large).stroke(Theme.line))
+        .contentShape(RoundedRectangle(cornerRadius: Radius.large))
         .onTapGesture(perform: open)
     }
 }

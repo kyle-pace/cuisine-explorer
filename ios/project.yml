@@ -1,40 +1,41 @@
-# XcodeGen spec. Generate the project with: xcodegen (see README.md)
-name: CuisineExplorer
+# XcodeGen spec. Generate the Xcode project with: xcodegen generate
+name: Cuisines
 options:
   bundleIdPrefix: net.kylepace
   deploymentTarget:
-    iOS: "18.0"
-  createIntermediateGroups: true
+    iOS: "26.0"
+packages:
+  KitchenUI:
+    path: ../../KitchenUI
 settings:
   base:
+    SWIFT_VERSION: "6.0"
     DEVELOPMENT_TEAM: 9BF66MY8TQ
     CODE_SIGN_STYLE: Automatic
-    SWIFT_VERSION: "5.0"
-    MARKETING_VERSION: "0.1"
-    CURRENT_PROJECT_VERSION: "1"
+    # Empty for TestFlight and the App Store. install-on-iphone.sh sets them to ".dev",
+    # " Dev" and "Dev" so the phone build is "Cuisines Dev" with a DEV icon, next to the real app.
+    BUNDLE_ID_SUFFIX: ""
+    APP_NAME_SUFFIX: ""
+    APP_ICON_SUFFIX: ""
 targets:
-  CuisineExplorer:
+  Cuisines:
     type: application
     platform: iOS
     sources:
-      - path: CuisineExplorer
-    info:
-      path: CuisineExplorer/Info.plist
-      properties:
-        CFBundleDisplayName: Cuisines
-        UILaunchScreen:
-          UIColorName: Night
-        UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
-        UIAppFonts:
-          - AtkinsonHyperlegibleNext-Regular.ttf
-          - AtkinsonHyperlegibleNext-Italic.ttf
-          - AtkinsonHyperlegibleNext-Medium.ttf
-          - AtkinsonHyperlegibleNext-SemiBold.ttf
-          - AtkinsonHyperlegibleNext-Bold.ttf
-          - AtkinsonHyperlegibleNext-ExtraBold.ttf
-        ITSAppUsesNonExemptEncryption: false
+      - Sources
+      - Resources
+    dependencies:
+      - package: KitchenUI
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: net.kylepace.cuisines
-        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        PRODUCT_BUNDLE_IDENTIFIER: net.kylepace.cuisines$(BUNDLE_ID_SUFFIX)
+        PRODUCT_NAME: Cuisines
+        MARKETING_VERSION: "0.1.0"
+        CURRENT_PROJECT_VERSION: "1"
         TARGETED_DEVICE_FAMILY: "1"
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_CFBundleDisplayName: "Cuisines$(APP_NAME_SUFFIX)"
+        INFOPLIST_KEY_UILaunchScreen_Generation: YES
+        INFOPLIST_KEY_UISupportedInterfaceOrientations: UIInterfaceOrientationPortrait
+        INFOPLIST_KEY_ITSAppUsesNonExemptEncryption: NO
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon$(APP_ICON_SUFFIX)

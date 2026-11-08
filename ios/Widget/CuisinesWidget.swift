@@ -34,19 +34,16 @@ struct TodayEntry: TimelineEntry {
 struct TodayProvider: TimelineProvider {
     func placeholder(in context: Context) -> TodayEntry { .placeholder }
 
-    func getSnapshot(in context: Context, completion: @escaping (TodayEntry) -> Void) {
-        if context.isPreview { completion(.placeholder); return }
-        Task { completion(await entry() ?? .unavailable) }
+    func snapshot(in context: Context) async -> TodayEntry {
+        context.isPreview ? .placeholder : (await entry() ?? .unavailable)
     }
 
-    func getTimeline(in context: Context, completion: @escaping (Timeline<TodayEntry>) -> Void) {
-        Task {
-            let e = await entry() ?? .unavailable
-            // New dish at midnight; if the fetch failed, try again in an hour
-            let next = e.ref == nil ? Date.now.addingTimeInterval(3600)
-                : Calendar.current.startOfDay(for: Date.now.addingTimeInterval(86400))
-            completion(Timeline(entries: [e], policy: .after(next)))
-        }
+    func timeline(in context: Context) async -> Timeline<TodayEntry> {
+        let e = await entry() ?? .unavailable
+        // New dish at midnight; if the fetch failed, try again in an hour
+        let next = e.ref == nil ? Date.now.addingTimeInterval(3600)
+            : Calendar.current.startOfDay(for: Date.now.addingTimeInterval(86400))
+        return Timeline(entries: [e], policy: .after(next))
     }
 
     /// The skeleton (names, in a stable order) and the app index (photos), as the app loads them

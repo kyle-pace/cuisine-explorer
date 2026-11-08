@@ -81,6 +81,9 @@ def main():
           VALUES ?cuisine { %s }
           ?dish wdt:P2012 ?cuisine .
           ?article schema:about ?dish ; schema:isPartOf <https://en.wikipedia.org/> .
+          # Restaurants, chains, bars, cafes and other businesses carry a cuisine too; they aren't dishes
+          FILTER NOT EXISTS { VALUES ?biz { wd:Q11707 wd:Q18534542 wd:Q187456 wd:Q30022 wd:Q4830453 wd:Q1032372 }
+                              ?dish wdt:P31/wdt:P279* ?biz . }
           OPTIONAL {
             ?dish wdt:P186|wdt:P527 ?ing .
             ?ingArticle schema:about ?ing ; schema:isPartOf <https://en.wikipedia.org/> .

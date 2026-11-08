@@ -20,7 +20,9 @@ def main():
     out_path = os.path.join(ROOT, "data/food_summaries.json")
     old = json.load(open(out_path)) if os.path.exists(out_path) else {}
     food = json.load(open(os.path.join(ROOT, "data/food.json")))
-    titles = sorted({d["id"] for d in food["dishes"]} | {i["title"] for i in food["ingredients"]})
+    # Notes written for this site have their own text; only fetch real Wikipedia titles
+    titles = sorted({d.get("title") or d["id"] for d in food["dishes"] if not d.get("note") or d.get("title")}
+                    | {i["title"] for i in food["ingredients"] if i.get("title")})
     out = {}
     try:
         for i in range(0, len(titles), 20):

@@ -15,6 +15,11 @@ on:
 permissions:
   contents: write
 
+# One rebuild at a time; a newer push waits for the one running
+concurrency:
+  group: refresh-data
+  cancel-in-progress: false
+
 jobs:
   refresh:
     runs-on: ubuntu-latest
@@ -37,4 +42,10 @@ jobs:
           git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
           git add data/
           git commit -m "Refresh cuisines from Wikipedia"
-          git push
+          # Someone may have pushed while this ran. The data is generated, so on a
+          # clash keep this run's copy (it was built from the newest content).
+          for i in 1 2 3; do
+            git pull --rebase -X theirs origin main && git push && exit 0
+            sleep 10
+          done
+          exit 1

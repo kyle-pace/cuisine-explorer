@@ -37,7 +37,7 @@ struct RootView: View {
 
     var body: some View {
         switch store.state {
-        case .ready: tabs
+        case .ready: tabs.onAppear(perform: openFromLaunchArguments)
         case .loading:
             VStack(spacing: 14) {
                 ProgressView().tint(Theme.muted)
@@ -56,6 +56,14 @@ struct RootView: View {
             }
             .background(Theme.night)
         }
+    }
+
+    /// For screenshots and testing: -open <ref> opens a page, -tab map opens the map
+    private func openFromLaunchArguments() {
+        let args = UserDefaults.standard
+        if let ref = args.string(forKey: "open") { app.explorePath = [store.route(ref)] }
+        if args.string(forKey: "tab") == "map" { app.tab = .map }
+        if let ref = args.string(forKey: "map") { app.showOnMap(ref) }
     }
 
     private var tabs: some View {

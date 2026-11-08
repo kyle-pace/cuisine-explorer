@@ -5,7 +5,7 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 mkdir -p raw data
 
-UA="CuisineExplorer/0.1 (https://kylepace.net/labs)"
+UA="WorldCuisine/0.1 (https://kylepace.dev/world-cuisine/)"
 curl -sSfL -A "$UA" "https://en.wikipedia.org/w/index.php?title=List_of_cuisines&action=raw" -o raw/list.wikitext
 
 python3 scripts/parse_list.py raw/list.wikitext data/list_entries.json

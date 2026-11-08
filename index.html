@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Cuisine Explorer</title>
+<title>World cuisine</title>
 <meta name="description" content="Spin the globe and explore the world's cuisines, with Wikipedia as the guide and recipe sites and cookbooks for each.">
-<meta property="og:title" content="Cuisine Explorer">
+<meta property="og:title" content="World cuisine">
 <meta property="og:description" content="Explore the world's cuisines on a globe, with recipe sites and cookbooks for each.">
-<meta property="og:image" content="https://kylepace.net/labs/cuisines/share.png">
+<meta property="og:image" content="https://kylepace.dev/world-cuisine/share.png">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#1b1424">
@@ -25,7 +25,7 @@
     --chili: #e46a3f;      /* Africa */
     --tomatillo: #94bd5c;  /* Americas */
     --seaglass: #55b8ad;   /* Oceania */
-    /* Atkinson Hyperlegible Next, as on kylepace.net */
+    /* Atkinson Hyperlegible Next, as on kylepace.net and kylepace.dev */
     --font: "Atkinson Hyperlegible Next", system-ui, sans-serif;
     --ease: cubic-bezier(.2, .8, .2, 1);
     --safe-b: env(safe-area-inset-bottom, 0px);
@@ -260,7 +260,7 @@
     .books { margin: 0 -20px; padding-left: 20px; padding-right: 20px; }
   }
 
-  /* Embedded in a page that already has its own title (kylepace.net/labs/cuisines/) */
+  /* Embedded in a page that already has its own title (kylepace.dev/world-cuisine/) */
   .embed .masthead h1, .embed .masthead p { display: none; }
   @media (max-width: 720px) { .embed .masthead .views { position: static; margin-bottom: 8px; } }
   .embed .masthead { top: 16px; left: 16px; }
@@ -272,7 +272,7 @@
 <div class="loading" id="loading">Setting the table…</div>
 
 <header class="masthead">
-  <h1>Cuisine Explorer</h1>
+  <h1>World cuisine</h1>
   <nav class="views" aria-label="Views"><a href="./" aria-current="page">Globe</a><a id="to-browse" href="web.html#/">Browse</a></nav>
   <p>Spin the globe, pick a place, and see what's cooking there. Every cuisine links back to Wikipedia.</p>
   <div class="search" role="search">
@@ -429,12 +429,12 @@
   // Each thing's address in the browse pages (cuisine/thai-cuisine), shared with them for photos and recents
   const refOf = x => (x.type === "dish" ? "dish/" : x.type === "ingredient" ? "ingredient/" : "cuisine/") + slug(x.id);
   const byRef = new Map([...all.map(c => [refOf(c), c]), ...dishes.map(d => [refOf(d), d]), ...usedIngredients.map(i => [refOf(i), i])]);
-  // Photos: paths from data/web/app.json, loaded when first needed. Only on kylepace.net, whose
+  // Photos: paths from data/web/app.json, loaded when first needed. Only on kylepace.dev, whose
   // image route serves them; no outside image host anywhere.
   let photoMap = null, photoLoad = null;
   const loadPhotos = () => photoLoad ||= (onSite ? load("data-app", "data/web/app.json").then(a => a.photos || {}).catch(() => ({})) : Promise.resolve({})).then(m => (photoMap = m));
-  const onSite = location.pathname.startsWith("/labs/cuisines/");
-  const photoUrl = p => "/labs/cuisines/img/" + p;
+  const onSite = location.pathname.startsWith("/world-cuisine/");
+  const photoUrl = p => "/world-cuisine/img/" + p;
   const thumbOf = (x, color) => {
     const p = photoMap && photoMap[refOf(x)];
     return `<span class="thumb">${p ? `<img src="${attr(photoUrl(p))}" alt="" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('i'),{style:'background:${color}'}))">` : `<i style="background:${color}"></i>`}</span>`;

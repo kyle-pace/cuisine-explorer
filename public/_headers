@@ -1,0 +1,9 @@
+# The full-screen globe, the page browser and their data stay out of search engines.
+# Only /world-cuisine/ (the framed page) is indexed, so the explorer doesn't outnumber
+# everything else on kylepace.dev in search. The item pages and photos are
+# server-rendered and set noindex themselves.
+/world-cuisine/app/
+  X-Robots-Tag: noindex
+
+/world-cuisine/app/*
+  X-Robots-Tag: noindex

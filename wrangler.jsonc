@@ -1,0 +1,18 @@
+{
+  // Cloudflare Workers config. The Astro adapter fills in the entry point and static
+  // assets at build time; settings here are merged into that.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "world-cuisine",
+  "compatibility_date": "2026-11-01",
+  "observability": { "enabled": true },
+  // Claims kylepace.dev/world-cuisine on the hub's domain. Routes win over the hub's
+  // Custom Domain, so only these paths reach this Worker.
+  "routes": [
+    { "pattern": "kylepace.dev/world-cuisine", "zone_name": "kylepace.dev" },
+    { "pattern": "kylepace.dev/world-cuisine/*", "zone_name": "kylepace.dev" }
+  ],
+  // Photos, each fetched from Wikimedia once and kept here
+  // (src/pages/world-cuisine/img/[...path].ts). Free tier; only listed photos are stored.
+  // The bucket kept its kylepace.net-era name.
+  "r2_buckets": [{ "binding": "CUISINE_IMAGES", "bucket_name": "kylepace-cuisine-images" }]
+}

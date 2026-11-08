@@ -140,7 +140,7 @@ struct Photo {
 
     init?(_ m: [String: Any]) {
         guard let src = m["src"] as? String else { return nil }
-        url = Photo.wikimediaURL(src.replacingOccurrences(of: "/labs/cuisines/img/", with: ""))
+        url = Photo.wikimediaURL(src.replacingOccurrences(of: "/world-cuisine/img/", with: "").replacingOccurrences(of: "/labs/cuisines/img/", with: ""))
         width = (m["w"] as? NSNumber)?.doubleValue ?? 4
         height = (m["h"] as? NSNumber)?.doubleValue ?? 3
         author = m["by"] as? String ?? "Unknown"

@@ -33,7 +33,7 @@ def main():
     os.makedirs(P("raw"), exist_ok=True)
     zpath = P("raw", "faostat_qcl.zip")
     if not os.path.exists(zpath):
-        req = urllib.request.Request(URL, headers={"User-Agent": "CuisineExplorer/0.1 (https://kylepace.net/labs)"})
+        req = urllib.request.Request(URL, headers={"User-Agent": "WorldCuisine/0.1 (https://kylepace.dev/world-cuisine/)"})
         with urllib.request.urlopen(req, timeout=600) as r, open(zpath, "wb") as f:
             f.write(r.read())
 

@@ -7,7 +7,7 @@
 //                     address (bucketOf in render_item.js), so a page loads one small file
 //
 // Page models are rendered by render_item.js, the same code in the browser
-// (web.html) and on the server (kylepace.net's /labs/cuisines/<type>/<slug>/).
+// (web.html) and on the server (kylepace.dev's /world-cuisine/<type>/<slug>/).
 // Usage: node scripts/build_web.mjs
 import fs from "fs";
 import path from "path";
@@ -255,7 +255,7 @@ const photo = (key, of) => {
   const name = images.items[key], f = name && images.files[name];
   if (!f) return null;
   usedImages.add(f.p);
-  return { src: "/labs/cuisines/img/" + f.p, w: f.w, h: f.h, by: f.by, lic: f.lic, licUrl: f.licUrl,
+  return { src: "/world-cuisine/img/" + f.p, w: f.w, h: f.h, by: f.by, lic: f.lic, licUrl: f.licUrl,
     page: "https://commons.wikimedia.org/wiki/File:" + encodeURIComponent(name.replace(/ /g, "_")), ...(of ? { of } : {}) };
 };
 for (const n of nodes.values()) {

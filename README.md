@@ -1,8 +1,8 @@
-# Cuisine Explorer
+# World cuisine
 
 A globe for exploring the world's cuisines. Wikipedia's [List of cuisines](https://en.wikipedia.org/wiki/List_of_cuisines) is the source of truth: the explorer maps what's on that list, shows each cuisine's Wikipedia intro live, and links back for everything else. On top of that sit hand-picked cookbooks and recipe sites for each cuisine.
 
-A [kylepace.net](https://kylepace.net) labs project.
+Live at **[kylepace.dev/world-cuisine](https://kylepace.dev/world-cuisine/)**, one of the experiments on [kylepace.dev](https://kylepace.dev). (It used to be Cuisine Explorer, at kylepace.net/labs/cuisines/.)
 
 ## How it works
 
@@ -68,3 +68,24 @@ python3 -m http.server 8000
 ## Credits
 
 Cuisine list and descriptions from Wikipedia and Wikidata (CC BY-SA / CC0). Country shapes from Natural Earth. Globe by [globe.gl](https://globe.gl).
+
+## The site
+
+The explorer is served by an Astro site on its own Cloudflare Worker, at kylepace.dev/world-cuisine/:
+
+```sh
+npm install
+npm run dev       # http://localhost:4321/world-cuisine/
+npm run build     # stages the explorer into public/world-cuisine/app/, then builds
+npm run preview   # builds, then runs it the way Cloudflare will
+```
+
+| What | Where |
+| --- | --- |
+| The framed page | `src/pages/world-cuisine/index.astro` |
+| Cuisine, dish and ingredient pages | `src/pages/world-cuisine/[type]/[slug].astro` (rendered on request, noindex) |
+| Photos | `src/pages/world-cuisine/img/[...path].ts`, kept in the R2 bucket `kylepace-cuisine-images` |
+| Staging the explorer | `scripts/stage-app.mjs` |
+| Share card | `scripts/og-card.html`, rendered to `og.png` by `node scripts/render-og.mjs` |
+
+Cloudflare Workers Builds deploys `main` (build `npm run build`, deploy `npx wrangler deploy`).

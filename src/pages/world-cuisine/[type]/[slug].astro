@@ -1,0 +1,127 @@
+---
+// One page of World cuisine's web: a cuisine, dish or ingredient, at
+// /world-cuisine/<type>/<slug>/. (Recipe sites and cookbooks link out from these pages
+// and have none of their own.) Server-rendered on request (there are about 3,600), so
+// the site build stays fast. Each page reads one small bucket file of
+// page models from the static assets (data/web/items/, staged into
+// /world-cuisine/app/data/web/items/ at build time and rebuilt weekly by scripts/update.sh)
+// and renders it with the same code the web view uses (render_item.js).
+//
+// Kept out of search engines (noindex): only /world-cuisine/ itself is indexed, so these
+// pages don't outnumber everything else on kylepace.dev in search.
+import { env } from 'cloudflare:workers';
+import Base from '../../../layouts/Base.astro';
+// @ts-expect-error: plain JS shared with web.html
+import { renderItem, bucketOf, summaryOf } from '../../../../render_item.js';
+
+export const prerender = false;
+
+const TYPES = new Set(['cuisine', 'dish', 'ingredient']);
+const LABEL: Record<string, string> = { cuisine: 'Cuisine', dish: 'Dish', ingredient: 'Ingredient' };
+const { type = '', slug = '' } = Astro.params;
+const ref = `${type}/${slug}`;
+
+let item: any = null;
+if (TYPES.has(type) && /^[a-z0-9-]+$/.test(slug)) {
+  const url = new URL(`/world-cuisine/app/data/web/items/${bucketOf(ref)}.json`, Astro.url);
+  const assets = (env as unknown as { ASSETS?: { fetch(r: Request): Promise<Response> } }).ASSETS;
+  try {
+    const res = assets ? await assets.fetch(new Request(url)) : await fetch(url);
+    if (res.ok) item = ((await res.json()) as Record<string, unknown>)[ref] ?? null;
+  } catch (error) {
+    console.error('Cuisine page failed to load its data', ref, error);
+  }
+}
+
+if (!item) Astro.response.status = 404;
+// Browsers keep a page for an hour; the data changes weekly at most
+Astro.response.headers.set('cache-control', item ? 'public, max-age=3600' : 'no-store');
+
+const app = '/world-cuisine/app/web.html';
+const html = item
+  ? renderItem(item, {
+      href: (r: string) => (r.includes('/') && !r.includes('#') ? `/world-cuisine/${r}/` : `${app}#/${r}`),
+      globe: (hash: string) => `/world-cuisine/#${hash}`,
+      correct: (name: string) => `https://github.com/kyle-pace/world-cuisine/issues/new?title=${encodeURIComponent('Correction: ' + name)}`,
+      extraActions: `<a class="btn btn-walk" href="${app}#/walk/${ref}">Explore on the map</a>`,
+    })
+  : '';
+const title = item ? (item.t === 'cuisine' ? item.n : `${item.n}: ${LABEL[item.t]}`) : 'Not found';
+const description = item ? summaryOf(item, 160) : undefined;
+// A page with a photo uses it for link previews; otherwise the explorer's share card
+const shareImage = item?.img?.src ?? '/world-cuisine/share.png';
+const shareAlt = item?.img ? `Photo of ${item.img.of ?? item.n}` : 'World cuisine: a dark globe with countries colored by continent and thin routes arcing between them.';
+---
+
+<Base
+  title={title}
+  description={description}
+  accent="tangerine"
+  image={shareImage}
+  imageAlt={shareAlt}
+  imageWidth={item?.img?.w ?? 1200}
+  imageHeight={item?.img?.h ?? 630}
+  noindex
+>
+  <nav class="cx-top" aria-label="World cuisine">
+    <a href="/world-cuisine/">World cuisine</a>
+    <span aria-hidden="true">/</span>
+    <a href={`${app}#/`}>Browse all</a>
+  </nav>
+  {item ? (
+    <article class="cx" set:html={html} />
+  ) : (
+    <article class="cx">
+      <h1>Nothing here by that name.</h1>
+      <p>Try <a href={`${app}#/`}>browsing every cuisine</a> or the <a href="/world-cuisine/">globe</a>.</p>
+    </article>
+  )}
+</Base>
+
+<style is:global>
+  .cx-top { max-width: var(--measure); margin: var(--space-8) auto 0; padding: 0 var(--space-4); font-size: var(--step--1); color: var(--ink-muted); display: flex; gap: var(--space-2); }
+  .cx { max-width: var(--measure); margin: var(--space-4) auto var(--space-16); padding: 0 var(--space-4); }
+  .cx a { color: inherit; text-underline-offset: 3px; }
+  .cx .crumb { color: var(--ink-muted); font-size: var(--step--1); margin: 0 0 var(--space-2); }
+  .cx h1 { font-family: var(--font-display); font-size: var(--step-4); line-height: 1.05; margin: 0 0 var(--space-2); }
+  .cx .sub { color: var(--ink-muted); margin: 0 0 var(--space-3); display: flex; align-items: center; gap: var(--space-2); }
+  .cx .sub i { width: 10px; height: 10px; border-radius: 50%; flex: none; box-shadow: 0 0 0 1px var(--line); }
+  .cx .intro { font-size: var(--step-1); }
+  .cx .intro p { margin: 0 0 var(--space-3); }
+  .cx .source { color: var(--ink-muted); font-size: var(--step--1); margin: 0 0 var(--space-2); }
+  .cx .actions { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: var(--space-4) 0; }
+  .cx .btn { display: inline-flex; align-items: center; gap: var(--space-2); padding: var(--space-2) var(--space-4); border: 1px solid var(--line); border-radius: 999px; text-decoration: none; font-weight: 600; font-size: var(--step--1); background: var(--bg-raised); }
+  .cx .btn:hover { border-color: var(--ink-muted); }
+  .cx .btn svg, .cx .out svg { width: 16px; height: 16px; }
+  .cx .btn-walk { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  .cx h2 { font-size: var(--step-1); margin: var(--space-8) 0 var(--space-3); display: flex; align-items: baseline; gap: var(--space-2); }
+  .cx h2 small { color: var(--ink-muted); font-weight: 400; font-size: var(--step--1); }
+  .cx .empty { color: var(--ink-muted); margin: 0; }
+  .cx .tag { display: inline-block; font-size: 0.75rem; color: var(--ink-muted); border: 1px solid var(--line); border-radius: 999px; padding: 0 7px; margin-left: 6px; vertical-align: 2px; font-weight: 400; }
+  .cx .links { display: flex; flex-wrap: wrap; gap: 6px 8px; margin: 0; padding: 0; list-style: none; }
+  .cx .links li:not(:last-child)::after { content: '·'; color: var(--ink-muted); margin-left: 8px; }
+  .cx .rows { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-2); }
+  .cx .row { display: flex; align-items: flex-start; gap: var(--space-3); padding: var(--space-3) var(--space-4); background: var(--bg-raised); border: 1px solid var(--line); border-radius: var(--radius); }
+  .cx .row > div { flex: 1; min-width: 0; }
+  .cx .row .name { font-weight: 700; text-decoration: none; }
+  .cx .row .name:hover { text-decoration: underline; }
+  .cx .row small { display: block; color: var(--ink-muted); font-size: var(--step--1); margin-top: 2px; }
+  .cx .row .mark { width: 10px; height: 10px; margin-top: 8px; flex: none; border-radius: 50%; box-shadow: 0 0 0 1px var(--line); }
+  .cx .row .out { color: var(--ink-muted); padding: 4px; }
+  .cx .grouped { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-4); }
+  .cx .grouped > li { border-top: 1px solid var(--line); padding-top: var(--space-3); }
+  .cx .grouped > li:first-child { border-top: 0; padding-top: 0; }
+  .cx .grouped .n { color: var(--ink-muted); font-size: var(--step--1); }
+  .cx .grouped .links { margin-top: var(--space-2); }
+  .cx .grown { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+  .cx .grown li { position: relative; display: flex; justify-content: space-between; gap: var(--space-3); padding: 6px 12px; border-radius: var(--radius-sm); overflow: hidden; background: var(--bg-raised); }
+  .cx .grown li i { position: absolute; left: 0; top: 0; bottom: 0; background: color-mix(in srgb, var(--ink) 10%, transparent); }
+  .cx .grown li span { position: relative; }
+  .cx .grown .n { color: var(--ink-muted); font-size: var(--step--1); }
+  .cx .cover { float: right; width: 120px; aspect-ratio: 2 / 3; margin: 0 0 var(--space-3) var(--space-4); border-radius: 3px 6px 6px 3px; overflow: hidden; position: relative; background: var(--bg-raised); display: flex; align-items: flex-end; padding: 10px; font-weight: 700; font-size: var(--step--1); }
+  .cx .cover img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .cx .photo { margin: var(--space-2) 0 var(--space-4); }
+  .cx .photo img { display: block; width: 100%; height: auto; max-height: 420px; object-fit: cover; border-radius: var(--radius); background: var(--bg-raised); }
+  .cx .photo figcaption { font-size: var(--step--1); color: var(--ink-muted); margin-top: var(--space-2); }
+  .cx .correct { margin-top: var(--space-12); padding-top: var(--space-4); border-top: 1px solid var(--line); color: var(--ink-muted); font-size: var(--step--1); }
+</style>

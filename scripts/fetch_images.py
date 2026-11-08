@@ -9,8 +9,8 @@ Only public domain, CC0, CC BY and CC BY-SA files are kept, and none with reuse
 restrictions (personality rights, trademarks). Maps, flags, logos and SVGs are skipped.
 
 We only record where each 500 px thumbnail lives (500 is one of Wikimedia's standard
-thumbnail widths); kylepace.net fetches each one once and keeps it
-(src/pages/labs/cuisines/img/[...path].ts). Requests send a User-Agent with a contact URL,
+thumbnail widths); kylepace.dev fetches each one once and keeps it
+(src/pages/world-cuisine/img/[...path].ts). Requests send a User-Agent with a contact URL,
 as Wikimedia's policy asks.
 
 Writes data/images.json:
@@ -33,7 +33,7 @@ from fetch_wikidata import run as sparql  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 P = lambda *a: os.path.join(ROOT, *a)
-UA = "CuisineExplorer/1.0 (https://kylepace.net/labs/cuisines/) python-urllib"
+UA = "WorldCuisine/1.0 (https://kylepace.dev/world-cuisine/) python-urllib"
 WIDTH = 500
 SKIP_NAME = re.compile(r"\.svg$|\bmap\b|_map[_.]|flag|locator|location|logo|coat[_ ]of[_ ]arms|emblem|seal[_ ]of|stamp", re.I)
 FREE = re.compile(r"^(cc0|public domain|pd\b|pd-|cc[- ]by(-sa)?[- ]\d|cc[- ]by(-sa)?$)", re.I)

@@ -1,6 +1,6 @@
 // Renders one page of the web of cuisines from its page model (built by
 // scripts/build_web.mjs). No imports and no browser APIs, so the same file runs in
-// the web view (web.html) and on kylepace.net's server-rendered pages.
+// the web view (web.html) and on kylepace.dev's server-rendered pages.
 
 export const slug = s => String(s).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "")
   .replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");

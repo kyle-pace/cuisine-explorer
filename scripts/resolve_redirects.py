@@ -13,7 +13,7 @@ import urllib.parse
 import urllib.request
 
 API = "https://en.wikipedia.org/w/api.php"
-UA = "CuisineExplorer/0.1 (https://kylepace.net/labs)"
+UA = "WorldCuisine/0.1 (https://kylepace.dev/world-cuisine/)"
 
 
 def main(src, dst):

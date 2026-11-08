@@ -17,7 +17,7 @@ import urllib.request
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 API = "https://en.wikipedia.org/w/api.php"
-UA = "CuisineExplorer/0.1 (https://kylepace.net/labs)"
+UA = "WorldCuisine/0.1 (https://kylepace.dev/world-cuisine/)"
 FIELD = re.compile(r"\|\s*main[_ ]ingredients?\s*=(.*?)(?=\n\s*\||\n\}\})", re.S | re.I)
 LINK = re.compile(r"\[\[([^\]|#]+)(?:#[^\]|]*)?(?:\|[^\]]*)?\]\]")
 

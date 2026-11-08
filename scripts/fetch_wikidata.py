@@ -16,7 +16,7 @@ import urllib.parse
 import urllib.request
 
 ENDPOINT = "https://query.wikidata.org/sparql"
-UA = "CuisineExplorer/0.1 (https://kylepace.net/labs)"
+UA = "WorldCuisine/0.1 (https://kylepace.dev/world-cuisine/)"
 
 QUERY = """
 SELECT ?article ?item ?desc ?coord ?country ?iso3 ?countryCoord ?locCoord WHERE {

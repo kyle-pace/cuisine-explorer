@@ -1,0 +1,161 @@
+---
+// World cuisine: frames the globe (index.html, served at /world-cuisine/app/) with the
+// site's header and credits, and passes #cuisine links through to it.
+import Base from '../../layouts/Base.astro';
+import { StatusBadge } from 'kp-design';
+
+// The data files at the repo root; picks and suggestions are optional
+const files = import.meta.glob<{ default: any }>(
+  ['../../../data/cuisines.json', '../../../data/picks.json', '../../../data/suggestions.json', '../../../data/food.json'],
+  { eager: true },
+);
+const read = (name: string) => files[`../../../data/${name}`]?.default ?? {};
+const dishCount: number = (read('food.json').dishes ?? []).length;
+const cuisines = read('cuisines.json').cuisines ?? [];
+const picks = read('picks.json').cuisines ?? {};
+const suggestions = read('suggestions.json').cuisines ?? {};
+const countries = new Set(cuisines.filter((c: { kind: string }) => c.kind === 'national').map((c: { iso3: string }) => c.iso3)).size;
+const shelved = new Set([...Object.keys(picks), ...Object.keys(suggestions)]).size;
+const round = (n: number) => Math.floor(n / 10) * 10;
+---
+
+<Base
+  title="World cuisine"
+  description="More than 600 of the world's cuisines, 2,400 dishes and their ingredients on one globe. Search an ingredient to see where it's cooked with."
+  accent="tangerine"
+  image="/world-cuisine/share.png"
+  imageAlt="World cuisine: a dark globe with countries colored by continent and thin routes arcing between them."
+>
+  <header class="intro">
+    <p class="eyebrow"><a href="https://kylepace.dev/">Experiments</a> <StatusBadge status="in-progress" /></p>
+    <h1>World cuisine.</h1>
+    <p class="lede prose">
+      Wikipedia lists {round(cuisines.length)}+ of the world’s cuisines. Here they are on a globe: {countries} countries and territories, their
+      regional cooking, and {dishCount.toLocaleString()} dishes. Search an ingredient and the globe becomes a map of where it’s cooked
+      with; pick a dish to see where it’s from and what goes in it.
+    </p>
+  </header>
+
+  <a class="fullscreen" href="/world-cuisine/app/">Open the globe full screen</a>
+  <div class="frame">
+    <iframe
+      data-src="/world-cuisine/app/?embed"
+      title="World cuisine: an interactive globe of the world's cuisines"
+      allow="fullscreen"></iframe>
+    <noscript><p class="noscript">The globe needs JavaScript. <a href="/world-cuisine/app/">Open it on its own</a>.</p></noscript>
+  </div>
+  <p class="open muted"><a href="/world-cuisine/app/">Open the globe full screen</a>, or <a href="/world-cuisine/app/web.html#/">browse every cuisine, dish and ingredient as pages</a></p>
+
+  <div class="fine-print prose muted">
+    <p>
+      Wikipedia is the source of truth. The list of cuisines comes from its
+      <a href="https://en.wikipedia.org/wiki/List_of_cuisines">List of cuisines</a>, places and countries from Wikidata,
+      and each card’s intro from its own article (CC BY-SA), refreshed weekly. Dishes and their ingredients come from
+      Wikidata and Wikipedia’s infoboxes. Where Wikipedia leaves gaps, like most Indigenous foodways, I write short notes
+      from tribal, museum and health sources; each has a link to suggest a correction. Where ingredients are grown comes from
+      <a href="https://www.fao.org/faostat/en/#data/QCL">FAO’s FAOSTAT</a> (CC BY 4.0).
+    </p>
+    <p>
+      Recipe sites and cookbooks are mine to choose. {shelved} cuisines have a shelf so far; anything marked
+      “suggested” is research I haven’t reviewed yet. Covers from Open Library. Country shapes from
+      <a href="https://www.naturalearthdata.com">Natural Earth</a>, globe by <a href="https://globe.gl">globe.gl</a>.
+    </p>
+    <p>The code and data are <a href="https://github.com/kyle-pace/world-cuisine">on GitHub</a>.</p>
+    <p><a href="https://kylepace.dev/">More experiments</a></p>
+  </div>
+</Base>
+
+<script>
+  // Load the globe, passing through a #cuisine link (kylepace.dev/world-cuisine/#thai-cuisine)
+  const frame = document.querySelector<HTMLIFrameElement>('.frame iframe');
+  if (frame?.dataset.src) frame.src = frame.dataset.src + location.hash;
+  addEventListener('hashchange', () => {
+    const win = frame?.contentWindow;
+    if (win && win.location.hash !== location.hash) win.location.hash = location.hash;
+  });
+</script>
+
+<style>
+  .intro {
+    padding-bottom: var(--space-6);
+  }
+
+  .intro h1 {
+    max-width: 18ch;
+  }
+
+  .eyebrow {
+    display: flex;
+    gap: var(--space-2);
+    align-items: center;
+  }
+
+  .eyebrow a {
+    color: inherit;
+  }
+
+  .lede {
+    font-size: var(--step-1);
+    color: var(--ink-muted);
+  }
+
+  .frame {
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: #1b1424;
+  }
+
+  iframe {
+    display: block;
+    width: 100%;
+    height: clamp(28rem, 80vh, 60rem);
+    border: 0;
+  }
+
+  /* On phones the globe works best on its own page, without the page scrolling around it */
+  .fullscreen {
+    display: none;
+  }
+
+  @media (max-width: 720px) {
+    .fullscreen {
+      display: block;
+      margin-bottom: var(--space-3);
+      padding: var(--space-3) var(--space-4);
+      border-radius: var(--radius);
+      background: var(--ink);
+      color: var(--bg);
+      font-weight: 700;
+      text-align: center;
+      text-decoration: none;
+    }
+
+    iframe {
+      height: 70svh;
+    }
+
+    .open {
+      display: none;
+    }
+  }
+
+  .noscript {
+    padding: var(--space-8);
+    color: #ede6da;
+  }
+
+  .noscript a {
+    color: inherit;
+  }
+
+  .open {
+    margin: var(--space-3) 0 0;
+    font-size: var(--step--1);
+  }
+
+  .fine-print {
+    margin-top: var(--space-12);
+    font-size: var(--step--1);
+  }
+</style>

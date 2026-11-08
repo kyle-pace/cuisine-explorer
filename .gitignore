@@ -5,3 +5,9 @@ node_modules/
 __pycache__/
 research/todo-*.json
 research/.work/
+
+# Staged at build time by scripts/stage-app.mjs
+public/world-cuisine/app/
+public/world-cuisine/share.png
+.astro/
+.wrangler/

@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Cuisine Explorer: browse</title>
-<meta name="description" content="Every cuisine, dish, ingredient, recipe site and cookbook in the Cuisine Explorer as linked pages, with backlinks and a graph.">
-<meta property="og:title" content="Cuisine Explorer: browse">
+<title>World cuisine: browse</title>
+<meta name="description" content="Every cuisine, dish, ingredient, recipe site and cookbook in World cuisine as linked pages, with backlinks and a graph.">
+<meta property="og:title" content="World cuisine: browse">
 <meta property="og:description" content="The world's cuisines, dishes and ingredients as a web of linked pages.">
-<meta property="og:image" content="https://kylepace.net/labs/cuisines/share.png">
+<meta property="og:image" content="https://kylepace.dev/world-cuisine/share.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#1b1424">
 <link rel="stylesheet" href="vendor/fonts/atkinson.css">
@@ -255,7 +255,7 @@
 </head>
 <body>
 <header class="top">
-  <a class="brand" href="#/">Cuisine Explorer</a>
+  <a class="brand" href="#/">World cuisine</a>
   <nav class="views" aria-label="Views">
     <a id="to-globe" href="./">Globe</a>
     <a href="#/" aria-current="page">Browse</a>
@@ -370,11 +370,11 @@
   const GRAPH = new Set(["cuisine", "dish", "ingredient"]);
   const graphNeighbors = n => [...n.out.values()].map(e => e.node).filter(x => GRAPH.has(x.type));
   // Photos for search and dish cards: paths from data/web/app.json, loaded when first needed.
-  // Only on kylepace.net, whose image route serves them; no outside image host anywhere.
+  // Only on kylepace.dev, whose image route serves them; no outside image host anywhere.
   let photoMap = null, photoLoad = null;
   const loadPhotos = () => photoLoad ||= (onSite ? load("data-app", "data/web/app.json").then(a => a.photos || {}).catch(() => ({})) : Promise.resolve({})).then(m => (photoMap = m));
-  const onSite = location.pathname.startsWith("/labs/cuisines/");
-  const photoUrl = p => "/labs/cuisines/img/" + p;
+  const onSite = location.pathname.startsWith("/world-cuisine/");
+  const photoUrl = p => "/world-cuisine/img/" + p;
   // Recently viewed pages, for search; kept in this browser only
   const recents = () => { try { return JSON.parse(localStorage.getItem("cuisines.recent") || "[]"); } catch (e) { return []; } };
   const saveRecents = l => { try { localStorage.setItem("cuisines.recent", JSON.stringify(l.slice(0, 6))); } catch (e) {} };
@@ -394,7 +394,7 @@
     }
     return live.get(title);
   }
-  // Server pages live at /labs/cuisines/<type>/<slug>/ on kylepace.net; here links stay in the app
+  // Server pages live at /world-cuisine/<type>/<slug>/ on kylepace.dev; here links stay in the app
   const renderOpts = {
     href: ref => "#/" + ref,
     globe: hash => "./#" + hash,
@@ -408,7 +408,7 @@
     if (token !== renderToken) return;
     target.dataset.ref = n.ref;
     if (!m) { target.innerHTML = `<h1>${esc(n.name)}</h1><p class="empty">This page didn't load. Check your connection and try again.</p>`; return; }
-    const shareable = location.hostname.endsWith("kylepace.net") ? `<button class="btn" type="button" data-copy="https://kylepace.net/labs/cuisines/${n.ref}/">Copy link</button>` : "";
+    const shareable = location.hostname.endsWith("kylepace.dev") ? `<button class="btn" type="button" data-copy="https://kylepace.dev/world-cuisine/${n.ref}/">Copy link</button>` : "";
     const mapBtn = page === mainPage ? `<a class="btn solid" href="${walkHref(n)}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="5" cy="6" r="2.5"/><circle cx="18" cy="5" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M7.3 7.2 10.6 16M16.5 7.1 13.2 15.9M7.5 6h8"/></svg> Wander from here</a>` : "";
     target.innerHTML = renderItem(m, { ...renderOpts, extraActions: mapBtn + shareable });
     contents(target);
@@ -513,7 +513,7 @@
       if (!n) { page.dataset.ref = ""; page.innerHTML = `<h1>Not found</h1><p class="empty">Nothing here by that name. <a href="#/">Back to the web</a>.</p>`; }
       else { current = n; visited(n); itemPage(n); }
     }
-    document.title = (current ? current.name + " · " : "") + "Cuisine Explorer: browse";
+    document.title = (current ? current.name + " · " : "") + "World cuisine: browse";
     document.getElementById("to-globe").href = "./" + (current && globeHash(current) ? "#" + globeHash(current) : "");
     if (walking && current) { showWalk(current); return; }
     if (walking) { location.replace("#/"); return; }
@@ -866,7 +866,7 @@
     if (trailList.length > 8) trailList.shift();
     document.getElementById("trail").innerHTML = trailList.map(t => `<a href="${walkHref(t)}"${t === n ? ' aria-current="page"' : ""}>${esc(t.name)}</a>`).join("<span>›</span>");
     walkPage.scrollTop = 0;
-    document.title = n.name + " · Wander · Cuisine Explorer";
+    document.title = n.name + " · Wander · World cuisine";
   }
   function hideWalk() {
     if (!walkEl.classList.contains("open")) return;

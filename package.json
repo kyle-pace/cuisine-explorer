@@ -1,12 +1,25 @@
 {
-  "name": "cuisine-explorer",
+  "name": "world-cuisine",
   "private": true,
   "type": "module",
-  "description": "Data pipeline helpers for the cuisine explorer",
+  "description": "World cuisine: the world's cuisines, dishes and ingredients on one globe, at kylepace.dev/world-cuisine/",
   "scripts": {
-    "web": "node scripts/build_web.mjs"
+    "web": "node scripts/build_web.mjs",
+    "dev": "node scripts/stage-app.mjs && astro dev",
+    "build": "node scripts/stage-app.mjs && astro build",
+    "preview": "npm run build && wrangler dev",
+    "astro": "astro"
   },
   "dependencies": {
-    "d3-force": "3.0.0"
+    "@amplitude/analytics-browser": "^2.49.2",
+    "@amplitude/plugin-session-replay-browser": "^1.36.7",
+    "@astrojs/cloudflare": "^14.4.6",
+    "astro": "^7.4.7",
+    "d3-force": "3.0.0",
+    "kp-design": "github:kyle-pace/kp-design#32e8c50"
+  },
+  "devDependencies": {
+    "axe-core": "^4.14.0",
+    "wrangler": "^4.158.0"
   }
 }

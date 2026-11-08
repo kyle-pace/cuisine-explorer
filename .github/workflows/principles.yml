@@ -27,7 +27,5 @@ jobs:
       contents: read
     uses: kyle-pace/principles/.github/workflows/check.yml@main
     with:
-      # Static pages with no build step: check the repo as it is.
-      output-dir: .
-      install-command: ''
-      build-command: ''
+      # The Astro build stages the explorer and writes the whole site here.
+      output-dir: dist/client

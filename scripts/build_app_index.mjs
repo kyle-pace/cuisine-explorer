@@ -1,5 +1,6 @@
 // A small index for the iOS app (ios/), next to the web view's skeleton:
 //   data/web/app.json  { places: [[ref, lat, lng]], cont: {ref: continent}, photos: {ref: photo path} }
+//   (photos include a cuisine's fallback dish photo; the page model's img.of says when)
 // The app loads skeleton.json and app.json at launch and page buckets as you open pages.
 import fs from "node:fs";
 import path from "node:path";
@@ -15,7 +16,8 @@ const dir = path.join(ROOT, "data/web/items");
 for (const f of fs.readdirSync(dir).sort()) {
   for (const [ref, m] of Object.entries(JSON.parse(fs.readFileSync(path.join(dir, f), "utf8")))) {
     if (m.cont) cont[ref] = m.cont;
-    if (m.img && !m.img.of) photos[ref] = m.img.src.replace(/^\/labs\/cuisines\/img\//, "");
+    // Cuisines without a photo of their own show one of their dishes (m.img.of says which)
+    if (m.img) photos[ref] = m.img.src.replace(/^\/labs\/cuisines\/img\//, "");
   }
 }
 fs.writeFileSync(path.join(ROOT, "data/web/app.json"), JSON.stringify({ places, cont, photos }));

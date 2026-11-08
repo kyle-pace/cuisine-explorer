@@ -4,6 +4,7 @@ import SwiftUI
 struct CuisinesApp: App {
     @State private var store = Store()
     @State private var app = AppState()
+    @State private var library = Library()
 
     var body: some Scene {
         WindowGroup {
@@ -11,6 +12,7 @@ struct CuisinesApp: App {
                 .kitchenAppearance()
                 .environment(store)
                 .environment(app)
+                .environment(library)
                 .tint(Theme.accent)
         }
     }
@@ -67,6 +69,8 @@ struct RootView: View {
     private func openFromLaunchArguments() {
         let args = UserDefaults.standard
         if let ref = args.string(forKey: "open") { app.explorePath = [store.route(ref)] }
+        if let ref = args.string(forKey: "walk") { app.explorePath = [.walk(ref)] }
+        if let ref = args.string(forKey: "hub") { app.explorePath = [.hub(ref)] }
         if args.string(forKey: "tab") == "map" { app.tab = .map }
         if let ref = args.string(forKey: "map") { app.showOnMap(ref) }
     }
@@ -97,10 +101,7 @@ struct Stack<Content: View>: View {
         NavigationStack(path: $path) {
             content
                 .navigationDestination(for: Route.self) { route in
-                    switch route {
-                    case .item(let ref): ItemView(ref: ref)
-                    case .hub(let ref): HubView(ref: ref)
-                    }
+                    route.view
                 }
         }
         .environment(\.openURL, OpenURLAction { url in

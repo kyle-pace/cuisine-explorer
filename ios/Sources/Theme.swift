@@ -22,8 +22,10 @@ enum Theme {
     static let seaglass = Color(hex: 0x55B8AD)   // Oceania
     static let elsewhere = Color(hex: 0xA99FB5)  // beyond borders
 
-    static let title = Font.display(.largeTitle, .bold)
-    static let heading = Font.display(.title3, .bold)
+    // Atkinson Hyperlegible Next throughout, as on the globe and kylepace.net. (KitchenUI's serif
+    // display face is Henwood's brand, not this one.)
+    static let title = Font.app(.largeTitle, .heavy)
+    static let heading = Font.app(.title3, .bold)
     static let body = Font.app(.body)
     static let bodyLarge = Font.app(19, .regular, relativeTo: .body)
     static let callout = Font.app(.callout)

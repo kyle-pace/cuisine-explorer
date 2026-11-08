@@ -6,8 +6,15 @@ struct MapScreen: View {
     @Environment(Store.self) private var store
     @Environment(AppState.self) private var app
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @State private var position: MapCameraPosition = .region(MKCoordinateRegion(
-        center: .init(latitude: 25, longitude: 10), span: .init(latitudeDelta: 110, longitudeDelta: 140)))
+    static let world = MKCoordinateRegion(center: .init(latitude: 25, longitude: 10), span: .init(latitudeDelta: 110, longitudeDelta: 140))
+    static let regions: [String: MKCoordinateRegion] = [
+        "africa": .init(center: .init(latitude: 4, longitude: 20), span: .init(latitudeDelta: 75, longitudeDelta: 75)),
+        "the-americas": .init(center: .init(latitude: 12, longitude: -85), span: .init(latitudeDelta: 115, longitudeDelta: 115)),
+        "asia": .init(center: .init(latitude: 30, longitude: 95), span: .init(latitudeDelta: 85, longitudeDelta: 95)),
+        "europe": .init(center: .init(latitude: 52, longitude: 15), span: .init(latitudeDelta: 38, longitudeDelta: 45)),
+        "oceania": .init(center: .init(latitude: -22, longitude: 150), span: .init(latitudeDelta: 60, longitudeDelta: 70)),
+    ]
+    @State private var position: MapCameraPosition = .region(MapScreen.world)
     @State private var selected: String?
     @State private var path: [Route] = []
     @State private var span: Double = 110
@@ -34,6 +41,31 @@ struct MapScreen: View {
             }
             .mapStyle(.standard(elevation: .flat, emphasis: .muted, pointsOfInterest: .excludingAll))
             .mapControls { MapCompass(); MapScaleView() }
+            .safeAreaInset(edge: .top) {
+                ChipRow {
+                    ForEach(Store.continents, id: \.slug) { c in
+                        Button {
+                            withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.6)) {
+                                selected = nil
+                                position = .region(Self.regions[c.slug] ?? Self.world)
+                            }
+                        } label: {
+                            HStack(spacing: 6) {
+                                Circle().fill(c.color).frame(width: 10, height: 10)
+                                Text(c.name)
+                            }
+                            .font(Theme.callout600).foregroundStyle(Theme.ink)
+                            .padding(.horizontal, 12).padding(.vertical, 8)
+                            .background(.regularMaterial, in: Capsule())
+                            .overlay(Capsule().strokeBorder(Theme.line.opacity(0.6)))
+                        }
+                        .buttonStyle(.plain)
+                        .accessibilityLabel("Show \(c.name)")
+                    }
+                }
+                .padding(.horizontal, Space.l).padding(.vertical, Space.s)
+            }
+            .sensoryFeedback(.selection, trigger: selected)
             .onMapCameraChange(frequency: .onEnd) { ctx in span = ctx.region.span.latitudeDelta }
             .safeAreaInset(edge: .bottom) {
                 if let ref = selected, let n = store.node(ref) {
@@ -43,12 +75,7 @@ struct MapScreen: View {
                 }
             }
             .animation(Theme.motion(reduceMotion), value: selected)
-            .navigationDestination(for: Route.self) { route in
-                switch route {
-                case .item(let ref): ItemView(ref: ref)
-                case .hub(let ref): HubView(ref: ref)
-                }
-            }
+            .navigationDestination(for: Route.self) { $0.view }
             .toolbar(.hidden, for: .navigationBar)
         }
         .environment(\.openURL, OpenURLAction { url in

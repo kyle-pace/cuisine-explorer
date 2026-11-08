@@ -3,7 +3,7 @@ import SwiftUI
 /// One cuisine, dish, ingredient, recipe site or cookbook, drawn natively from its page model
 struct ItemView: View {
     @Environment(Store.self) private var store
-    @Environment(AppState.self) private var app
+    @Environment(Library.self) private var library
     let ref: String
     @State private var page: Page?
     @State private var missing = false
@@ -11,14 +11,27 @@ struct ItemView: View {
     var body: some View {
         Group {
             if let page {
-                ScrollView {
-                    PageContent(page: page)
-                        .padding(.horizontal, 20)
-                        .padding(.bottom, 40)
+                ScrollViewReader { proxy in
+                    ScrollView {
+                        PageContent(page: page)
+                            .padding(.horizontal, Space.xl)
+                            .padding(.bottom, 40)
+                    }
+                    .task {
+                        // For screenshots: -scrollTo "Where it's grown"
+                        guard let title = UserDefaults.standard.string(forKey: "scrollTo") else { return }
+                        try? await Task.sleep(for: .milliseconds(600))
+                        withAnimation { proxy.scrollTo(title, anchor: .top) }
+                    }
                 }
             } else if missing {
-                ContentUnavailableView("Couldn’t open this page", systemImage: "wifi.exclamationmark",
-                                       description: Text("Check your connection and try again."))
+                ContentUnavailableView {
+                    Label("Couldn’t open this page", systemImage: "wifi.exclamationmark")
+                } description: {
+                    Text("Check your connection and try again.")
+                } actions: {
+                    Button("Try again") { Task { await load() } }.buttonStyle(.borderedProminent)
+                }
             } else {
                 ProgressView().tint(Theme.muted).frame(maxWidth: .infinity, maxHeight: .infinity)
             }
@@ -27,16 +40,24 @@ struct ItemView: View {
         .navigationTitle(page?.name ?? store.node(ref)?.name ?? "")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            if store.place(ref) != nil {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button("Show on the map", systemImage: "map") { app.showOnMap(ref) }
+            ToolbarItemGroup(placement: .topBarTrailing) {
+                Button(library.isSaved(ref) ? "Saved" : "Save", systemImage: library.isSaved(ref) ? "bookmark.fill" : "bookmark") {
+                    library.toggleSaved(ref)
+                }
+                .sensoryFeedback(.impact(weight: .light), trigger: library.isSaved(ref))
+                if let url = Share.url(ref) {
+                    ShareLink(item: url, subject: Text(page?.name ?? ""), message: Text(page.map { Page.summary($0) } ?? ""))
                 }
             }
         }
-        .task(id: ref) {
-            page = store.cachedPage(ref)
-            if page == nil { page = await store.page(ref); missing = page == nil }
-        }
+        .task(id: ref) { await load() }
+    }
+
+    private func load() async {
+        missing = false
+        page = store.cachedPage(ref)
+        if page == nil { page = await store.page(ref); missing = page == nil }
+        if page != nil { library.visited(ref) }
     }
 }
 
@@ -72,7 +93,7 @@ struct PageContent: View {
                 Text(names).font(Theme.callout).foregroundStyle(Theme.muted).padding(.top, 6)
             }
             if let photo = page.photo {
-                PhotoView(photo: photo, name: page.name).padding(.top, 18)
+                PhotoView(photo: photo, name: page.name).padding(.top, Space.l)
             }
             ForEach(Array(page.intro.enumerated()), id: \.offset) { _, para in
                 Text(attributed(para))
@@ -87,7 +108,11 @@ struct PageContent: View {
             actions.padding(.top, 18)
 
             ForEach(page.sections) { s in
-                SectionView(section: s).padding(.top, 30)
+                SectionView(section: s).padding(.top, 30).id(s.title)
+            }
+
+            if store.linkCount(page.ref) > 0 {
+                ConnectionsSection(ref: page.ref).padding(.top, 30).id("Connections")
             }
 
             if let url = URL(string: "https://github.com/kyle-pace/cuisine-explorer/issues/new?title="
@@ -160,18 +185,24 @@ func linked(_ l: Page.Link, underline: Bool = true) -> AttributedString {
 struct PhotoView: View {
     let photo: Photo
     let name: String
+    @State private var open = false
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            RemoteImage(url: photo.url)
-                .aspectRatio(max(0.6, min(2.2, photo.width / max(photo.height, 1))), contentMode: .fit)
-                .clipShape(RoundedRectangle(cornerRadius: Radius.large))
-                .accessibilityLabel("Photo of \(photo.pictured ?? name)")
+        VStack(alignment: .leading, spacing: Space.s) {
+            Button { open = true } label: {
+                RemoteImage(url: photo.url)
+                    .aspectRatio(max(0.6, min(2.2, photo.width / max(photo.height, 1))), contentMode: .fit)
+                    .clipShape(RoundedRectangle(cornerRadius: Radius.large))
+            }
+            .buttonStyle(.plain)
+            .accessibilityLabel("Photo of \(photo.pictured ?? name)")
+            .accessibilityHint("Opens it full screen")
             Text(credit).font(Theme.caption).foregroundStyle(Theme.muted)
         }
+        .fullScreenCover(isPresented: $open) { PhotoViewer(photo: photo, name: name, credit: credit) }
     }
 
-    private var credit: AttributedString {
+    fileprivate var credit: AttributedString {
         var out = AttributedString(photo.pictured.map { "Pictured: \($0). " } ?? "")
         out += AttributedString("Photo: \(photo.author), ")
         var lic = AttributedString(photo.license)
@@ -376,5 +407,120 @@ struct GrownChart: View {
         let f = NumberFormatter(); f.numberStyle = .decimal
         if t >= 1000 { return "\(f.string(from: NSNumber(value: (t / 1000).rounded())) ?? "") thousand tonnes" }
         return "\(f.string(from: NSNumber(value: t.rounded())) ?? "") tonnes"
+    }
+}
+
+/// The page's place in the web: a small ring of what links here, and a way into walk mode
+struct ConnectionsSection: View {
+    @Environment(Store.self) private var store
+    let ref: String
+
+    var body: some View {
+        let all = store.neighbors(ref)
+        VStack(alignment: .leading, spacing: Space.m) {
+            HStack(alignment: .firstTextBaseline, spacing: Space.s) {
+                Text("Connections").font(Theme.heading).foregroundStyle(Theme.ink)
+                Text("\(all.count)").font(Theme.callout).foregroundStyle(Theme.muted)
+            }
+            .accessibilityAddTraits(.isHeader)
+            NavigationLink(value: Route.walk(ref)) {
+                VStack(spacing: 0) {
+                    RadialGraph(center: ref, neighbors: Array(all.prefix(14)), labels: false, compact: true) { _ in }
+                        .frame(height: 170)
+                        .allowsHitTesting(false)
+                    HStack {
+                        Text(summary(all)).font(Theme.caption).foregroundStyle(Theme.muted).multilineTextAlignment(.leading)
+                        Spacer()
+                        Label("Explore", systemImage: "arrow.right").font(Theme.callout600).labelStyle(.titleAndIcon)
+                            .foregroundStyle(Theme.accent)
+                    }
+                    .padding(.horizontal, Space.l).padding(.bottom, Space.m)
+                }
+                .background(Theme.surface, in: RoundedRectangle(cornerRadius: Radius.large))
+                .overlay(RoundedRectangle(cornerRadius: Radius.large).strokeBorder(Theme.line.opacity(0.7)))
+            }
+            .buttonStyle(.plain)
+            .accessibilityLabel("Explore the \(all.count) connections of this page")
+        }
+    }
+
+    private func summary(_ all: [Store.Node]) -> String {
+        let parts = Store.Kind.allCases.compactMap { k -> String? in
+            let n = all.filter { $0.type == k }.count
+            return n > 0 ? "\(n) \(n == 1 ? k.singular.lowercased() : k.plural.lowercased())" : nil
+        }
+        return "Linked to " + parts.joined(separator: ", ") + ". Tap a dot to walk the web from here."
+    }
+}
+
+/// A photo full screen, pinch to zoom, with its credit
+struct PhotoViewer: View {
+    @Environment(\.dismiss) private var dismiss
+    let photo: Photo
+    let name: String
+    let credit: AttributedString
+
+    var body: some View {
+        ZStack(alignment: .topTrailing) {
+            Color.black.ignoresSafeArea()
+            ZoomableImage(url: photo.url).ignoresSafeArea()
+            Button { dismiss() } label: {
+                Image(systemName: "xmark").font(.body.weight(.bold)).foregroundStyle(.white)
+                    .frame(width: 44, height: 44).background(.black.opacity(0.45), in: Circle())
+            }
+            .padding(Space.l)
+            .accessibilityLabel("Close")
+        }
+        .overlay(alignment: .bottom) {
+            Text(credit).font(Theme.caption).foregroundStyle(.white.opacity(0.85)).tint(.white)
+                .padding(Space.l).frame(maxWidth: .infinity, alignment: .leading)
+                .background(.black.opacity(0.45))
+        }
+        .preferredColorScheme(.dark)
+        .statusBarHidden()
+    }
+}
+
+/// UIScrollView zooming, which SwiftUI still doesn't have built in
+struct ZoomableImage: UIViewRepresentable {
+    let url: URL?
+
+    func makeCoordinator() -> Coordinator { Coordinator() }
+
+    func makeUIView(context: Context) -> UIScrollView {
+        let scroll = UIScrollView()
+        scroll.delegate = context.coordinator
+        scroll.minimumZoomScale = 1; scroll.maximumZoomScale = 5
+        scroll.showsVerticalScrollIndicator = false; scroll.showsHorizontalScrollIndicator = false
+        scroll.backgroundColor = .clear
+        let image = UIImageView()
+        image.contentMode = .scaleAspectFit
+        image.frame = scroll.bounds
+        image.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        scroll.addSubview(image)
+        context.coordinator.image = image
+        let tap = UITapGestureRecognizer(target: context.coordinator, action: #selector(Coordinator.doubleTap(_:)))
+        tap.numberOfTapsRequired = 2
+        scroll.addGestureRecognizer(tap)
+        if let url {
+            Task { @MainActor in image.image = await ImageLoader.shared.load(url) }
+        }
+        return scroll
+    }
+
+    func updateUIView(_ view: UIScrollView, context: Context) {}
+
+    final class Coordinator: NSObject, UIScrollViewDelegate {
+        var image: UIImageView?
+        func viewForZooming(in scrollView: UIScrollView) -> UIView? { image }
+        @objc func doubleTap(_ g: UITapGestureRecognizer) {
+            guard let scroll = g.view as? UIScrollView else { return }
+            if scroll.zoomScale > 1 { scroll.setZoomScale(1, animated: true) }
+            else {
+                let p = g.location(in: image)
+                let w = scroll.bounds.width / 2.5, h = scroll.bounds.height / 2.5
+                scroll.zoom(to: CGRect(x: p.x - w / 2, y: p.y - h / 2, width: w, height: h), animated: true)
+            }
+        }
     }
 }

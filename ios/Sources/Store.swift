@@ -23,6 +23,7 @@ final class Store {
         var plural: String { ["Cuisines", "Dishes", "Ingredients", "Recipe sites", "Cookbooks"][rawValue] }
         var singular: String { ["Cuisine", "Dish", "Ingredient", "Recipe site", "Cookbook"][rawValue] }
         var hub: String { ["cuisines", "dishes", "ingredients", "sites", "cookbooks"][rawValue] }
+        var walkOrder: Int { [0, 1, 2, 4, 3][rawValue] }
     }
 
     struct Place: Identifiable, Hashable {
@@ -50,6 +51,7 @@ final class Store {
     private var placeIndex: [String: Place] = [:]
     private var continentOf: [String: String] = [:]
     private var photoOf: [String: String] = [:]
+    @ObservationIgnored private var neighborIndex: [[Int]] = []
     @ObservationIgnored private var buckets: [String: [String: Any]] = [:]
     @ObservationIgnored private var pages: [String: Page] = [:]
 
@@ -81,6 +83,13 @@ final class Store {
             places.append(place)
             placeIndex[ref] = place
         }
+        var neighbors = Array(repeating: [Int](), count: nodes.count)
+        for case let l as [Any] in s["links"] as? [Any] ?? [] {
+            guard l.count == 2, let a = l[0] as? Int, let b = l[1] as? Int,
+                  nodes.indices.contains(a), nodes.indices.contains(b), a != b else { continue }
+            neighbors[a].append(b); neighbors[b].append(a)
+        }
+        neighborIndex = neighbors.map { Array(Set($0)).sorted() }
         self.nodes = nodes; self.index = index
         self.places = places; self.placeIndex = placeIndex
         continentOf = e["cont"] as? [String: String] ?? [:]
@@ -98,7 +107,18 @@ final class Store {
     func place(_ ref: String) -> Place? { placeIndex[ref] }
     func continent(_ ref: String) -> String? { continentOf[ref] }
 
-    /// A small thumbnail for lists, when the item has a photo of its own
+    /// Everything linked to an item: its cuisine, dishes, ingredients, sites, books and mentions.
+    /// Cuisines first, then dishes, ingredients, books and sites, alphabetical within each.
+    func neighbors(_ ref: String) -> [Node] {
+        guard let i = index[ref], neighborIndex.indices.contains(i) else { return [] }
+        return neighborIndex[i].map { nodes[$0] }.sorted {
+            $0.type.walkOrder != $1.type.walkOrder ? $0.type.walkOrder < $1.type.walkOrder
+                : $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending
+        }
+    }
+    func linkCount(_ ref: String) -> Int { index[ref].map { neighborIndex[$0].count } ?? 0 }
+
+    /// A small thumbnail for lists (a cuisine without its own photo gets one of its dishes)
     func thumbnail(_ ref: String) -> URL? {
         guard let p = photoOf[ref] else { return nil }
         return Photo.wikimediaURL(p.replacingOccurrences(of: "/500px-", with: "/120px-"))
@@ -169,7 +189,17 @@ final class Store {
     }
 }
 
+/// Where a navigation stack can go
 enum Route: Hashable {
     case item(String)
     case hub(String)
+    case walk(String)
+
+    @MainActor @ViewBuilder var view: some View {
+        switch self {
+        case .item(let ref): ItemView(ref: ref)
+        case .hub(let ref): HubView(ref: ref)
+        case .walk(let ref): WalkView(start: ref)
+        }
+    }
 }

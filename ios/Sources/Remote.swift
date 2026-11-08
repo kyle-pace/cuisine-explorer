@@ -6,6 +6,12 @@ enum DataSource {
     static let base = URL(string: "https://raw.githubusercontent.com/kyle-pace/cuisine-explorer/main/data/web/")!
 }
 
+/// Where a page lives on the web, for the share sheet. The site may move; a redirect there
+/// will carry old links along, and this is the one place to change.
+enum Share {
+    static func url(_ ref: String) -> URL? { URL(string: "https://kylepace.net/labs/cuisines/\(ref)/") }
+}
+
 /// Fetches data files, revalidating with the server when online and falling back to the
 /// on-disk cache when not, so anything already seen opens offline.
 final class Remote: Sendable {

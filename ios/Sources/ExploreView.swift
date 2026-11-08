@@ -3,6 +3,8 @@ import SwiftUI
 /// Home: a few cuisines to start from, then every way into the collection
 struct ExploreView: View {
     @Environment(Store.self) private var store
+    @Environment(Library.self) private var library
+    @Environment(\.dynamicTypeSize) private var typeSize
     @State private var featured: [Store.Node] = []
     @State private var settings = false
 
@@ -17,7 +19,7 @@ struct ExploreView: View {
                         .font(Theme.body)
                         .foregroundStyle(Theme.muted)
                 }
-                .padding(.horizontal, 20)
+                .padding(.horizontal, Space.xl)
 
                 VStack(alignment: .leading, spacing: 12) {
                     HStack {
@@ -28,7 +30,7 @@ struct ExploreView: View {
                             .labelStyle(.iconOnly)
                             .accessibilityLabel("Show other cuisines")
                     }
-                    .padding(.horizontal, 20)
+                    .padding(.horizontal, Space.xl)
                     ScrollView(.horizontal, showsIndicators: false) {
                         LazyHStack(spacing: 12) {
                             ForEach(featured) { n in
@@ -37,9 +39,45 @@ struct ExploreView: View {
                             }
                         }
                         .scrollTargetLayout()
-                        .padding(.horizontal, 20)
+                        .padding(.horizontal, Space.xl)
                     }
                     .scrollTargetBehavior(.viewAligned)
+                }
+
+                if !library.recent.isEmpty || !library.saved.isEmpty {
+                    VStack(alignment: .leading, spacing: Space.m) {
+                        NavigationLink(value: Route.hub("x:recent")) {
+                            SectionHeader("Pick up where you left off", chevron: true)
+                        }
+                        .buttonStyle(.plain)
+                        .padding(.horizontal, Space.xl)
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            HStack(spacing: Space.s) {
+                                if !library.saved.isEmpty {
+                                    NavigationLink(value: Route.hub("x:saved")) {
+                                        Label("Saved \(library.saved.count)", systemImage: "bookmark.fill")
+                                            .font(Theme.callout600).foregroundStyle(Theme.onAccent)
+                                            .padding(.horizontal, 14).padding(.vertical, 9)
+                                            .background(Theme.accent, in: Capsule())
+                                    }
+                                    .buttonStyle(.plain)
+                                }
+                                ForEach(library.recent.prefix(12).compactMap(store.node)) { n in
+                                    NavigationLink(value: Route.item(n.ref)) {
+                                        HStack(spacing: 8) {
+                                            Mark(color: n.color, square: n.type != .cuisine)
+                                            Text(n.name).font(Theme.callout).foregroundStyle(Theme.ink).lineLimit(1)
+                                        }
+                                        .padding(.horizontal, 14).padding(.vertical, 9)
+                                        .background(Theme.surface, in: Capsule())
+                                        .overlay(Capsule().strokeBorder(Theme.line))
+                                    }
+                                    .buttonStyle(.plain)
+                                }
+                            }
+                            .padding(.horizontal, Space.xl)
+                        }
+                    }
                 }
 
                 VStack(alignment: .leading, spacing: 12) {
@@ -74,7 +112,7 @@ struct ExploreView: View {
                     }
                     .buttonStyle(.plain)
                 }
-                .padding(.horizontal, 20)
+                .padding(.horizontal, Space.xl)
 
                 VStack(alignment: .leading, spacing: 4) {
                     SectionHeader("Everything")
@@ -93,12 +131,12 @@ struct ExploreView: View {
                         Divider().overlay(Theme.line)
                     }
                 }
-                .padding(.horizontal, 20)
+                .padding(.horizontal, Space.xl)
 
                 Text("Intros from Wikipedia (CC BY-SA), photos from Wikimedia Commons, production figures from FAOSTAT (CC BY 4.0), plus notes written for this explorer.")
                     .font(Theme.caption)
                     .foregroundStyle(Theme.muted)
-                    .padding(.horizontal, 20)
+                    .padding(.horizontal, Space.xl)
                     .padding(.bottom, 24)
             }
             .padding(.top, 8)
@@ -124,22 +162,24 @@ struct ExploreView: View {
 
 struct FeatureCard: View {
     @Environment(Store.self) private var store
+    @Environment(\.dynamicTypeSize) private var typeSize
     let node: Store.Node
+    private var width: CGFloat { typeSize.isAccessibilitySize ? 300 : 240 }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             RemoteImage(url: store.photo(node.ref))
-                .frame(width: 240, height: 170)
+                .frame(width: width, height: 170)
                 .clipped()
             VStack(alignment: .leading, spacing: 4) {
                 HStack(spacing: 8) {
                     Mark(color: node.color)
-                    Text(node.name).font(Theme.callout600).foregroundStyle(Theme.ink).lineLimit(1)
+                    Text(node.name).font(Theme.callout600).foregroundStyle(Theme.ink).lineLimit(2)
                 }
                 Text(node.sub).font(Theme.caption).foregroundStyle(Theme.muted).lineLimit(1)
             }
             .padding(12)
-            .frame(width: 240, alignment: .leading)
+            .frame(width: width, alignment: .leading)
         }
         .background(Theme.surface)
         .clipShape(RoundedRectangle(cornerRadius: Radius.large))
@@ -173,24 +213,87 @@ struct ContinentTile: View {
 /// Every item in a hub: "Asia", "Dishes", "Indigenous foodways"…
 struct HubView: View {
     @Environment(Store.self) private var store
+    @Environment(Library.self) private var library
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     let ref: String
     @State private var filter = ""
+    @State private var facet: Facet = .all
+
+    /// Ways to narrow a list of cuisines
+    enum Facet: String, CaseIterable { case all = "All", national = "National", regional = "Regional", indigenous = "Indigenous"
+        func keeps(_ n: Store.Node) -> Bool {
+            switch self {
+            case .all: true
+            case .national: n.isNational
+            case .regional: !n.isNational && !n.isIndigenous && !n.isBeyondBorders
+            case .indigenous: n.isIndigenous
+            }
+        }
+    }
+
+    private var hub: (title: String, nodes: [Store.Node]) {
+        switch ref {
+        case "x:saved": ("Saved", library.saved.compactMap(store.node))
+        case "x:recent": ("Recently viewed", library.recent.compactMap(store.node))
+        default: store.hub(ref)
+        }
+    }
+    private var showsFacets: Bool { ref == "cuisines" || ref.hasPrefix("cuisines#") }
 
     var body: some View {
-        let hub = store.hub(ref)
-        let list = filter.isEmpty ? hub.nodes
-            : hub.nodes.filter { $0.name.localizedCaseInsensitiveContains(filter) }
-        List(list) { n in
-            NavigationLink(value: Route.item(n.ref)) { NodeRow(node: n) }
+        let hub = hub
+        let faceted = showsFacets ? hub.nodes.filter(facet.keeps) : hub.nodes
+        let list = filter.isEmpty ? faceted : faceted.filter { $0.name.localizedCaseInsensitiveContains(filter) }
+        List {
+            if showsFacets {
+                ChipRow {
+                    ForEach(Facet.allCases, id: \.self) { f in
+                        let n = hub.nodes.filter(f.keeps).count
+                        if n > 0 {
+                            FilterChip(f.rawValue, count: f == .all ? nil : n, isOn: facet == f) {
+                                withAnimation(Theme.motion(reduceMotion)) { facet = f }
+                            }
+                        }
+                    }
+                }
                 .listRowBackground(Theme.ground)
-                .listRowSeparatorTint(Theme.line)
+                .listRowSeparator(.hidden)
+                .listRowInsets(EdgeInsets(top: Space.xs, leading: Space.l, bottom: Space.s, trailing: Space.l))
+            }
+            ForEach(list) { n in
+                NavigationLink(value: Route.item(n.ref)) { NodeRow(node: n) }
+                    .listRowBackground(Theme.ground)
+                    .listRowSeparatorTint(Theme.line)
+                    .swipeActions(edge: .trailing) {
+                        Button(library.isSaved(n.ref) ? "Unsave" : "Save", systemImage: library.isSaved(n.ref) ? "bookmark.slash" : "bookmark") {
+                            library.toggleSaved(n.ref)
+                        }
+                        .tint(Theme.accent)
+                    }
+            }
         }
         .listStyle(.plain)
         .scrollContentBackground(.hidden)
         .background(Theme.ground)
-        .searchable(text: $filter, placement: .navigationBarDrawer(displayMode: .automatic), prompt: "Filter \(hub.title)")
+        .searchable(text: $filter, placement: .navigationBarDrawer(displayMode: .automatic), prompt: "Filter \(hub.title.lowercased())")
         .navigationTitle(hub.title)
-        .overlay { if list.isEmpty { ContentUnavailableView.search(text: filter) } }
+        .toolbar {
+            if ref == "x:recent", !library.recent.isEmpty {
+                ToolbarItem(placement: .topBarTrailing) { Button("Clear") { library.clearRecent() } }
+            }
+        }
+        .overlay {
+            if list.isEmpty {
+                if ref == "x:saved" {
+                    ContentUnavailableView("Nothing saved yet", systemImage: "bookmark",
+                                           description: Text("Tap the bookmark on any page, or swipe a row, to keep it here."))
+                } else if ref == "x:recent" {
+                    ContentUnavailableView("Nothing yet", systemImage: "clock", description: Text("Pages you open show up here."))
+                } else {
+                    ContentUnavailableView.search(text: filter)
+                }
+            }
+        }
     }
 }
 
@@ -221,9 +324,16 @@ struct NodeRow: View {
 struct SearchView: View {
     @Environment(Store.self) private var store
     @State private var query = ""
+    @State private var scope: Scope = .all
+
+    enum Scope: Hashable, CaseIterable { case all, cuisine, dish, ingredient, book, site
+        var title: String { ["Everything", "Cuisines", "Dishes", "Ingredients", "Cookbooks", "Sites"][Scope.allCases.firstIndex(of: self)!] }
+        var kind: Store.Kind? { [nil, .cuisine, .dish, .ingredient, .book, .site][Scope.allCases.firstIndex(of: self)!] }
+    }
 
     var body: some View {
-        let results = store.search(query)
+        let all = store.search(query, limit: 200)
+        let results = scope.kind.map { k in all.filter { $0.type == k } } ?? Array(all.prefix(80))
         List(results) { n in
             NavigationLink(value: Route.item(n.ref)) { NodeRow(node: n) }
                 .listRowBackground(Theme.ground)
@@ -234,6 +344,9 @@ struct SearchView: View {
         .background(Theme.ground)
         .navigationTitle("Search")
         .searchable(text: $query, prompt: "Cuisines, dishes, ingredients")
+        .searchScopes($scope, activation: .onSearchPresentation) {
+            ForEach(Scope.allCases, id: \.self) { Text($0.title).tag($0) }
+        }
         .overlay {
             if query.isEmpty {
                 ContentUnavailableView("Find anything", systemImage: "magnifyingglass",

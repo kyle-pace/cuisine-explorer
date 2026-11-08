@@ -70,6 +70,19 @@ struct Page {
         }
     }
 
+    /// Plain text of the first paragraph, for share sheets and previews
+    static func summary(_ p: Page, max: Int = 200) -> String {
+        var t = p.intro.first?.map { seg -> String in
+            switch seg { case .text(let s): return s; case .link(let l): return l.name }
+        }.joined() ?? p.sub
+        if t.count > max {
+            t = String(t.prefix(max - 1))
+            if let r = t.range(of: " ", options: .backwards) { t = String(t[..<r.lowerBound]) }
+            t += "…"
+        }
+        return t
+    }
+
     static func link(_ x: Any) -> Link? {
         guard let a = x as? [Any], let name = a.first as? String else { return nil }
         return Link(name: name, ref: a.count > 1 ? a[1] as? String : nil)

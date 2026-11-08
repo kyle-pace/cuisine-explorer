@@ -370,10 +370,11 @@
   const GRAPH = new Set(["cuisine", "dish", "ingredient"]);
   const graphNeighbors = n => [...n.out.values()].map(e => e.node).filter(x => GRAPH.has(x.type));
   // Photos for search and dish cards: paths from data/web/app.json, loaded when first needed.
-  // On kylepace.net the site's image route serves them; anywhere else, Wikimedia Commons.
+  // Only on kylepace.net, whose image route serves them; no outside image host anywhere.
   let photoMap = null, photoLoad = null;
-  const loadPhotos = () => photoLoad ||= load("data-app", "data/web/app.json").then(a => { photoMap = a.photos || {}; return photoMap; }).catch(() => (photoMap = {}));
-  const photoUrl = p => location.pathname.startsWith("/labs/cuisines/") ? "/labs/cuisines/img/" + p : "https://upload.wikimedia.org/wikipedia/commons/" + p;
+  const loadPhotos = () => photoLoad ||= (onSite ? load("data-app", "data/web/app.json").then(a => a.photos || {}).catch(() => ({})) : Promise.resolve({})).then(m => (photoMap = m));
+  const onSite = location.pathname.startsWith("/labs/cuisines/");
+  const photoUrl = p => "/labs/cuisines/img/" + p;
   // Recently viewed pages, for search; kept in this browser only
   const recents = () => { try { return JSON.parse(localStorage.getItem("cuisines.recent") || "[]"); } catch (e) { return []; } };
   const saveRecents = l => { try { localStorage.setItem("cuisines.recent", JSON.stringify(l.slice(0, 6))); } catch (e) {} };

@@ -429,11 +429,12 @@
   // Each thing's address in the browse pages (cuisine/thai-cuisine), shared with them for photos and recents
   const refOf = x => (x.type === "dish" ? "dish/" : x.type === "ingredient" ? "ingredient/" : "cuisine/") + slug(x.id);
   const byRef = new Map([...all.map(c => [refOf(c), c]), ...dishes.map(d => [refOf(d), d]), ...usedIngredients.map(i => [refOf(i), i])]);
-  // Photos: paths from data/web/app.json, loaded when first needed. On kylepace.net the site's
-  // image route serves them; anywhere else, Wikimedia Commons.
+  // Photos: paths from data/web/app.json, loaded when first needed. Only on kylepace.net, whose
+  // image route serves them; no outside image host anywhere.
   let photoMap = null, photoLoad = null;
-  const loadPhotos = () => photoLoad ||= load("data-app", "data/web/app.json").then(a => { photoMap = a.photos || {}; return photoMap; }).catch(() => (photoMap = {}));
-  const photoUrl = p => location.pathname.startsWith("/labs/cuisines/") ? "/labs/cuisines/img/" + p : "https://upload.wikimedia.org/wikipedia/commons/" + p;
+  const loadPhotos = () => photoLoad ||= (onSite ? load("data-app", "data/web/app.json").then(a => a.photos || {}).catch(() => ({})) : Promise.resolve({})).then(m => (photoMap = m));
+  const onSite = location.pathname.startsWith("/labs/cuisines/");
+  const photoUrl = p => "/labs/cuisines/img/" + p;
   const thumbOf = (x, color) => {
     const p = photoMap && photoMap[refOf(x)];
     return `<span class="thumb">${p ? `<img src="${attr(photoUrl(p))}" alt="" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('i'),{style:'background:${color}'}))">` : `<i style="background:${color}"></i>`}</span>`;

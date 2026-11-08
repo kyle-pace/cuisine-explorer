@@ -11,7 +11,8 @@ struct MapScreen: View {
     @State private var shapes = Shapes()
 
     /// Camera heights: the whole world, then each continent
-    static let world = MapCamera(centerCoordinate: .init(latitude: 20, longitude: 15), distance: 40_000_000)
+    /// The whole globe, spun to a random longitude each launch so it doesn't always open on Africa
+    static let world = MapCamera(centerCoordinate: .init(latitude: 20, longitude: .random(in: -180..<180)), distance: 40_000_000)
     static let regions: [String: MapCamera] = [
         "africa": MapCamera(centerCoordinate: .init(latitude: 2, longitude: 20), distance: 13_000_000),
         "the-americas": MapCamera(centerCoordinate: .init(latitude: 8, longitude: -80), distance: 24_000_000),

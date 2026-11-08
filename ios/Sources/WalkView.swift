@@ -9,7 +9,7 @@ struct WalkView: View {
     let start: String
     @State private var center: String
     @State private var trail: [String] = []
-    @State private var hidden: Set<Store.Kind> = []
+    @State private var focus: Store.Kind?
     @State private var picked: String?
     @State private var showAll = false
     @State private var page: Page?
@@ -20,7 +20,7 @@ struct WalkView: View {
     }
 
     private var all: [Store.Node] { store.neighbors(center) }
-    private var shown: [Store.Node] { all.filter { !hidden.contains($0.type) } }
+    private var shown: [Store.Node] { focus.map { k in all.filter { $0.type == k } } ?? all }
     private var counts: [(Store.Kind, Int)] {
         Store.Kind.allCases.compactMap { k in
             let n = all.filter { $0.type == k }.count
@@ -32,11 +32,10 @@ struct WalkView: View {
         VStack(spacing: 0) {
             if counts.count > 1 {
                 ChipRow {
+                    FilterChip("All", isOn: focus == nil) { withAnimation(Theme.motion(reduceMotion)) { focus = nil } }
                     ForEach(counts, id: \.0) { kind, n in
-                        FilterChip(kind.plural, count: n, isOn: !hidden.contains(kind)) {
-                            withAnimation(Theme.motion(reduceMotion)) {
-                                if hidden.contains(kind) { hidden.remove(kind) } else { hidden.insert(kind) }
-                            }
+                        FilterChip(kind.plural, count: n, isOn: focus == kind) {
+                            withAnimation(Theme.motion(reduceMotion)) { focus = focus == kind ? nil : kind }
                         }
                     }
                 }
@@ -45,11 +44,18 @@ struct WalkView: View {
             }
 
             RadialGraph(center: center, neighbors: Array(shown.prefix(RadialGraph.maxShown)),
-                        picked: picked, labels: true) { ref in
-                step(to: ref)
-            }
+                        picked: picked, labels: true, onTap: step(to:), onHold: { picked = $0 })
             .frame(maxHeight: .infinity)
             .accessibilityLabel("Connections of \(store.node(center)?.name ?? "")")
+            .overlay(alignment: .bottom) {
+                if shown.count > 18 {
+                    Text(picked == nil ? "Tap a dot to move there. Hold one to see its name." : "Tap again to move there.")
+                        .font(Theme.caption).foregroundStyle(Theme.muted)
+                        .padding(.horizontal, Space.m).padding(.vertical, 6)
+                        .background(Theme.surface.opacity(0.9), in: Capsule())
+                        .padding(.bottom, Space.s)
+                }
+            }
 
             panel
         }
@@ -62,6 +68,7 @@ struct WalkView: View {
             }
         }
         .sheet(isPresented: $showAll) { NeighborsSheet(center: center) { step(to: $0) } }
+        .onChange(of: focus) { picked = nil }
         .task(id: center) {
             page = store.cachedPage(center)
             if page == nil { page = await store.page(center) }
@@ -151,13 +158,13 @@ struct RadialGraph: View {
     var picked: String?
     var labels = true
     var compact = false
-    let onTap: (String) -> Void
+    var onTap: (String) -> Void = { _ in }
+    var onHold: (String) -> Void = { _ in }
 
     var body: some View {
         GeometryReader { geo in
             let mid = CGPoint(x: geo.size.width / 2, y: geo.size.height / 2)
-            let points = layout(in: geo.size)
-            let showLabels = labels && (neighbors.count <= 18 || !compact)
+            let (points, labeled) = layout(in: geo.size)
             ZStack {
                 // Edges: thin bars from the middle to each dot, so they animate with the dots
                 ForEach(neighbors) { n in
@@ -172,12 +179,11 @@ struct RadialGraph: View {
                 }
                 ForEach(neighbors) { n in
                     if let p = points[n.ref] {
-                        Button { onTap(n.ref) } label: {
-                            Dot(node: n, size: dotSize, label: showLabels && (neighbors.count <= 18 || picked == n.ref || !compact),
-                                labelBelow: p.y >= mid.y, emphasized: picked == n.ref)
-                        }
-                        .buttonStyle(.plain)
-                        .position(p)
+                        Dot(node: n, size: dotSize, label: labels && (labeled.contains(n.ref) || picked == n.ref),
+                            labelBelow: p.y >= mid.y, emphasized: picked == n.ref)
+                            .onTapGesture { onTap(n.ref) }
+                            .onLongPressGesture(minimumDuration: 0.25) { onHold(n.ref) }
+                            .position(p)
                         .transition(.opacity.combined(with: .scale(scale: 0.6)))
                         .accessibilityLabel("\(n.name), \(n.type.singular)")
                         .accessibilityHint("Makes it the center")
@@ -204,31 +210,34 @@ struct RadialGraph: View {
 
     private var dotSize: CGFloat { compact ? 9 : (neighbors.count > 18 ? 10 : 13) }
 
-    /// One ring up to 12, then two rings: cuisines and dishes inside, the rest outside
-    private func layout(in size: CGSize) -> [String: CGPoint] {
+    /// One ring up to 18, then two: cuisines and dishes inside, the rest outside. Rings are
+    /// ellipses so a tall phone screen is used. Labels fit on a ring of up to 18 dots.
+    private func layout(in size: CGSize) -> (points: [String: CGPoint], labeled: Set<String>) {
         let mid = CGPoint(x: size.width / 2, y: size.height / 2)
-        let labelRoom: CGFloat = labels && !compact ? 44 : 12
-        let r = max(40, min(size.width, size.height) / 2 - labelRoom)
+        let room: CGFloat = labels && !compact ? 48 : 12
+        let rx = max(40, size.width / 2 - room), ry = max(40, size.height / 2 - room - (compact ? 0 : 10))
         var out: [String: CGPoint] = [:]
-        if neighbors.count <= 12 {
-            for (i, n) in neighbors.enumerated() {
-                let a = -CGFloat.pi / 2 + CGFloat(i) / CGFloat(max(neighbors.count, 1)) * 2 * .pi
-                out[n.ref] = CGPoint(x: mid.x + r * cos(a), y: mid.y + r * sin(a))
-            }
-        } else {
-            let inner = neighbors.filter { $0.type == .cuisine || $0.type == .dish }
-            let outer = neighbors.filter { !($0.type == .cuisine || $0.type == .dish) }
-            let rings: [([Store.Node], CGFloat)] = (inner.isEmpty || outer.isEmpty)
-                ? [(Array(neighbors.prefix(neighbors.count / 2)), r * 0.58), (Array(neighbors.dropFirst(neighbors.count / 2)), r)]
-                : [(inner, r * 0.58), (outer, r)]
-            for (ring, radius) in rings {
-                for (i, n) in ring.enumerated() {
-                    let a = -CGFloat.pi / 2 + (CGFloat(i) + (radius < r ? 0.5 : 0)) / CGFloat(max(ring.count, 1)) * 2 * .pi
-                    out[n.ref] = CGPoint(x: mid.x + radius * cos(a), y: mid.y + radius * sin(a))
-                }
+        var labeled = Set<String>()
+        func place(_ ring: [Store.Node], scale: CGFloat, offset: CGFloat) {
+            for (i, n) in ring.enumerated() {
+                let a = -CGFloat.pi / 2 + (CGFloat(i) + offset) / CGFloat(max(ring.count, 1)) * 2 * .pi
+                out[n.ref] = CGPoint(x: mid.x + rx * scale * cos(a), y: mid.y + ry * scale * sin(a))
             }
         }
-        return out
+        if neighbors.count <= 18 {
+            place(neighbors, scale: 1, offset: 0)
+            labeled = Set(neighbors.map(\.ref))
+        } else {
+            var inner = neighbors.filter { $0.type == .cuisine || $0.type == .dish }
+            var outer = neighbors.filter { !($0.type == .cuisine || $0.type == .dish) }
+            if inner.count < 4 || outer.count < 4 {
+                inner = Array(neighbors.prefix(neighbors.count / 2)); outer = Array(neighbors.dropFirst(neighbors.count / 2))
+            }
+            place(inner, scale: 0.52, offset: 0.5)
+            place(outer, scale: 1, offset: 0)
+            if inner.count <= 10 { labeled = Set(inner.map(\.ref)) }
+        }
+        return (out, labeled)
     }
 }
 
@@ -241,18 +250,22 @@ struct Dot: View {
     var isCenter = false
 
     var body: some View {
-        VStack(spacing: 4) {
-            if label && !labelBelow { text }
-            RoundedRectangle(cornerRadius: node.type == .cuisine ? size / 2 : size * 0.22)
-                .fill(node.color)
-                .frame(width: size, height: size)
-                .overlay(RoundedRectangle(cornerRadius: node.type == .cuisine ? size / 2 : size * 0.22)
-                    .stroke(isCenter ? Theme.ink : (emphasized ? Theme.ink : Theme.ground), lineWidth: isCenter ? 3 : 1.5))
-                .shadow(color: .black.opacity(isCenter ? 0.25 : 0), radius: 6, y: 2)
-            if label && labelBelow { text }
-        }
-        .frame(width: 92)
-        .contentShape(Rectangle())
+        // The hit area is the dot alone, so neighbors on a crowded ring don't steal taps
+        RoundedRectangle(cornerRadius: node.type == .cuisine ? size / 2 : size * 0.22)
+            .fill(node.color)
+            .frame(width: size, height: size)
+            .overlay(RoundedRectangle(cornerRadius: node.type == .cuisine ? size / 2 : size * 0.22)
+                .stroke(isCenter || emphasized ? Theme.ink : Theme.ground, lineWidth: isCenter ? 3 : 1.5))
+            .shadow(color: .black.opacity(isCenter ? 0.25 : 0), radius: 6, y: 2)
+            .scaleEffect(emphasized && !isCenter ? 1.3 : 1)
+            .frame(width: max(size, 36), height: max(size, 36))
+            .contentShape(Circle())
+            .overlay(alignment: labelBelow ? .top : .bottom) {
+                if label {
+                    text.offset(y: labelBelow ? max(size, 36) / 2 + size / 2 + 2 : -(max(size, 36) / 2 + size / 2 + 2))
+                        .allowsHitTesting(false)
+                }
+            }
     }
 
     private var text: some View {
@@ -261,7 +274,9 @@ struct Dot: View {
             .foregroundStyle(isCenter || emphasized ? Theme.ink : Theme.muted)
             .multilineTextAlignment(.center)
             .lineLimit(2)
+            .frame(width: 92)
             .fixedSize(horizontal: false, vertical: true)
+            .background(emphasized && !isCenter ? AnyShapeStyle(Theme.surface.opacity(0.92)) : AnyShapeStyle(.clear), in: RoundedRectangle(cornerRadius: 6))
     }
 }
 

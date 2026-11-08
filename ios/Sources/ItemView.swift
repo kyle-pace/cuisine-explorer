@@ -425,7 +425,7 @@ struct ConnectionsSection: View {
             .accessibilityAddTraits(.isHeader)
             NavigationLink(value: Route.walk(ref)) {
                 VStack(spacing: 0) {
-                    RadialGraph(center: ref, neighbors: Array(all.prefix(14)), labels: false, compact: true) { _ in }
+                    RadialGraph(center: ref, neighbors: Array(all.prefix(14)), labels: false, compact: true)
                         .frame(height: 170)
                         .allowsHitTesting(false)
                     HStack {

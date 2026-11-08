@@ -275,7 +275,7 @@ struct HubView: View {
         .listStyle(.plain)
         .scrollContentBackground(.hidden)
         .background(Theme.ground)
-        .searchable(text: $filter, placement: .navigationBarDrawer(displayMode: .automatic), prompt: "Filter \(hub.title.lowercased())")
+        .searchable(text: $filter, placement: .navigationBarDrawer(displayMode: .automatic), prompt: "Filter \(Store.Kind.allCases.map(\.plural).contains(hub.title) ? hub.title.lowercased() : hub.title)")
         .navigationTitle(hub.title)
         .toolbar {
             if ref == "x:recent", !library.recent.isEmpty {

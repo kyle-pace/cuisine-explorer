@@ -94,7 +94,8 @@ struct MapScreen: View {
         }
     }
 
-    private func dotSize(_ n: Store.Node) -> CGFloat { n.isNational ? 14 : 10 }
+    /// Smaller dots when the whole world is in view, so Europe doesn't become one blob
+    private func dotSize(_ n: Store.Node) -> CGFloat { (n.isNational ? 14 : 10) * (span > 60 ? 0.7 : 1) }
 
     private func color(_ ref: String) -> Color {
         let key = store.continent(ref)

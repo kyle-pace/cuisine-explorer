@@ -249,7 +249,9 @@
 <!--INLINE_DATA-->
 <script>
 (async function () {
-  // --- Data ------------------------------------------------------------------
+  // --- Data: a light skeleton of every page, and each page's details on demand ------
+  // Built weekly by scripts/build_web.mjs. The skeleton has names, types and links for
+  // search, hubs and graphs; a page's details come from one of 256 small bucket files.
   async function load(id, path) {
     const el = document.getElementById(id);
     if (el) return JSON.parse(el.textContent);
@@ -257,136 +259,46 @@
     if (!r.ok) throw new Error(path);
     return r.json();
   }
-  const [data, countries, picksFile, suggestionsFile, food, notesFile] = await Promise.all([
-    load("data-cuisines", "data/cuisines.json"),
-    load("data-countries", "data/countries.geojson"),
-    load("data-picks", "data/picks.json").catch(() => ({})),
-    load("data-suggestions", "data/suggestions.json").catch(() => ({})),
-    load("data-food", "data/food.json").catch(() => ({ dishes: [], ingredients: [] })),
-    load("data-notes", "data/notes.json").catch(() => ({})),
-  ]);
-  let summaries = {}, foodSummaries = {}, grown = { items: {} };
-  const later = Promise.all([
-    load("data-summaries", "data/summaries.json").then(d => { summaries = d || {}; }).catch(() => {}),
-    load("data-food_summaries", "data/food_summaries.json").then(d => { foodSummaries = d || {}; }).catch(() => {}),
-    load("data-grown", "data/grown.json").then(d => { grown = d || grown; }).catch(() => {}),
-  ]);
-  const notes = { cuisines: {}, dishes: {}, ingredients: {}, ...(notesFile || {}) };
-  const picks = picksFile.cuisines || {};
-  const suggestions = suggestionsFile.cuisines || {};
+  const [skeleton, R] = await Promise.all([load("data-skeleton", "data/web/skeleton.json"), import("./render_item.js")]);
+  const { renderItem, bucketOf, summaryOf, slug } = R;
+  const buckets = new Map();
+  function getItem(ref) {
+    const b = bucketOf(ref);
+    if (!buckets.has(b)) buckets.set(b, load("data-items-" + b, `data/web/items/${b}.json`).catch(() => { buckets.delete(b); return {}; }));
+    return buckets.get(b).then(all => all[ref] || null);
+  }
 
   const COLORS = { "African cuisine": "#e46a3f", "Cuisine of the Americas": "#94bd5c", "Asian cuisine": "#f0b340", "European cuisine": "#cf5f87", "Oceanic cuisine": "#55b8ad" };
-  const CONTINENT = { "African cuisine": "Africa", "Cuisine of the Americas": "The Americas", "Asian cuisine": "Asia", "European cuisine": "Europe", "Oceanic cuisine": "Oceania" };
-  const NEUTRAL = "#a99fb5";
-  const KIND_LABEL = { national: "National cuisine", regional: "Regional cuisine", diaspora: "Diaspora cuisine", peoples: "Cuisine of a people",
-    religious: "Religious cuisine or diet", historical: "Historical cuisine", style: "Style of cooking" };
+  const CONTINENT = skeleton.continents;
+  const continentOfColor = new Map(Object.entries(COLORS).map(([k, c]) => [c, CONTINENT[k]]));
   const TYPE_LABEL = { cuisine: "Cuisine", dish: "Dish", ingredient: "Ingredient", site: "Recipe site", book: "Cookbook" };
   const PLURAL = { cuisine: "Cuisines", dish: "Dishes", ingredient: "Ingredients", site: "Recipe sites", book: "Cookbooks" };
-  const PATH = { cuisine: "cuisine", dish: "dish", ingredient: "ingredient", site: "site", book: "cookbook" };
+  const INDEX_PATH = { cuisine: "cuisines", dish: "dishes", ingredient: "ingredients", site: "sites", book: "cookbooks" };
   const CORRECT = "https://github.com/kyle-pace/cuisine-explorer/issues/new?title=";
-  const ARROW = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
   const esc = s => String(s ?? "").replace(/[&<>"']/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch]));
-  const slug = s => String(s).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
   const norm = s => String(s).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
-  const capital = s => s.charAt(0).toUpperCase() + s.slice(1).replace(/\.$/, "");
-  const hostOf = u => { try { return new URL(u).hostname.replace(/^www\./, ""); } catch (e) { return ""; } };
-  const isoName = new Map(countries.features.map(f => {
-    const p = f.properties;
-    return [p.ISO_A3_EH !== "-99" ? p.ISO_A3_EH : p.ADM0_A3, p.NAME];
-  }));
-  countries.features.forEach(f => isoName.set(f.properties.ADM0_A3, f.properties.NAME));
 
-  // --- The web: every thing is a node, every relation an edge both ways ------
-  const nodes = new Map();          // key -> node
-  const add = (type, id, props) => {
-    const key = type + ":" + id;
-    if (!nodes.has(key)) nodes.set(key, { key, type, id, out: new Map(), ...props });
-    return nodes.get(key);
-  };
-  // rel names the edge from a's side; back names it from b's side
-  function link(a, b, rel, back, extra) {
-    if (!a || !b || a === b) return;
-    if (!a.out.has(b.key)) a.out.set(b.key, { node: b, rel, ...extra });
-    if (!b.out.has(a.key)) b.out.set(a.key, { node: a, rel: back, ...extra });
-  }
-
-  const all = data.cuisines;
-  const byId = new Map(all.map(c => [c.id, c]));
-  const nationalByIso = new Map(all.filter(c => c.kind === "national").map(c => [c.iso3, c]));
-  const colorOf = c => COLORS[(c.region || [])[0]] || (c.iso3 && nationalByIso.get(c.iso3) && COLORS[(nationalByIso.get(c.iso3).region || [])[0]]) || NEUTRAL;
-  for (const c of all) add("cuisine", c.id, { name: c.name, c, color: colorOf(c) });
-  for (const c of all) for (const p of c.parents || []) link(nodes.get("cuisine:" + c.id), nodes.get("cuisine:" + p), "parent", "child");
-
-  const dishes = (food.dishes || []).filter(d => d.cuisines.some(id => byId.has(id)));
-  const ingById = new Map((food.ingredients || []).map(i => [i.id, i]));
-  for (const d of dishes) {
-    const dn = add("dish", d.id, { name: d.name, d, color: "#ede6da" });
-    for (const cid of d.cuisines) if (byId.has(cid)) link(dn, nodes.get("cuisine:" + cid), "cuisine", "dish");
-    for (const iid of d.ingredients || []) {
-      const i = ingById.get(iid);
-      if (!i) continue;
-      link(dn, add("ingredient", i.id, { name: i.name, i, color: "#c9b8dd" }), "ingredient", "dish");
-    }
-  }
-
-  // Ingredients with a note of their own get a page even before a dish uses them
-  for (const id of Object.keys(notes.ingredients || {})) { const i = ingById.get(id); if (i) add("ingredient", i.id, { name: i.name, i, color: "#c9b8dd" }); }
-
-  // Recipe sites (one node per site, by host) and cookbooks (one per title)
-  const shelves = new Map(); // cuisine id -> { sites, books }
-  const addShelf = (cid, list, suggested) => {
-    for (const s of list.sites || []) {
-      const host = hostOf(s.url);
-      if (!host) continue;
-      const n = add("site", host, { name: s.name, host, color: "#55b8ad", names: new Map() });
-      n.names.set(s.name, (n.names.get(s.name) || 0) + 1);
-      link(n, nodes.get("cuisine:" + cid), "cuisine", "site", { entry: { ...s, suggested } });
-    }
-    for (const b of list.cookbooks || []) {
-      const n = add("book", slug(b.title), { name: b.title, b, color: "#f0b340" });
-      link(n, nodes.get("cuisine:" + cid), "cuisine", "book", { entry: { ...b, suggested } });
-    }
-  };
-  for (const [cid, list] of Object.entries(picks)) if (byId.has(cid)) addShelf(cid, list, false);
-  for (const [cid, list] of Object.entries(suggestions)) if (byId.has(cid)) addShelf(cid, list, true);
-  for (const [cid, n] of Object.entries(notes.cuisines)) if (byId.has(cid)) addShelf(cid, { sites: n.sites, cookbooks: n.cookbooks }, true);
-  for (const n of nodes.values()) if (n.type === "site") n.name = [...n.names].sort((a, b) => b[1] - a[1] || a[0].length - b[0].length)[0][0];
-
-  // Links written inside notes are connections too, like Obsidian's backlinks
-  const KIND = { cuisine: "cuisine", dish: "dish", ingredient: "ingredient" };
-  for (const [bucket, type] of [["cuisines", "cuisine"], ["dishes", "dish"], ["ingredients", "ingredient"]])
-    for (const [id, note] of Object.entries(notes[bucket] || {}))
-      for (const l of note.links || []) link(nodes.get(type + ":" + id), nodes.get(KIND[l.kind] + ":" + l.id), "mentions", "mentioned");
-
-  const bySlug = new Map();
-  for (const n of nodes.values()) { n.slug = slug(n.id); n.href = `#/${PATH[n.type]}/${n.slug}`; bySlug.set(PATH[n.type] + "/" + n.slug, n); }
-  const nodeList = [...nodes.values()];
+  // Nodes and links from the skeleton: [ref, name, type, color, flags, sub, x, y, X, Y]
+  const nodes = new Map();
+  const nodeList = skeleton.nodes.map(([ref, name, t, c, flags, sub, x, y, X, Y]) => {
+    const n = { key: ref, ref, name, type: skeleton.types[t], color: skeleton.colors[c], national: !!(flags & 1), indigenous: !!(flags & 2),
+      beyond: !!(flags & 4), sub, pos: [x, y, X, Y], href: "#/" + ref, out: new Map() };
+    nodes.set(ref, n);
+    return n;
+  });
+  for (const [a, b] of skeleton.links) { const x = nodeList[a], y = nodeList[b]; x.out.set(y.key, { node: y }); y.out.set(x.key, { node: x }); }
+  const bySlug = nodes;
   const ofType = t => nodeList.filter(n => n.type === t);
-  const edges = (n, rel) => [...n.out.values()].filter(e => !rel || e.rel === rel);
   const byName = (a, b) => a.name.localeCompare(b.name);
   const linkTo = n => `<a href="${n.href}">${esc(n.name)}</a>`;
   const linkList = list => list.length ? `<ul class="links">${list.map(n => `<li>${linkTo(n)}</li>`).join("")}</ul>` : "";
+  const neighbors = (n, type) => [...n.out.values()].map(e => e.node).filter(x => !type || x.type === type);
+  const globeHash = n => n.type === "cuisine" ? slug(n.ref.slice(8)) : n.type === "dish" ? "dish-" + n.ref.slice(5) : n.type === "ingredient" ? "ingredient-" + n.ref.slice(11) : "";
 
-  // Links into the globe view
-  const globeHash = n => n.type === "cuisine" ? slug(n.id) : n.type === "dish" ? "dish-" + slug(n.id) : n.type === "ingredient" ? "ingredient-" + slug(n.id) : "";
-
-  // --- Text: our notes first, then Wikipedia's intro ---------------------------
-  function clean(text) {
-    return text.replace(/\s*\((?:[^()]*\([^()]*\))*[^()]*\)/, m => /[:;\[]|pronounced|listen|[^\u0000-ɏ‘-”]/i.test(m) ? "" : m)
-      .replace(/\s*\[\d+\]/g, "").replace(/\.\./g, ".").replace(/\s+([,.;])/g, "$1").trim();
-  }
-  function noteHtml(n) {
-    const links = new Map((n.links || []).map(l => [l.text.toLowerCase(), l]));
-    return (n.text || []).map(p => `<p class="inline">${esc(p).replace(/\[\[([^\]|#]+)(?:#[^\]|]*)?(?:\|([^\]]+))?\]\]/g, (m, target, label) => {
-      const l = links.get(target.trim().toLowerCase().replace(/&#39;/g, "'").replace(/&amp;/g, "&"));
-      const node = l && nodes.get((l.kind === "cuisine" ? "cuisine:" : l.kind === "dish" ? "dish:" : "ingredient:") + l.id);
-      return node ? `<a href="${node.href}">${label || target}</a>` : (label || target);
-    })}</p>`).join("");
-  }
-  function noteSource(n, what) {
-    const src = (n.sources || []).filter(x => x.url);
-    return `<p class="source">Written for this explorer${src.length ? " from " + src.map(x => `<a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.name)}</a>`).join(", ") : ""}.</p>`;
-  }
+  // --- Pages ------------------------------------------------------------------
+  const mainPage = document.getElementById("page"), walkPage = document.getElementById("walk-page");
+  let page = mainPage;
+  const section = (title, body, count) => body ? `<h2>${title}${count ? ` <small>${count}</small>` : ""}</h2>${body}` : "";
   const live = new Map();
   function liveIntro(title) {
     if (!live.has(title)) {
@@ -396,168 +308,39 @@
     }
     return live.get(title);
   }
-  const wikiParas = text => text.split(/\n+/).map(t => clean(t.trim())).filter(Boolean).map(p => `<p>${esc(p)}</p>`).join("");
-  // Fill #intro: the note, or the stored Wikipedia intro, or fetch it live
-  function fillIntro(own, title, fallback) {
-    const box = document.getElementById("intro");
-    if (own && (own.text || []).length) { box.innerHTML = noteHtml(own); return; }
-    const show = t => { if (document.getElementById("intro") === box) box.innerHTML = wikiParas(t) + `<p class="source">Intro from Wikipedia, shared under CC BY-SA.</p>`; };
-    const get = () => title && (summaries[title] || foodSummaries[title]);
-    if (get()) return show(get());
-    box.innerHTML = fallback ? `<p>${esc(fallback)}</p>` : "";
-    if (!title) return;
-    later.then(() => {
-      if (get()) return show(get());
-      liveIntro(title).then(t => { if (t) show(t); });
+  // Server pages live at /labs/cuisines/<type>/<slug>/ on kylepace.net; here links stay in the app
+  const renderOpts = {
+    href: ref => "#/" + ref,
+    globe: hash => "./#" + hash,
+    correct: name => CORRECT + encodeURIComponent("Correction: " + name),
+  };
+  let renderToken = 0;
+  async function itemPage(n) {
+    const token = ++renderToken, target = page;
+    if (!target.querySelector("h1") || target.dataset.ref !== n.ref) target.innerHTML = `<p class="crumb">${esc(TYPE_LABEL[n.type])}</p><h1>${esc(n.name)}</h1>`;
+    const m = await getItem(n.ref);
+    if (token !== renderToken) return;
+    target.dataset.ref = n.ref;
+    if (!m) { target.innerHTML = `<h1>${esc(n.name)}</h1><p class="empty">This page didn't load. Check your connection and try again.</p>`; return; }
+    const shareable = location.hostname.endsWith("kylepace.net") ? `<a class="btn" href="/labs/cuisines/${n.ref}/">Page link</a>` : "";
+    target.innerHTML = renderItem(m, { ...renderOpts, extraActions: shareable });
+    const box = target.querySelector("#intro");
+    if (box && !box.textContent.trim() && box.dataset.wiki) liveIntro(box.dataset.wiki).then(t => {
+      if (t && box.isConnected) box.innerHTML = t.split(/\n+/).filter(p => p.trim()).map(p => `<p>${esc(p)}</p>`).join("") + `<p class="source">Intro from Wikipedia, shared under CC BY-SA.</p>`;
     });
-  }
-
-  // --- Pages ------------------------------------------------------------------
-  const mainPage = document.getElementById("page"), walkPage = document.getElementById("walk-page");
-  let page = mainPage;
-  const outLink = (url, label) => `<a class="btn" href="${esc(url)}" target="_blank" rel="noopener">${label} ${ARROW}</a>`;
-  const globeBtn = n => `<a class="btn" href="./#${globeHash(n)}">Show on the globe</a>`;
-  const correct = name => `<p class="correct">Something wrong or missing? <a href="${CORRECT + encodeURIComponent("Correction: " + name)}" target="_blank" rel="noopener">Suggest a correction</a>.</p>`;
-  function siteRows(list) {
-    return `<ul class="rows">${list.map(({ node, entry }) => `<li class="row"><span class="mark" style="background:${node.color};border-radius:2px"></span><div>
-      <a class="name" href="${node.href}">${esc(node.type === "site" ? node.name : entry.title)}</a>${entry.suggested ? `<span class="tag">Suggested</span>` : ""}
-      <small>${node.type === "site" ? esc(node.host) : esc([entry.author, entry.year].filter(Boolean).join(", "))}${entry.note ? `<br>${esc(entry.note)}` : ""}</small></div>
-      ${entry.url || entry.isbn ? `<a class="out" href="${esc(entry.url || "https://openlibrary.org/isbn/" + entry.isbn)}" target="_blank" rel="noopener" aria-label="Open ${esc(entry.name || entry.title)}">${ARROW}</a>` : ""}</li>`).join("")}</ul>`;
-  }
-  const section = (title, body, count) => body ? `<h2>${title}${count ? ` <small>${count}</small>` : ""}</h2>${body}` : "";
-
-  function cuisinePage(n) {
-    const c = n.c, own = notes.cuisines[c.id];
-    const country = c.iso3 && isoName.get(c.iso3);
-    const kind = c.indigenous ? `Indigenous foodways${own?.area ? ", " + own.area : ""}`
-      : (KIND_LABEL[c.kind] || "Cuisine") + (country ? (c.kind === "national" ? " of " : " in ") + country : "");
-    const parents = edges(n, "parent").map(e => e.node);
-    const kids = edges(n, "child").map(e => e.node).sort(byName);
-    const ds = edges(n, "dish").map(e => e.node).sort(byName);
-    const sites = edges(n, "site").sort((a, b) => a.entry.suggested - b.entry.suggested);
-    const books = edges(n, "book").sort((a, b) => a.entry.suggested - b.entry.suggested);
-    const count = new Map();
-    for (const d of ds) for (const e of edges(d, "ingredient")) count.set(e.node, (count.get(e.node) || 0) + 1);
-    const ings = [...count].sort((a, b) => b[1] - a[1]).slice(0, 24).map(([x]) => x);
-    const sameCountry = c.kind === "national" ? ofType("cuisine").filter(o => o !== n && o.c.iso3 === c.iso3 && !kids.includes(o)).sort(byName) : [];
-    const region = (c.region || [])[0];
-    page.innerHTML = `
-      <p class="crumb">${region ? `<a href="#/cuisines#${slug(CONTINENT[region] || region)}">${esc(CONTINENT[region] || region)}</a> /` : ""} ${parents.map(linkTo).join(", ") || "Cuisine"}</p>
-      <h1>${esc(c.name)}</h1>
-      <p class="sub"><i style="background:${n.color}"></i>${esc(kind)}</p>
-      ${own?.names ? `<p class="sub">${esc(own.names)}</p>` : ""}
-      <div class="intro" id="intro"></div>
-      ${own ? noteSource(own) : ""}
-      <div class="actions">${c.loc || c.iso3 ? globeBtn(n) : ""}${c.url ? outLink(c.url, "Wikipedia") : ""}</div>
-      ${section("Recipe sites", sites.length ? siteRows(sites) : `<p class="empty">None yet${parents.length ? `. Try ${parents.map(linkTo).join(" or ")}` : ""}.</p>`, sites.length)}
-      ${section("Cookbooks", books.length ? siteRows(books) : "", books.length)}
-      ${section("Dishes", linkList(ds), ds.length)}
-      ${section("Key ingredients", ings.length ? linkList(ings) + `<p class="source" style="margin-top:8px">Most used across its dishes.</p>` : "")}
-      ${section("Part of", linkList(parents))}
-      ${section(`Within ${esc(c.name.replace(/ (cuisine|foodways)$/, ""))} cooking`, linkList(kids), kids.length)}
-      ${section(`More from ${esc(country || "")}`, linkList(sameCountry), sameCountry.length)}
-      ${section("Mentioned in", linkList(edges(n, "mentioned").map(e => e.node).sort(byName)))}
-      ${correct(c.name)}`;
-    fillIntro(own, c.title, c.desc && capital(c.desc) + ".");
-  }
-
-  function dishPage(n) {
-    const d = n.d, own = notes.dishes[d.id];
-    const homes = edges(n, "cuisine").map(e => e.node);
-    const ings = edges(n, "ingredient").map(e => e.node).sort(byName);
-    const siblings = homes[0] ? edges(homes[0], "dish").map(e => e.node).filter(x => x !== n).sort(byName).slice(0, 40) : [];
-    const cook = homes.flatMap(h => edges(h, "site")).slice(0, 4);
-    page.innerHTML = `
-      <p class="crumb"><a href="#/dishes">Dishes</a></p>
-      <h1>${esc(d.name)}</h1>
-      <p class="sub"><i style="background:${homes[0]?.color || NEUTRAL}"></i>${homes.length === 1 ? `Dish from ${esc(homes[0].name)}` : `Dish found in ${homes.length} cuisines`}</p>
-      <div class="intro" id="intro"></div>
-      ${own ? noteSource(own) : ""}
-      <div class="actions">${globeBtn(n)}${!d.note || d.title ? outLink("https://en.wikipedia.org/wiki/" + encodeURIComponent((d.title || d.id).replace(/ /g, "_")), "Wikipedia") : ""}</div>
-      ${section("Where it's from", linkList(homes))}
-      ${section("Ingredients", linkList(ings), ings.length)}
-      ${section("Cook it", cook.length ? siteRows(cook) : "")}
-      ${section(homes[0] ? `More from ${esc(homes[0].name)}` : "", linkList(siblings))}
-      ${section("Mentioned in", linkList(edges(n, "mentioned").map(e => e.node).sort(byName)))}
-      ${correct(d.name)}`;
-    fillIntro(own, d.note && !d.title ? null : (d.title || d.id));
-  }
-
-  function ingredientPage(n) {
-    const i = n.i, own = notes.ingredients[i.id];
-    const ds = edges(n, "dish").map(e => e.node);
-    const byC = new Map();
-    for (const d of ds) for (const e of edges(d, "cuisine")) { if (!byC.has(e.node)) byC.set(e.node, []); byC.get(e.node).push(d); }
-    const rows = [...byC].sort((a, b) => b[1].length - a[1].length || byName(a[0], b[0]));
-    const pairs = new Map();
-    for (const d of ds) for (const e of edges(d, "ingredient")) if (e.node !== n) pairs.set(e.node, (pairs.get(e.node) || 0) + 1);
-    const paired = [...pairs].sort((a, b) => b[1] - a[1]).slice(0, 16).map(([x]) => x);
-    page.innerHTML = `
-      <p class="crumb"><a href="#/ingredients">Ingredients</a></p>
-      <h1>${esc(i.name)}</h1>
-      <p class="sub"><i style="background:${n.color}"></i>Ingredient in ${ds.length} ${ds.length === 1 ? "dish" : "dishes"} across ${rows.length} ${rows.length === 1 ? "cuisine" : "cuisines"}</p>
-      <div class="intro" id="intro"></div>
-      ${own ? noteSource(own) : ""}
-      <div class="actions">${ds.length ? globeBtn(n) : ""}${i.title ? outLink("https://en.wikipedia.org/wiki/" + encodeURIComponent(i.title.replace(/ /g, "_")), "Wikipedia") : ""}</div>
-      ${section("Where it's cooked with", rows.length ? `<ul class="grouped">${rows.map(([c, list]) => `<li><b>${linkTo(c)}</b> <span class="n">${list.length}</span>${linkList(list.sort(byName))}</li>`).join("")}</ul>` : "", rows.length)}
-      <div id="grown"></div>
-      ${section("Often cooked with", linkList(paired))}
-      ${section("Mentioned in", linkList(edges(n, "mentioned").map(e => e.node).sort(byName)))}
-      ${correct(i.name)}`;
-    fillIntro(own, i.title);
-    later.then(() => {
-      const g = grown.items[i.id], box = document.getElementById("grown");
-      if (!g || !box) return;
-      const nat = iso => nodes.get("cuisine:" + (nationalByIso.get(iso)?.id));
-      box.innerHTML = `<h2>Where it's grown</h2>
-        <p class="empty" style="margin-bottom:10px">Top producers of ${esc(g.fao.replace(/;/g, ","))}, averaged over ${esc(grown.meta.years)}.</p>
-        <ol class="grown">${g.top.slice(0, 15).map(([iso, t]) => `<li><span>${nat(iso) ? linkTo(nat(iso)).replace(">" + esc(nat(iso).name) + "<", ">" + esc(isoName.get(iso) || iso) + "<") : esc(isoName.get(iso) || iso)}</span><span class="n">${tonnes(t)}</span><i style="width:${Math.max(2, 100 * t / g.top[0][1]).toFixed(1)}%"></i></li>`).join("")}</ol>
-        <p class="source" style="margin-top:8px">Production data from <a href="${esc(grown.meta.url)}" target="_blank" rel="noopener">FAO, FAOSTAT</a>, CC BY 4.0. The world grows about ${tonnes(g.world)} a year.</p>`;
-    });
-  }
-  const tonnes = t => t >= 1e6 ? `${(t / 1e6).toFixed(t >= 1e7 ? 0 : 1)} million tonnes` : t >= 1000 ? `${Math.round(t / 1000).toLocaleString()} thousand tonnes` : `${Math.round(t).toLocaleString()} tonnes`;
-
-  function sitePage(n) {
-    const covers = edges(n, "cuisine").sort((a, b) => byName(a.node, b.node));
-    const note = covers.map(e => e.entry.note).find(Boolean);
-    page.innerHTML = `
-      <p class="crumb"><a href="#/sites">Recipe sites</a></p>
-      <h1>${esc(n.name)}</h1>
-      <p class="sub"><i style="background:${n.color};border-radius:2px"></i>Recipe site, ${esc(n.host)}${covers.every(e => e.entry.suggested) ? `<span class="tag">Suggested</span>` : ""}</p>
-      ${note ? `<div class="intro"><p>${esc(note)}</p></div>` : ""}
-      <div class="actions">${outLink("https://" + n.host, "Visit " + n.host)}</div>
-      ${section("Cuisines it covers", `<ul class="rows">${covers.map(e => `<li class="row"><span class="mark dot" style="background:${e.node.color}"></span><div>
-        <a class="name" href="${e.node.href}">${esc(e.node.name)}</a><small>${esc(e.entry.name)}</small></div>
-        <a class="out" href="${esc(e.entry.url)}" target="_blank" rel="noopener" aria-label="Open ${esc(e.entry.name)} for ${esc(e.node.name)}">${ARROW}</a></li>`).join("")}</ul>`, covers.length)}
-      ${correct(n.name)}`;
-  }
-
-  function bookPage(n) {
-    const covers = edges(n, "cuisine").sort((a, b) => byName(a.node, b.node));
-    const b = { ...n.b, ...covers.map(e => e.entry).find(x => x.isbn || x.url) };
-    const href = b.url || (b.isbn ? "https://openlibrary.org/isbn/" + b.isbn : null);
-    page.innerHTML = `
-      <p class="crumb"><a href="#/cookbooks">Cookbooks</a></p>
-      <div class="cover">${b.isbn ? `<img alt="" src="https://covers.openlibrary.org/b/isbn/${esc(b.isbn)}-M.jpg?default=false" onerror="this.remove()">` : ""}<span>${esc(b.title)}</span></div>
-      <h1>${esc(b.title)}</h1>
-      <p class="sub"><i style="background:${n.color};border-radius:2px"></i>Cookbook${b.author ? " by " + esc(b.author) : ""}${b.year ? ", " + b.year : ""}${covers.every(e => e.entry.suggested) ? `<span class="tag">Suggested</span>` : ""}</p>
-      ${b.note ? `<div class="intro"><p>${esc(b.note)}</p></div>` : ""}
-      <div class="actions">${href ? outLink(href, b.url ? "Publisher or book page" : "Open Library") : ""}</div>
-      ${section("Cuisines it covers", linkList(covers.map(e => e.node)), covers.length)}
-      ${b.isbn ? `<p class="source" style="clear:both">ISBN ${esc(b.isbn)}</p>` : ""}
-      ${correct(b.title)}`;
   }
 
   // Hub pages, like the index notes in a vault
-  const stat = (t, label) => `<li><a href="#/${t === "book" ? "cookbooks" : t === "site" ? "sites" : PLURAL[t].toLowerCase()}"><b>${ofType(t).length.toLocaleString()}</b><span>${label}</span></a></li>`;
+  const stat = (t, label) => `<li><a href="#/${INDEX_PATH[t]}"><b>${ofType(t).length.toLocaleString()}</b><span>${label}</span></a></li>`;
   function homePage() {
-    const nationals = ofType("cuisine").filter(n => n.c.kind === "national");
-    const indigenous = ofType("cuisine").filter(n => n.c.indigenous).sort(byName);
-    const topIngs = ofType("ingredient").map(n => [n, edges(n, "dish").length]).sort((a, b) => b[1] - a[1]).slice(0, 40).map(([n]) => n);
-    const shared = ofType("dish").filter(n => edges(n, "cuisine").length > 1).sort((a, b) => edges(b, "cuisine").length - edges(a, "cuisine").length).slice(0, 40);
+    const nationals = ofType("cuisine").filter(n => n.national);
+    const indigenous = ofType("cuisine").filter(n => n.indigenous).sort(byName);
+    const topIngs = ofType("ingredient").map(n => [n, neighbors(n, "dish").length]).sort((a, b) => b[1] - a[1]).slice(0, 40).map(([n]) => n);
+    const shared = ofType("dish").filter(n => neighbors(n, "cuisine").length > 1).sort((a, b) => neighbors(b, "cuisine").length - neighbors(a, "cuisine").length).slice(0, 40);
+    page.dataset.ref = "";
     page.innerHTML = `
       <h1>The web of cuisines</h1>
-      <div class="intro"><p>The same cuisines, dishes and ingredients as the globe, laid out as linked pages. Every page lists what it connects to, and the graph shows how it all ties together. Follow any link to keep going.</p></div>
+      <div class="intro"><p>The same cuisines, dishes and ingredients as the globe, laid out as linked pages. Every page lists what it connects to, and you can walk the web from any of them. Follow any link to keep going.</p></div>
       <ul class="stats">${stat("cuisine", "cuisines")}${stat("dish", "dishes")}${stat("ingredient", "ingredients")}${stat("site", "recipe sites")}${stat("book", "cookbooks")}</ul>
       ${section("Cuisines by region", byContinent(nationals))}
       ${section("Indigenous foodways", linkList(indigenous), indigenous.length)}
@@ -566,23 +349,21 @@
   }
   function byContinent(list) {
     const groups = new Map();
-    for (const n of list) { const k = (n.c.region || [])[0] || "Elsewhere"; if (!groups.has(k)) groups.set(k, []); groups.get(k).push(n); }
-    return [...groups].sort((a, b) => (CONTINENT[a[0]] || a[0]).localeCompare(CONTINENT[b[0]] || b[0])).map(([k, l]) =>
-      `<h3 id="${slug(CONTINENT[k] || k)}">${esc(CONTINENT[k] || k)}</h3>${linkList(l.sort(byName))}`).join("");
+    for (const n of list) { const k = continentOfColor.get(n.color) || "Elsewhere"; if (!groups.has(k)) groups.set(k, []); groups.get(k).push(n); }
+    return [...groups].sort((a, b) => a[0].localeCompare(b[0])).map(([k, l]) => `<h3 id="${slug(k)}">${esc(k)}</h3>${linkList(l.sort(byName))}`).join("");
   }
   function indexPage(type, letter) {
     let list = ofType(type).sort(byName);
-    if (type === "ingredient") list = list.filter(n => edges(n, "dish").length);
+    if (type === "ingredient") list = list.filter(n => neighbors(n, "dish").length);
     const letters = [...new Set(list.map(n => norm(n.name).charAt(0).toUpperCase()).filter(ch => /[A-Z]/.test(ch)))].sort();
     const long = list.length > 300;
     const pick = long ? (letter || letters[0]) : null;
     const shown = long ? list.filter(n => norm(n.name).charAt(0).toUpperCase() === pick) : list;
-    const base = `#/${type === "book" ? "cookbooks" : type === "site" ? "sites" : PLURAL[type].toLowerCase()}`;
-    let body;
-    if (type === "cuisine") {
-      const beyond = list.filter(n => !n.c.iso3 || ["religious", "historical", "style"].includes(n.c.kind));
-      body = byContinent(list.filter(n => !beyond.includes(n))) + `<h3 id="beyond-borders">Beyond borders</h3>${linkList(beyond)}`;
-    } else body = linkList(shown);
+    const base = "#/" + INDEX_PATH[type];
+    const body = type === "cuisine"
+      ? byContinent(list.filter(n => !n.beyond)) + `<h3 id="beyond-borders">Beyond borders</h3>${linkList(list.filter(n => n.beyond))}`
+      : linkList(shown);
+    page.dataset.ref = "";
     page.innerHTML = `
       <p class="crumb"><a href="#/">The web</a></p>
       <h1>${PLURAL[type]}</h1>
@@ -599,6 +380,7 @@
     const [path, anchor] = h.split("#");
     const parts = path.split("/").filter(Boolean);
     const walking = parts[0] === "walk";
+
     if (walking) parts.shift();
     current = null;
     page = walking ? walkPage : mainPage;
@@ -607,11 +389,8 @@
     else if (INDEX[parts[0]]) indexPage(INDEX[parts[0]], parts[1]);
     else {
       const n = bySlug.get(parts[0] + "/" + parts[1]);
-      if (!n) { page.innerHTML = `<h1>Not found</h1><p class="empty">Nothing here by that name. <a href="#/">Back to the web</a>.</p>`; }
-      else {
-        current = n;
-        ({ cuisine: cuisinePage, dish: dishPage, ingredient: ingredientPage, site: sitePage, book: bookPage })[n.type](n);
-      }
+      if (!n) { page.dataset.ref = ""; page.innerHTML = `<h1>Not found</h1><p class="empty">Nothing here by that name. <a href="#/">Back to the web</a>.</p>`; }
+      else { current = n; itemPage(n); }
     }
     document.title = (current ? current.name + " · " : "") + "Cuisine Explorer: the web";
     document.getElementById("to-globe").href = "./" + (current && globeHash(current) ? "#" + globeHash(current) : "");
@@ -639,7 +418,7 @@
     : t === "site" ? `<rect x="-4" y="-4" width="8" height="8" fill="#55b8ad"/>` : t === "book" ? `<rect x="-3" y="-5" width="6" height="10" fill="#f0b340"/>`
     : t === "dish" ? `<circle r="3.5" fill="#ede6da"/>` : `<circle r="5" fill="#94bd5c"/>`}</svg>`;
   document.getElementById("key").innerHTML = ["cuisine", "dish", "ingredient", "site", "book"].map(t => `<span>${keySvg(t)}${TYPE_LABEL[t]}</span>`).join("");
-  const size = n => n.type === "cuisine" ? (n.c.kind === "national" ? 5 : 3.6) : n.type === "dish" ? 2.2 : n.type === "ingredient" ? 2.8 : 3;
+  const size = n => n.type === "cuisine" ? (n.national ? 5 : 3.6) : n.type === "dish" ? 2.2 : n.type === "ingredient" ? 2.8 : 3;
   const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const isPhone = () => innerWidth <= 720;
   const tip = document.getElementById("tip");
@@ -706,14 +485,13 @@
   // The whole web. Positions come from data/graph.json, laid out once in the weekly
   // rebuild (scripts/build_graph.mjs), so it opens settled and holds still.
   const full = document.getElementById("full"), graphEl = document.getElementById("graph");
-  let fullGraph = null, fullOpen = false, fullHover = null, positions = null, layoutKind = "continent";
+  let fullGraph = null, fullOpen = false, fullHover = null, layoutKind = "continent";
   const shown = { cuisine: true, site: true, book: true, dish: false, ingredient: false };
   let near = new Set();
-  function highlight() { near = current ? new Set([current, ...[...current.out.values()].map(e => e.node)]) : new Set(); }
+  function highlight() { near = current && shown[current.type] ? new Set([current, ...[...current.out.values()].map(e => e.node)]) : new Set(); }
   const fullCache = new Map();
   function place(g) {
-    const p = positions[g.n.key];
-    if (!p) return;
+    const p = g.n.pos;
     const [x, y] = layoutKind === "links" ? [p[0], p[1]] : [p[2], p[3]];
     const first = g.hx == null;
     g.hx = x; g.hy = y;
@@ -721,7 +499,7 @@
     if (reduceMotion) { g.fx = x; g.fy = y; }
   }
   function fullData() {
-    const keep = nodeList.filter(n => shown[n.type] && positions[n.key]);
+    const keep = nodeList.filter(n => shown[n.type]);
     const set = new Set(keep);
     const gl = [];
     for (const a of keep) for (const [k, e] of a.out) if (set.has(e.node) && a.key < k) gl.push({ source: a.key, target: k });
@@ -732,9 +510,6 @@
     fullOpen = true; full.classList.add("open"); highlight();
     document.body.style.overflow = "hidden";
     document.getElementById("close-graph").focus();
-    if (!positions) {
-      positions = (await load("data-graph", "data/graph.json").catch(() => ({ nodes: {} }))).nodes;
-    }
     if (!fullGraph) {
       fullGraph = ForceGraph()(graphEl)
         .backgroundColor("#1b1424")
@@ -754,7 +529,7 @@
           ctx.fillStyle = n.color; ctx.fill();
           ctx.globalAlpha = 1;
           if (me) { ctx.lineWidth = 2.5 / scale; ctx.strokeStyle = "#fff"; ctx.stroke(); }
-          const label = me || n === fullHover || (near.has(n) && scale > 0.9) || (n.type === "cuisine" && n.c.kind === "national" && scale > 1.4) || scale > 4;
+          const label = me || n === fullHover || (near.has(n) && scale > 0.9) || (n.type === "cuisine" && n.national && scale > 1.4) || scale > 4;
           if (label) {
             const fs = Math.max(11 / scale, 1.2);
             ctx.font = `${me ? 700 : 400} ${fs}px Atkinson Hyperlegible Next, system-ui, sans-serif`;
@@ -819,16 +594,19 @@
   const walkNodes = new Map();   // key -> graph node, kept between steps so dots glide
   const trailList = [];
   // A one-line preview for hovering, from notes or Wikipedia's intro
+  // A one-line preview for hovering, from the page's intro (its bucket loads on hover)
+  const previews = new Map();
   function preview(n) {
-    const own = (n.type === "cuisine" ? notes.cuisines : n.type === "dish" ? notes.dishes : n.type === "ingredient" ? notes.ingredients : {})[n.id];
-    let t = own?.text?.[0]?.replace(/\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g, (m, a, b) => b || a)
-      || (n.type === "cuisine" && (summaries[n.c.title] || n.c.desc))
-      || (n.type === "dish" && foodSummaries[n.d.title || n.d.id])
-      || (n.type === "ingredient" && n.i.title && foodSummaries[n.i.title])
-      || (n.type === "site" ? n.host : n.type === "book" ? [n.b.author, n.b.year].filter(Boolean).join(", ") : "");
-    t = clean(String(t || "").split(/\n/)[0]);
-    const first = (t.match(/^.{20,}?[.!?](\s|$)/) || [t])[0];
-    return first.length > 160 ? first.slice(0, 157) + "…" : first;
+    if (previews.has(n.ref)) return previews.get(n.ref);
+    previews.set(n.ref, "");
+    getItem(n.ref).then(m => {
+      if (!m) return;
+      const t = summaryOf(m, 300);
+      const first = (t.match(/^.{20,}?[.!?](\s|$)/) || [t])[0];
+      previews.set(n.ref, first.length > 160 ? first.slice(0, 157) + "…" : first);
+      if (walkHover === n) walkGraph.onNodeHover()({ n });
+    });
+    return "";
   }
   // Everything within `depth` steps, nearest and best-connected first, capped so it stays readable
   function neighborhood(center) {
@@ -972,7 +750,7 @@
 
   // --- Search ----------------------------------------------------------------------
   const q = document.getElementById("q"), results = document.getElementById("results");
-  const index = nodeList.map(n => ({ n, s: norm(n.name), w: n.type === "cuisine" ? (n.c.kind === "national" ? 3 : 2) : n.type === "ingredient" ? 1.5 : 1 }));
+  const index = nodeList.map(n => ({ n, s: norm(n.name), w: n.type === "cuisine" ? (n.national ? 3 : 2) : n.type === "ingredient" ? 1.5 : 1 }));
   let hits = [], sel = 0;
   function search() {
     const t = norm(q.value.trim());
@@ -985,7 +763,7 @@
     let html = "", last = null;
     hits.forEach((x, i) => {
       if (x.n.type !== last) { html += `<li class="group" role="presentation">${PLURAL[x.n.type]}</li>`; last = x.n.type; }
-      const sub = x.n.type === "cuisine" ? (x.n.c.iso3 ? isoName.get(x.n.c.iso3) || "" : "") : x.n.type === "site" ? x.n.host : `${x.n.out.size} links`;
+      const sub = x.n.sub || `${x.n.out.size} links`;
       html += `<li role="option" id="r${i}" data-i="${i}" aria-selected="${i === 0}"><span>${esc(x.n.name)}</span><small>${esc(sub)}</small></li>`;
     });
     results.innerHTML = html || `<li class="group">Nothing matches</li>`;

@@ -41,5 +41,5 @@ python3 scripts/fetch_food_summaries.py
 # Where ingredients are grown (FAOSTAT, CC BY 4.0)
 python3 scripts/fetch_faostat.py
 
-# Lay out the whole web for the graph view (needs `npm ci` for d3-force)
-node scripts/build_graph.mjs
+# The web view: page models, the skeleton and the graph layout (needs `npm ci` for d3-force)
+node scripts/build_web.mjs

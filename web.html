@@ -342,6 +342,13 @@
 
   const COLORS = { "African cuisine": "#e46a3f", "Cuisine of the Americas": "#94bd5c", "Asian cuisine": "#f0b340", "European cuisine": "#cf5f87", "Oceanic cuisine": "#55b8ad" };
   const CONTINENT = skeleton.continents;
+  // The visitor's own continent goes first, from the device's time zone (it never leaves the browser)
+  const HOME = (() => {
+    let zone = "";
+    try { zone = Intl.DateTimeFormat().resolvedOptions().timeZone || ""; } catch (e) {}
+    const area = zone.split("/")[0];
+    return { America: "The Americas", Europe: "Europe", Asia: "Asia", Africa: "Africa", Australia: "Oceania", Pacific: "Oceania" }[area] || "";
+  })();
   const continentOfColor = new Map(Object.entries(COLORS).map(([k, c]) => [c, CONTINENT[k]]));
   const TYPE_LABEL = { cuisine: "Cuisine", dish: "Dish", ingredient: "Ingredient", site: "Recipe site", book: "Cookbook" };
   const PLURAL = { cuisine: "Cuisines", dish: "Dishes", ingredient: "Ingredients", site: "Recipe sites", book: "Cookbooks" };
@@ -471,7 +478,7 @@
   function byContinent(list) {
     const groups = new Map();
     for (const n of list) { const k = continentOfColor.get(n.color) || "Elsewhere"; if (!groups.has(k)) groups.set(k, []); groups.get(k).push(n); }
-    return [...groups].sort((a, b) => a[0].localeCompare(b[0])).map(([k, l]) => `<h3 id="${slug(k)}">${esc(k)}</h3>${linkList(l.sort(byName))}`).join("");
+    return [...groups].sort((a, b) => (b[0] === HOME) - (a[0] === HOME) || a[0].localeCompare(b[0])).map(([k, l]) => `<h3 id="${slug(k)}">${esc(k)}</h3>${linkList(l.sort(byName))}`).join("");
   }
   function indexPage(type, letter) {
     let list = ofType(type).sort(byName);

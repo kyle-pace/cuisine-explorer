@@ -229,12 +229,18 @@
   /* Phones: compact controls, and the card becomes a bottom sheet that peeks
      over the map and expands when tapped or dragged up */
   @media (max-width: 720px) {
-    .masthead { top: 12px; left: 12px; width: calc(100vw - 24px); }
-    .masthead h1 { font-size: 1.6rem; margin-bottom: 8px; }
+    /* Same top as the Browse pages: name and switch side by side, search underneath */
+    .masthead {
+      top: calc(12px + env(safe-area-inset-top, 0px));
+      left: calc(14px + env(safe-area-inset-left, 0px));
+      width: calc(100vw - 28px - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px));
+      display: flex; flex-wrap: wrap; align-items: center; gap: 12px 10px;
+    }
+    .masthead h1 { font-size: 1.15rem; letter-spacing: -0.01em; margin: 0; white-space: nowrap; }
+    .masthead .views { margin: 0; }
+    .masthead .search { flex: 1 0 100%; }
     .masthead p, .swatches, .hint, .nearby { display: none; }
-    .masthead .views { position: absolute; top: 0; right: 0; margin: 0; }
-    .views a { padding: 4px 10px; font-size: 0.85rem; }
-    .masthead h1 { max-width: calc(100% - 150px); }
+    .views a { padding: 5px 11px; }
     .legend { left: 12px; right: 12px; bottom: calc(12px + var(--safe-b)); }
     .toggles { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
     .chip-btn { white-space: nowrap; padding: 9px 14px; }
@@ -262,7 +268,6 @@
 
   /* Embedded in a page that already has its own title (kylepace.dev/world-cuisine/) */
   .embed .masthead h1, .embed .masthead p { display: none; }
-  @media (max-width: 720px) { .embed .masthead .views { position: static; margin-bottom: 8px; } }
   .embed .masthead { top: 16px; left: 16px; }
   .embed .legend { left: 16px; bottom: 16px; }
 </style>
@@ -342,6 +347,22 @@
   };
   const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const isPhone = () => innerWidth <= 720;
+  // Start on the visitor's own side of the world, worked out from the device's time zone.
+  // It never leaves the browser; a time zone that says nothing (UTC) falls back to the middle.
+  function homeView() {
+    const clamp = (n, lo, hi) => Math.min(hi, Math.max(lo, n));
+    let zone = "";
+    try { zone = Intl.DateTimeFormat().resolvedOptions().timeZone || ""; } catch (e) {}
+    const lng = -new Date().getTimezoneOffset() / 4;   // 15° of longitude per hour
+    const area = zone.split("/")[0];
+    if (area === "America") return { lat: 25, lng: clamp(lng, -100, -55) };
+    if (area === "Europe") return { lat: 46, lng: clamp(lng, 0, 30) };
+    if (area === "Asia") return { lat: 28, lng: clamp(lng, 45, 130) };
+    if (area === "Africa") return { lat: 5, lng: 20 };
+    if (area === "Australia" || zone === "Pacific/Auckland") return { lat: -28, lng: 145 };
+    if (area === "Pacific") return { lat: -10, lng: 175 };
+    return { lat: 22, lng: 20 };
+  }
   const noHover = matchMedia("(hover: none)").matches;
 
   // Data: inlined in the preview build, fetched alongside the page otherwise
@@ -669,7 +690,7 @@
   const stopSpin = () => { controls.autoRotate = false; };
   el.addEventListener("pointerdown", stopSpin);
   el.addEventListener("wheel", stopSpin, { passive: true });
-  world.pointOfView({ lat: 22, lng: 20, altitude: isPhone() ? 2.8 : 2.1 }, 0);
+  world.pointOfView({ ...homeView(), altitude: isPhone() ? 2.8 : 2.1 }, 0);
   const resize = () => world.width(innerWidth).height(innerHeight);
   addEventListener("resize", resize); resize();
   document.getElementById("loading").remove();

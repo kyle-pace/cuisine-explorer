@@ -14,6 +14,7 @@ struct WalkView: View {
     @Environment(Store.self) private var store
     @Environment(Library.self) private var library
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.dynamicTypeSize) private var typeSize
     let start: String
     @State private var center: String
     @State private var trail: [String] = []
@@ -96,7 +97,7 @@ struct WalkView: View {
 
     private var panel: some View {
         VStack(alignment: .leading, spacing: Space.m) {
-            if shown.count > 18 { TipView(HoldForNameTip()).tipBackground(Theme.raised) }
+            if shown.count > (typeSize.isAccessibilitySize ? 8 : 18) { TipView(HoldForNameTip()).tipBackground(Theme.raised) }
             if let n = store.node(center) {
                 HStack(alignment: .top, spacing: Space.m) {
                     if let thumb = store.thumbnail(center) {
@@ -154,6 +155,7 @@ struct RadialGraph: View {
     static let maxShown = 36
     @Environment(Store.self) private var store
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.dynamicTypeSize) private var typeSize
     let center: String
     let neighbors: [Store.Node]
     var picked: String?
@@ -228,16 +230,18 @@ struct RadialGraph: View {
                 out[n.ref] = CGPoint(x: mid.x + rx * scale * cos(a), y: mid.y + ry * scale * sin(a))
             }
         }
+        // At the accessibility text sizes only a few labels fit; the rest show on hold or to VoiceOver
+        let fit = typeSize.isAccessibilitySize ? 8 : 18
         if neighbors.count <= 18 {
             place(neighbors, scale: 1, offset: 0)
-            labeled = Set(neighbors.map(\.ref))
+            if neighbors.count <= fit { labeled = Set(neighbors.map(\.ref)) }
         } else {
             // The outer ring has room for labels (about 70 points apart on a phone), so the
             // likeliest next steps (cuisines, then dishes) go there; the rest sit inside, unlabeled
             let outer = Array(neighbors.prefix(18)), inner = Array(neighbors.dropFirst(18))
             place(outer, scale: 1, offset: 0)
             place(inner, scale: 0.5, offset: 0.5)
-            labeled = Set(outer.map(\.ref))
+            if !typeSize.isAccessibilitySize { labeled = Set(outer.map(\.ref)) }
         }
         return (out, labeled)
     }

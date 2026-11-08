@@ -135,6 +135,29 @@ struct ExploreView: View {
                 }
                 .padding(.horizontal, Space.xl)
 
+                // Ingredients are a good way in: the most-cooked-with ones, with photos
+                VStack(alignment: .leading, spacing: Space.m) {
+                    NavigationLink(value: Route.hub("ingredients")) {
+                        SectionHeader("Browse by ingredient", trailing: "All \(count(.ingredient))", chevron: true)
+                    }
+                    .buttonStyle(.plain)
+                    LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: Space.s), count: 3), spacing: Space.s) {
+                        ForEach(topIngredients) { n in
+                            NavigationLink(value: Route.item(n.ref)) {
+                                ZStack(alignment: .bottomLeading) {
+                                    RemoteImage(url: store.photo(n.ref)).frame(height: 96).clipped()
+                                    LinearGradient(colors: [.clear, .black.opacity(0.7)], startPoint: .center, endPoint: .bottom)
+                                    Text(n.name).font(Theme.caption.weight(.semibold)).foregroundStyle(.white).lineLimit(1).padding(8)
+                                }
+                                .clipShape(RoundedRectangle(cornerRadius: Radius.medium))
+                            }
+                            .buttonStyle(.plain)
+                            .accessibilityLabel(n.name)
+                        }
+                    }
+                }
+                .padding(.horizontal, Space.xl)
+
                 // A way into walk mode from the start, as the web's home offers
                 if let start = featured.first {
                     NavigationLink(value: Route.walk(start.ref)) {
@@ -197,6 +220,13 @@ struct ExploreView: View {
     }
 
     private func count(_ kind: Store.Kind) -> Int { store.nodes.lazy.filter { $0.type == kind }.count }
+
+    /// The nine ingredients cooked with most, among those with a photo
+    private var topIngredients: [Store.Node] {
+        store.nodes.filter { $0.type == .ingredient && store.hasPhoto($0.ref) }
+            .sorted { store.linkCount($0.ref) > store.linkCount($1.ref) }
+            .prefix(9).map { $0 }
+    }
 
     /// Picked from the dishes with photos by the day of the year, so it changes at midnight
     private var dailyDish: Store.Node? {
@@ -268,6 +298,11 @@ struct HubView: View {
     @State private var filter = ""
     @State private var facet: Facet = .all
     @State private var continent: String?
+    @State private var sort: Sort?
+
+    enum Sort: String, CaseIterable { case mostLinked = "Most used", alphabetical = "A to Z" }
+    /// Ingredients open by how much they're cooked with; everything else A to Z
+    private var order: Sort { sort ?? (ref == "ingredients" ? .mostLinked : .alphabetical) }
 
     /// Ways to narrow a list of cuisines
     enum Facet: String, CaseIterable { case all = "All", national = "National", regional = "Regional", indigenous = "Indigenous"
@@ -294,7 +329,7 @@ struct HubView: View {
     var body: some View {
         let hub = hub
         let list = visible(hub.nodes)
-        let grouped = list.count > 40 && filter.isEmpty
+        let grouped = list.count > 40 && filter.isEmpty && order == .alphabetical
         List {
             if cuisineFacets || continentFacets {
                 ChipRow {
@@ -342,6 +377,15 @@ struct HubView: View {
             if ref == "x:recent", !library.recent.isEmpty {
                 ToolbarItem(placement: .topBarTrailing) { Button("Clear") { library.clearRecent() } }
             }
+            if !["x:recent", "x:saved"].contains(ref) {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Menu("Sort", systemImage: "arrow.up.arrow.down") {
+                        Picker("Sort", selection: Binding(get: { order }, set: { sort = $0 })) {
+                            ForEach(Sort.allCases, id: \.self) { Text($0.rawValue).tag($0) }
+                        }
+                    }
+                }
+            }
         }
         .overlay {
             if list.isEmpty {
@@ -361,6 +405,7 @@ struct HubView: View {
         var out = cuisineFacets ? nodes.filter(facet.keeps) : nodes
         if let continent { out = out.filter { store.continents(of: $0.ref).contains(continent) } }
         if !filter.isEmpty { out = out.filter { $0.name.localizedCaseInsensitiveContains(filter) } }
+        if order == .mostLinked { out.sort { store.linkCount($0.ref) > store.linkCount($1.ref) } }
         return out
     }
 
@@ -397,7 +442,12 @@ struct NodeRow: View {
     /// Dishes and ingredients have no place of their own; say which cuisine they belong to
     private var sub: String {
         if !node.sub.isEmpty { return node.sub }
-        if let c = store.neighbors(node.ref).first(where: { $0.type == .cuisine }) { return "\(node.type.singular) · \(c.name)" }
+        let links = store.neighbors(node.ref)
+        if node.type == .ingredient {
+            let dishes = links.filter { $0.type == .dish }.count
+            return dishes > 0 ? "In \(dishes) \(dishes == 1 ? "dish" : "dishes")" : "Ingredient"
+        }
+        if let c = links.first(where: { $0.type == .cuisine }) { return "\(node.type.singular) · \(c.name)" }
         return node.type.singular
     }
 

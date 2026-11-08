@@ -123,16 +123,20 @@ final class Store {
         return out
     }
 
-    /// Everything linked to an item: its cuisine, dishes, ingredients, sites, books and mentions.
-    /// Cuisines first, then dishes, ingredients, books and sites, alphabetical within each.
+    /// The web is food: cuisines, dishes and ingredients. Recipe sites and cookbooks stay on pages.
+    static let graphKinds: Set<Kind> = [.cuisine, .dish, .ingredient]
+    func inGraph(_ ref: String) -> Bool { node(ref).map { Self.graphKinds.contains($0.type) } ?? false }
+
+    /// Everything linked to an item in the web: cuisines first, then dishes and ingredients,
+    /// alphabetical within each. Empty for recipe sites and cookbooks.
     func neighbors(_ ref: String) -> [Node] {
-        guard let i = index[ref], neighborIndex.indices.contains(i) else { return [] }
-        return neighborIndex[i].map { nodes[$0] }.sorted {
+        guard inGraph(ref), let i = index[ref], neighborIndex.indices.contains(i) else { return [] }
+        return neighborIndex[i].map { nodes[$0] }.filter { Self.graphKinds.contains($0.type) }.sorted {
             $0.type.walkOrder != $1.type.walkOrder ? $0.type.walkOrder < $1.type.walkOrder
                 : $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending
         }
     }
-    func linkCount(_ ref: String) -> Int { index[ref].map { neighborIndex[$0].count } ?? 0 }
+    func linkCount(_ ref: String) -> Int { neighbors(ref).count }
 
     /// A small thumbnail for lists (a cuisine without its own photo gets one of its dishes)
     func thumbnail(_ ref: String) -> URL? {

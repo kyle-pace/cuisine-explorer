@@ -316,6 +316,10 @@
   const linkTo = n => `<a href="${n.href}">${esc(n.name)}</a>`;
   const linkList = list => list.length ? `<ul class="links">${list.map(n => `<li>${linkTo(n)}</li>`).join("")}</ul>` : "";
   const neighbors = (n, type) => [...n.out.values()].map(e => e.node).filter(x => !type || x.type === type);
+  // The graph is food: cuisines, dishes and ingredients. Recipe sites and cookbooks stay on
+  // the pages (and in search) but aren't dots.
+  const GRAPH = new Set(["cuisine", "dish", "ingredient"]);
+  const graphNeighbors = n => [...n.out.values()].map(e => e.node).filter(x => GRAPH.has(x.type));
   const globeHash = n => n.type === "cuisine" ? slug(n.ref.slice(8)) : n.type === "dish" ? "dish-" + n.ref.slice(5) : n.type === "ingredient" ? "ingredient-" + n.ref.slice(11) : "";
 
   // --- Pages ------------------------------------------------------------------
@@ -466,15 +470,15 @@
   let localGraph = null, localHover = null;
   function drawLocal() {
     const side = document.getElementById("side");
-    side.hidden = !current;
-    document.getElementById("layout").classList.toggle("solo", !current);
-    if (!current) return;
-    const priority = { cuisine: 0, site: 1, book: 1, ingredient: 2, dish: 3 };
-    const near = [...current.out.values()].map(e => e.node).sort((a, b) => priority[a.type] - priority[b.type] || b.out.size - a.out.size).slice(0, 48);
+    side.hidden = !current || !GRAPH.has(current.type);
+    document.getElementById("layout").classList.toggle("solo", side.hidden);
+    if (side.hidden) return;
+    const priority = { cuisine: 0, ingredient: 2, dish: 3 };
+    const near = graphNeighbors(current).sort((a, b) => priority[a.type] - priority[b.type] || b.out.size - a.out.size).slice(0, 48);
     const set = new Set([current, ...near]);
     const gNodes = [...set].map(n => ({ n, id: n.key }));
     const gLinks = [];
-    for (const a of set) for (const [k, e] of a.out) if (set.has(e.node) && a.key < k) gLinks.push({ source: a.key, target: k });
+    for (const a of set) for (const [k, e] of a.out) if (set.has(e.node) && GRAPH.has(e.node.type) && a.key < k) gLinks.push({ source: a.key, target: k });
     if (!localGraph) {
       localGraph = ForceGraph()(localEl)
         .backgroundColor("rgba(0,0,0,0)")
@@ -518,9 +522,9 @@
   // rebuild (scripts/build_graph.mjs), so it opens settled and holds still.
   const full = document.getElementById("full"), graphEl = document.getElementById("graph");
   let fullGraph = null, fullOpen = false, fullHover = null, layoutKind = "continent";
-  const shown = { cuisine: true, site: true, book: true, dish: false, ingredient: false };
+  const shown = { cuisine: true, dish: false, ingredient: false };
   let near = new Set();
-  function highlight() { near = current && shown[current.type] ? new Set([current, ...[...current.out.values()].map(e => e.node)]) : new Set(); }
+  function highlight() { near = current && shown[current.type] ? new Set([current, ...graphNeighbors(current)]) : new Set(); }
   const fullCache = new Map();
   function place(g) {
     const p = g.n.pos;
@@ -623,7 +627,7 @@
   const walkEl = document.getElementById("walk"), walkGraphEl = document.getElementById("walk-graph");
   const walkHref = n => "#/walk/" + n.href.slice(2);
   let walkGraph = null, walkCenter = null, walkHover = null, depth = 1, walkFit = false;
-  const walkShown = { cuisine: true, dish: true, ingredient: true, site: true, book: true };
+  const walkShown = { cuisine: true, dish: true, ingredient: true };
   const walkNodes = new Map();   // key -> graph node, kept between steps so dots glide
   const trailList = [];
   // A one-line preview for hovering, from notes or Wikipedia's intro
@@ -644,14 +648,14 @@
   // Everything within `depth` steps, nearest and best-connected first, capped so it stays readable
   function neighborhood(center) {
     const cap = [0, 70, 140, 200][depth];
-    const priority = { cuisine: 0, site: 1, book: 1, ingredient: 2, dish: 3 };
+    const priority = { cuisine: 0, ingredient: 2, dish: 3 };
     const seen = new Map([[center, { d: 0, via: null }]]);
     let ring = [center];
     for (let d = 1; d <= depth && seen.size < cap; d++) {
       const next = [];
       for (const a of ring) for (const e of a.out.values()) {
         const b = e.node;
-        if (seen.has(b) || !walkShown[b.type]) continue;
+        if (seen.has(b) || !walkShown[b.type] || !GRAPH.has(b.type)) continue;
         seen.set(b, { d, via: a }); next.push(b);
       }
       next.sort((a, b) => priority[a.type] - priority[b.type] || b.out.size - a.out.size);

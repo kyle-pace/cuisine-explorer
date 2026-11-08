@@ -123,14 +123,28 @@ def main():
     # 3. License, author and the 500 px thumbnail for every file, from Commons
     files = {}
     names = sorted(set(items.values()))
+    def commons_pages(batch):
+        # imageinfo with extmetadata answers only a few files per request and asks
+        # to continue for the rest, so follow "continue" until the batch is done
+        params = {"action": "query", "prop": "imageinfo", "iiprop": "url|size|extmetadata", "iiurlwidth": str(WIDTH),
+                  "iiextmetadatafilter": "LicenseShortName|LicenseUrl|Artist|Attribution|NonFree|Restrictions",
+                  "titles": "|".join("File:" + n for n in batch)}
+        got, extra = {}, {}
+        for _ in range(60):
+            d = api("https://commons.wikimedia.org/w/api.php", {**params, **extra})
+            if not d:
+                break
+            for page in d.get("query", {}).get("pages", []):
+                if page.get("imageinfo"):
+                    got[page["title"]] = page
+            if "continue" not in d:
+                break
+            extra = d["continue"]
+            time.sleep(0.2)
+        return got.values()
+
     for i in range(0, len(names), 50):
-        d = api("https://commons.wikimedia.org/w/api.php", {
-            "action": "query", "prop": "imageinfo", "iiprop": "url|size|extmetadata", "iiurlwidth": str(WIDTH),
-            "iiextmetadatafilter": "LicenseShortName|LicenseUrl|Artist|Attribution|NonFree|Restrictions",
-            "titles": "|".join("File:" + n for n in names[i:i + 50])})
-        if not d:
-            continue
-        for page in d.get("query", {}).get("pages", []):
+        for page in commons_pages(names[i:i + 50]):
             info = (page.get("imageinfo") or [None])[0]
             if not info or page.get("missing"):
                 continue
@@ -147,6 +161,7 @@ def main():
                                         "h": info.get("thumbheight") or info.get("height"), "by": by,
                                         "lic": lic, "licUrl": meta.get("LicenseUrl", "")}
         time.sleep(0.5)
+        print(f"  commons: {min(i + 50, len(names))} of {len(names)} files, {len(files)} free", file=sys.stderr) if i % 1000 == 0 else None
 
     kept = {k: v for k, v in items.items() if v in files}
     json.dump({"files": files, "items": kept}, open(P("data/images.json"), "w"), ensure_ascii=False, separators=(",", ":"))

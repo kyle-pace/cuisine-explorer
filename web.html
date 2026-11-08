@@ -170,12 +170,20 @@
     .walk-page { border-left: 0; border-top: 1px solid var(--line); padding: 16px 18px 32px; }
     .walk-tools { margin-left: 0; }
   }
+  .local-wrap { position: relative; }
+  .local-open { position: absolute; right: 10px; top: 10px; z-index: 2; display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line); background: rgba(36, 27, 47, 0.92); border-radius: 999px; padding: 6px 12px; cursor: pointer; font-weight: 600; font-size: 0.82rem; }
+  .local-open:hover { border-color: var(--rice); }
+  .local-open svg { width: 14px; height: 14px; }
+  .actions .btn.solid svg { width: 16px; height: 16px; }
   .side-note { color: var(--muted); font-size: 0.85rem; margin: -4px 0 10px; }
   .walk-hint { position: absolute; left: 20px; bottom: 16px; margin: 0; max-width: 46ch; color: var(--muted); font-size: 0.85rem; pointer-events: none; }
   .walk-hint b { color: var(--rice); font-weight: 600; }
   @media (max-width: 720px) { .walk-hint { left: 14px; right: 14px; bottom: 10px; font-size: 0.8rem; } }
-  .tip small { display: block; font-weight: 400; max-width: 34ch; white-space: normal; margin-top: 2px; line-height: 1.35; }
-  .tip { position: fixed; z-index: 12; pointer-events: none; background: var(--rice); color: var(--night); font-weight: 600; font-size: 0.85rem; padding: 4px 10px; border-radius: 999px; display: none; white-space: nowrap; }
+  .tip { position: fixed; z-index: 12; pointer-events: none; background: var(--rice); color: var(--night); font-weight: 600; font-size: 0.85rem; padding: 4px 10px; border-radius: 999px; display: none; white-space: nowrap; box-shadow: 0 4px 16px rgba(0,0,0,0.35); }
+  .tip.card { border-radius: 12px; padding: 10px 12px; white-space: normal; width: max-content; max-width: min(300px, calc(100vw - 32px)); }
+  .tip .type { display: block; font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: #5b5066; margin-bottom: 2px; }
+  .tip b { display: block; font-size: 0.95rem; line-height: 1.25; }
+  .tip small { display: block; font-weight: 400; font-size: 0.82rem; margin-top: 4px; line-height: 1.4; color: #3a3142; }
   .loading { padding: 80px 28px; text-align: center; color: var(--muted); }
 
   @media (prefers-reduced-motion: no-preference) {
@@ -203,12 +211,12 @@
   <div class="search" role="search">
     <svg viewBox="0 0 24 24" fill="none" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
     <input id="q" type="search" placeholder="Search cuisines, dishes, ingredients, sites, books" autocomplete="off" enterkeyhint="go"
-           aria-label="Search the web of cuisines" role="combobox" aria-expanded="false" aria-controls="results" aria-autocomplete="list">
+           aria-label="Search cuisines, dishes and ingredients" role="combobox" aria-expanded="false" aria-controls="results" aria-autocomplete="list">
     <ul class="results" id="results" role="listbox" aria-label="Matches"></ul>
   </div>
   <button class="btn" id="open-graph" type="button">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="5" cy="6" r="2.5"/><circle cx="18" cy="5" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M7.3 7.2 10.6 16M16.5 7.1 13.2 15.9M7.5 6h8"/></svg>
-    Connections</button>
+    Map</button>
 </header>
 
 <div class="layout" id="layout">
@@ -216,10 +224,12 @@
   <aside class="side" id="side" aria-label="Connections">
     <h2>Connections</h2>
     <p class="side-note">Everything linked to this page. Pick a dot to go there.</p>
-    <div class="local" id="local" aria-hidden="true"></div>
+    <div class="local-wrap">
+      <div class="local" id="local" aria-hidden="true"></div>
+      <button class="local-open" id="local-open" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="5" cy="6" r="2.5"/><circle cx="18" cy="5" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M7.3 7.2 10.6 16M16.5 7.1 13.2 15.9M7.5 6h8"/></svg> Open the map</button>
+    </div>
     <div class="key" id="key" aria-hidden="true"></div>
-    <button class="btn solid" id="walk-here" type="button">Explore connections</button>
-    <button class="btn" id="open-graph-2" type="button" style="margin-top:8px">See everything at once</button>
+    <button class="btn" id="open-graph-2" type="button">See everything at once</button>
   </aside>
 </div>
 
@@ -232,7 +242,7 @@
   <div id="graph" aria-hidden="true"></div>
   <p class="full-hint">Each dot is a cuisine, recipe site or cookbook, and each line links two of them. Drag to move, scroll or pinch to zoom, and pick a dot to explore from there. Dishes and ingredients are hidden at first; turn them on above.</p>
 </div>
-<div class="walk" id="walk" role="dialog" aria-label="Explore connections">
+<div class="walk" id="walk" role="dialog" aria-label="Map of connections">
   <div class="walk-bar">
     <button class="btn" id="walk-close" type="button" >← Back to page</button>
     <nav class="trail" id="trail" aria-label="Where you've been"></nav>
@@ -332,7 +342,8 @@
     target.dataset.ref = n.ref;
     if (!m) { target.innerHTML = `<h1>${esc(n.name)}</h1><p class="empty">This page didn't load. Check your connection and try again.</p>`; return; }
     const shareable = location.hostname.endsWith("kylepace.net") ? `<button class="btn" type="button" data-copy="https://kylepace.net/labs/cuisines/${n.ref}/">Copy link</button>` : "";
-    target.innerHTML = renderItem(m, { ...renderOpts, extraActions: shareable });
+    const mapBtn = page === mainPage ? `<a class="btn solid" href="${walkHref(n)}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="5" cy="6" r="2.5"/><circle cx="18" cy="5" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M7.3 7.2 10.6 16M16.5 7.1 13.2 15.9M7.5 6h8"/></svg> Explore on the map</a>` : "";
+    target.innerHTML = renderItem(m, { ...renderOpts, extraActions: mapBtn + shareable });
     const box = target.querySelector("#intro");
     if (box && !box.textContent.trim() && box.dataset.wiki) liveIntro(box.dataset.wiki).then(t => {
       if (t && box.isConnected) box.innerHTML = t.split(/\n+/).filter(p => p.trim()).map(p => `<p>${esc(p)}</p>`).join("") + `<p class="source">Intro from Wikipedia, shared under CC BY-SA.</p>`;
@@ -349,7 +360,8 @@
     page.dataset.ref = "";
     page.innerHTML = `
       <h1>Browse every cuisine</h1>
-      <div class="intro"><p>The same cuisines, dishes and ingredients as the globe, as pages you can read and follow. Every page links to what it's connected to: a cuisine to its dishes, a dish to its ingredients, an ingredient to everywhere it's cooked. Pick "Connections" on any page to see those links as a map you can move through.</p></div>
+      <div class="intro"><p>The same cuisines, dishes and ingredients as the globe, as pages you can read and follow. Every page links to what it's connected to: a cuisine to its dishes, a dish to its ingredients, an ingredient to everywhere it's cooked. Every page also has a map of its connections that you can move through, one link at a time.</p>
+        <p class="actions"><a class="btn solid" href="#/walk/cuisine/thai-cuisine"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="5" cy="6" r="2.5"/><circle cx="18" cy="5" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M7.3 7.2 10.6 16M16.5 7.1 13.2 15.9M7.5 6h8"/></svg> Try the map, starting from Thai cuisine</a><button class="btn" type="button" id="home-everything">See everything at once</button></p></div>
       <ul class="stats">${stat("cuisine", "cuisines")}${stat("dish", "dishes")}${stat("ingredient", "ingredients")}${stat("site", "recipe sites")}${stat("book", "cookbooks")}</ul>
       ${section("Cuisines by region", byContinent(nationals))}
       ${section("Indigenous foodways", linkList(indigenous), indigenous.length)}
@@ -433,10 +445,15 @@
   const tip = document.getElementById("tip");
   let mouse = [0, 0];
   addEventListener("pointermove", e => { mouse = [e.clientX, e.clientY]; if (tip.style.display === "block") placeTip(); });
-  const placeTip = () => { tip.style.left = mouse[0] + 14 + "px"; tip.style.top = mouse[1] + 14 + "px"; };
+  const placeTip = () => {
+    const w = tip.offsetWidth, h = tip.offsetHeight;
+    const x = mouse[0] + 16 + w > innerWidth - 8 ? mouse[0] - 16 - w : mouse[0] + 16;
+    const y = mouse[1] + 16 + h > innerHeight - 8 ? mouse[1] - 16 - h : mouse[1] + 16;
+    tip.style.left = Math.max(8, x) + "px"; tip.style.top = Math.max(8, y) + "px";
+  };
   function hover(n) {
     if (!n) { tip.style.display = "none"; return; }
-    tip.textContent = `${n.name} · ${TYPE_LABEL[n.type]}`;
+    tip.className = "tip"; tip.textContent = `${n.name} · ${TYPE_LABEL[n.type]}`;
     tip.style.display = "block"; placeTip();
   }
 
@@ -476,6 +493,8 @@
         .nodePointerAreaPaint((g, color, ctx) => { ctx.fillStyle = color; shape(ctx, g.n, g.x, g.y, size(g.n) + 4); ctx.fill(); })
         .onNodeHover(g => { localHover = g ? g.n : null; localEl.style.cursor = g ? "pointer" : ""; hover(localHover); })
         .onNodeClick(g => { hover(null); location.hash = g.n.href; })
+        // Clicking the empty space opens the full map from here
+        .onBackgroundClick(() => { if (current) location.hash = walkHref(current); })
         .cooldownTicks(reduceMotion ? 0 : 120)
         .warmupTicks(reduceMotion ? 120 : 20)
         .d3VelocityDecay(0.35);
@@ -574,7 +593,8 @@
     fullOpen = false; full.classList.remove("open"); document.body.style.overflow = ""; hover(null);
   }
   document.getElementById("open-graph").addEventListener("click", () => current ? (location.hash = walkHref(current)) : openFull());
-  document.getElementById("walk-here").addEventListener("click", () => current && (location.hash = walkHref(current)));
+  document.getElementById("local-open").addEventListener("click", () => current && (location.hash = walkHref(current)));
+  document.addEventListener("click", e => { if (e.target.id === "home-everything") openFull(); });
   document.getElementById("open-graph-2").addEventListener("click", openFull);
   document.getElementById("close-graph").addEventListener("click", closeFull);
   addEventListener("keydown", e => { if (e.key === "Escape" && fullOpen) closeFull(); });
@@ -691,7 +711,9 @@
       .onNodeHover(g => {
         walkHover = g ? g.n : null; walkGraphEl.style.cursor = g ? "pointer" : "";
         if (!g) { tip.style.display = "none"; return; }
-        tip.innerHTML = `${esc(g.n.name)} · ${TYPE_LABEL[g.n.type]}${preview(g.n) ? `<small>${esc(preview(g.n))}</small>` : ""}`;
+        const pv = preview(g.n);
+        tip.className = "tip card";
+        tip.innerHTML = `<span class="type">${TYPE_LABEL[g.n.type]}</span><b>${esc(g.n.name)}</b>${pv ? `<small>${esc(pv)}</small>` : ""}`;
         tip.style.display = "block"; placeTip();
       })
       .onNodeClick(g => { tip.style.display = "none"; if (g.n !== walkCenter) location.hash = walkHref(g.n); })
@@ -725,7 +747,7 @@
     if (trailList.length > 8) trailList.shift();
     document.getElementById("trail").innerHTML = trailList.map(t => `<a href="${walkHref(t)}"${t === n ? ' aria-current="page"' : ""}>${esc(t.name)}</a>`).join("<span>›</span>");
     walkPage.scrollTop = 0;
-    document.title = n.name + " · Connections · Cuisine Explorer";
+    document.title = n.name + " · Map · Cuisine Explorer";
   }
   function hideWalk() {
     if (!walkEl.classList.contains("open")) return;

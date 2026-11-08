@@ -112,6 +112,7 @@
   }
   .wiki-btn:hover { background: #fff8ec; }
   .wiki-btn svg, .site svg { width: 18px; height: 18px; flex: none; }
+  .page-links { margin: 2px 0 4px; color: var(--muted); font-size: 0.88rem; }
   .page-link { display: inline-block; color: var(--muted); font-size: 0.88rem; margin: 2px 0 4px; text-underline-offset: 2px; }
   .page-link:hover { color: var(--rice); }
   .chip-btn[href] { text-decoration: none; color: var(--rice); }
@@ -338,7 +339,7 @@
     s.cookbooks = (n.cookbooks || []).concat(s.cookbooks || []);
   }
   // Every cuisine, dish and ingredient also has a page in the web view
-  const pageLink = (type, id) => `<a class="page-link" href="web.html#/${type}/${slug(id)}"${embedded ? ' target="_top"' : ""}>Open its full page</a>`;
+  const pageLink = (type, id) => `<p class="page-links"><a class="page-link" href="web.html#/${type}/${slug(id)}"${embedded ? ' target="_top"' : ""}>Open its full page</a> · <a class="page-link" href="web.html#/walk/${type}/${slug(id)}"${embedded ? ' target="_top"' : ""}>See its connections on a map</a></p>`;
   const CORRECT = "https://github.com/kyle-pace/cuisine-explorer/issues/new?title=";
   // Our own text, with [[links]] turned into buttons that open what they point to
   function noteHtml(n) {

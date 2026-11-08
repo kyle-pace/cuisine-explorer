@@ -49,7 +49,7 @@ struct WalkView: View {
             .accessibilityLabel("Connections of \(store.node(center)?.name ?? "")")
             .overlay(alignment: .bottom) {
                 if shown.count > 18 {
-                    Text(picked == nil ? "Tap a dot to move there. Hold one to see its name." : "Tap again to move there.")
+                    Text(picked == nil ? "Tap a dot to move there. Hold an unnamed one to see its name." : "Tap it to move there.")
                         .font(Theme.caption).foregroundStyle(Theme.muted)
                         .padding(.horizontal, Space.m).padding(.vertical, 6)
                         .background(Theme.surface.opacity(0.9), in: Capsule())
@@ -180,7 +180,7 @@ struct RadialGraph: View {
                 ForEach(neighbors) { n in
                     if let p = points[n.ref] {
                         Dot(node: n, size: dotSize, label: labels && (labeled.contains(n.ref) || picked == n.ref),
-                            labelBelow: p.y >= mid.y, emphasized: picked == n.ref)
+                            labelBelow: p.y >= mid.y, emphasized: picked == n.ref, labelWidth: neighbors.count > 12 ? 74 : 92)
                             .onTapGesture { onTap(n.ref) }
                             .onLongPressGesture(minimumDuration: 0.25) { onHold(n.ref) }
                             .position(p)
@@ -210,8 +210,8 @@ struct RadialGraph: View {
 
     private var dotSize: CGFloat { compact ? 9 : (neighbors.count > 18 ? 10 : 13) }
 
-    /// One ring up to 18, then two: cuisines and dishes inside, the rest outside. Rings are
-    /// ellipses so a tall phone screen is used. Labels fit on a ring of up to 18 dots.
+    /// One ring up to 18, then two. Rings are ellipses so a tall phone screen is used.
+    /// Labels fit on a ring of up to 18 dots.
     private func layout(in size: CGSize) -> (points: [String: CGPoint], labeled: Set<String>) {
         let mid = CGPoint(x: size.width / 2, y: size.height / 2)
         let room: CGFloat = labels && !compact ? 48 : 12
@@ -228,14 +228,12 @@ struct RadialGraph: View {
             place(neighbors, scale: 1, offset: 0)
             labeled = Set(neighbors.map(\.ref))
         } else {
-            var inner = neighbors.filter { $0.type == .cuisine || $0.type == .dish }
-            var outer = neighbors.filter { !($0.type == .cuisine || $0.type == .dish) }
-            if inner.count < 4 || outer.count < 4 {
-                inner = Array(neighbors.prefix(neighbors.count / 2)); outer = Array(neighbors.dropFirst(neighbors.count / 2))
-            }
-            place(inner, scale: 0.52, offset: 0.5)
+            // The outer ring has room for labels (about 70 points apart on a phone), so the
+            // likeliest next steps (cuisines, then dishes) go there; the rest sit inside, unlabeled
+            let outer = Array(neighbors.prefix(18)), inner = Array(neighbors.dropFirst(18))
             place(outer, scale: 1, offset: 0)
-            if inner.count <= 10 { labeled = Set(inner.map(\.ref)) }
+            place(inner, scale: 0.5, offset: 0.5)
+            labeled = Set(outer.map(\.ref))
         }
         return (out, labeled)
     }
@@ -248,6 +246,7 @@ struct Dot: View {
     var labelBelow = true
     var emphasized = false
     var isCenter = false
+    var labelWidth: CGFloat = 92
 
     var body: some View {
         // The hit area is the dot alone, so neighbors on a crowded ring don't steal taps
@@ -274,7 +273,7 @@ struct Dot: View {
             .foregroundStyle(isCenter || emphasized ? Theme.ink : Theme.muted)
             .multilineTextAlignment(.center)
             .lineLimit(2)
-            .frame(width: 92)
+            .frame(width: labelWidth)
             .fixedSize(horizontal: false, vertical: true)
             .background(emphasized && !isCenter ? AnyShapeStyle(Theme.surface.opacity(0.92)) : AnyShapeStyle(.clear), in: RoundedRectangle(cornerRadius: 6))
     }

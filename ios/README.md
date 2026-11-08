@@ -22,9 +22,11 @@ repo (`../../KitchenUI` from here).
 ## What's in it
 
 - **Explore**: cuisines to start from, where you left off (recently viewed, saved), cuisines by continent, Beyond borders, Indigenous foodways, and lists of every dish, ingredient, cookbook and recipe site. Cuisine lists filter by national, regional and Indigenous. Settings has KitchenUI's appearance rows and the sources.
-- **Map**: every cuisine with a place, colored by continent; a globe when zoomed out. Chips jump to a continent; regional cuisines appear as you zoom in.
+- **Map** (first tab, as the globe is on the web): countries filled in their continent's color, regional cuisines drawn as their states and provinces when you zoom in (`data/countries.geojson`, `data/regions.geojson`, loaded on first use), diaspora routes as arcs that light up for the selected cuisine, dots for cuisines that are a place but not an area. Tap any shape for its card; chips jump to a continent.
 - **Search**: everything by name, with scopes by type.
-- **Pages**: the same page models as the web view (`scripts/build_web.mjs`), drawn natively: links between pages, photos with credits (tap for full screen), where ingredients are grown, sources. Save and share from the toolbar.
+- **Pages**: the same page models as the web view (`scripts/build_web.mjs`), drawn natively: links between pages, photos with credits (tap to zoom in), cookbooks as a shelf of covers, where ingredients are grown as a Swift Charts bar chart, sources. Save and share from the toolbar; long-press any row for a preview with Save, Share, map and connections.
+- **Browse**: today's dish (`Daily.swift`, the same pick as the widget), cuisines to start from, where you left off, a way into walk mode, cuisines by continent, Beyond borders, Indigenous foodways; every list filters by continent and groups A to Z.
+- **iOS**: Spotlight indexes every page (`Spotlight.swift`); Siri and Shortcuts have "Surprise me", "Today's dish" and "Search" (`Intents.swift`); a Today's dish Home Screen widget (`Widget/`); Handoff to the web page; `cuisines://open?r=<ref>`, `cuisines://walk?r=`, `cuisines://map?r=`, `cuisines://search?q=`; Liquid Glass on the map chips; a TipKit tip in walk mode.
 - **Connections** (walk mode, as on the web): the page in the middle, everything linked to it on a ring, the likeliest next steps (cuisines, then dishes) labeled on the outer ring. Tap a dot to move there; hold an unlabeled one for its name; the trail retraces your route. Chips focus on one type; the list button shows every link.
 
 ## Files

@@ -347,21 +347,22 @@
   };
   const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const isPhone = () => innerWidth <= 720;
-  // Start on the visitor's own side of the world, worked out from the device's time zone.
-  // It never leaves the browser; a time zone that says nothing (UTC) falls back to the middle.
-  function homeView() {
-    const clamp = (n, lo, hi) => Math.min(hi, Math.max(lo, n));
-    let zone = "";
-    try { zone = Intl.DateTimeFormat().resolvedOptions().timeZone || ""; } catch (e) {}
-    const lng = -new Date().getTimezoneOffset() / 4;   // 15° of longitude per hour
-    const area = zone.split("/")[0];
-    if (area === "America") return { lat: 25, lng: clamp(lng, -100, -55) };
-    if (area === "Europe") return { lat: 46, lng: clamp(lng, 0, 30) };
-    if (area === "Asia") return { lat: 28, lng: clamp(lng, 45, 130) };
-    if (area === "Africa") return { lat: 5, lng: 20 };
-    if (area === "Australia" || zone === "Pacific/Auckland") return { lat: -28, lng: 145 };
-    if (area === "Pacific") return { lat: -10, lng: 175 };
-    return { lat: 22, lng: 20 };
+  // Start somewhere different every visit: a random continent, then a random country on it,
+  // so each part of the world comes up about as often (Oceania as much as Africa)
+  function startView() {
+    const byContinent = new Map();
+    for (const c of all) {
+      const k = c.kind === "national" && c.loc && (c.region || [])[0];
+      if (!k || !COLORS[k]) continue;
+      if (!byContinent.has(k)) byContinent.set(k, []);
+      byContinent.get(k).push(c.loc);
+    }
+    const pick = list => list[Math.floor(Math.random() * list.length)];
+    const groups = [...byContinent.values()];
+    if (!groups.length) return { lat: 22, lng: 20 };
+    const [lat, lng] = pick(pick(groups));
+    // Keep the view off the poles, where the globe reads as mostly ice and ocean
+    return { lat: Math.min(50, Math.max(-35, lat)), lng };
   }
   const noHover = matchMedia("(hover: none)").matches;
 
@@ -690,7 +691,7 @@
   const stopSpin = () => { controls.autoRotate = false; };
   el.addEventListener("pointerdown", stopSpin);
   el.addEventListener("wheel", stopSpin, { passive: true });
-  world.pointOfView({ ...homeView(), altitude: isPhone() ? 2.8 : 2.1 }, 0);
+  world.pointOfView({ ...startView(), altitude: isPhone() ? 2.8 : 2.1 }, 0);
   const resize = () => world.width(innerWidth).height(innerHeight);
   addEventListener("resize", resize); resize();
   document.getElementById("loading").remove();

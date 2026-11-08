@@ -1,18 +1,19 @@
 import SwiftUI
 
-/// Home: a few cuisines to start from, then every way into the collection
+/// Home, laid out like a food magazine's contents page: photos and names, nothing decorative.
+/// Color dots are kept for the map, where they mean something.
 struct ExploreView: View {
     @Environment(Store.self) private var store
     @Environment(Library.self) private var library
     @Environment(\.dynamicTypeSize) private var typeSize
-    @State private var featured: [Store.Node] = []
     @State private var settings = false
+    @State private var wanderFrom: Store.Node?
 
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 28) {
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("The world’s cuisines")
+            LazyVStack(alignment: .leading, spacing: 36) {
+                VStack(alignment: .leading, spacing: Space.s) {
+                    Text("The world\u{2019}s cuisines")
                         .font(Theme.title)
                         .foregroundStyle(Theme.ink)
                     Text("\(count(.cuisine)) cuisines, \(count(.dish)) dishes and \(count(.ingredient)) ingredients, each linked to the others.")
@@ -21,177 +22,31 @@ struct ExploreView: View {
                 }
                 .padding(.horizontal, Space.xl)
 
-                // One dish a day, the same for everyone that day
-                if let dish = dailyDish {
-                    NavigationLink(value: Route.item(dish.ref)) {
-                        ZStack(alignment: .bottomLeading) {
-                            RemoteImage(url: store.photo(dish.ref)).frame(height: 210).clipped()
-                            LinearGradient(colors: [.clear, .black.opacity(0.75)], startPoint: .center, endPoint: .bottom)
-                            VStack(alignment: .leading, spacing: 3) {
-                                Text("Today’s dish").font(Theme.caption.weight(.bold)).foregroundStyle(.white.opacity(0.8)).textCase(.uppercase).tracking(0.8)
-                                Text(dish.name).font(Theme.heading).foregroundStyle(.white)
-                                Text(dish.sub).font(Theme.caption).foregroundStyle(.white.opacity(0.85)).lineLimit(1)
-                            }
-                            .padding(Space.l)
-                        }
-                        .clipShape(RoundedRectangle(cornerRadius: Radius.large))
-                        .overlay(RoundedRectangle(cornerRadius: Radius.large).strokeBorder(Theme.line))
-                    }
-                    .buttonStyle(.plain)
-                    .padding(.horizontal, Space.xl)
-                    .accessibilityLabel("Today’s dish: \(dish.name), \(dish.sub)")
-                }
+                if let dish = dailyDish { todaysDish(dish) }
 
-                VStack(alignment: .leading, spacing: 12) {
-                    HStack {
-                        SectionHeader("Start somewhere")
-                        Spacer()
-                        Button("Shuffle", systemImage: "shuffle") { pickFeatured() }
-                            .font(Theme.callout600)
-                            .labelStyle(.iconOnly)
-                            .frame(width: 44, height: 44)
-                            .accessibilityLabel("Show other cuisines")
-                            .sensoryFeedback(.impact(weight: .light), trigger: featured.first?.ref)
-                    }
-                    .padding(.horizontal, Space.xl)
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        LazyHStack(spacing: 12) {
-                            ForEach(featured) { n in
-                                NavigationLink(value: Route.item(n.ref)) { FeatureCard(node: n) }
-                                    .buttonStyle(.plain)
-                            }
-                        }
-                        .scrollTargetLayout()
-                        .padding(.horizontal, Space.xl)
-                    }
-                    .scrollTargetBehavior(.viewAligned)
-                }
+                if !recent.isEmpty || !library.saved.isEmpty { pickUp }
 
-                if !library.recent.isEmpty || !library.saved.isEmpty {
-                    VStack(alignment: .leading, spacing: Space.m) {
-                        NavigationLink(value: Route.hub("x:recent")) {
-                            SectionHeader("Pick up where you left off", chevron: true)
-                        }
-                        .buttonStyle(.plain)
-                        .padding(.horizontal, Space.xl)
-                        ScrollView(.horizontal, showsIndicators: false) {
-                            HStack(spacing: Space.s) {
-                                if !library.saved.isEmpty {
-                                    NavigationLink(value: Route.hub("x:saved")) {
-                                        Label("Saved \(library.saved.count)", systemImage: "bookmark.fill")
-                                            .font(Theme.callout600).foregroundStyle(Theme.onAccent)
-                                            .padding(.horizontal, 14).padding(.vertical, 9)
-                                            .background(Theme.accent, in: Capsule())
-                                    }
-                                    .buttonStyle(.plain)
-                                }
-                                ForEach(library.recent.prefix(12).compactMap(store.node)) { n in
-                                    NavigationLink(value: Route.item(n.ref)) {
-                                        HStack(spacing: 8) {
-                                            Mark(color: n.color, square: n.type != .cuisine)
-                                            Text(n.name).font(Theme.callout).foregroundStyle(Theme.ink).lineLimit(1)
-                                        }
-                                        .padding(.horizontal, 14).padding(.vertical, 9)
-                                        .background(Theme.surface, in: Capsule())
-                                        .overlay(Capsule().strokeBorder(Theme.line))
-                                    }
-                                    .buttonStyle(.plain)
-                                }
-                            }
-                            .padding(.horizontal, Space.xl)
-                        }
-                    }
+                ForEach(Store.continents, id: \.slug) { c in
+                    Shelf(title: c.name, hub: "cuisines#\(c.slug)", nodes: shelfCuisines(store.hub("cuisines#\(c.slug)").nodes))
                 }
+                Shelf(title: "Indigenous foodways", hub: "x:indigenous", nodes: shelfCuisines(store.hub("x:indigenous").nodes),
+                      note: "Peoples of Alaska, the Americas and beyond")
+                Shelf(title: "Beyond borders", hub: "x:beyond", nodes: shelfCuisines(store.hub("x:beyond").nodes),
+                      note: "Diets, faiths, histories and styles that don\u{2019}t belong to one country")
 
-                VStack(alignment: .leading, spacing: 12) {
-                    SectionHeader("Cuisines by continent")
-                    LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 12), count: typeSize.isAccessibilitySize ? 1 : 2), spacing: 12) {
-                        ForEach(Store.continents, id: \.slug) { c in
-                            NavigationLink(value: Route.hub("cuisines#\(c.slug)")) {
-                                ContinentTile(name: c.name, color: c.color,
-                                              count: store.hub("cuisines#\(c.slug)").nodes.count)
-                            }
-                            .buttonStyle(.plain)
-                        }
-                        NavigationLink(value: Route.hub("x:beyond")) {
-                            ContinentTile(name: "Beyond borders", color: Theme.elsewhere,
-                                          count: store.hub("x:beyond").nodes.count)
-                        }
-                        .buttonStyle(.plain)
-                    }
-                    NavigationLink(value: Route.hub("x:indigenous")) {
-                        HStack(spacing: 12) {
-                            Mark(color: Theme.tomatillo, size: 12)
-                            VStack(alignment: .leading, spacing: 2) {
-                                Text("Indigenous foodways").font(Theme.callout600).foregroundStyle(Theme.ink)
-                                Text("Peoples of Alaska, the Americas and beyond").font(Theme.caption).foregroundStyle(Theme.muted)
-                            }
-                            Spacer()
-                            Image(systemName: "chevron.right").foregroundStyle(Theme.muted).font(.footnote.weight(.semibold))
-                        }
-                        .padding(16)
-                        .background(Theme.surface, in: RoundedRectangle(cornerRadius: Radius.medium))
-                        .overlay(RoundedRectangle(cornerRadius: Radius.medium).stroke(Theme.line))
-                    }
-                    .buttonStyle(.plain)
-                }
-                .padding(.horizontal, Space.xl)
+                ingredients
 
-                // Ingredients are a good way in: the most-cooked-with ones, with photos
-                VStack(alignment: .leading, spacing: Space.m) {
-                    NavigationLink(value: Route.hub("ingredients")) {
-                        SectionHeader("Browse by ingredient", trailing: "All \(count(.ingredient))", chevron: true)
-                    }
-                    .buttonStyle(.plain)
-                    LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: Space.s), count: typeSize.isAccessibilitySize ? 2 : 3), spacing: Space.s) {
-                        ForEach(topIngredients) { n in
-                            NavigationLink(value: Route.item(n.ref)) {
-                                ZStack(alignment: .bottomLeading) {
-                                    RemoteImage(url: store.photo(n.ref)).frame(height: 96).clipped()
-                                    LinearGradient(colors: [.clear, .black.opacity(0.7)], startPoint: .center, endPoint: .bottom)
-                                    Text(n.name).font(Theme.caption.weight(.semibold)).foregroundStyle(.white).lineLimit(2).padding(8)
-                                }
-                                .clipShape(RoundedRectangle(cornerRadius: Radius.medium))
-                            }
-                            .buttonStyle(.plain)
-                            .accessibilityLabel(n.name)
-                        }
-                    }
-                }
-                .padding(.horizontal, Space.xl)
+                if let n = wanderFrom { wander(n) }
 
-                // A way into walk mode from the start, as the web's home offers
-                if let start = featured.first {
-                    NavigationLink(value: Route.walk(start.ref)) {
-                        HStack(spacing: Space.m) {
-                            RadialGraph(center: start.ref, neighbors: Array(store.neighbors(start.ref).prefix(8)), labels: false, compact: true)
-                                .frame(width: 72, height: 72)
-                                .allowsHitTesting(false)
-                            VStack(alignment: .leading, spacing: 3) {
-                                Text("Wander the web").font(Theme.callout600).foregroundStyle(Theme.ink)
-                                Text("Start from \(start.name) and follow the links from dish to ingredient to cuisine.")
-                                    .font(Theme.caption).foregroundStyle(Theme.muted)
-                            }
-                            Spacer(minLength: 0)
-                            Image(systemName: "chevron.right").foregroundStyle(Theme.muted).font(.footnote.weight(.semibold))
-                        }
-                        .padding(Space.m)
-                        .background(Theme.surface, in: RoundedRectangle(cornerRadius: Radius.large))
-                        .overlay(RoundedRectangle(cornerRadius: Radius.large).strokeBorder(Theme.line))
-                    }
-                    .buttonStyle(.plain)
-                    .padding(.horizontal, Space.xl)
-                }
-
-                VStack(alignment: .leading, spacing: 4) {
-                    SectionHeader("Browse everything")
+                VStack(alignment: .leading, spacing: 0) {
                     ForEach([Store.Kind.cuisine, .dish, .ingredient], id: \.self) { kind in
                         NavigationLink(value: Route.hub(kind.hub)) {
                             HStack {
-                                Text(kind.plural).font(Theme.body).foregroundStyle(Theme.ink)
+                                Text("Every \(kind.singular.lowercased())").font(Theme.body).foregroundStyle(Theme.ink)
                                 Spacer()
-                                Text("\(count(kind))").font(Theme.callout).foregroundStyle(Theme.muted)
+                                Text("\(count(kind))").font(Theme.callout).foregroundStyle(Theme.muted).monospacedDigit()
                                 Image(systemName: "chevron.right").foregroundStyle(Theme.muted).font(.footnote.weight(.semibold))
+                                    .accessibilityHidden(true)
                             }
                             .padding(.vertical, 14)
                             .contentShape(Rectangle())
@@ -206,13 +61,13 @@ struct ExploreView: View {
                     .font(Theme.caption)
                     .foregroundStyle(Theme.muted)
                     .padding(.horizontal, Space.xl)
-                    .padding(.bottom, 24)
+                    .padding(.bottom, Space.xl)
             }
-            .padding(.top, 8)
+            .padding(.top, Space.s)
         }
         .background(Theme.ground)
         .toolbarBackground(Theme.ground, for: .navigationBar)
-        .onAppear { if featured.isEmpty { pickFeatured() } }
+        .onAppear { if wanderFrom == nil { wanderFrom = randomCuisine() } }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button("Settings", systemImage: "gearshape") { settings = true }
@@ -221,9 +76,101 @@ struct ExploreView: View {
         .sheet(isPresented: $settings) { SettingsView() }
     }
 
+    // MARK: Sections
+
+    /// The photo, then the words under it, as a magazine would set it
+    private func todaysDish(_ dish: Store.Node) -> some View {
+        NavigationLink(value: Route.item(dish.ref)) {
+            VStack(alignment: .leading, spacing: Space.s) {
+                RemoteImage(url: store.photo(dish.ref))
+                    .frame(height: typeSize.isAccessibilitySize ? 180 : 240)
+                    .clipShape(RoundedRectangle(cornerRadius: Radius.large))
+                Text("Today\u{2019}s dish").font(Theme.caption.weight(.semibold)).foregroundStyle(Theme.accent)
+                Text(dish.name).font(Theme.heading).foregroundStyle(Theme.ink)
+                if let c = cuisineOf(dish) {
+                    Text(c).font(Theme.callout).foregroundStyle(Theme.muted)
+                }
+            }
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .padding(.horizontal, Space.xl)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("Today\u{2019}s dish: \(dish.name)\(cuisineOf(dish).map { ", " + $0 } ?? "")")
+    }
+
+    private var recent: [Store.Node] {
+        library.recent.compactMap(store.node).filter { Store.graphKinds.contains($0.type) }
+    }
+
+    private var pickUp: some View {
+        VStack(alignment: .leading, spacing: Space.m) {
+            HStack(alignment: .firstTextBaseline) {
+                Text("Pick up where you left off").font(Theme.heading).foregroundStyle(Theme.ink)
+                Spacer()
+                if !library.saved.isEmpty {
+                    NavigationLink("Saved", value: Route.hub("x:saved")).font(Theme.callout600)
+                }
+            }
+            .padding(.horizontal, Space.xl)
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(alignment: .top, spacing: Space.m) {
+                    ForEach(recent.prefix(10)) { n in
+                        NavigationLink(value: Route.item(n.ref)) { PhotoTile(node: n, width: 104, height: 104) }
+                            .buttonStyle(.plain)
+                    }
+                    if recent.count > 10 {
+                        NavigationLink("All", value: Route.hub("x:recent")).font(Theme.callout600).padding(.top, 40)
+                    }
+                }
+                .padding(.horizontal, Space.xl)
+            }
+        }
+    }
+
+    private var ingredients: some View {
+        VStack(alignment: .leading, spacing: Space.m) {
+            ShelfHeader(title: "Ingredients", hub: "ingredients", count: count(.ingredient),
+                        note: "The ones cooked with most, and where they\u{2019}re grown")
+            LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: Space.m, alignment: .top), count: typeSize.isAccessibilitySize ? 2 : 3),
+                      alignment: .leading, spacing: Space.l) {
+                ForEach(topIngredients) { n in
+                    NavigationLink(value: Route.item(n.ref)) { PhotoTile(node: n, width: nil, height: 92, showSub: false) }
+                        .buttonStyle(.plain)
+                }
+            }
+            .padding(.horizontal, Space.xl)
+        }
+    }
+
+    private func wander(_ n: Store.Node) -> some View {
+        NavigationLink(value: Route.walk(n.ref)) {
+            VStack(alignment: .leading, spacing: Space.xs) {
+                Text("Wander").font(Theme.heading).foregroundStyle(Theme.ink)
+                (Text("Start at ") + Text(n.name).foregroundStyle(Theme.ink) +
+                 Text(" and follow one link at a time, from a dish to its ingredients to everywhere else they\u{2019}re cooked."))
+                    .font(Theme.callout).foregroundStyle(Theme.muted)
+                    .fixedSize(horizontal: false, vertical: true)
+                Text("Start wandering").font(Theme.callout600).foregroundStyle(Theme.accent).padding(.top, Space.xs)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .padding(.horizontal, Space.xl)
+    }
+
+    // MARK: Picks
+
     private func count(_ kind: Store.Kind) -> Int { store.nodes.lazy.filter { $0.type == kind }.count }
 
-    /// The nine ingredients cooked with most, among those with a photo
+    /// A shelf shows the best-connected cuisines with a photo of their own first
+    private func shelfCuisines(_ nodes: [Store.Node]) -> [Store.Node] {
+        nodes.filter { store.hasPhoto($0.ref) }
+            .sorted { (store.linkCount($0.ref), $1.name) > (store.linkCount($1.ref), $0.name) }
+            .prefix(12).map { $0 }
+    }
+
     private var topIngredients: [Store.Node] {
         store.nodes.filter { $0.type == .ingredient && store.hasPhoto($0.ref) }
             .sorted { store.linkCount($0.ref) > store.linkCount($1.ref) }
@@ -235,58 +182,102 @@ struct ExploreView: View {
         Daily.dish(from: store.nodes.filter { $0.type == .dish && store.hasPhoto($0.ref) }.map(\.ref)).flatMap(store.node)
     }
 
-    private func pickFeatured() {
-        let withPhotos = store.nodes.filter { $0.type == .cuisine && store.hasPhoto($0.ref) }
-        featured = Array(withPhotos.shuffled().prefix(8))
+    private func cuisineOf(_ n: Store.Node) -> String? {
+        store.neighbors(n.ref).first { $0.type == .cuisine }?.name
+    }
+
+    private func randomCuisine() -> Store.Node? {
+        store.nodes.filter { $0.type == .cuisine && store.linkCount($0.ref) >= 6 }.randomElement()
     }
 }
 
-struct FeatureCard: View {
+/// A section title that leads to the full list
+struct ShelfHeader: View {
+    let title: String
+    let hub: String
+    var count: Int?
+    var note: String?
+
+    var body: some View {
+        NavigationLink(value: Route.hub(hub)) {
+            VStack(alignment: .leading, spacing: 2) {
+                HStack(alignment: .firstTextBaseline, spacing: Space.s) {
+                    Text(title).font(Theme.heading).foregroundStyle(Theme.ink)
+                    Spacer()
+                    Text(count.map { "All \($0)" } ?? "All").font(Theme.callout).foregroundStyle(Theme.accent)
+                    Image(systemName: "chevron.right").font(.footnote.weight(.semibold)).foregroundStyle(Theme.accent)
+                        .accessibilityHidden(true)
+                }
+                if let note { Text(note).font(Theme.callout).foregroundStyle(Theme.muted) }
+            }
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .padding(.horizontal, Space.xl)
+        .accessibilityLabel("\(title), see all\(count.map { " \($0)" } ?? "")")
+    }
+}
+
+/// A sideways row of cuisines with their photos
+struct Shelf: View {
+    @Environment(Store.self) private var store
+    let title: String
+    let hub: String
+    let nodes: [Store.Node]
+    var note: String?
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: Space.m) {
+            ShelfHeader(title: title, hub: hub, count: store.hub(hub).nodes.count, note: note)
+            ScrollView(.horizontal, showsIndicators: false) {
+                LazyHStack(alignment: .top, spacing: Space.m) {
+                    ForEach(nodes) { n in
+                        NavigationLink(value: Route.item(n.ref)) { PhotoTile(node: n, width: 148, height: 112) }
+                            .buttonStyle(.plain)
+                    }
+                }
+                .scrollTargetLayout()
+                .padding(.horizontal, Space.xl)
+            }
+            .scrollTargetBehavior(.viewAligned)
+        }
+    }
+}
+
+/// A photo with its name under it. No border, no badge: the photo carries it.
+struct PhotoTile: View {
     @Environment(Store.self) private var store
     @Environment(\.dynamicTypeSize) private var typeSize
     let node: Store.Node
-    private var width: CGFloat { typeSize.isAccessibilitySize ? 300 : 240 }
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            RemoteImage(url: store.photo(node.ref))
-                .frame(width: width, height: 170)
-                .clipped()
-            VStack(alignment: .leading, spacing: 4) {
-                HStack(spacing: 8) {
-                    Mark(color: node.color)
-                    Text(node.name).font(Theme.callout600).foregroundStyle(Theme.ink).lineLimit(2)
-                }
-                Text(node.sub).font(Theme.caption).foregroundStyle(Theme.muted).lineLimit(1)
-            }
-            .padding(12)
-            .frame(width: width, alignment: .leading)
-        }
-        .background(Theme.surface)
-        .clipShape(RoundedRectangle(cornerRadius: Radius.large))
-        .overlay(RoundedRectangle(cornerRadius: Radius.large).stroke(Theme.line))
-        .accessibilityElement(children: .combine)
-    }
-}
-
-struct ContinentTile: View {
-    let name: String
-    let color: Color
-    let count: Int
+    var width: CGFloat?
+    var height: CGFloat
+    var showSub = true
 
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
-            Circle().fill(color).frame(width: 14, height: 14)
-            Spacer(minLength: 12)
-            Text(name).font(Theme.callout600).foregroundStyle(Theme.ink)
-            Text("\(count) cuisines").font(Theme.caption).foregroundStyle(Theme.muted)
+            Group {
+                if let url = store.thumbnail(node.ref)?.absoluteString.replacingOccurrences(of: "/120px-", with: "/330px-") {
+                    RemoteImage(url: URL(string: url))
+                } else {
+                    // No photo: the name's first letter, set large, on the surface color
+                    ZStack {
+                        Theme.surface
+                        Text(String(node.name.prefix(1))).font(.app(34, .bold, relativeTo: .title)).foregroundStyle(Theme.muted)
+                    }
+                }
+            }
+            .frame(width: width, height: height)
+            .frame(maxWidth: width == nil ? .infinity : nil)
+            .clipShape(RoundedRectangle(cornerRadius: Radius.small))
+            Text(node.name.replacingOccurrences(of: " cuisine", with: ""))
+                .font(Theme.callout600).foregroundStyle(Theme.ink)
+                .lineLimit(typeSize.isAccessibilitySize ? 3 : 2)
+                .multilineTextAlignment(.leading)
+            if showSub, !node.sub.isEmpty, !node.name.hasPrefix(node.sub) {
+                Text(node.sub).font(Theme.caption).foregroundStyle(Theme.muted).lineLimit(1)
+            }
         }
-        .frame(maxWidth: .infinity, minHeight: 104, alignment: .leading)
-        .padding(14)
-        .background(
-            LinearGradient(colors: [color.opacity(0.22), Theme.surface], startPoint: .topLeading, endPoint: .bottomTrailing),
-            in: RoundedRectangle(cornerRadius: Radius.medium))
-        .overlay(RoundedRectangle(cornerRadius: Radius.medium).stroke(Theme.line))
+        .frame(width: typeSize.isAccessibilitySize && width != nil ? (width ?? 0) * 1.3 : width, alignment: .leading)
         .accessibilityElement(children: .combine)
     }
 }
@@ -476,7 +467,10 @@ struct NodeRow: View {
             if let thumb = store.thumbnail(node.ref) {
                 RemoteImage(url: thumb).frame(width: 44, height: 44).clipShape(RoundedRectangle(cornerRadius: Radius.small))
             } else {
-                ZStack { RoundedRectangle(cornerRadius: Radius.small).fill(Theme.surface); Mark(color: node.color, square: node.type != .cuisine) }
+                ZStack {
+                    RoundedRectangle(cornerRadius: Radius.small).fill(Theme.surface)
+                    Text(String(node.name.prefix(1))).font(.app(20, .bold, relativeTo: .title3)).foregroundStyle(Theme.muted)
+                }
                     .frame(width: 44, height: 44)
             }
             VStack(alignment: .leading, spacing: 2) {

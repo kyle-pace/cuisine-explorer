@@ -93,11 +93,10 @@ struct PageContent: View {
                 .fixedSize(horizontal: false, vertical: true)
                 .accessibilityAddTraits(.isHeader)
             HStack(spacing: 8) {
-                Mark(color: page.dot, square: page.square)
                 Text(page.sub).font(Theme.callout).foregroundStyle(Theme.muted)
                 if page.suggested { Tag(text: "Suggested") }
             }
-            .padding(.top, 8)
+            .padding(.top, 6)
             if let names = page.names {
                 Text(names).font(Theme.callout).foregroundStyle(Theme.muted).padding(.top, 6)
             }
@@ -244,7 +243,12 @@ struct SectionView: View {
             case .rows(let rows) where rows.allSatisfy(\.isBook):
                 BookShelf(rows: rows)
             case .rows(let rows):
-                VStack(spacing: 8) { ForEach(rows, id: \.self) { RowCard(row: $0) } }
+                VStack(spacing: 0) {
+                    ForEach(rows, id: \.self) { r in
+                        RowCard(row: r)
+                        if r != rows.last { Divider().overlay(Theme.line) }
+                    }
+                }
             case .links(let links, let note):
                 LinkChips(links: links)
                 if let note { Text(note).font(Theme.caption).foregroundStyle(Theme.muted) }
@@ -282,7 +286,6 @@ struct RowCard: View {
 
     var body: some View {
         HStack(alignment: .top, spacing: 12) {
-            Mark(color: row.color, square: !row.isCuisine).padding(.top, 6)
             VStack(alignment: .leading, spacing: 3) {
                 HStack(spacing: 6) {
                     Text(row.name).font(Theme.callout600).foregroundStyle(Theme.ink)
@@ -299,18 +302,17 @@ struct RowCard: View {
             if let url = row.url {
                 Link(destination: url) {
                     Image(systemName: "arrow.up.right").font(.footnote.weight(.semibold))
-                        .foregroundStyle(Theme.muted).frame(width: 32, height: 32).contentShape(Rectangle())
+                        .foregroundStyle(Theme.accent).frame(width: 44, height: 44).contentShape(Rectangle())
                 }
                 .accessibilityLabel("Open \(row.name)")
             }
         }
-        .padding(14)
-        .background(Theme.surface, in: RoundedRectangle(cornerRadius: Radius.medium))
-        .overlay(RoundedRectangle(cornerRadius: Radius.medium).stroke(Theme.line))
+        .padding(.vertical, Space.m)
+        .contentShape(Rectangle())
         .overlay {
             if let ref = row.ref {
                 NavigationLink(value: store.route(ref)) { Color.clear }
-                    .padding(.trailing, row.url == nil ? 0 : 48)
+                    .padding(.trailing, row.url == nil ? 0 : 52)
                     .accessibilityLabel(row.name)
             } else if let url = row.url {
                 // Recipe sites and cookbooks have no page here: the whole card opens the site
@@ -531,10 +533,8 @@ struct ConnectionsSection: View {
                         Label("Explore", systemImage: "arrow.right").font(Theme.callout600).labelStyle(.titleAndIcon)
                             .foregroundStyle(Theme.accent)
                     }
-                    .padding(.horizontal, Space.l).padding(.bottom, Space.m)
+                    .padding(.bottom, Space.s)
                 }
-                .background(Theme.surface, in: RoundedRectangle(cornerRadius: Radius.large))
-                .overlay(RoundedRectangle(cornerRadius: Radius.large).strokeBorder(Theme.line.opacity(0.7)))
             }
             .buttonStyle(.plain)
             .accessibilityLabel("Explore the \(all.count) connections of this page")

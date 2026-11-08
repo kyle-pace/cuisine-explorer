@@ -27,7 +27,7 @@ struct CuisinesApp: App {
 @MainActor @Observable
 final class AppState {
     enum Tab: Hashable { case explore, map, search }
-    var tab: Tab = .explore
+    var tab: Tab = .map
     var explorePath: [Route] = []
     var searchPath: [Route] = []
     var mapFocus: String?
@@ -68,9 +68,10 @@ struct RootView: View {
     /// For screenshots and testing: -open <ref> opens a page, -tab map opens the map
     private func openFromLaunchArguments() {
         let args = UserDefaults.standard
-        if let ref = args.string(forKey: "open") { app.explorePath = [store.route(ref)] }
-        if let ref = args.string(forKey: "walk") { app.explorePath = [.walk(ref)] }
-        if let ref = args.string(forKey: "hub") { app.explorePath = [.hub(ref)] }
+        if let ref = args.string(forKey: "open") { app.tab = .explore; app.explorePath = [store.route(ref)] }
+        if let ref = args.string(forKey: "walk") { app.tab = .explore; app.explorePath = [.walk(ref)] }
+        if let ref = args.string(forKey: "hub") { app.tab = .explore; app.explorePath = [.hub(ref)] }
+        if args.string(forKey: "tab") == "browse" { app.tab = .explore }
         if args.string(forKey: "tab") == "map" { app.tab = .map }
         if let ref = args.string(forKey: "map") { app.showOnMap(ref) }
     }
@@ -78,11 +79,12 @@ struct RootView: View {
     private var tabs: some View {
         @Bindable var app = app
         return TabView(selection: $app.tab) {
-            Tab("Explore", systemImage: "fork.knife", value: AppState.Tab.explore) {
-                Stack(path: $app.explorePath) { ExploreView() }
-            }
+            // The same two ways in as the web: the map for discovery by place, Browse for reading
             Tab("Map", systemImage: "globe.americas", value: AppState.Tab.map) {
                 MapScreen()
+            }
+            Tab("Browse", systemImage: "fork.knife", value: AppState.Tab.explore) {
+                Stack(path: $app.explorePath) { ExploreView() }
             }
             Tab(value: AppState.Tab.search, role: .search) {
                 Stack(path: $app.searchPath) { SearchView() }

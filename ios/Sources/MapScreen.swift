@@ -1,11 +1,15 @@
 import SwiftUI
 import MapKit
 
-/// Every cuisine with a place, as a dot in its continent's color. Tap one for a card.
+/// The map, as on the globe: countries filled in their continent's color, regional cuisines
+/// drawn as the states or provinces they come from once you zoom in, and dots for the
+/// cuisines that are a place but not an area (Indigenous foodways, cities). Tap anything for a card.
 struct MapScreen: View {
     @Environment(Store.self) private var store
     @Environment(AppState.self) private var app
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @State private var shapes = Shapes()
+
     /// Camera heights: the whole world, then each continent
     static let world = MapCamera(centerCoordinate: .init(latitude: 20, longitude: 15), distance: 40_000_000)
     static let regions: [String: MapCamera] = [
@@ -16,38 +20,82 @@ struct MapScreen: View {
         "oceania": MapCamera(centerCoordinate: .init(latitude: -22, longitude: 150), distance: 11_000_000),
     ]
     @State private var position: MapCameraPosition = .camera(MapScreen.world)
-    @State private var selected: String?
+    @State private var selected: String?        // a cuisine ref
+    @State private var selectedShape: Int?      // a country with no cuisine of its own
     @State private var path: [Route] = []
     @State private var span: Double = 110
 
+    private var showRegions: Bool { span < 30 }
+
     var body: some View {
         NavigationStack(path: $path) {
-            Map(position: $position, selection: $selected) {
-                ForEach(visiblePlaces) { p in
-                    if let n = store.node(p.ref) {
-                        Annotation(n.name, coordinate: p.coordinate, anchor: .center) {
-                            Circle()
-                                .fill(color(p.ref))
-                                .frame(width: dotSize(n), height: dotSize(n))
-                                .overlay(Circle().stroke(selected == p.ref ? Theme.ink : Theme.ground.opacity(0.7),
-                                                         lineWidth: selected == p.ref ? 3 : 1.5))
-                                .scaleEffect(selected == p.ref ? 1.5 : 1)
-                                .padding(10)
-                                .contentShape(Circle())
+            MapReader { proxy in
+                Map(position: $position, interactionModes: [.pan, .zoom, .rotate]) {
+                    ForEach(shapes.countries) { c in
+                        let color = fill(c), on = isSelected(c)
+                        ForEach(Array(c.polygons.enumerated()), id: \.offset) { _, p in
+                            MapPolygon(p)
+                                .foregroundStyle(color.opacity(on ? 0.75 : 0.42))
+                                .stroke(on ? Theme.ink : Theme.ground.opacity(0.9), lineWidth: on ? 1.5 : 0.5)
                         }
-                        .annotationTitles(span < 12 || selected == p.ref ? .automatic : .hidden)
-                        .tag(p.ref)
+                    }
+                    if showRegions {
+                        ForEach(shapes.regions) { r in
+                            let color = fill(r), on = isSelected(r)
+                            ForEach(Array(r.polygons.enumerated()), id: \.offset) { _, p in
+                                MapPolygon(p)
+                                    .foregroundStyle(color.opacity(on ? 0.8 : 0.5))
+                                    .stroke(on ? Theme.ink : Theme.ground, lineWidth: on ? 1.5 : 0.8)
+                            }
+                            if span < 14, let ref = r.ref, let n = store.node(ref), let c = r.rings.first?.first {
+                                Annotation(n.name.replacingOccurrences(of: " cuisine", with: ""), coordinate: labelPoint(r), anchor: .center) {
+                                    EmptyView()
+                                }
+                                .annotationTitles(.visible)
+                            }
+                        }
+                    }
+                    // Diaspora routes, as on the globe: faint arcs, lit when they touch the selection
+                    ForEach(arcs, id: \.route) { a in
+                        MapPolyline(coordinates: [a.from, a.to], contourStyle: .geodesic)
+                            .stroke(a.lit ? Theme.saffron : Theme.ink.opacity(0.22), style: StrokeStyle(lineWidth: a.lit ? 2.5 : 1, dash: a.lit ? [] : [4, 6]))
+                    }
+                    // Dots: places without an area. National cuisines are their country; regional
+                    // ones with a shape are their shape; the rest appear as you zoom in
+                    ForEach(dotPlaces) { p in
+                        if let n = store.node(p.ref) {
+                            Annotation(n.name, coordinate: p.coordinate, anchor: .center) {
+                                Circle()
+                                    .fill(color(p.ref))
+                                    .frame(width: 11, height: 11)
+                                    .overlay(Circle().stroke(selected == p.ref ? Theme.ink : Theme.ground.opacity(0.8), lineWidth: selected == p.ref ? 2.5 : 1.5))
+                                    .scaleEffect(selected == p.ref ? 1.4 : 1)
+                                    .padding(10)
+                                    .contentShape(Circle())
+                                    .onTapGesture { select(p.ref) }
+                            }
+                            .annotationTitles(span < 8 || selected == p.ref ? .visible : .hidden)
+                        }
+                    }
+                }
+                .mapStyle(.standard(elevation: .flat, emphasis: .muted, pointsOfInterest: .excludingAll, showsTraffic: false))
+                .mapControls { MapCompass(); MapScaleView() }
+                .onMapCameraChange(frequency: .onEnd) { ctx in span = ctx.region.span.latitudeDelta }
+                .onTapGesture { point in
+                    guard let coord = proxy.convert(point, from: .local) else { return }
+                    if let hit = shapes.hit(coord, regions: showRegions) {
+                        if let ref = hit.ref { select(ref) } else { selectedShape = hit.id; selected = nil }
+                    } else {
+                        withAnimation(Theme.motion(reduceMotion)) { selected = nil; selectedShape = nil }
                     }
                 }
             }
-            .mapStyle(.standard(elevation: .realistic, emphasis: .muted, pointsOfInterest: .excludingAll))   // realistic: zoomed out, it becomes a globe, like the web
-            .mapControls { MapCompass(); MapScaleView() }
             .safeAreaInset(edge: .top) {
                 ChipRow {
                     ForEach(Store.continents, id: \.slug) { c in
                         Button {
                             withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.6)) {
-                                selected = nil
+                                selected = nil; selectedShape = nil
                                 position = .camera(Self.regions[c.slug] ?? Self.world)
                             }
                         } label: {
@@ -66,16 +114,35 @@ struct MapScreen: View {
                 }
                 .padding(.horizontal, Space.l).padding(.vertical, Space.s)
             }
-            .sensoryFeedback(.selection, trigger: selected)
-            .onMapCameraChange(frequency: .onEnd) { ctx in span = ctx.region.span.latitudeDelta }
             .safeAreaInset(edge: .bottom) {
                 if let ref = selected, let n = store.node(ref) {
                     PlaceCard(node: n) { path.append(.item(ref)) } close: { selected = nil }
-                        .padding(.horizontal, 12).padding(.bottom, 8)
+                        .padding(.horizontal, Space.m).padding(.bottom, Space.s)
                         .transition(reduceMotion ? .opacity : .move(edge: .bottom).combined(with: .opacity))
+                } else if let i = selectedShape, let c = shapes.countries.first(where: { $0.id == i }) {
+                    HStack {
+                        Text("No cuisine page for \(c.name) yet.").font(Theme.callout).foregroundStyle(Theme.muted)
+                        Spacer()
+                        Button("Suggest one") { suggest(c.name) }.font(Theme.callout600)
+                    }
+                    .padding(Space.m)
+                    .background(Theme.surface, in: RoundedRectangle(cornerRadius: Radius.large))
+                    .overlay(RoundedRectangle(cornerRadius: Radius.large).strokeBorder(Theme.line))
+                    .padding(.horizontal, Space.m).padding(.bottom, Space.s)
+                    .transition(.opacity)
+                } else if !shapes.loaded {
+                    HStack(spacing: Space.s) {
+                        ProgressView().tint(Theme.muted)
+                        Text("Drawing the borders…").font(Theme.caption).foregroundStyle(Theme.muted)
+                    }
+                    .padding(.horizontal, Space.m).padding(.vertical, Space.s)
+                    .background(.regularMaterial, in: Capsule())
+                    .padding(.bottom, Space.s)
                 }
             }
             .animation(Theme.motion(reduceMotion), value: selected)
+            .animation(Theme.motion(reduceMotion), value: selectedShape)
+            .sensoryFeedback(.selection, trigger: selected)
             .navigationDestination(for: Route.self) { $0.view }
             .toolbar(.hidden, for: .navigationBar)
         }
@@ -84,32 +151,87 @@ struct MapScreen: View {
             path.append(store.route(ref))
             return .handled
         })
+        .task { await shapes.load(national: store.national, regionRefs: store.regionRefs) }
         .onAppear(perform: focus)
         .onChange(of: app.mapFocus) { focus() }
+        .onChange(of: shapes.loaded) { focus() }
     }
 
-    /// National cuisines always; regional ones once you zoom in, so the world view stays calm
-    private var visiblePlaces: [Store.Place] {
-        store.places.filter { p in
-            span < 40 || p.ref == selected || (store.node(p.ref)?.isNational ?? false)
+    // MARK: What's drawn
+
+    private var shaped: Set<String> {
+        var s = Set(shapes.countries.flatMap(\.refs))
+        if showRegions { s.formUnion(shapes.regions.flatMap(\.refs)) }
+        return s
+    }
+
+    private struct Arc { let route: Store.Route3; let from: CLLocationCoordinate2D; let to: CLLocationCoordinate2D; let lit: Bool }
+    private var arcs: [Arc] {
+        let sel = selected
+        let selIso = sel.flatMap { ref in store.national.first { $0.value == ref }?.key }
+        return store.routes.compactMap { r in
+            guard let a = store.national[r.from].flatMap(store.place), let b = store.national[r.to].flatMap(store.place) else { return nil }
+            let lit = r.ref == sel || (selIso != nil && (r.from == selIso || r.to == selIso))
+            return Arc(route: r, from: a.coordinate, to: b.coordinate, lit: lit)
         }
     }
 
-    /// Smaller dots when the whole world is in view, so Europe doesn't become one blob
-    private func dotSize(_ n: Store.Node) -> CGFloat { (n.isNational ? 14 : 10) * (span > 60 ? 0.7 : 1) }
+    private var dotPlaces: [Store.Place] {
+        let covered = shaped
+        return store.places.filter { p in
+            if p.ref == selected { return !covered.contains(p.ref) }
+            guard let n = store.node(p.ref), !covered.contains(p.ref) else { return false }
+            // National cuisines without a country shape (Palestine, Kosovo) show from afar; the rest when close
+            return n.isNational || span < 40
+        }
+    }
 
     private func color(_ ref: String) -> Color {
         let key = store.continent(ref)
-        return Store.continents.first { $0.key == key }?.color ?? Theme.muted
+        return Store.continents.first { $0.key == key }?.color ?? Theme.elsewhere
+    }
+
+    private func fill(_ s: MapShape) -> Color {
+        s.ref.map(color) ?? Theme.muted.opacity(0.6)
+    }
+
+    private func isSelected(_ s: MapShape) -> Bool {
+        if let selected { return s.refs.contains(selected) }
+        return selectedShape == s.id && s.refs.isEmpty
+    }
+
+    private func labelPoint(_ s: MapShape) -> CLLocationCoordinate2D {
+        // The middle of the largest polygon's bounds, which is close enough for a label
+        let big = s.polygons.max { $0.boundingMapRect.width * $0.boundingMapRect.height < $1.boundingMapRect.width * $1.boundingMapRect.height }!
+        return MKMapPoint(x: big.boundingMapRect.midX, y: big.boundingMapRect.midY).coordinate
+    }
+
+    // MARK: Selection
+
+    private func select(_ ref: String) {
+        withAnimation(Theme.motion(reduceMotion)) { selected = ref; selectedShape = nil }
+    }
+
+    private func suggest(_ country: String) {
+        let title = "\(country): add its cuisine".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        if let url = URL(string: "https://github.com/kyle-pace/cuisine-explorer/issues/new?title=\(title)") { UIApplication.shared.open(url) }
     }
 
     private func focus() {
-        guard let ref = app.mapFocus, let p = store.place(ref) else { return }
+        guard let ref = app.mapFocus else { return }
+        // Wait for the shapes so a country can be framed, unless the place is a plain dot
+        if !shapes.loaded, store.national.values.contains(ref) { return }
         app.mapFocus = nil
         path = []
         selected = ref
+        selectedShape = nil
         withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.6)) {
-            position = .region(MKCoordinateRegion(center: p.coordinate, span: .init(latitudeDelta: 14, longitudeDelta: 14)))
+            if let s = shapes.shape(for: ref) {
+                let r = s.bounds
+                position = .rect(r.insetBy(dx: -r.width * 0.3, dy: -r.height * 0.3))
+            } else if let p = store.place(ref) {
+                position = .region(MKCoordinateRegion(center: p.coordinate, span: .init(latitudeDelta: 10, longitudeDelta: 10)))
+            }
         }
     }
 }

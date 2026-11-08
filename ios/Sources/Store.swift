@@ -51,6 +51,10 @@ final class Store {
     private var placeIndex: [String: Place] = [:]
     private var continentOf: [String: String] = [:]
     private var photoOf: [String: String] = [:]
+    private(set) var national: [String: String] = [:]   // iso3 to the national cuisine
+    private(set) var regionRefs: [[String]] = []         // cuisines per regions.geojson shape
+    private(set) var routes: [Route3] = []               // diaspora cuisines: from one country to another
+    struct Route3: Hashable { let ref: String, from: String, to: String }
     @ObservationIgnored private var neighborIndex: [[Int]] = []
     @ObservationIgnored private var buckets: [String: [String: Any]] = [:]
     @ObservationIgnored private var pages: [String: Page] = [:]
@@ -94,6 +98,9 @@ final class Store {
         self.places = places; self.placeIndex = placeIndex
         continentOf = e["cont"] as? [String: String] ?? [:]
         photoOf = e["photos"] as? [String: String] ?? [:]
+        national = e["national"] as? [String: String] ?? [:]
+        regionRefs = e["regions"] as? [[String]] ?? []
+        routes = (e["routes"] as? [[String]] ?? []).compactMap { $0.count == 3 ? Route3(ref: $0[0], from: $0[1], to: $0[2]) : nil }
         state = .ready
     }
 

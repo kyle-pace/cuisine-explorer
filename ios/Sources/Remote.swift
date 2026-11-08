@@ -3,7 +3,8 @@ import Foundation
 /// Where the data comes from. The cuisine-explorer repo's weekly rebuild commits fresh data
 /// here; to serve it from somewhere else, change this one line.
 enum DataSource {
-    static let base = URL(string: "https://raw.githubusercontent.com/kyle-pace/cuisine-explorer/main/data/web/")!
+    static let root = URL(string: "https://raw.githubusercontent.com/kyle-pace/cuisine-explorer/main/data/")!
+    static let base = root.appendingPathComponent("web/")
 }
 
 /// Where a page lives on the web, for the share sheet. The site may move; a redirect there
@@ -29,8 +30,8 @@ final class Remote: Sendable {
     }
 
     /// The file's bytes, or nil when it can't be fetched and isn't cached
-    func data(_ path: String) async -> Data? {
-        let url = DataSource.base.appendingPathComponent(path)
+    func data(_ path: String, under base: URL = DataSource.base) async -> Data? {
+        let url = base.appendingPathComponent(path)
         for policy in [URLRequest.CachePolicy.useProtocolCachePolicy, .returnCacheDataDontLoad] {
             let request = URLRequest(url: url, cachePolicy: policy)
             if let (data, response) = try? await session.data(for: request),

@@ -163,7 +163,7 @@ struct PageContent: View {
     private var actions: some View {
         FlowLayout(spacing: Space.s) {
             if store.place(page.ref) != nil {
-                Button("Show on the map", systemImage: "map") { app.showOnMap(page.ref) }
+                Button("Show on the globe", systemImage: "globe.americas") { app.showOnMap(page.ref) }
             }
             ForEach(page.actions.filter { $0.kind != "globe" }, id: \.self) { a in
                 if let url = a.url {
@@ -530,15 +530,15 @@ struct ConnectionsSection: View {
                     HStack {
                         Text(summary(all)).font(Theme.caption).foregroundStyle(Theme.muted).multilineTextAlignment(.leading)
                         Spacer()
-                        Label("Explore", systemImage: "arrow.right").font(Theme.callout600).labelStyle(.titleAndIcon)
+                        Label("Wander", systemImage: "arrow.right").font(Theme.callout600).labelStyle(.titleAndIcon)
                             .foregroundStyle(Theme.accent)
                     }
                     .padding(.bottom, Space.s)
                 }
             }
             .buttonStyle(.plain)
-            .accessibilityLabel("Explore the \(all.count) connections of this page")
-            .accessibilityHint("Opens walk mode")
+            .accessibilityLabel("Wander from here, through the \(all.count) connections of this page")
+            .accessibilityHint("Opens Wander")
         }
     }
 
@@ -547,7 +547,7 @@ struct ConnectionsSection: View {
             let n = all.filter { $0.type == k }.count
             return n > 0 ? "\(n) \(n == 1 ? k.singular.lowercased() : k.plural.lowercased())" : nil
         }
-        return "Linked to " + parts.joined(separator: ", ") + ". Tap a dot to walk the web from here."
+        return "Linked to " + parts.joined(separator: ", ") + ". Tap to wander from here."
     }
 }
 

@@ -25,6 +25,7 @@ struct MapScreen: View {
     @State private var path: [Route] = []
     @State private var span: Double = 110
     @State private var listOpen = false
+    @State private var detent: PresentationDetent = .height(236)
 
     private var showRegions: Bool { span < 30 }
 
@@ -114,30 +115,29 @@ struct MapScreen: View {
                 }
                 .padding(.horizontal, Space.l).padding(.vertical, Space.s)
             }
-            .accessibilityLabel("Map of the world's cuisines, colored by continent")
-            .accessibilityHint("Use the list button to browse the cuisines on the map")
+            .accessibilityLabel("Globe of the world's cuisines, colored by continent")
+            .accessibilityHint("Use the list button to browse the cuisines on the globe")
             .overlay(alignment: .bottomTrailing) {
-                Button("Cuisines on the map", systemImage: "list.bullet") { listOpen = true }
+                Button("Cuisines on the globe", systemImage: "list.bullet") { listOpen = true }
                     .labelStyle(.iconOnly)
                     .font(.body.weight(.semibold))
                     .frame(width: 44, height: 44)
                     .glassEffect(.regular.interactive(), in: Circle())
                     .padding(.trailing, Space.m)
-                    .padding(.bottom, selected != nil || selectedShape != nil ? 110 : Space.m)
-                    .animation(Theme.motion(reduceMotion), value: selected)
+                    .padding(.bottom, selectedShape != nil ? 110 : Space.m)
             }
             .sheet(isPresented: $listOpen) {
                 NavigationStack {
-                    MapList { ref in listOpen = false; app.showOnMap(ref) }
+                    MapList { ref in
+                        listOpen = false
+                        // Let the list finish going away before the place's sheet comes up
+                        Task { try? await Task.sleep(for: .milliseconds(400)); app.showOnMap(ref) }
+                    }
                 }
                 .presentationDetents([.medium, .large])
             }
             .safeAreaInset(edge: .bottom) {
-                if let ref = selected, let n = store.node(ref) {
-                    PlaceCard(node: n) { path.append(.item(ref)) } close: { selected = nil }
-                        .padding(.horizontal, Space.m).padding(.bottom, Space.s)
-                        .transition(reduceMotion ? .opacity : .move(edge: .bottom).combined(with: .opacity))
-                } else if let i = selectedShape, let c = shapes.countries.first(where: { $0.id == i }) {
+                if let i = selectedShape, let c = shapes.countries.first(where: { $0.id == i }) {
                     HStack {
                         Text("No cuisine page for \(c.name) yet.").font(Theme.callout).foregroundStyle(Theme.muted)
                         Spacer()
@@ -158,7 +158,21 @@ struct MapScreen: View {
                     .padding(.bottom, Space.s)
                 }
             }
-            .animation(Theme.motion(reduceMotion), value: selected)
+            // A picked place opens a sheet, as in Maps: a peek with its photo and what to do next,
+            // pulled up for its intro and dishes. The map stays usable behind the smaller sizes.
+            .sheet(isPresented: Binding(get: { selected != nil && path.isEmpty }, set: { if !$0 { selected = nil } })) {
+                if let ref = selected {
+                    PlaceSheet(ref: ref) { route in
+                        selected = nil
+                        path.append(route)
+                    }
+                    .presentationDetents([.height(236), .medium, .large], selection: $detent)
+                    .presentationBackgroundInteraction(.enabled(upThrough: .medium))
+                    .presentationDragIndicator(.visible)
+                    .presentationBackground(Theme.surface)
+                }
+            }
+            .onChange(of: selected) { detent = .height(236) }
             .animation(Theme.motion(reduceMotion), value: selectedShape)
             .sensoryFeedback(.selection, trigger: selected)
             .navigationDestination(for: Route.self) { $0.view }
@@ -258,45 +272,82 @@ struct MapScreen: View {
     }
 }
 
-struct PlaceCard: View {
+/// The sheet for a picked place: photo, name and the next steps up top, so the peek is useful
+/// on its own; pulled up, its intro and best-known dishes.
+struct PlaceSheet: View {
     @Environment(Store.self) private var store
-    let node: Store.Node
-    let open: () -> Void
-    let close: () -> Void
+    @Environment(Library.self) private var library
+    @Environment(\.dismiss) private var dismiss
+    let ref: String
+    let go: (Route) -> Void
+    @State private var page: Page?
 
     var body: some View {
-        HStack(spacing: 14) {
-            if let url = store.photo(node.ref) {
-                RemoteImage(url: url).frame(width: 76, height: 76).clipShape(RoundedRectangle(cornerRadius: Radius.medium))
-            }
-            VStack(alignment: .leading, spacing: 4) {
-                Text(node.name).font(Theme.callout600).foregroundStyle(Theme.ink)
-                Text(node.sub).font(Theme.caption).foregroundStyle(Theme.muted).lineLimit(2)
-                Button(action: open) {
-                    Text("Open").font(Theme.callout600)
-                        .padding(.horizontal, 14).padding(.vertical, 6)
-                        .background(Theme.ink, in: Capsule())
-                        .foregroundStyle(Theme.ground)
+        if let node = store.node(ref) {
+            ScrollView {
+                VStack(alignment: .leading, spacing: Space.m) {
+                    HStack(alignment: .top, spacing: 14) {
+                        if let url = store.photo(ref) {
+                            RemoteImage(url: url).frame(width: 76, height: 76).clipShape(RoundedRectangle(cornerRadius: Radius.medium))
+                                .accessibilityHidden(true)
+                        }
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(node.name).font(Theme.heading).foregroundStyle(Theme.ink)
+                                .accessibilityAddTraits(.isHeader)
+                            Text(node.sub).font(Theme.caption).foregroundStyle(Theme.muted).lineLimit(2)
+                        }
+                        Spacer(minLength: 0)
+                        Button("Close", systemImage: "xmark") { dismiss() }
+                            .labelStyle(.iconOnly).font(.footnote.weight(.bold)).foregroundStyle(Theme.muted)
+                            .frame(width: 44, height: 44)
+                    }
+                    HStack(spacing: Space.s) {
+                        Button { go(.item(ref)) } label: {
+                            Text("Open").font(Theme.callout600).frame(maxWidth: .infinity).padding(.vertical, 10)
+                                .background(Theme.ink, in: Capsule()).foregroundStyle(Theme.ground)
+                        }
+                        Button { go(.walk(ref)) } label: {
+                            Label("Wander", systemImage: "point.3.connected.trianglepath.dotted").font(Theme.callout600)
+                                .frame(maxWidth: .infinity).padding(.vertical, 10)
+                                .overlay(Capsule().stroke(Theme.line)).foregroundStyle(Theme.ink)
+                        }
+                        Button(library.isSaved(ref) ? "Saved" : "Save", systemImage: library.isSaved(ref) ? "bookmark.fill" : "bookmark") {
+                            library.toggleSaved(ref)
+                        }
+                        .labelStyle(.iconOnly).font(Theme.callout600).foregroundStyle(Theme.ink)
+                        .frame(width: 44, height: 44).overlay(Circle().stroke(Theme.line))
+                        .sensoryFeedback(.impact(weight: .light), trigger: library.isSaved(ref))
+                    }
+                    .buttonStyle(.plain)
+
+                    if let page {
+                        Text(Page.summary(page, max: 360)).font(Theme.body).foregroundStyle(Theme.ink)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .padding(.top, Space.s)
+                    }
+                    if !dishes.isEmpty {
+                        Text("Dishes").font(Theme.heading).foregroundStyle(Theme.ink).padding(.top, Space.s)
+                            .accessibilityAddTraits(.isHeader)
+                        LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: Space.m, alignment: .top), count: 3), alignment: .leading, spacing: Space.l) {
+                            ForEach(dishes) { d in
+                                Button { go(.item(d.ref)) } label: { PhotoTile(node: d, width: nil, height: 92, showSub: false) }
+                                    .buttonStyle(.plain)
+                            }
+                        }
+                    }
                 }
-                .buttonStyle(.plain)
-                .padding(.top, 4)
+                .padding(.horizontal, Space.l).padding(.top, Space.l).padding(.bottom, Space.xl)
             }
-            Spacer(minLength: 0)
-            Button(action: close) {
-                Image(systemName: "xmark").font(.footnote.weight(.bold)).foregroundStyle(Theme.muted)
-                    .frame(width: 44, height: 44)
-            }
-            .accessibilityLabel("Close")
-            .frame(maxHeight: .infinity, alignment: .top)
+            .scrollBounceBehavior(.basedOnSize)
+            .task(id: ref) { page = await store.page(ref) }
         }
-        .padding(12)
-        .fixedSize(horizontal: false, vertical: true)
-        .background(Theme.surface, in: RoundedRectangle(cornerRadius: Radius.large))
-        .overlay(RoundedRectangle(cornerRadius: Radius.large).stroke(Theme.line))
-        .contentShape(RoundedRectangle(cornerRadius: Radius.large))
-        .onTapGesture(perform: open)
-        .accessibilityElement(children: .contain)
-        .accessibilityLabel("\(node.name), \(node.sub)")
+    }
+
+    /// Its best-connected dishes that have a photo
+    private var dishes: [Store.Node] {
+        store.neighbors(ref).filter { $0.type == .dish && store.hasPhoto($0.ref) }
+            .sorted { store.linkCount($0.ref) > store.linkCount($1.ref) }
+            .prefix(6).map { $0 }
     }
 }
 
@@ -326,14 +377,14 @@ struct MapList: View {
                                 }
                             }
                             .accessibilityLabel("\(n.name), \(n.sub)")
-                            .accessibilityHint("Shows it on the map")
+                            .accessibilityHint("Shows it on the globe")
                         }
                     } header: { Text(c.name) }
                 }
             }
         }
         .searchable(text: $filter, prompt: "Find a cuisine")
-        .navigationTitle("On the map")
+        .navigationTitle("On the globe")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar { ToolbarItem(placement: .confirmationAction) { Button("Done") { dismiss() } } }
     }

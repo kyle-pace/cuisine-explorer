@@ -45,6 +45,32 @@
   /* Top-left: title and search */
   .masthead { position: fixed; top: 24px; left: 28px; width: min(380px, calc(100vw - 56px)); z-index: 7; }
   .masthead h1 { font-weight: 800; font-size: 2.5rem; line-height: 1; margin: 0 0 10px; letter-spacing: -0.02em; }
+  /* Globe and Browse, the same switch as the top of the browse pages */
+  .views { display: inline-flex; gap: 4px; padding: 3px; background: var(--panel-2); border-radius: 999px; margin: 0 0 14px; }
+  .views a { text-decoration: none; padding: 5px 14px; border-radius: 999px; font-weight: 600; font-size: 0.9rem; color: var(--muted); }
+  .views a[aria-current="page"] { background: var(--rice); color: var(--night); }
+  .views a:not([aria-current]):hover { color: var(--rice); }
+  /* Near the middle: the cuisines under the view, with photos, while nothing is open */
+  .nearby { margin-top: 12px; background: rgba(36, 27, 47, 0.9); border: 1px solid var(--line); border-radius: 16px; padding: 12px 8px 8px; backdrop-filter: blur(6px); }
+  .nearby[hidden] { display: none; }
+  .masthead:has(.results.open) .nearby { display: none; }
+  .nearby h2 { font-size: 0.85rem; font-weight: 700; color: var(--muted); margin: 0 8px 6px; }
+  .nearby ul { list-style: none; margin: 0; padding: 0; overflow-y: auto; max-height: var(--near-max, 40vh); }
+  .nearby button { display: flex; align-items: center; gap: 10px; width: 100%; background: none; border: 0; padding: 6px 8px; border-radius: 10px; cursor: pointer; text-align: left; }
+  .nearby button:hover { background: var(--panel-2); }
+  .nearby small { display: block; color: var(--muted); font-size: 0.82rem; }
+  .thumb { flex: none; width: 40px; height: 40px; border-radius: 8px; background: var(--panel-2); overflow: hidden; display: grid; place-items: center; }
+  .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .thumb i { width: 10px; height: 10px; border-radius: 50%; display: block; }
+  .txt { flex: 1; min-width: 0; display: flex; flex-direction: column; line-height: 1.3; }
+  .txt small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  /* Dishes with photos, as cards above the rest */
+  .cards { list-style: none; margin: 0 0 10px; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+  .cards button { display: block; width: 100%; background: none; border: 0; padding: 0; cursor: pointer; text-align: left; }
+  .cards .pic { aspect-ratio: 1; border-radius: 10px; overflow: hidden; background: var(--panel-2); }
+  .cards img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .cards b { display: block; font-weight: 600; font-size: 0.85rem; line-height: 1.25; margin-top: 5px; }
+  .cards button:hover b { text-decoration: underline; text-underline-offset: 2px; }
   .masthead p { margin: 0 0 16px; color: var(--muted); font-size: 0.95rem; max-width: 34ch; }
   .search { position: relative; }
   .search input {
@@ -57,8 +83,12 @@
   .results { list-style: none; margin: 6px 0 0; padding: 6px; background: var(--panel); border: 1px solid var(--line); border-radius: 14px; max-height: 50vh; overflow: auto; display: none; }
   .results.open { display: block; }
   .results { max-height: 60vh; }
-  .results li { padding: 9px 10px; border-radius: 8px; cursor: pointer; display: flex; justify-content: space-between; gap: 12px; }
-  .results li small { color: var(--muted); white-space: nowrap; }
+  .results li { padding: 6px 10px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 12px; }
+  .results li small { color: var(--muted); font-size: 0.84rem; }
+  .results .clear-recent { margin-left: auto; background: none; border: 0; color: var(--muted); font-size: 0.78rem; cursor: pointer; text-decoration: underline; text-underline-offset: 2px; padding: 0; }
+  .search input::-webkit-search-cancel-button { -webkit-appearance: none; appearance: none; width: 16px; height: 16px; cursor: pointer;
+    background: var(--muted); -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round'%3E%3Cpath d='M6 6l12 12M18 6 6 18'/%3E%3C/svg%3E") center / contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round'%3E%3Cpath d='M6 6l12 12M18 6 6 18'/%3E%3C/svg%3E") center / contain no-repeat; }
   .results li[aria-selected="true"], .results li:hover { background: var(--panel-2); }
 
   /* Bottom-left: legend, layer toggles, hint */
@@ -173,7 +203,7 @@
   .tabs button[aria-selected="true"] { background: var(--rice); color: var(--night); }
   .small-h { font-size: 1rem !important; margin-top: 18px !important; }
   .surprise { margin-top: 4px; }
-  .results .group { padding: 10px 10px 4px; font-size: 0.78rem; font-weight: 700; color: var(--muted); cursor: default; }
+  .results .group { padding: 10px 10px 4px; font-size: 0.78rem; font-weight: 700; color: var(--muted); cursor: default; display: flex; align-items: baseline; }
   .results .group:hover { background: none; }
   .results .filters { display: flex; gap: 6px; padding: 4px 4px 6px; cursor: default; flex-wrap: wrap; }
   .results .filters:hover { background: none; }
@@ -203,7 +233,10 @@
   @media (max-width: 720px) {
     .masthead { top: 12px; left: 12px; width: calc(100vw - 24px); }
     .masthead h1 { font-size: 1.6rem; margin-bottom: 8px; }
-    .masthead p, .swatches, .hint { display: none; }
+    .masthead p, .swatches, .hint, .nearby { display: none; }
+    .masthead .views { position: absolute; top: 0; right: 0; margin: 0; }
+    .views a { padding: 4px 10px; font-size: 0.85rem; }
+    .masthead h1 { max-width: calc(100% - 150px); }
     .legend { left: 12px; right: 12px; bottom: calc(12px + var(--safe-b)); }
     .toggles { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
     .chip-btn { white-space: nowrap; padding: 9px 14px; }
@@ -231,6 +264,7 @@
 
   /* Embedded in a page that already has its own title (kylepace.net/labs/cuisines/) */
   .embed .masthead h1, .embed .masthead p { display: none; }
+  @media (max-width: 720px) { .embed .masthead .views { position: static; margin-bottom: 8px; } }
   .embed .masthead { top: 16px; left: 16px; }
   .embed .legend { left: 16px; bottom: 16px; }
 </style>
@@ -241,6 +275,7 @@
 
 <header class="masthead">
   <h1>Cuisine Explorer</h1>
+  <nav class="views" aria-label="Views"><a href="./" aria-current="page">Globe</a><a id="to-browse" href="web.html#/">Browse</a></nav>
   <p>Spin the globe, pick a place, and see what's cooking there. Every cuisine links back to Wikipedia.</p>
   <div class="search" role="search">
     <svg viewBox="0 0 24 24" fill="none" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
@@ -248,6 +283,10 @@
            aria-label="Search cuisines, dishes and ingredients" role="combobox" aria-expanded="false" aria-controls="results" aria-autocomplete="list">
     <ul class="results" id="results" role="listbox" aria-label="Matching cuisines, dishes and ingredients"></ul>
   </div>
+  <section class="nearby" id="nearby" aria-label="Cuisines near the middle of the globe" hidden>
+    <h2>Near the middle</h2>
+    <ul id="nearby-list"></ul>
+  </section>
 </header>
 
 <div class="legend">
@@ -260,8 +299,7 @@
   </div>
   <div class="toggles">
     <button class="chip-btn" id="t-arcs" aria-pressed="true">Diaspora routes</button>
-    <button class="chip-btn" id="t-explore" aria-pressed="false">Explore</button>
-    <a class="chip-btn" id="t-web" href="web.html#/">Browse as pages</a>
+    <button class="chip-btn" id="t-explore" aria-pressed="false">Where to start</button>
   </div>
   <p class="hint">Search a cuisine, dish or ingredient. Pick a country, or zoom in, to see its regional cuisines.</p>
 </div>
@@ -281,7 +319,7 @@
 (async function () {
   const embedded = new URLSearchParams(location.search).has("embed");
   if (embedded) document.documentElement.classList.add("embed");
-  if (embedded) document.getElementById("t-web").target = "_top";
+  if (embedded) document.getElementById("to-browse").target = "_top";
   // When embedded on the same site, keep the parent page's address in step so links can be shared
   const setHash = h => {
     history.replaceState(null, "", h ? "#" + h : location.pathname + location.search);
@@ -343,7 +381,7 @@
     s.cookbooks = (n.cookbooks || []).concat(s.cookbooks || []);
   }
   // Every cuisine, dish and ingredient also has a page in the web view
-  const pageLink = (type, id) => `<p class="page-links"><a class="page-link" href="web.html#/${type}/${slug(id)}"${embedded ? ' target="_top"' : ""}>Open its full page</a> · <a class="page-link" href="web.html#/walk/${type}/${slug(id)}"${embedded ? ' target="_top"' : ""}>See its connections on a map</a></p>`;
+  const pageLink = (type, id) => `<p class="page-links"><a class="page-link" href="web.html#/${type}/${slug(id)}"${embedded ? ' target="_top"' : ""}>Open its full page</a> · <a class="page-link" href="web.html#/walk/${type}/${slug(id)}"${embedded ? ' target="_top"' : ""}>Wander from here</a></p>`;
   const CORRECT = "https://github.com/kyle-pace/cuisine-explorer/issues/new?title=";
   // Our own text, with [[links]] turned into buttons that open what they point to
   function noteHtml(n) {
@@ -390,6 +428,21 @@
   const dishSlug = new Map(dishes.map(d => ["dish-" + slug(d.id), d]));
   const ingSlug = new Map(usedIngredients.map(i => ["ingredient-" + slug(i.id), i]));
   const hashOf = x => x.type === "dish" ? "dish-" + slug(x.id) : x.type === "ingredient" ? "ingredient-" + slug(x.id) : slug(x.id);
+  // Each thing's address in the browse pages (cuisine/thai-cuisine), shared with them for photos and recents
+  const refOf = x => (x.type === "dish" ? "dish/" : x.type === "ingredient" ? "ingredient/" : "cuisine/") + slug(x.id);
+  const byRef = new Map([...all.map(c => [refOf(c), c]), ...dishes.map(d => [refOf(d), d]), ...usedIngredients.map(i => [refOf(i), i])]);
+  // Photos: paths from data/web/app.json, loaded when first needed. On kylepace.net the site's
+  // image route serves them; anywhere else, Wikimedia Commons.
+  let photoMap = null, photoLoad = null;
+  const loadPhotos = () => photoLoad ||= load("data-app", "data/web/app.json").then(a => { photoMap = a.photos || {}; return photoMap; }).catch(() => (photoMap = {}));
+  const photoUrl = p => location.pathname.startsWith("/labs/cuisines/") ? "/labs/cuisines/img/" + p : "https://upload.wikimedia.org/wikipedia/commons/" + p;
+  const thumbOf = (x, color) => {
+    const p = photoMap && photoMap[refOf(x)];
+    return `<span class="thumb">${p ? `<img src="${attr(photoUrl(p))}" alt="" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('i'),{style:'background:${color}'}))">` : `<i style="background:${color}"></i>`}</span>`;
+  };
+  // Recently opened, for search; kept in this browser only, shared with the browse pages
+  const recents = () => { try { return JSON.parse(localStorage.getItem("cuisines.recent") || "[]"); } catch (e) { return []; } };
+  const saveRecents = l => { try { localStorage.setItem("cuisines.recent", JSON.stringify(l.slice(0, 6))); } catch (e) {} };
   // Ingredients a cuisine leans on most, by how many of its dishes use them
   function keyIngredients(list, n) {
     const count = new Map();
@@ -676,11 +729,41 @@
   }
   // While moving, labels just ride along; once the globe settles, sort out which to
   // show and which country's regions to show
-  let settle = null;
+  let settle = null, lastNear = 0;
   controls.addEventListener("change", () => {
     clearTimeout(settle);
-    settle = setTimeout(() => { browseFocus(); declutter(); }, 220);
+    settle = setTimeout(() => { browseFocus(); declutter(); updateNearby(); }, 220);
+    // While the globe spins on its own, the list keeps up every couple of seconds
+    if (Date.now() - lastNear > 2000) updateNearby();
   });
+
+  // --- Near the middle: national cuisines under the view, closest first ----------------
+  // Wide screens only, and only while no card is open, so the column under search isn't empty.
+  const nearby = document.getElementById("nearby"), nearList = document.getElementById("nearby-list");
+  const nationals = all.filter(c => c.kind === "national" && c.loc);
+  let nearKey = "";
+  function updateNearby() {
+    lastNear = Date.now();
+    const show = innerWidth > 900 && innerHeight > 640 && !document.getElementById("panel").classList.contains("open");
+    nearby.hidden = !show;
+    if (!show) return;
+    const pov = world.pointOfView();
+    const reach = Math.min(60, 12 + pov.altitude * 18);
+    const near = nationals.map(c => [c, angle([pov.lat, pov.lng], c.loc)]).filter(([, a]) => a < reach)
+      .sort((a, b) => a[1] - b[1]).slice(0, 8).map(([c]) => c);
+    const key = near.map(c => c.id).join("|") + (photoMap ? "+" : "");
+    if (key === nearKey) return;
+    nearKey = key;
+    nearList.innerHTML = near.map(c => `<li><button type="button" data-near="${attr(c.id)}">${thumbOf(c, colorOf(c))}<span class="txt">${esc(c.name)}<small>${esc(isoName.get(c.iso3) || "")}${(dishesOf.get(c.id) || []).length ? ` · ${(dishesOf.get(c.id) || []).length} dishes` : ""}</small></span></button></li>`).join("");
+    nearby.hidden = !near.length;
+    // Keep clear of the legend at the bottom
+    const top = nearList.getBoundingClientRect().top, legendTop = document.querySelector(".legend").getBoundingClientRect().top;
+    nearby.style.setProperty("--near-max", Math.max(120, legendTop - top - 28) + "px");
+    scheduleDeclutter();
+  }
+  nearList.addEventListener("click", e => { const b = e.target.closest("[data-near]"); if (b) open(byId.get(b.dataset.near)); });
+  addEventListener("resize", () => { nearKey = ""; updateNearby(); });
+  if (innerWidth > 900) loadPhotos().then(() => { nearKey = ""; updateNearby(); });
 
   // --- Layer toggles ------------------------------------------------------------
   const arcsBtn = document.getElementById("t-arcs");
@@ -704,6 +787,7 @@
 
   function showPanel() {
     panel.classList.add("open");
+    document.getElementById("nearby").hidden = true;
     panel.classList.remove("full");
     document.body.classList.add("sheet-open");
     body.scrollTop = 0;
@@ -713,6 +797,8 @@
     document.body.classList.remove("sheet-open");
     exploreBtn.setAttribute("aria-pressed", "false");
     selected = null; lit = null; current = null; trail.length = 0;
+    document.getElementById("to-browse").href = "web.html#/";
+    setTimeout(() => { nearKey = ""; updateNearby(); }, 0);
     refresh();
     if (location.hash) setHash("");
     setFocus([], true);
@@ -839,6 +925,10 @@
   function remember(x, push) {
     if (push !== false && current && current !== x) { trail.push(current); if (trail.length > 30) trail.shift(); }
     current = x;
+    if (x) {
+      saveRecents([refOf(x), ...recents().filter(r => r !== refOf(x))]);
+      document.getElementById("to-browse").href = "web.html#/" + refOf(x);
+    }
   }
   function goBack() {
     const prev = trail.pop();
@@ -947,6 +1037,8 @@
       ${pageLink("cuisine", c.id)}
       ${p && p.note ? `<p class="intro"><em>${esc(p.note)}</em></p>` : ""}
 
+      ${myDishes.length ? `<h3>Dishes</h3><ul class="cards" id="dish-cards" hidden></ul>${chipList(myDishes, dishChip, 24)}` : ""}
+
       <h3>Recipe sites</h3>
       ${sites.length ? `<ul class="sites">${sites.map(site).join("")}</ul>`
         : bSites ? `${fromNote(bSites)}<ul class="sites" style="margin-top:10px">${bSites.items.map(site).join("")}</ul>`
@@ -956,7 +1048,6 @@
         : bBooks ? `<h3>Cookbooks</h3>${bSites && bSites.from === bBooks.from ? "" : fromNote(bBooks)}<div class="books" style="margin-top:12px">${bBooks.items.map(book).join("")}</div>`
         : ""}
 
-      ${myDishes.length ? `<h3>Dishes</h3>${chipList(myDishes, dishChip, 24)}` : ""}
       ${keyIngs.length ? `<h3>Key ingredients</h3><p class="empty" style="margin-bottom:8px">Pick one to see where else in the world it's cooked with.</p><div class="chips">${keyIngs.map(x => ingChip(x.ing)).join("")}</div>` : ""}
 
       ${c.url ? `<a class="wiki-btn" href="${attr(c.url)}" target="_blank" rel="noopener">${cNote ? "Read Wikipedia's article" : "Read the full article on Wikipedia"} ${ARROW}</a>
@@ -970,6 +1061,18 @@
     `;
     fillIntro(c);
     fillPhoto("cuisine/" + slug(c.id), c);
+    fillDishCards(c, myDishes);
+  }
+  // The best-known dishes that have a photo, as cards (by how many cuisines and ingredients they link)
+  async function fillDishCards(c, list) {
+    const photos = await loadPhotos();
+    const box = document.getElementById("dish-cards");
+    if (!box || selected !== c) return;
+    const withPhoto = list.filter(d => photos[refOf(d)]);
+    if (withPhoto.length < 3) return;
+    const top = withPhoto.sort((a, b) => (b.cuisines.length * 3 + b.ingredients.length) - (a.cuisines.length * 3 + a.ingredients.length)).slice(0, withPhoto.length >= 6 ? 6 : 3);
+    box.innerHTML = top.map(d => `<li><button data-dish="${attr(d.id)}"><div class="pic"><img src="${attr(photoUrl(photos[refOf(d)]))}" alt="" loading="lazy" onerror="this.closest('li').remove()"></div><b>${esc(d.name)}</b></button></li>`).join("");
+    box.hidden = false;
   }
 
   // --- Dishes and ingredients: cards and their maps --------------------------------
@@ -1139,7 +1242,7 @@
         }).join("")}`,
     };
     body.innerHTML = `
-      <h2>Explore</h2>
+      <h2>Where to start</h2>
       <div class="tabs" role="tablist">${tabs.map(([k, label]) => `<button role="tab" aria-selected="${k === tab}" data-tab="${k}">${label}</button>`).join("")}</div>
       <div role="tabpanel">${content[tab]}</div>`;
     body.scrollTop = 0;
@@ -1202,13 +1305,29 @@
   const index = [
     ...all.map(c => ({ x: c, type: "cuisine", n: norm(c.name), alt: norm(c.iso3 ? (isoName.get(c.iso3) || "") : ""), sub: c.iso3 ? (isoName.get(c.iso3) || "") : KIND_LABEL[c.kind], weight: c.kind === "national" ? 2 : 0 })),
     ...dishes.map(d => ({ x: d, type: "dish", n: norm(d.name), alt: "", sub: shortName(byId.get(d.cuisines[0])) + (d.cuisines.length > 1 ? ` and ${d.cuisines.length - 1} more` : ""), weight: d.ingredients.length ? 1 : 0 })),
-    ...usedIngredients.map(i => ({ x: i, type: "ingredient", n: norm(i.name), alt: norm(i.title), sub: `in ${i.dishes} ${i.dishes === 1 ? "dish" : "dishes"}`, weight: Math.min(3, i.dishes / 10) })),
+    ...usedIngredients.map(i => ({ x: i, type: "ingredient", n: norm(i.name), alt: norm(i.title), sub: `In ${i.dishes} ${i.dishes === 1 ? "dish" : "dishes"}`, weight: Math.min(3, i.dishes / 10) })),
   ];
   const GROUPS = [["all", "All"], ["cuisine", "Cuisines"], ["dish", "Dishes"], ["ingredient", "Ingredients"]];
   let filter = "all", matches = [], active = -1;
+  // With nothing typed: what you opened last, then a few good places to start
+  const STARTERS = ["cuisine/thai-cuisine", "cuisine/mexican-cuisine", "cuisine/ethiopian-cuisine", "dish/pad-thai", "ingredient/chili-pepper", "ingredient/coconut-milk"];
+  const entryOf = x => index.find(e => e.x === x);
+  function showStart() {
+    const recent = recents().map(r => entryOf(byRef.get(r))).filter(Boolean);
+    const starters = STARTERS.map(r => entryOf(byRef.get(r))).filter(e => e && !recent.includes(e));
+    matches = [...recent, ...starters];
+    active = -1;
+    let html = "";
+    if (recent.length) html += `<li class="group" role="presentation">Recently opened <button type="button" class="clear-recent" data-clear>Clear</button></li>` + recent.map((e, i) => row(e, i)).join("");
+    if (starters.length) html += `<li class="group" role="presentation">Places to start</li>` + starters.map((e, i) => row(e, recent.length + i)).join("");
+    list.innerHTML = html;
+    list.classList.add("open"); q.setAttribute("aria-expanded", "true");
+  }
+  const colorFor = e => e.type === "cuisine" ? colorOf(e.x) : e.type === "dish" ? colorOf(byId.get(e.x.cuisines[0])) : "#c9b8dd";
+  const row = (e, i) => `<li role="option" id="opt-${i}" aria-selected="${i === active}" data-i="${i}">${thumbOf(e.x, colorFor(e))}<span class="txt">${esc(e.x.name)}<small>${esc(e.sub)}</small></span></li>`;
   function search() {
     const t = norm(q.value.trim());
-    if (!t) { list.classList.remove("open"); q.setAttribute("aria-expanded", "false"); return; }
+    if (!t) { if (document.activeElement === q) showStart(); else { list.classList.remove("open"); q.setAttribute("aria-expanded", "false"); } return; }
     const scored = index
       .filter(e => filter === "all" || e.type === filter)
       .map(e => ({ e, s: e.n.startsWith(t) ? 0 : e.n.includes(" " + t) ? 1 : e.n.includes(t) ? 2 : e.alt.startsWith(t) ? 3 : 9 }))
@@ -1230,7 +1349,7 @@
     let last = null;
     matches.forEach((e, i) => {
       if (e.type !== last) { html += `<li class="group" role="presentation">${head[e.type]}</li>`; last = e.type; }
-      html += `<li role="option" id="opt-${i}" aria-selected="${i === active}" data-i="${i}">${esc(e.x.name)}<small>${esc(e.sub)}</small></li>`;
+      html += row(e, i);
     });
     if (!matches.length) html += `<li role="option" aria-disabled="true">Nothing by that name. Try a country, a dish or an ingredient.</li>`;
     list.innerHTML = html;
@@ -1240,16 +1359,18 @@
   function openAny(x) { x.type === "dish" ? openDish(x) : x.type === "ingredient" ? openIngredient(x) : open(x); }
   function pick(i) { const e = matches[i]; if (!e) return; q.value = ""; search(); q.blur(); openAny(e.x); }
   q.addEventListener("input", search);
+  q.addEventListener("focus", () => { loadPhotos().then(() => { if (list.classList.contains("open")) search(); }); search(); });
   q.addEventListener("keydown", e => {
     if (e.key === "ArrowDown" || e.key === "ArrowUp") {
       e.preventDefault(); if (!matches.length) return;
       active = (active + (e.key === "ArrowDown" ? 1 : -1) + matches.length) % matches.length;
       list.querySelectorAll("[data-i]").forEach(li => li.setAttribute("aria-selected", String(+li.dataset.i === active)));
       q.setAttribute("aria-activedescendant", "opt-" + active);
-    } else if (e.key === "Enter") { e.preventDefault(); pick(active); }
+    } else if (e.key === "Enter") { e.preventDefault(); pick(Math.max(0, active)); }
     else if (e.key === "Escape") { q.value = ""; search(); }
   });
   list.addEventListener("mousedown", e => {
+    if (e.target.closest("[data-clear]")) { e.preventDefault(); saveRecents([]); showStart(); return; }
     const f = e.target.closest("[data-filter]");
     if (f) { e.preventDefault(); filter = f.dataset.filter; search(); return; }
     const li = e.target.closest("[data-i]");

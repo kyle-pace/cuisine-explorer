@@ -38,12 +38,23 @@
   .search input { width: 100%; padding: 9px 14px 9px 38px; border-radius: 22px; border: 1px solid var(--line);
     background: var(--panel); color: var(--rice); font: inherit; -webkit-appearance: none; appearance: none; }
   .search input::placeholder { color: var(--muted); }
+  .search input::-webkit-search-cancel-button { -webkit-appearance: none; appearance: none; width: 16px; height: 16px; cursor: pointer;
+    background: var(--muted); -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round'%3E%3Cpath d='M6 6l12 12M18 6 6 18'/%3E%3C/svg%3E") center / contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round'%3E%3Cpath d='M6 6l12 12M18 6 6 18'/%3E%3C/svg%3E") center / contain no-repeat; }
+  .search input::-webkit-search-cancel-button:hover { background: var(--rice); }
   .search svg { position: absolute; left: 14px; top: 12px; width: 15px; height: 15px; stroke: var(--muted); pointer-events: none; }
   .results { list-style: none; margin: 6px 0 0; padding: 6px; position: absolute; left: 0; right: 0; background: var(--panel);
     border: 1px solid var(--line); border-radius: 14px; max-height: 60vh; overflow: auto; display: none; }
   .results.open { display: block; }
-  .results li { padding: 8px 10px; border-radius: 8px; cursor: pointer; display: flex; justify-content: space-between; gap: 12px; }
-  .results li small { color: var(--muted); white-space: nowrap; }
+  .results li { padding: 6px 10px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 12px; }
+  .results li > .txt { flex: 1; min-width: 0; display: flex; flex-direction: column; line-height: 1.3; }
+  .results li small { color: var(--muted); font-size: 0.84rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .thumb { flex: none; width: 40px; height: 40px; border-radius: 8px; background: var(--panel-2); overflow: hidden; display: grid; place-items: center; }
+  .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .thumb i { width: 10px; height: 10px; border-radius: 50%; display: block; }
+  .thumb i.sq { border-radius: 2px; transform: rotate(45deg); }
+  .results .clear-recent { margin-left: auto; background: none; border: 0; color: var(--muted); font-size: 0.78rem; cursor: pointer; text-decoration: underline; text-underline-offset: 2px; padding: 0; }
+  .results .group { display: flex; align-items: baseline; }
   .results li[aria-selected="true"], .results li:hover { background: var(--panel-2); }
   .results .group { padding: 10px 10px 4px; font-size: 0.78rem; font-weight: 700; color: var(--muted); cursor: default; }
   .results .group:hover { background: none; }
@@ -52,6 +63,8 @@
   .btn.solid { background: var(--rice); color: var(--night); border-color: var(--rice); }
   .btn.solid:hover { background: #fff8ec; }
   .btn svg { width: 16px; height: 16px; flex: none; }
+  .cdot { display: inline-block; width: 11px; height: 11px; border-radius: 50%; flex: none;
+    background: conic-gradient(var(--chili) 0 20%, var(--tomatillo) 0 40%, var(--saffron) 0 60%, var(--beet) 0 80%, var(--seaglass) 0); }
 
   /* Page and its connections */
   .layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 48px; max-width: 1200px; margin: 0 auto; padding: 36px 28px 80px; }
@@ -99,8 +112,8 @@
   .letters { display: flex; flex-wrap: wrap; gap: 4px; margin: 0 0 16px; }
   .letters a { min-width: 32px; text-align: center; padding: 4px 6px; border-radius: 8px; text-decoration: none; background: var(--panel); border: 1px solid var(--line); font-weight: 600; font-size: 0.9rem; }
   .letters a[aria-current="true"] { background: var(--rice); color: var(--night); border-color: var(--rice); }
-  .stats { display: flex; flex-wrap: wrap; gap: 10px; margin: 18px 0 0; padding: 0; list-style: none; }
-  .stats a { display: block; text-decoration: none; padding: 12px 16px; background: var(--panel); border: 1px solid var(--line); border-radius: 14px; min-width: 120px; }
+  .stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 18px 0 0; padding: 0; list-style: none; max-width: 420px; }
+  .stats a { display: block; text-decoration: none; padding: 12px 16px; background: var(--panel); border: 1px solid var(--line); border-radius: 14px; }
   .stats a:hover { border-color: var(--muted); }
   .stats b { display: block; font-size: 1.5rem; font-weight: 800; line-height: 1.1; }
   .stats span { color: var(--muted); font-size: 0.9rem; }
@@ -116,6 +129,23 @@
   .photo img { display: block; width: 100%; max-width: 560px; height: auto; max-height: 360px; object-fit: cover; border-radius: 14px; background: var(--panel); }
   .photo figcaption { font-size: 0.8rem; color: var(--muted); margin-top: 6px; }
   .photo figcaption a { color: var(--muted); }
+  .cards { list-style: none; margin: 0 0 14px; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+  .cards a { display: block; text-decoration: none; border-radius: 12px; }
+  .cards .pic { aspect-ratio: 4 / 3; border-radius: 12px; overflow: hidden; background: var(--panel); border: 1px solid var(--line); }
+  .cards img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .cards b { display: block; font-weight: 600; font-size: 0.95rem; line-height: 1.3; margin-top: 6px; }
+  .cards a:hover b { text-decoration: underline; text-underline-offset: 3px; }
+  .all-of { font-size: 0.9rem; color: var(--muted); margin: 0 0 8px; }
+  .toc { margin-top: 24px; }
+  .toc h2 { margin-bottom: 6px; }
+  .toc ol, .toc-m ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+  .toc a, .toc-m a { display: block; padding: 4px 10px; border-left: 2px solid var(--line); text-decoration: none; color: var(--muted); font-size: 0.92rem; }
+  .toc a:hover, .toc-m a:hover { color: var(--rice); }
+  .toc a[aria-current="true"] { color: var(--rice); border-left-color: var(--saffron); font-weight: 600; }
+  .toc-m { display: none; margin: 14px 0 0; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); }
+  .toc-m summary { cursor: pointer; padding: 10px 14px; font-weight: 700; font-size: 0.95rem; }
+  .toc-m ol { padding: 0 14px 12px; }
+  .page h2[id] { scroll-margin-top: 84px; }
   .correct { margin-top: 48px; padding-top: 16px; border-top: 1px solid var(--line); color: var(--muted); font-size: 0.88rem; }
 
   /* Connections: the local graph */
@@ -160,14 +190,21 @@
   .walk-page h1 { font-size: 2rem; }
   .walk-page .actions .walk-open { }
   @media (max-width: 720px) {
-    /* On phones the walk takes the whole screen, with its tools in one row that scrolls sideways */
+    /* On phones the walk takes the whole screen: back and where you are on top, the tools
+       on their own row that scrolls sideways, and the hint under the graph, not on it */
     .walk { inset: 0; z-index: 6; }
-    .walk-bar { flex-wrap: nowrap; overflow-x: auto; padding: 10px 14px; gap: 8px; scrollbar-width: none; }
-    .walk-bar::-webkit-scrollbar { display: none; }
-    .walk-tools, #walk-filters { flex-wrap: nowrap; }
-    .trail { flex-wrap: nowrap; }
+    .walk-bar { flex-wrap: wrap; padding: 10px 14px 8px; gap: 8px 10px; }
+    .trail { flex-wrap: nowrap; flex: 1; }
     .trail a:not([aria-current]), .trail span { display: none; }
+    .trail a[aria-current] { max-width: none; }
+    .walk-tools { flex-basis: 100%; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin: 0 -14px; padding: 2px 14px;
+      -webkit-mask: linear-gradient(90deg, transparent, #000 14px, #000 calc(100% - 28px), transparent); mask: linear-gradient(90deg, transparent, #000 14px, #000 calc(100% - 28px), transparent); }
+    .walk-tools::-webkit-scrollbar { display: none; }
+    #walk-filters { flex-wrap: nowrap; }
     .walk-tools .chip, .walk-bar .btn, .seg button { white-space: nowrap; }
+    .walk-graph-wrap { display: flex; flex-direction: column; }
+    #walk-graph { position: relative; flex: 1; min-height: 0; overflow: hidden; }
+    .walk-graph-wrap .walk-hint { position: static; padding: 4px 14px 8px; max-width: none; }
   }
   @media (max-width: 900px) {
     .walk-body { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1fr) 42vh; }
@@ -188,6 +225,7 @@
   .tip .type { display: block; font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: #5b5066; margin-bottom: 2px; }
   .tip b { display: block; font-size: 0.95rem; line-height: 1.25; }
   .tip small { display: block; font-weight: 400; font-size: 0.82rem; margin-top: 4px; line-height: 1.4; color: #3a3142; }
+  @media (hover: none) { .hover-only { display: none; } }
   .loading { padding: 80px 28px; text-align: center; color: var(--muted); }
 
   @media (prefers-reduced-motion: no-preference) {
@@ -202,6 +240,18 @@
     .search { order: 3; flex-basis: 100%; max-width: none; }
     .top .btn { margin-left: auto; }
     .cover { width: 96px; }
+    .toc { display: none; }
+    .toc-m { display: block; }
+  }
+  @media (max-width: 560px) {
+    .top { padding: 10px 14px; gap: 8px; }
+    .brand { font-size: 1.05rem; }
+    .views a { padding: 5px 11px; }
+    .top .btn .label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    .top .btn { padding: 8px 10px; }
+    .stats a { padding: 10px 12px; }
+    .stats b { font-size: 1.25rem; }
+    .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
 </style>
 </head>
@@ -214,13 +264,13 @@
   </nav>
   <div class="search" role="search">
     <svg viewBox="0 0 24 24" fill="none" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-    <input id="q" type="search" placeholder="Search cuisines, dishes, ingredients, sites, books" autocomplete="off" enterkeyhint="go"
+    <input id="q" type="search" placeholder="Search cuisines, dishes, ingredients" autocomplete="off" enterkeyhint="go"
            aria-label="Search cuisines, dishes and ingredients" role="combobox" aria-expanded="false" aria-controls="results" aria-autocomplete="list">
     <ul class="results" id="results" role="listbox" aria-label="Matches"></ul>
   </div>
   <button class="btn" id="open-graph" type="button">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="5" cy="6" r="2.5"/><circle cx="18" cy="5" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M7.3 7.2 10.6 16M16.5 7.1 13.2 15.9M7.5 6h8"/></svg>
-    Map</button>
+    <span class="label">Wander</span></button>
 </header>
 
 <div class="layout" id="layout">
@@ -230,10 +280,11 @@
     <p class="side-note">Everything linked to this page. Pick a dot to go there.</p>
     <div class="local-wrap">
       <div class="local" id="local" aria-hidden="true"></div>
-      <button class="local-open" id="local-open" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="5" cy="6" r="2.5"/><circle cx="18" cy="5" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M7.3 7.2 10.6 16M16.5 7.1 13.2 15.9M7.5 6h8"/></svg> Open the map</button>
+      <button class="local-open" id="local-open" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="5" cy="6" r="2.5"/><circle cx="18" cy="5" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M7.3 7.2 10.6 16M16.5 7.1 13.2 15.9M7.5 6h8"/></svg> Wander from here</button>
     </div>
     <div class="key" id="key" aria-hidden="true"></div>
     <button class="btn" id="open-graph-2" type="button">See everything at once</button>
+    <nav class="toc" id="toc" aria-label="On this page" hidden></nav>
   </aside>
 </div>
 
@@ -244,9 +295,9 @@
     <button class="btn close" id="close-graph" type="button">Close</button>
   </div>
   <div id="graph" aria-hidden="true"></div>
-  <p class="full-hint">Each dot is a cuisine, recipe site or cookbook, and each line links two of them. Drag to move, scroll or pinch to zoom, and pick a dot to explore from there. Dishes and ingredients are hidden at first; turn them on above.</p>
+  <p class="full-hint">Each dot is a cuisine, and each line links two of them. Drag to move, scroll or pinch to zoom, and pick a dot to explore from there. Dishes and ingredients are hidden at first; turn them on above.</p>
 </div>
-<div class="walk" id="walk" role="dialog" aria-label="Map of connections">
+<div class="walk" id="walk" role="dialog" aria-label="Wander">
   <div class="walk-bar">
     <button class="btn" id="walk-close" type="button" >← Back to page</button>
     <nav class="trail" id="trail" aria-label="Where you've been"></nav>
@@ -261,7 +312,7 @@
   <div class="walk-body">
     <div class="walk-graph-wrap">
       <div id="walk-graph" aria-hidden="true"></div>
-      <p class="walk-hint" id="walk-hint">Each dot is something linked to <b id="walk-name"></b>. Pick one to move there, and its own links appear around it. Hover for a preview.</p>
+      <p class="walk-hint" id="walk-hint">Each dot is something linked to <b id="walk-name"></b>. Pick one to move there, and its own links appear around it. <span class="hover-only">Hover for a preview.</span></p>
     </div>
     <section class="walk-page page" id="walk-page" aria-live="polite"></section>
   </div>
@@ -320,6 +371,15 @@
   // the pages (and in search) but aren't dots.
   const GRAPH = new Set(["cuisine", "dish", "ingredient"]);
   const graphNeighbors = n => [...n.out.values()].map(e => e.node).filter(x => GRAPH.has(x.type));
+  // Photos for search and dish cards: paths from data/web/app.json, loaded when first needed.
+  // On kylepace.net the site's image route serves them; anywhere else, Wikimedia Commons.
+  let photoMap = null, photoLoad = null;
+  const loadPhotos = () => photoLoad ||= load("data-app", "data/web/app.json").then(a => { photoMap = a.photos || {}; return photoMap; }).catch(() => (photoMap = {}));
+  const photoUrl = p => location.pathname.startsWith("/labs/cuisines/") ? "/labs/cuisines/img/" + p : "https://upload.wikimedia.org/wikipedia/commons/" + p;
+  // Recently viewed pages, for search; kept in this browser only
+  const recents = () => { try { return JSON.parse(localStorage.getItem("cuisines.recent") || "[]"); } catch (e) { return []; } };
+  const saveRecents = l => { try { localStorage.setItem("cuisines.recent", JSON.stringify(l.slice(0, 6))); } catch (e) {} };
+  const visited = n => saveRecents([n.ref, ...recents().filter(r => r !== n.ref)]);
   const globeHash = n => n.type === "cuisine" ? slug(n.ref.slice(8)) : n.type === "dish" ? "dish-" + n.ref.slice(5) : n.type === "ingredient" ? "ingredient-" + n.ref.slice(11) : "";
 
   // --- Pages ------------------------------------------------------------------
@@ -350,12 +410,45 @@
     target.dataset.ref = n.ref;
     if (!m) { target.innerHTML = `<h1>${esc(n.name)}</h1><p class="empty">This page didn't load. Check your connection and try again.</p>`; return; }
     const shareable = location.hostname.endsWith("kylepace.net") ? `<button class="btn" type="button" data-copy="https://kylepace.net/labs/cuisines/${n.ref}/">Copy link</button>` : "";
-    const mapBtn = page === mainPage ? `<a class="btn solid" href="${walkHref(n)}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="5" cy="6" r="2.5"/><circle cx="18" cy="5" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M7.3 7.2 10.6 16M16.5 7.1 13.2 15.9M7.5 6h8"/></svg> Explore on the map</a>` : "";
+    const mapBtn = page === mainPage ? `<a class="btn solid" href="${walkHref(n)}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="5" cy="6" r="2.5"/><circle cx="18" cy="5" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M7.3 7.2 10.6 16M16.5 7.1 13.2 15.9M7.5 6h8"/></svg> Wander from here</a>` : "";
     target.innerHTML = renderItem(m, { ...renderOpts, extraActions: mapBtn + shareable });
+    contents(target);
+    dishCards(target, token);
     const box = target.querySelector("#intro");
     if (box && !box.textContent.trim() && box.dataset.wiki) liveIntro(box.dataset.wiki).then(t => {
       if (t && box.isConnected) box.innerHTML = t.split(/\n+/).filter(p => p.trim()).map(p => `<p>${esc(p)}</p>`).join("") + `<p class="source">Intro from Wikipedia, shared under CC BY-SA.</p>`;
     });
+  }
+
+  // On this page: the sections, in the side rail on wide screens and folded up at the top on phones
+  function contents(root) {
+    const toc = document.getElementById("toc");
+    const hs = [...root.querySelectorAll("h2")];
+    hs.forEach(h => { h.id = "s-" + slug(h.firstChild.textContent); });
+    const list = hs.length >= 3 ? `<ol>${hs.map(h => `<li><a href="${current ? current.href + "#" + h.id : "#" + h.id}">${esc(h.firstChild.textContent.trim())}</a></li>`).join("")}</ol>` : "";
+    if (root === mainPage) { toc.hidden = !list; toc.innerHTML = list ? `<h2>On this page</h2>${list}` : ""; }
+    if (list && root === mainPage) root.querySelector(".actions")?.insertAdjacentHTML("afterend", `<details class="toc-m"><summary>On this page</summary>${list}</details>`);
+  }
+  // Section links scroll within the page instead of changing the route
+  document.addEventListener("click", e => {
+    const a = e.target.closest('a[href*="#s-"]');
+    if (!a) return;
+    e.preventDefault();
+    document.getElementById(a.getAttribute("href").split("#").pop())?.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" });
+    a.closest("details")?.removeAttribute("open");
+  });
+  // A cuisine's best-known dishes with photos as cards, above the full list
+  async function dishCards(root, token) {
+    const h = [...root.querySelectorAll("h2")].find(x => x.firstChild.textContent.trim() === "Dishes");
+    const ul = h && h.nextElementSibling;
+    if (!ul || !ul.matches(".links")) return;
+    const photos = await loadPhotos();
+    if (token !== renderToken || !ul.isConnected) return;
+    const ds = [...ul.querySelectorAll("a")].map(a => nodes.get(a.getAttribute("href").slice(2))).filter(n => n && photos[n.ref]);
+    if (ds.length < 3) return;
+    const top = ds.sort((a, b) => b.out.size - a.out.size).slice(0, ds.length >= 8 ? 8 : 4);
+    ul.insertAdjacentHTML("beforebegin", `<ul class="cards">${top.map(n => `<li><a href="${n.href}"><div class="pic"><img src="${esc(photoUrl(photos[n.ref]))}" alt="" loading="lazy" onerror="this.closest('li').remove()"></div><b>${esc(n.name)}</b></a></li>`).join("")}</ul>
+      <p class="all-of">All ${ul.children.length} dishes</p>`);
   }
 
   // Hub pages, like the index notes in a vault
@@ -368,8 +461,8 @@
     page.dataset.ref = "";
     page.innerHTML = `
       <h1>Browse every cuisine</h1>
-      <div class="intro"><p>The same cuisines, dishes and ingredients as the globe, as pages you can read and follow. Every page links to what it's connected to: a cuisine to its dishes, a dish to its ingredients, an ingredient to everywhere it's cooked. Every page also has a map of its connections that you can move through, one link at a time.</p>
-        <p class="actions"><a class="btn solid" href="#/walk/cuisine/thai-cuisine"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="5" cy="6" r="2.5"/><circle cx="18" cy="5" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M7.3 7.2 10.6 16M16.5 7.1 13.2 15.9M7.5 6h8"/></svg> Try the map, starting from Thai cuisine</a><button class="btn" type="button" id="home-everything">See everything at once</button></p></div>
+      <div class="intro"><p>The same cuisines, dishes and ingredients as the globe, as pages you can read and follow. Every page links to what it's connected to: a cuisine to its dishes, a dish to its ingredients, an ingredient to everywhere it's cooked. From any page you can wander: its connections laid out around it, to follow one link at a time.</p>
+        <p class="actions"><a class="btn solid" href="#/walk/cuisine/thai-cuisine"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="5" cy="6" r="2.5"/><circle cx="18" cy="5" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M7.3 7.2 10.6 16M16.5 7.1 13.2 15.9M7.5 6h8"/></svg> Wander, starting from Thai cuisine</a><button class="btn" type="button" id="home-everything">See everything at once</button></p></div>
       <ul class="stats">${stat("cuisine", "cuisines")}${stat("dish", "dishes")}${stat("ingredient", "ingredients")}</ul>
       ${section("Cuisines by region", byContinent(nationals))}
       ${section("Indigenous foodways", linkList(indigenous), indigenous.length)}
@@ -419,7 +512,7 @@
     else {
       const n = bySlug.get(parts[0] + "/" + parts[1]);
       if (!n) { page.dataset.ref = ""; page.innerHTML = `<h1>Not found</h1><p class="empty">Nothing here by that name. <a href="#/">Back to the web</a>.</p>`; }
-      else { current = n; itemPage(n); }
+      else { current = n; visited(n); itemPage(n); }
     }
     document.title = (current ? current.name + " · " : "") + "Cuisine Explorer: browse";
     document.getElementById("to-globe").href = "./" + (current && globeHash(current) ? "#" + globeHash(current) : "");
@@ -445,8 +538,10 @@
   }
   const keySvg = t => `<svg viewBox="-6 -6 12 12">${t === "ingredient" ? `<path d="M0-5 5 0 0 5-5 0z" fill="#c9b8dd"/>`
     : t === "site" ? `<rect x="-4" y="-4" width="8" height="8" fill="#55b8ad"/>` : t === "book" ? `<rect x="-3" y="-5" width="6" height="10" fill="#f0b340"/>`
-    : t === "dish" ? `<circle r="3.5" fill="#ede6da"/>` : `<circle r="5" fill="#94bd5c"/>`}</svg>`;
-  document.getElementById("key").innerHTML = ["cuisine", "dish", "ingredient", "site", "book"].map(t => `<span>${keySvg(t)}${TYPE_LABEL[t]}</span>`).join("");
+    : t === "dish" ? `<circle r="3.5" fill="#ede6da"/>` : ""}</svg>`;
+  // Cuisines take their continent's color, so their key is every continent's color at once
+  const keyMark = t => t === "cuisine" ? `<i class="cdot" aria-hidden="true"></i>` : keySvg(t);
+  document.getElementById("key").innerHTML = [...GRAPH].map(t => `<span>${keyMark(t)}${t === "cuisine" ? "Cuisine, colored by continent" : TYPE_LABEL[t]}</span>`).join("");
   const size = n => n.type === "cuisine" ? (n.national ? 5 : 3.6) : n.type === "dish" ? 2.2 : n.type === "ingredient" ? 2.8 : 3;
   const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const isPhone = () => innerWidth <= 720;
@@ -607,7 +702,7 @@
   document.getElementById("close-graph").addEventListener("click", closeFull);
   addEventListener("keydown", e => { if (e.key === "Escape" && fullOpen) closeFull(); });
   const filters = document.getElementById("filters");
-  filters.innerHTML = Object.keys(shown).map(t => `<button class="chip" type="button" data-t="${t}" aria-pressed="${shown[t]}">${keySvg(t)}${PLURAL[t]}</button>`).join(" ")
+  filters.innerHTML = Object.keys(shown).map(t => `<button class="chip" type="button" data-t="${t}" aria-pressed="${shown[t]}">${keyMark(t)}${PLURAL[t]}</button>`).join(" ")
     + `<span class="seg" role="group" aria-label="Arrange the dots"><button type="button" data-layout="continent" aria-pressed="true">Arrange by continent</button><button type="button" data-layout="links" aria-pressed="false">Arrange by connections</button></span>`;
   filters.addEventListener("click", e => {
     const b = e.target.closest("[data-t], [data-layout]");
@@ -704,14 +799,31 @@
         shape(ctx, n, g.x, g.y, r);
         ctx.fillStyle = n.color; ctx.fill();
         if (me) { ctx.lineWidth = 2.5 / scale; ctx.strokeStyle = "#fff"; ctx.stroke(); }
-        // Every dot is labeled at walking scale; farther rings get smaller type
-        const fs = (me ? 14 : g.depth === 1 ? 11 : 9.5) / Math.max(scale, 0.6);
-        if (scale * fs > 6 || me || n === walkHover) {
-          ctx.font = `${me || n === walkHover ? 700 : 400} ${fs}px Atkinson Hyperlegible Next, system-ui, sans-serif`;
-          ctx.textAlign = "center"; ctx.textBaseline = "top";
-          ctx.fillStyle = me || n === walkHover ? "#ede6da" : "rgba(237,230,218,0.8)";
+        ctx.globalAlpha = 1;
+      })
+      // Labels go on last, most important first, and a label that would overlap one
+      // already drawn is left off (hover or tap a dot for its name)
+      .onRenderFramePost((ctx, scale) => {
+        const gs = walkGraph.graphData().nodes;
+        const rank = g => g.n === walkCenter ? -2 : g.n === walkHover ? -1 : (g.depth - 1) * 100 + (g.n.type === "cuisine" ? 0 : 50) - Math.min(49, g.n.out.size / 4);
+        const placed = [];
+        ctx.textAlign = "center"; ctx.textBaseline = "top";
+        for (const g of [...gs].sort((a, b) => rank(a) - rank(b))) {
+          const n = g.n, me = n === walkCenter, hov = n === walkHover;
+          if (g.x == null || (walkHover && !lit(n))) continue;
+          const fs = (me ? 14 : g.depth === 1 ? 11 : 9.5) / Math.max(scale, 0.6);
+          if (scale * fs <= 6 && !me && !hov) continue;
+          ctx.font = `${me || hov ? 700 : 400} ${fs}px Atkinson Hyperlegible Next, system-ui, sans-serif`;
           const label = n.name.replace(/ cuisine$/, "");
-          ctx.fillText(label.length > 30 ? label.slice(0, 29) + "…" : label, g.x, g.y + r + 2 / scale);
+          const text = label.length > 30 ? label.slice(0, 29) + "…" : label;
+          const r = me ? 9 : size(n) + (g.depth === 1 ? 2.5 : 1);
+          const w = ctx.measureText(text).width, y = g.y + r + 2 / scale, pad = 2 / scale;
+          const box = [g.x - w / 2 - pad, y - pad, g.x + w / 2 + pad, y + fs + pad];
+          if (!me && !hov && placed.some(b => box[0] < b[2] && box[2] > b[0] && box[1] < b[3] && box[3] > b[1])) continue;
+          placed.push(box);
+          ctx.globalAlpha = g.depth > 1 && !walkHover && !me ? 0.8 : 1;
+          ctx.fillStyle = me || hov ? "#ede6da" : "rgba(237,230,218,0.82)";
+          ctx.fillText(text, g.x, y);
         }
         ctx.globalAlpha = 1;
       })
@@ -755,7 +867,7 @@
     if (trailList.length > 8) trailList.shift();
     document.getElementById("trail").innerHTML = trailList.map(t => `<a href="${walkHref(t)}"${t === n ? ' aria-current="page"' : ""}>${esc(t.name)}</a>`).join("<span>›</span>");
     walkPage.scrollTop = 0;
-    document.title = n.name + " · Map · Cuisine Explorer";
+    document.title = n.name + " · Wander · Cuisine Explorer";
   }
   function hideWalk() {
     if (!walkEl.classList.contains("open")) return;
@@ -779,7 +891,7 @@
     walkGraph.graphData(walkData()); walkFit = true;
   });
   const wf = document.getElementById("walk-filters");
-  wf.innerHTML = Object.keys(walkShown).map(t => `<button class="chip" type="button" data-wt="${t}" aria-pressed="true">${keySvg(t)}${PLURAL[t]}</button>`).join(" ");
+  wf.innerHTML = Object.keys(walkShown).map(t => `<button class="chip" type="button" data-wt="${t}" aria-pressed="true">${keyMark(t)}${PLURAL[t]}</button>`).join(" ");
   wf.addEventListener("click", e => {
     const b = e.target.closest("[data-wt]");
     if (!b) return;
@@ -796,37 +908,67 @@
   });
 
   // --- Search ----------------------------------------------------------------------
+  // Names with a photo and a line on where each is from. With nothing typed yet, it
+  // offers what you looked at last and a few good places to start.
   const q = document.getElementById("q"), results = document.getElementById("results");
   const index = nodeList.map(n => ({ n, s: norm(n.name), w: n.type === "cuisine" ? (n.national ? 3 : 2) : n.type === "ingredient" ? 1.5 : 1 }));
+  const STARTERS = ["cuisine/thai-cuisine", "cuisine/mexican-cuisine", "cuisine/ethiopian-cuisine", "dish/pad-thai", "ingredient/chili-pepper", "ingredient/coconut-milk"];
   let hits = [], sel = 0;
+  function about(n) {
+    if (n.type === "cuisine") return n.sub || (n.indigenous ? "Indigenous foodways" : n.beyond ? "Beyond borders" : "Cuisine");
+    if (n.type === "dish") { const c = neighbors(n, "cuisine"); return c.length ? c[0].name + (c.length > 1 ? ` and ${c.length - 1} more` : "") : "Dish"; }
+    if (n.type === "ingredient") { const k = neighbors(n, "dish").length; return `In ${k} ${k === 1 ? "dish" : "dishes"}`; }
+    return n.sub || "";
+  }
+  const thumbOf = n => {
+    const p = photoMap && photoMap[n.ref];
+    return `<span class="thumb">${p ? `<img src="${esc(photoUrl(p))}" alt="" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('i'),{style:'background:${n.color}'}))">` : `<i${n.type === "ingredient" ? ' class="sq"' : ""} style="background:${n.color}"></i>`}</span>`;
+  };
+  const option = (x, i) => `<li role="option" id="r${i}" data-i="${i}" aria-selected="${i === sel}">${thumbOf(x.n)}<span class="txt">${esc(x.n.name)}<small>${esc(about(x.n))}</small></span></li>`;
+  function showStart() {
+    const recent = recents().map(r => nodes.get(r)).filter(Boolean);
+    const starters = STARTERS.map(r => nodes.get(r)).filter(n => n && !recent.includes(n));
+    hits = [...recent, ...starters].map(n => ({ n }));
+    sel = -1;
+    let html = "";
+    if (recent.length) html += `<li class="group" role="presentation">Recently viewed <button type="button" class="clear-recent" data-clear>Clear</button></li>` + recent.map((n, i) => option({ n }, i)).join("");
+    if (starters.length) html += `<li class="group" role="presentation">Places to start</li>` + starters.map((n, i) => option({ n }, recent.length + i)).join("");
+    results.innerHTML = html;
+    results.classList.add("open"); q.setAttribute("aria-expanded", "true");
+  }
   function search() {
     const t = norm(q.value.trim());
-    if (!t) { results.classList.remove("open"); q.setAttribute("aria-expanded", "false"); return; }
-    hits = index.filter(x => x.s.includes(t)).map(x => ({ ...x, score: (x.s.startsWith(t) ? 10 : 0) + (x.s === t ? 20 : 0) + x.w + x.n.out.size / 400 }))
+    if (!t) { if (document.activeElement === q) showStart(); else { results.classList.remove("open"); q.setAttribute("aria-expanded", "false"); } return; }
+    hits = index.filter(x => GRAPH.has(x.n.type) && x.s.includes(t)).map(x => ({ ...x, score: (x.s.startsWith(t) ? 10 : x.s.includes(" " + t) ? 5 : 0) + (x.s === t ? 20 : 0) + x.w + x.n.out.size / 400 }))
       .sort((a, b) => b.score - a.score).slice(0, 24);
-    const order = ["cuisine", "dish", "ingredient", "site", "book"];
+    const order = ["cuisine", "dish", "ingredient"];
     hits.sort((a, b) => order.indexOf(a.n.type) - order.indexOf(b.n.type) || b.score - a.score);
     sel = 0;
     let html = "", last = null;
     hits.forEach((x, i) => {
       if (x.n.type !== last) { html += `<li class="group" role="presentation">${PLURAL[x.n.type]}</li>`; last = x.n.type; }
-      const sub = x.n.sub || `${x.n.out.size} links`;
-      html += `<li role="option" id="r${i}" data-i="${i}" aria-selected="${i === 0}"><span>${esc(x.n.name)}</span><small>${esc(sub)}</small></li>`;
+      html += option(x, i);
     });
-    results.innerHTML = html || `<li class="group">Nothing matches</li>`;
+    results.innerHTML = html || `<li class="group">Nothing by that name. Try a country, a dish or an ingredient.</li>`;
     results.classList.add("open"); q.setAttribute("aria-expanded", "true");
   }
-  const go = i => { const x = hits[i]; if (!x) return; q.value = ""; search(); q.blur(); if (fullOpen) closeFull(); location.hash = walkEl.classList.contains("open") ? walkHref(x.n) : x.n.href; };
+  const go = i => { const x = hits[i]; if (!x) return; q.value = ""; results.classList.remove("open"); q.blur(); if (fullOpen) closeFull(); location.hash = walkEl.classList.contains("open") ? walkHref(x.n) : x.n.href; };
   q.addEventListener("input", search);
+  q.addEventListener("focus", () => { loadPhotos().then(() => { if (results.classList.contains("open")) search(); }); search(); });
   q.addEventListener("keydown", e => {
     if (e.key === "ArrowDown" || e.key === "ArrowUp") {
-      e.preventDefault(); sel = Math.max(0, Math.min(hits.length - 1, sel + (e.key === "ArrowDown" ? 1 : -1)));
+      e.preventDefault(); if (!hits.length) return;
+      sel = Math.max(0, Math.min(hits.length - 1, sel + (e.key === "ArrowDown" ? 1 : -1)));
       results.querySelectorAll("[role=option]").forEach(li => li.setAttribute("aria-selected", String(+li.dataset.i === sel)));
       q.setAttribute("aria-activedescendant", "r" + sel);
-    } else if (e.key === "Enter") go(sel);
-    else if (e.key === "Escape") { q.value = ""; search(); }
+    } else if (e.key === "Enter") go(Math.max(0, sel));
+    else if (e.key === "Escape") { q.value = ""; results.classList.remove("open"); q.blur(); }
   });
-  results.addEventListener("click", e => { const li = e.target.closest("[data-i]"); if (li) go(+li.dataset.i); });
+  results.addEventListener("mousedown", e => {
+    if (e.target.closest("[data-clear]")) { e.preventDefault(); saveRecents([]); showStart(); return; }
+    const li = e.target.closest("[data-i]");
+    if (li) { e.preventDefault(); go(+li.dataset.i); }
+  });
   document.addEventListener("click", e => { if (!e.target.closest(".search")) results.classList.remove("open"); });
 
   route();

@@ -79,6 +79,6 @@ export const typeLabel = t => TYPE_LABEL[t];
 // A photo with its credit: author, license and a link to the file on Wikimedia Commons
 export function photoHtml(img, name, ext = ' target="_blank" rel="noopener"') {
   const lic = /^(pd|public domain|cc0)/i.test(img.lic) ? (/cc0/i.test(img.lic) ? "CC0" : "Public domain") : img.lic;
-  return `<figure class="photo"><img src="${esc(img.src)}" width="${img.w}" height="${img.h}" loading="lazy" decoding="async" alt="${esc(img.of ? "Photo of " + img.of : "Photo of " + name)}">
+  return `<figure class="photo"><img src="${esc(img.src)}" width="${img.w}" height="${img.h}" loading="lazy" decoding="async" onerror="this.closest('figure').remove()" alt="${esc(img.of ? "Photo of " + img.of : "Photo of " + name)}">
     <figcaption>${img.of ? `Pictured: ${esc(img.of)}. ` : ""}Photo: ${esc(img.by)}, ${img.licUrl ? `<a href="${esc(img.licUrl)}"${ext}>${esc(lic)}</a>` : esc(lic)}, via <a href="${esc(img.page)}"${ext}>Wikimedia Commons</a></figcaption></figure>`;
 }

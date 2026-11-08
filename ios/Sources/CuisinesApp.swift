@@ -30,8 +30,8 @@ struct CuisinesApp: App {
 @MainActor @Observable
 final class AppState {
     static let shared = AppState()
-    enum Tab: Hashable { case explore, map, wander, search }
-    var tab: Tab = .explore
+    enum Tab: Hashable { case browse, globe, wander, search }
+    var tab: Tab = .browse
     var explorePath: [Route] = []
     var wanderPath: [Route] = []
     var searchPath: [Route] = []
@@ -40,12 +40,12 @@ final class AppState {
 
     func showOnMap(_ ref: String) {
         mapFocus = ref
-        tab = .map
+        tab = .globe
     }
 
     /// Opens a page, hub or walk in the Browse tab (Spotlight, Siri, widgets, Handoff, links)
     func open(_ route: Route) {
-        tab = .explore
+        tab = .browse
         explorePath = [route]
     }
 
@@ -110,23 +110,23 @@ struct RootView: View {
     /// For screenshots and testing: -open <ref> opens a page, -tab map opens the map
     private func openFromLaunchArguments() {
         let args = UserDefaults.standard
-        if let ref = args.string(forKey: "open") { app.tab = .explore; app.explorePath = [store.route(ref)] }
-        if let ref = args.string(forKey: "walk") { app.tab = .explore; app.explorePath = [.walk(ref)] }
-        if let ref = args.string(forKey: "hub") { app.tab = .explore; app.explorePath = [.hub(ref)] }
-        if args.string(forKey: "tab") == "browse" { app.tab = .explore }
+        if let ref = args.string(forKey: "open") { app.tab = .browse; app.explorePath = [store.route(ref)] }
+        if let ref = args.string(forKey: "walk") { app.tab = .browse; app.explorePath = [.walk(ref)] }
+        if let ref = args.string(forKey: "hub") { app.tab = .browse; app.explorePath = [.hub(ref)] }
+        if args.string(forKey: "tab") == "browse" { app.tab = .browse }
         if args.string(forKey: "tab") == "wander" { app.tab = .wander }
-        if args.string(forKey: "tab") == "map" { app.tab = .map }
+        if args.string(forKey: "tab") == "map" || args.string(forKey: "tab") == "globe" { app.tab = .globe }
         if let ref = args.string(forKey: "map") { app.showOnMap(ref) }
     }
 
     private var tabs: some View {
         @Bindable var app = app
         return TabView(selection: $app.tab) {
-            // Browse for reading, the map for discovery by place (as on the web), Wander for walk mode
-            Tab("Browse", systemImage: "fork.knife", value: AppState.Tab.explore) {
+            // The same three names as the web: Browse for reading, Globe for discovery by place, Wander for following links
+            Tab("Browse", systemImage: "fork.knife", value: AppState.Tab.browse) {
                 Stack(path: $app.explorePath) { ExploreView() }
             }
-            Tab("Map", systemImage: "globe.americas", value: AppState.Tab.map) {
+            Tab("Globe", systemImage: "globe.americas", value: AppState.Tab.globe) {
                 MapScreen()
             }
             Tab("Wander", systemImage: "point.3.connected.trianglepath.dotted", value: AppState.Tab.wander) {

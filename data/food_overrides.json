@@ -39,6 +39,22 @@
     "Minced meat": "Ground meat",
     "Dried and salted cod": "Salt cod"
   },
-  "generic": ["Drinking water", "Nut", "Vegetable oil", "Fried onion", "Boiled egg", "Food coloring", "Spices"],
-  "drop_dishes": []
+  "generic": [
+    "Drinking water",
+    "Nut",
+    "Vegetable oil",
+    "Fried onion",
+    "Boiled egg",
+    "Food coloring",
+    "Spices"
+  ],
+  "drop_dishes": [
+    "Adventureland Bazaar",
+    "Egg wash",
+    "Fish sauce",
+    "Nori",
+    "Sichuan pepper",
+    "Soy sauce",
+    "Sweet chili sauce"
+  ]
 }

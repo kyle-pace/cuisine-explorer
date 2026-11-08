@@ -164,11 +164,12 @@ for (const n of nodes.values()) {
       names: own?.names,
       ...intro(own, c.title, c.desc && capital(c.desc) + "."),
       actions: [...(c.loc || c.iso3 ? [{ kind: "globe", hash: slug(c.id) }] : []), ...(c.url ? [{ kind: "wiki", url: c.url }] : [])],
+      // Dishes first: they're what the page is about. Then where to cook them from.
       sections: [
+        ds.length && { h: "Dishes", count: ds.length, links: list(ds) },
         sites.length ? { h: "Recipe sites", count: sites.length, rows: sites.map(shelfRow) }
           : { h: "Recipe sites", empty: "None yet", tryLinks: list(parents) },
         books.length && { h: "Cookbooks", count: books.length, rows: books.map(shelfRow) },
-        ds.length && { h: "Dishes", count: ds.length, links: list(ds) },
         ings.length && { h: "Key ingredients", links: list(ings), note: "Most used across its dishes." },
         parents.length && { h: "Part of", links: list(parents) },
         kids.length && { h: `Within ${c.name.replace(/ (cuisine|foodways)$/, "")} cooking`, count: kids.length, links: list(kids) },

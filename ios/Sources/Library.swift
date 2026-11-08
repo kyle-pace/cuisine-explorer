@@ -7,11 +7,13 @@ import Observation
 final class Library {
     private(set) var saved: [String]
     private(set) var recent: [String]
+    private(set) var searches: [String]
     private let defaults = UserDefaults.standard
 
     init() {
         saved = defaults.stringArray(forKey: "saved") ?? []
         recent = defaults.stringArray(forKey: "recent") ?? []
+        searches = defaults.stringArray(forKey: "searches") ?? []
     }
 
     func isSaved(_ ref: String) -> Bool { saved.contains(ref) }
@@ -27,6 +29,26 @@ final class Library {
         recent.insert(ref, at: 0)
         if recent.count > 40 { recent.removeLast(recent.count - 40) }
         defaults.set(recent, forKey: "recent")
+    }
+
+    /// A search that led somewhere, newest first, for the Search tab before you type
+    func searched(_ query: String) {
+        let q = query.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard q.count > 1 else { return }
+        searches.removeAll { $0.caseInsensitiveCompare(q) == .orderedSame }
+        searches.insert(q, at: 0)
+        if searches.count > 8 { searches.removeLast(searches.count - 8) }
+        defaults.set(searches, forKey: "searches")
+    }
+
+    func forgetSearch(_ query: String) {
+        searches.removeAll { $0 == query }
+        defaults.set(searches, forKey: "searches")
+    }
+
+    func clearSearches() {
+        searches = []
+        defaults.removeObject(forKey: "searches")
     }
 
     func clearRecent() {

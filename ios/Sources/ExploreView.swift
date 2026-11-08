@@ -7,7 +7,6 @@ struct ExploreView: View {
     @Environment(Library.self) private var library
     @Environment(\.dynamicTypeSize) private var typeSize
     @State private var settings = false
-    @State private var wanderFrom: Store.Node?
 
     var body: some View {
         ScrollView {
@@ -22,6 +21,8 @@ struct ExploreView: View {
                 }
                 .padding(.horizontal, Space.xl)
 
+                continentChips
+
                 if let dish = dailyDish { todaysDish(dish) }
 
                 if !recent.isEmpty || !library.saved.isEmpty { pickUp }
@@ -35,8 +36,6 @@ struct ExploreView: View {
                       note: "Diets, faiths, histories and styles that don\u{2019}t belong to one country")
 
                 ingredients
-
-                if let n = wanderFrom { wander(n) }
 
                 VStack(alignment: .leading, spacing: 0) {
                     ForEach([Store.Kind.cuisine, .dish, .ingredient], id: \.self) { kind in
@@ -67,7 +66,6 @@ struct ExploreView: View {
         }
         .background(Theme.ground)
         .toolbarBackground(Theme.ground, for: .navigationBar)
-        .onAppear { if wanderFrom == nil { wanderFrom = randomCuisine() } }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button("Settings", systemImage: "gearshape") { settings = true }
@@ -77,6 +75,36 @@ struct ExploreView: View {
     }
 
     // MARK: Sections
+
+    /// A row of continents up top, so each is one tap away instead of a long scroll down
+    private var continentChips: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: Space.s) {
+                ForEach(Store.continents, id: \.slug) { c in
+                    NavigationLink(value: Route.hub("cuisines#\(c.slug)")) {
+                        HStack(spacing: 6) {
+                            Mark(color: c.color, size: 9)
+                            Text(c.name)
+                        }
+                        .font(Theme.callout600).foregroundStyle(Theme.ink)
+                        .padding(.horizontal, 14).frame(minHeight: 44)
+                        .overlay(Capsule().stroke(Theme.line))
+                        .contentShape(Capsule())
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityLabel("Cuisines of \(c.name)")
+                }
+                NavigationLink(value: Route.hub("x:beyond")) {
+                    Text("Beyond borders").font(Theme.callout600).foregroundStyle(Theme.ink)
+                        .padding(.horizontal, 14).frame(minHeight: 44)
+                        .overlay(Capsule().stroke(Theme.line))
+                        .contentShape(Capsule())
+                }
+                .buttonStyle(.plain)
+            }
+            .padding(.horizontal, Space.xl)
+        }
+    }
 
     /// The photo, then the words under it, as a magazine would set it
     private func todaysDish(_ dish: Store.Node) -> some View {
@@ -143,23 +171,6 @@ struct ExploreView: View {
         }
     }
 
-    private func wander(_ n: Store.Node) -> some View {
-        NavigationLink(value: Route.walk(n.ref)) {
-            VStack(alignment: .leading, spacing: Space.xs) {
-                Text("Wander").font(Theme.heading).foregroundStyle(Theme.ink)
-                (Text("Start at ") + Text(n.name).foregroundStyle(Theme.ink) +
-                 Text(" and follow one link at a time, from a dish to its ingredients to everywhere else they\u{2019}re cooked."))
-                    .font(Theme.callout).foregroundStyle(Theme.muted)
-                    .fixedSize(horizontal: false, vertical: true)
-                Text("Start wandering").font(Theme.callout600).foregroundStyle(Theme.accent).padding(.top, Space.xs)
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .contentShape(Rectangle())
-        }
-        .buttonStyle(.plain)
-        .padding(.horizontal, Space.xl)
-    }
-
     // MARK: Picks
 
     private func count(_ kind: Store.Kind) -> Int { store.nodes.lazy.filter { $0.type == kind }.count }
@@ -186,9 +197,6 @@ struct ExploreView: View {
         store.neighbors(n.ref).first { $0.type == .cuisine }?.name
     }
 
-    private func randomCuisine() -> Store.Node? {
-        store.nodes.filter { $0.type == .cuisine && store.linkCount($0.ref) >= 6 }.randomElement()
-    }
 }
 
 /// A section title that leads to the full list
@@ -451,9 +459,9 @@ struct NodeRow: View {
                     library.toggleSaved(node.ref)
                 }
                 if store.place(node.ref) != nil || store.national.values.contains(node.ref) {
-                    Button("Show on the map", systemImage: "map") { app.showOnMap(node.ref) }
+                    Button("Show on the globe", systemImage: "globe.americas") { app.showOnMap(node.ref) }
                 }
-                Button("Explore connections", systemImage: "point.3.connected.trianglepath.dotted") {
+                Button("Wander from here", systemImage: "point.3.connected.trianglepath.dotted") {
                     if let url = AppLink.url(node.ref, action: "walk") { openURL(url) }
                 }
                 if let url = Share.url(node.ref) { ShareLink(item: url) { Label("Share", systemImage: "square.and.arrow.up") } }
@@ -483,26 +491,25 @@ struct NodeRow: View {
     }
 }
 
-/// The search tab: everything, by name
+/// The search tab: everything, by name. Before you type, your recent searches, what you
+/// opened last, and a few searches to try, so the tab is never a blank page.
 struct SearchView: View {
     @Environment(Store.self) private var store
     @Environment(AppState.self) private var app
+    @Environment(Library.self) private var library
     @State private var scope: Scope = .all
 
     enum Scope: Hashable, CaseIterable { case all, cuisine, dish, ingredient
         var title: String { ["Everything", "Cuisines", "Dishes", "Ingredients"][Scope.allCases.firstIndex(of: self)!] }
         var kind: Store.Kind? { [nil, .cuisine, .dish, .ingredient][Scope.allCases.firstIndex(of: self)!] }
     }
+    static let tries = ["Mole", "Sichuan", "Seal oil", "Coconut milk", "Injera", "Kimchi"]
 
     var body: some View {
         @Bindable var app = app
         let query = app.searchQuery
-        let all = store.search(query, limit: 200)
-        let results = scope.kind.map { k in all.filter { $0.type == k } } ?? Array(all.prefix(80))
-        List(results) { n in
-            NavigationLink(value: Route.item(n.ref)) { NodeRow(node: n) }
-                .listRowBackground(Theme.ground)
-                .listRowSeparatorTint(Theme.line)
+        Group {
+            if query.isEmpty { start } else { results(query) }
         }
         .listStyle(.plain)
         .scrollContentBackground(.hidden)
@@ -512,14 +519,61 @@ struct SearchView: View {
         .searchScopes($scope, activation: .onSearchPresentation) {
             ForEach(Scope.allCases, id: \.self) { Text($0.title).tag($0) }
         }
-        .overlay {
-            if query.isEmpty {
-                ContentUnavailableView("Find anything", systemImage: "magnifyingglass",
-                                       description: Text("Try “mole”, “seal oil” or “Sichuan”."))
-            } else if results.isEmpty {
-                ContentUnavailableView.search(text: query)
+        .onSubmit(of: .search) { library.searched(query) }
+        // Opening a result counts as a search worth keeping
+        .onChange(of: app.searchPath) { old, new in if new.count > old.count, !query.isEmpty { library.searched(query) } }
+    }
+
+    private func results(_ query: String) -> some View {
+        let all = store.search(query, limit: 200)
+        let results = scope.kind.map { k in all.filter { $0.type == k } } ?? Array(all.prefix(80))
+        return List(results) { n in
+            NavigationLink(value: Route.item(n.ref)) { NodeRow(node: n) }
+                .listRowBackground(Theme.ground)
+                .listRowSeparatorTint(Theme.line)
+        }
+        .overlay { if results.isEmpty { ContentUnavailableView.search(text: query) } }
+    }
+
+    private var recentNodes: [Store.Node] { library.recent.prefix(5).compactMap(store.node) }
+
+    private var start: some View {
+        List {
+            if !library.searches.isEmpty {
+                Section {
+                    ForEach(library.searches, id: \.self) { q in
+                        Button { app.searchQuery = q } label: {
+                            Label(q, systemImage: "clock.arrow.circlepath").font(Theme.body).foregroundStyle(Theme.ink)
+                        }
+                        .swipeActions { Button("Remove", role: .destructive) { library.forgetSearch(q) } }
+                    }
+                    .listRowBackground(Theme.ground)
+                } header: {
+                    HStack {
+                        Text("Recent searches")
+                        Spacer()
+                        Button("Clear") { library.clearSearches() }.font(Theme.callout)
+                    }
+                }
+            }
+            if !recentNodes.isEmpty {
+                Section("Recently viewed") {
+                    ForEach(recentNodes) { n in
+                        NavigationLink(value: Route.item(n.ref)) { NodeRow(node: n) }
+                    }
+                    .listRowBackground(Theme.ground)
+                }
+            }
+            Section("Try searching") {
+                ForEach(Self.tries, id: \.self) { q in
+                    Button { app.searchQuery = q } label: {
+                        Label(q, systemImage: "magnifyingglass").font(Theme.body).foregroundStyle(Theme.ink)
+                    }
+                }
+                .listRowBackground(Theme.ground)
             }
         }
+        .listRowSeparatorTint(Theme.line)
     }
 }
 

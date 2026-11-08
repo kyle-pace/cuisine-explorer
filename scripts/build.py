@@ -36,6 +36,7 @@ def main():
     wd = load("raw/wikidata.json", {})
     redirects = load("raw/redirects.json", {})
     overrides = load("data/overrides.json", {}).get("coords", {})
+    parent_overrides = load("data/overrides.json", {}).get("parents", {})
     picks = load("data/picks.json", {}).get("cuisines", {})
     countries = load("data/countries.geojson")
     shape_iso = {f["properties"]["ADM0_A3"] for f in countries["features"]}
@@ -70,6 +71,9 @@ def main():
         cs = w.get("countries", {})
         isos = [c["iso3"] for c in cs.values() if c.get("iso3")]
         parents = [rp for rp in (real_parent(p) for p in e["parents"]) if rp]
+        forced = parent_overrides.get(e["key"], parent_overrides.get(e["title"]))
+        if forced is not None:
+            parents = [p for p in forced if p in by_key]
         loc = overrides.get(e["key"]) or overrides.get(e["title"]) or w.get("coord")
         if not loc and w.get("locCoords"):
             loc = w["locCoords"][0]

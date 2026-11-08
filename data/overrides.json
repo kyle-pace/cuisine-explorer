@@ -649,5 +649,9 @@
   "national": {
     "PNG": "Papua New Guinean cuisine",
     "TIB": "Tibetan cuisine"
+  },
+  "_about_parents": "Replace the cuisines a cuisine sits under, when the list nests it somewhere it doesn't belong (Lao cooking is its own country's cuisine, not part of Thai). An empty list means none.",
+  "parents": {
+    "Lao cuisine": []
   }
 }

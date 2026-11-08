@@ -1,3 +1,4 @@
+import AppIntents
 import SwiftUI
 import WidgetKit
 
@@ -10,7 +11,7 @@ struct CuisinesWidgetBundle: WidgetBundle {
 
 struct TodaysDishWidget: Widget {
     var body: some WidgetConfiguration {
-        StaticConfiguration(kind: "net.kylepace.cuisines.today", provider: TodayProvider()) { entry in
+        AppIntentConfiguration(kind: "net.kylepace.cuisines.today", intent: TodayConfig.self, provider: TodayProvider()) { entry in
             TodayView(entry: entry)
                 .containerBackground(for: .widget) { Color(red: 0x1B / 255, green: 0x14 / 255, blue: 0x24 / 255) }
         }
@@ -18,6 +19,11 @@ struct TodaysDishWidget: Widget {
         .description("A dish from somewhere in the world, new every day.")
         .supportedFamilies([.systemSmall, .systemMedium])
     }
+}
+
+/// Nothing to configure yet; the intent-based provider is the one with async timelines
+struct TodayConfig: WidgetConfigurationIntent {
+    static let title: LocalizedStringResource = "Today’s dish"
 }
 
 struct TodayEntry: TimelineEntry {
@@ -31,14 +37,14 @@ struct TodayEntry: TimelineEntry {
     static let unavailable = TodayEntry(date: .now, ref: nil, name: "Today’s dish", cuisine: "Open Cuisines to load it", image: nil)
 }
 
-struct TodayProvider: TimelineProvider {
+struct TodayProvider: AppIntentTimelineProvider {
     func placeholder(in context: Context) -> TodayEntry { .placeholder }
 
-    func snapshot(in context: Context) async -> TodayEntry {
+    func snapshot(for configuration: TodayConfig, in context: Context) async -> TodayEntry {
         context.isPreview ? .placeholder : (await entry() ?? .unavailable)
     }
 
-    func timeline(in context: Context) async -> Timeline<TodayEntry> {
+    func timeline(for configuration: TodayConfig, in context: Context) async -> Timeline<TodayEntry> {
         let e = await entry() ?? .unavailable
         // New dish at midnight; if the fetch failed, try again in an hour
         let next = e.ref == nil ? Date.now.addingTimeInterval(3600)

@@ -132,7 +132,8 @@ const shelfRow = e => {
   const n = e.node, x = e.entry;
   return { name: n.type === "site" ? n.name : x.title, ref: n.ref, color: n.color, shape: n.type,
     sub: n.type === "site" ? n.host : [x.author, x.year].filter(Boolean).join(", "), note: x.note || "",
-    url: x.url || (x.isbn ? "https://openlibrary.org/isbn/" + x.isbn : ""), suggested: !!x.suggested };
+    url: x.url || (x.isbn ? "https://openlibrary.org/isbn/" + x.isbn : ""), suggested: !!x.suggested,
+    ...(x.isbn ? { isbn: x.isbn } : {}), ...(n.type === "site" && x.type ? { kind: x.type } : {}) };
 };
 
 // --- Page models ------------------------------------------------------------------

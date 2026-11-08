@@ -9,6 +9,9 @@ struct Page {
     struct Row: Hashable {
         let name: String, ref: String?, color: Color, isCuisine: Bool
         let sub: String, note: String?, url: URL?, suggested: Bool
+        var isbn: String? = nil     // cookbooks: for the cover
+        var kind: String? = nil     // recipe sites: blog, site, magazine…
+        var isBook: Bool { ref?.hasPrefix("cookbook/") ?? false }
     }
     struct Grown { let what: String, years: String, url: URL?, world: Double; let top: [(Link, Double)] }
     enum Body {
@@ -99,7 +102,8 @@ struct Page {
                            color: Color(hexString: r["color"] as? String ?? "#a99fb5"),
                            isCuisine: r["shape"] as? String == "cuisine",
                            sub: r["sub"] as? String ?? "", note: r["note"] as? String,
-                           url: url, suggested: r["suggested"] as? Bool ?? false)
+                           url: url, suggested: r["suggested"] as? Bool ?? false,
+                           isbn: r["isbn"] as? String, kind: r["kind"] as? String)
             })
         } else if let links = s["links"] as? [Any] {
             body = .links(links.compactMap(link), note: s["note"] as? String)

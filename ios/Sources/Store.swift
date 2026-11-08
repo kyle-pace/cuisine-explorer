@@ -114,6 +114,14 @@ final class Store {
     func place(_ ref: String) -> Place? { placeIndex[ref] }
     func continent(_ ref: String) -> String? { continentOf[ref] }
 
+    /// A dish's or ingredient's continents, through the cuisines it's linked to
+    func continents(of ref: String) -> Set<String> {
+        if let c = continentOf[ref] { return [c] }
+        var out = Set<String>()
+        for n in neighbors(ref) where n.type == .cuisine { if let c = continentOf[n.ref] { out.insert(c) } }
+        return out
+    }
+
     /// Everything linked to an item: its cuisine, dishes, ingredients, sites, books and mentions.
     /// Cuisines first, then dishes, ingredients, books and sites, alphabetical within each.
     func neighbors(_ ref: String) -> [Node] {

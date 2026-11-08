@@ -218,6 +218,7 @@ struct HubView: View {
     let ref: String
     @State private var filter = ""
     @State private var facet: Facet = .all
+    @State private var continent: String?
 
     /// Ways to narrow a list of cuisines
     enum Facet: String, CaseIterable { case all = "All", national = "National", regional = "Regional", indigenous = "Indigenous"
@@ -238,20 +239,32 @@ struct HubView: View {
         default: store.hub(ref)
         }
     }
-    private var showsFacets: Bool { ref == "cuisines" || ref.hasPrefix("cuisines#") }
+    private var cuisineFacets: Bool { ref == "cuisines" || ref.hasPrefix("cuisines#") }
+    private var continentFacets: Bool { ["dishes", "ingredients", "cookbooks", "sites"].contains(ref) }
 
     var body: some View {
         let hub = hub
-        let faceted = showsFacets ? hub.nodes.filter(facet.keeps) : hub.nodes
+        var faceted = cuisineFacets ? hub.nodes.filter(facet.keeps) : hub.nodes
+        if let continent { faceted = faceted.filter { store.continents(of: $0.ref).contains(continent) } }
         let list = filter.isEmpty ? faceted : faceted.filter { $0.name.localizedCaseInsensitiveContains(filter) }
+        let grouped = list.count > 40 && filter.isEmpty
         List {
-            if showsFacets {
+            if cuisineFacets || continentFacets {
                 ChipRow {
-                    ForEach(Facet.allCases, id: \.self) { f in
-                        let n = hub.nodes.filter(f.keeps).count
-                        if n > 0 {
-                            FilterChip(f.rawValue, count: f == .all ? nil : n, isOn: facet == f) {
-                                withAnimation(Theme.motion(reduceMotion)) { facet = f }
+                    if cuisineFacets {
+                        ForEach(Facet.allCases, id: \.self) { f in
+                            let n = hub.nodes.filter(f.keeps).count
+                            if n > 0 {
+                                FilterChip(f.rawValue, count: f == .all ? nil : n, isOn: facet == f) {
+                                    withAnimation(Theme.motion(reduceMotion)) { facet = f }
+                                }
+                            }
+                        }
+                    } else {
+                        FilterChip("All", isOn: continent == nil) { withAnimation(Theme.motion(reduceMotion)) { continent = nil } }
+                        ForEach(Store.continents, id: \.slug) { c in
+                            FilterChip(c.name, isOn: continent == c.key) {
+                                withAnimation(Theme.motion(reduceMotion)) { continent = continent == c.key ? nil : c.key }
                             }
                         }
                     }
@@ -260,16 +273,16 @@ struct HubView: View {
                 .listRowSeparator(.hidden)
                 .listRowInsets(EdgeInsets(top: Space.xs, leading: Space.l, bottom: Space.s, trailing: Space.l))
             }
-            ForEach(list) { n in
-                NavigationLink(value: Route.item(n.ref)) { NodeRow(node: n) }
-                    .listRowBackground(Theme.ground)
-                    .listRowSeparatorTint(Theme.line)
-                    .swipeActions(edge: .trailing) {
-                        Button(library.isSaved(n.ref) ? "Unsave" : "Save", systemImage: library.isSaved(n.ref) ? "bookmark.slash" : "bookmark") {
-                            library.toggleSaved(n.ref)
-                        }
-                        .tint(Theme.accent)
+            if grouped {
+                ForEach(letters(list), id: \.0) { letter, items in
+                    Section {
+                        ForEach(items) { row($0) }
+                    } header: {
+                        Text(letter).font(Theme.caption.weight(.bold)).foregroundStyle(Theme.muted)
                     }
+                }
+            } else {
+                ForEach(list) { row($0) }
             }
         }
         .listStyle(.plain)
@@ -277,6 +290,7 @@ struct HubView: View {
         .background(Theme.ground)
         .searchable(text: $filter, placement: .navigationBarDrawer(displayMode: .automatic), prompt: "Filter \(Store.continents.map(\.name).contains(hub.title) ? hub.title : hub.title.lowercased())")
         .navigationTitle(hub.title)
+        .navigationSubtitle(grouped ? "\(list.count)" : "")
         .toolbar {
             if ref == "x:recent", !library.recent.isEmpty {
                 ToolbarItem(placement: .topBarTrailing) { Button("Clear") { library.clearRecent() } }
@@ -294,6 +308,28 @@ struct HubView: View {
                 }
             }
         }
+    }
+
+    private func row(_ n: Store.Node) -> some View {
+        NavigationLink(value: Route.item(n.ref)) { NodeRow(node: n) }
+            .listRowBackground(Theme.ground)
+            .listRowSeparatorTint(Theme.line)
+            .swipeActions(edge: .trailing) {
+                Button(library.isSaved(n.ref) ? "Unsave" : "Save", systemImage: library.isSaved(n.ref) ? "bookmark.slash" : "bookmark") {
+                    library.toggleSaved(n.ref)
+                }
+                .tint(Theme.accent)
+            }
+    }
+
+    /// A to Z, with everything else under #
+    private func letters(_ list: [Store.Node]) -> [(String, [Store.Node])] {
+        var groups: [String: [Store.Node]] = [:]
+        for n in list {
+            let first = n.name.folding(options: .diacriticInsensitive, locale: nil).uppercased().first.map(String.init) ?? "#"
+            groups[first.rangeOfCharacter(from: .letters) != nil ? first : "#", default: []].append(n)
+        }
+        return groups.keys.sorted { $0 == "#" ? false : $1 == "#" ? true : $0 < $1 }.map { ($0, groups[$0]!) }
     }
 }
 

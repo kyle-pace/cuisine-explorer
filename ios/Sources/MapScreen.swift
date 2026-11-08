@@ -58,7 +58,7 @@ struct MapScreen: View {
                     // Diaspora routes, as on the globe: faint arcs, lit when they touch the selection
                     ForEach(arcs, id: \.route) { a in
                         MapPolyline(coordinates: [a.from, a.to], contourStyle: .geodesic)
-                            .stroke(a.lit ? Theme.saffron : Theme.ink.opacity(0.22), style: StrokeStyle(lineWidth: a.lit ? 2.5 : 1, dash: a.lit ? [] : [4, 6]))
+                            .stroke(a.lit ? Theme.saffron : Theme.ink.opacity(0.16), lineWidth: a.lit ? 2.5 : 1)
                     }
                     // Dots: places without an area. National cuisines are their country; regional
                     // ones with a shape are their shape; the rest appear as you zoom in
@@ -218,9 +218,8 @@ struct MapScreen: View {
     }
 
     private func focus() {
-        guard let ref = app.mapFocus else { return }
-        // Wait for the shapes so a country can be framed, unless the place is a plain dot
-        if !shapes.loaded, store.national.values.contains(ref) { return }
+        // Wait for the shapes, so a country or region can be framed (onChange(loaded) calls again)
+        guard let ref = app.mapFocus, shapes.loaded else { return }
         app.mapFocus = nil
         path = []
         selected = ref

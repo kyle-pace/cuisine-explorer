@@ -227,6 +227,8 @@ struct SectionView: View {
             }
             .accessibilityAddTraits(.isHeader)
             switch section.body {
+            case .rows(let rows) where rows.allSatisfy(\.isBook):
+                BookShelf(rows: rows)
             case .rows(let rows):
                 VStack(spacing: 8) { ForEach(rows, id: \.self) { RowCard(row: $0) } }
             case .links(let links, let note):
@@ -271,6 +273,7 @@ struct RowCard: View {
                 HStack(spacing: 6) {
                     Text(row.name).font(Theme.callout600).foregroundStyle(Theme.ink)
                         .multilineTextAlignment(.leading)
+                    if let kind = row.kind, kind != "site" { Tag(text: kind.capitalized) }
                     if row.suggested { Tag(text: "Suggested") }
                 }
                 if !row.sub.isEmpty { Text(row.sub).font(Theme.caption).foregroundStyle(Theme.muted) }
@@ -297,6 +300,49 @@ struct RowCard: View {
                     .accessibilityLabel(row.name)
             }
         }
+    }
+}
+
+/// Cookbooks as a sideways row of covers, as on the globe's cards
+struct BookShelf: View {
+    @Environment(Store.self) private var store
+    let rows: [Page.Row]
+
+    var body: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(alignment: .top, spacing: Space.m) {
+                ForEach(rows, id: \.self) { r in
+                    NavigationLink(value: r.ref.map(store.route) ?? Route.hub("cookbooks")) {
+                        VStack(alignment: .leading, spacing: 6) {
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 6).fill(Theme.raised)
+                                VStack(spacing: 6) {
+                                    Image(systemName: "book.closed").font(.title2).foregroundStyle(Theme.muted)
+                                    Text(r.name).font(.app(11, .semibold, relativeTo: .caption2)).foregroundStyle(Theme.muted)
+                                        .multilineTextAlignment(.center).lineLimit(4).padding(.horizontal, 6)
+                                }
+                                if let isbn = r.isbn {
+                                    RemoteImage(url: URL(string: "https://covers.openlibrary.org/b/isbn/\(isbn)-M.jpg?default=false"), placeholder: .clear)
+                                }
+                            }
+                            .frame(width: 104, height: 156)
+                            .clipShape(RoundedRectangle(cornerRadius: 6))
+                            .overlay(RoundedRectangle(cornerRadius: 6).strokeBorder(Theme.line))
+                            .shadow(color: .black.opacity(0.18), radius: 4, y: 2)
+                            Text(r.name).font(Theme.caption.weight(.semibold)).foregroundStyle(Theme.ink).lineLimit(2)
+                            Text(r.sub).font(Theme.caption).foregroundStyle(Theme.muted).lineLimit(2)
+                            if r.suggested { Tag(text: "Suggested") }
+                        }
+                        .frame(width: 104, alignment: .leading)
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityLabel("\(r.name), \(r.sub)")
+                }
+            }
+            .padding(.horizontal, Space.xl)
+        }
+        .scrollClipDisabled()
+        .padding(.horizontal, -Space.xl)
     }
 }
 

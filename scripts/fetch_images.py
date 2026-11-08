@@ -127,10 +127,15 @@ def main():
         time.sleep(0.5)
     # The same page image on several different articles is a series sidebar picture
     # ("Part of a series on American cuisine"), not a photo of the subject: drop it
-    pages_by_file = {}
+    # Sidebars sit on cuisine articles; two ingredient articles sharing a plant photo
+    # (basil, Genovese basil) is fine, so only cuisines, or four or more articles, count
+    pages_by_file, cuisine_files = {}, set()
     for key, page in from_page.items():
         pages_by_file.setdefault(items[key], set()).add(page)
-    shared = {f for f, pages in pages_by_file.items() if len(pages) > 1}
+        if key.startswith("cuisine:"):
+            cuisine_files.add(items[key])
+    shared = {f for f, pages in pages_by_file.items()
+              if len(pages) > 3 or (len(pages) > 1 and f in cuisine_files)}
     for key in [k for k in from_page if items[k] in shared]:
         del items[key]
     print(f"images: {len(items)} with Wikipedia page images "

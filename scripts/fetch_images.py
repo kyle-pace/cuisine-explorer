@@ -98,6 +98,7 @@ def main():
         if ing.get("title") and ing.get("dishes", 0) > 0:
             titles.setdefault(ing["title"], []).append("ingredient:" + ing["id"])
     tl = list(titles)
+    from_page = {}   # key -> the article its page image came from
     for i in range(0, len(tl), 50):
         d = api("https://en.wikipedia.org/w/api.php", {"action": "query", "prop": "pageimages", "piprop": "name",
                                                        "pilicense": "free", "redirects": "1", "titles": "|".join(tl[i:i + 50])})
@@ -106,6 +107,10 @@ def main():
         q = d.get("query", {})
         back = {}
         for n in q.get("normalized", []) + q.get("redirects", []):
+            # A redirect to a section of another article (Tlingit cuisine -> Tlingit#Cuisine)
+            # would hand us that article's picture, so skip it
+            if n.get("tofragment"):
+                continue
             back[n["to"]] = back.get(n["from"], n["from"])
         for page in q.get("pages", []):
             name = page.get("pageimage")
@@ -116,9 +121,20 @@ def main():
                 continue
             original = back.get(page["title"], page["title"])
             for key in titles.get(original, []) + titles.get(page["title"], []):
-                items.setdefault(key, name)
+                if key not in items:
+                    items[key] = name
+                    from_page[key] = page["title"]
         time.sleep(0.5)
-    print(f"images: {len(items)} with Wikipedia page images")
+    # The same page image on several different articles is a series sidebar picture
+    # ("Part of a series on American cuisine"), not a photo of the subject: drop it
+    pages_by_file = {}
+    for key, page in from_page.items():
+        pages_by_file.setdefault(items[key], set()).add(page)
+    shared = {f for f, pages in pages_by_file.items() if len(pages) > 1}
+    for key in [k for k in from_page if items[k] in shared]:
+        del items[key]
+    print(f"images: {len(items)} with Wikipedia page images "
+          f"(dropped {len(shared)} sidebar pictures shared across articles: {sorted(shared)[:8]})")
 
     # 3. License, author and the 500 px thumbnail for every file, from Commons
     files = {}

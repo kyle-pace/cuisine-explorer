@@ -21,6 +21,27 @@ struct ExploreView: View {
                 }
                 .padding(.horizontal, Space.xl)
 
+                // One dish a day, the same for everyone that day
+                if let dish = dailyDish {
+                    NavigationLink(value: Route.item(dish.ref)) {
+                        ZStack(alignment: .bottomLeading) {
+                            RemoteImage(url: store.photo(dish.ref)).frame(height: 210).clipped()
+                            LinearGradient(colors: [.clear, .black.opacity(0.75)], startPoint: .center, endPoint: .bottom)
+                            VStack(alignment: .leading, spacing: 3) {
+                                Text("Today’s dish").font(Theme.caption.weight(.bold)).foregroundStyle(.white.opacity(0.8)).textCase(.uppercase).tracking(0.8)
+                                Text(dish.name).font(Theme.heading).foregroundStyle(.white)
+                                Text(dish.sub).font(Theme.caption).foregroundStyle(.white.opacity(0.85)).lineLimit(1)
+                            }
+                            .padding(Space.l)
+                        }
+                        .clipShape(RoundedRectangle(cornerRadius: Radius.large))
+                        .overlay(RoundedRectangle(cornerRadius: Radius.large).strokeBorder(Theme.line))
+                    }
+                    .buttonStyle(.plain)
+                    .padding(.horizontal, Space.xl)
+                    .accessibilityLabel("Today’s dish: \(dish.name), \(dish.sub)")
+                }
+
                 VStack(alignment: .leading, spacing: 12) {
                     HStack {
                         SectionHeader("Start somewhere")
@@ -114,8 +135,31 @@ struct ExploreView: View {
                 }
                 .padding(.horizontal, Space.xl)
 
+                // A way into walk mode from the start, as the web's home offers
+                if let start = featured.first {
+                    NavigationLink(value: Route.walk(start.ref)) {
+                        HStack(spacing: Space.m) {
+                            RadialGraph(center: start.ref, neighbors: Array(store.neighbors(start.ref).prefix(8)), labels: false, compact: true)
+                                .frame(width: 72, height: 72)
+                                .allowsHitTesting(false)
+                            VStack(alignment: .leading, spacing: 3) {
+                                Text("Wander the web").font(Theme.callout600).foregroundStyle(Theme.ink)
+                                Text("Start from \(start.name) and follow the links from dish to ingredient to cuisine.")
+                                    .font(Theme.caption).foregroundStyle(Theme.muted)
+                            }
+                            Spacer(minLength: 0)
+                            Image(systemName: "chevron.right").foregroundStyle(Theme.muted).font(.footnote.weight(.semibold))
+                        }
+                        .padding(Space.m)
+                        .background(Theme.surface, in: RoundedRectangle(cornerRadius: Radius.large))
+                        .overlay(RoundedRectangle(cornerRadius: Radius.large).strokeBorder(Theme.line))
+                    }
+                    .buttonStyle(.plain)
+                    .padding(.horizontal, Space.xl)
+                }
+
                 VStack(alignment: .leading, spacing: 4) {
-                    SectionHeader("Everything")
+                    SectionHeader("Browse everything")
                     ForEach([Store.Kind.dish, .ingredient, .book, .site], id: \.self) { kind in
                         NavigationLink(value: Route.hub(kind.hub)) {
                             HStack {
@@ -153,6 +197,15 @@ struct ExploreView: View {
     }
 
     private func count(_ kind: Store.Kind) -> Int { store.nodes.lazy.filter { $0.type == kind }.count }
+
+    /// Picked from the dishes with photos by the day of the year, so it changes at midnight
+    private var dailyDish: Store.Node? {
+        let dishes = store.nodes.filter { $0.type == .dish && store.hasPhoto($0.ref) }
+        guard !dishes.isEmpty else { return nil }
+        let day = Calendar.current.ordinality(of: .day, in: .year, for: .now) ?? 1
+        let year = Calendar.current.component(.year, from: .now)
+        return dishes[(day * 31 + year * 7) % dishes.count]
+    }
 
     private func pickFeatured() {
         let withPhotos = store.nodes.filter { $0.type == .cuisine && store.hasPhoto($0.ref) }

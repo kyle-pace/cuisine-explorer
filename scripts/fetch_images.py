@@ -166,7 +166,7 @@ def main():
                 continue
             # Drop the tracking query Wikimedia adds; keep originals only when they're small
             thumb = (info.get("thumburl") or info.get("url") or "").split("?", 1)[0]
-            m = re.match(r"https://upload\.wikimedia\.org/wikipedia/commons/(.+)$", thumb)
+            m = re.match(r"https://(?:upload|thumb)\.wikimedia\.org/wikipedia/commons/(.+)$", thumb)
             if not m:
                 drop("not on commons", page, thumb)
                 continue

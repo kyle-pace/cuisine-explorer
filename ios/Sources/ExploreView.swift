@@ -297,9 +297,7 @@ struct HubView: View {
 
     var body: some View {
         let hub = hub
-        var faceted = cuisineFacets ? hub.nodes.filter(facet.keeps) : hub.nodes
-        if let continent { faceted = faceted.filter { store.continents(of: $0.ref).contains(continent) } }
-        let list = filter.isEmpty ? faceted : faceted.filter { $0.name.localizedCaseInsensitiveContains(filter) }
+        let list = visible(hub.nodes)
         let grouped = list.count > 40 && filter.isEmpty
         List {
             if cuisineFacets || continentFacets {
@@ -361,6 +359,13 @@ struct HubView: View {
                 }
             }
         }
+    }
+
+    private func visible(_ nodes: [Store.Node]) -> [Store.Node] {
+        var out = cuisineFacets ? nodes.filter(facet.keeps) : nodes
+        if let continent { out = out.filter { store.continents(of: $0.ref).contains(continent) } }
+        if !filter.isEmpty { out = out.filter { $0.name.localizedCaseInsensitiveContains(filter) } }
+        return out
     }
 
     private func row(_ n: Store.Node) -> some View {

@@ -1,0 +1,46 @@
+# XcodeGen spec. Generate the project with: xcodegen (see README.md)
+name: CuisineExplorer
+options:
+  bundleIdPrefix: net.kylepace
+  deploymentTarget:
+    iOS: "18.0"
+  createIntermediateGroups: true
+settings:
+  base:
+    DEVELOPMENT_TEAM: 9BF66MY8TQ
+    CODE_SIGN_STYLE: Automatic
+    SWIFT_VERSION: "5.0"
+    MARKETING_VERSION: "0.1"
+    CURRENT_PROJECT_VERSION: "1"
+targets:
+  CuisineExplorer:
+    type: application
+    platform: iOS
+    sources:
+      - path: CuisineExplorer
+        excludes:
+          - "Data"
+          - "Data/**"
+      - path: CuisineExplorer/Data
+        type: folder
+        buildPhase: resources
+    info:
+      path: CuisineExplorer/Info.plist
+      properties:
+        CFBundleDisplayName: Cuisines
+        UILaunchScreen:
+          UIColorName: Night
+        UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
+        UIAppFonts:
+          - AtkinsonHyperlegibleNext-Regular.ttf
+          - AtkinsonHyperlegibleNext-Italic.ttf
+          - AtkinsonHyperlegibleNext-Medium.ttf
+          - AtkinsonHyperlegibleNext-SemiBold.ttf
+          - AtkinsonHyperlegibleNext-Bold.ttf
+          - AtkinsonHyperlegibleNext-ExtraBold.ttf
+        ITSAppUsesNonExemptEncryption: false
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: net.kylepace.cuisines
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        TARGETED_DEVICE_FAMILY: "1"

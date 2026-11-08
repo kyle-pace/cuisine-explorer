@@ -1106,7 +1106,7 @@
         <button class="chip-btn surprise" data-surprise>Show me a random dish</button>
         <h3>Shared across borders</h3><p class="empty" style="margin-bottom:8px">Dishes claimed by more than one cuisine.</p>${chipList(shared, dishChip, 40)}`,
       cuisines: `<h3>Cuisines with the most dishes listed</h3>${chipList(nationals.filter(c => dishesOf.has(c.id)), chip, 30)}
-        <h3>Not tied to one country</h3><p class="empty" style="margin-bottom:4px">Cooking that doesn't fit inside one country: carried by people, shaped by faith, or from empires that no longer exist.</p>
+        <h3>Beyond borders</h3><p class="empty" style="margin-bottom:4px">Cooking that doesn't fit inside one country: carried by people, shaped by faith, or from empires that no longer exist.</p>
         ${groups.map(([k, label]) => {
           const items = (k === "indigenous" ? all.filter(c => c.indigenous) : beyond.filter(c => c.kind === k && !c.indigenous)).sort((a, b) => a.name.localeCompare(b.name));
           return items.length ? `<h3 class="small-h">${label}</h3><div class="chips">${items.map(chip).join("")}</div>` : "";

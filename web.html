@@ -370,7 +370,7 @@
     const shown = long ? list.filter(n => norm(n.name).charAt(0).toUpperCase() === pick) : list;
     const base = "#/" + INDEX_PATH[type];
     const body = type === "cuisine"
-      ? byContinent(list.filter(n => !n.beyond)) + `<h3 id="beyond-borders">Not tied to one country</h3>${linkList(list.filter(n => n.beyond))}`
+      ? byContinent(list.filter(n => !n.beyond)) + `<h3 id="beyond-borders">Beyond borders</h3>${linkList(list.filter(n => n.beyond))}`
       : linkList(shown);
     page.dataset.ref = "";
     page.innerHTML = `

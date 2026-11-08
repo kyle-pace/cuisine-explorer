@@ -64,6 +64,7 @@ export function renderItem(m, opts) {
     <h1>${esc(m.n)}</h1>
     <p class="sub"><i style="background:${esc(dot)}${m.square ? ";border-radius:2px" : ""}"></i>${esc(m.sub)}${m.suggested ? `<span class="tag">Suggested</span>` : ""}</p>
     ${m.names ? `<p class="sub">${esc(m.names)}</p>` : ""}
+    ${m.img ? photoHtml(m.img, m.n, ext) : ""}
     <div class="intro" id="intro"${m.wiki ? ` data-wiki="${esc(m.wiki)}"` : ""}>${(m.intro || []).map(para).join("")}</div>
     ${m.src === "wikipedia" ? `<p class="source">Intro from Wikipedia, shared under CC BY-SA.</p>` : ""}
     ${m.src === "note" ? `<p class="source">Written for this explorer${m.sources?.length ? " from " + m.sources.map(x => `<a href="${esc(x.url)}"${ext}>${esc(x.name)}</a>`).join(", ") : ""}.</p>` : ""}
@@ -74,3 +75,10 @@ export function renderItem(m, opts) {
 }
 
 export const typeLabel = t => TYPE_LABEL[t];
+
+// A photo with its credit: author, license and a link to the file on Wikimedia Commons
+export function photoHtml(img, name, ext = ' target="_blank" rel="noopener"') {
+  const lic = /^(pd|public domain|cc0)/i.test(img.lic) ? (/cc0/i.test(img.lic) ? "CC0" : "Public domain") : img.lic;
+  return `<figure class="photo"><img src="${esc(img.src)}" width="${img.w}" height="${img.h}" loading="lazy" decoding="async" alt="${esc(img.of ? "Photo of " + img.of : "Photo of " + name)}">
+    <figcaption>${img.of ? `Pictured: ${esc(img.of)}. ` : ""}Photo: ${esc(img.by)}, ${img.licUrl ? `<a href="${esc(img.licUrl)}"${ext}>${esc(lic)}</a>` : esc(lic)}, via <a href="${esc(img.page)}"${ext}>Wikimedia Commons</a></figcaption></figure>`;
+}

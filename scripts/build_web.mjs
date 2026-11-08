@@ -26,6 +26,7 @@ const summaries = read("summaries.json", {});
 const foodSummaries = read("food_summaries.json", {});
 const grown = read("grown.json", { items: {} });
 const countries = read("countries.geojson");
+const images = read("images.json", { files: {}, items: {} });
 
 const COLORS = { "African cuisine": "#e46a3f", "Cuisine of the Americas": "#94bd5c", "Asian cuisine": "#f0b340", "European cuisine": "#cf5f87", "Oceanic cuisine": "#55b8ad" };
 const CONTINENT = { "African cuisine": "Africa", "Cuisine of the Americas": "The Americas", "Asian cuisine": "Asia", "European cuisine": "Europe", "Oceanic cuisine": "Oceania" };
@@ -243,6 +244,26 @@ for (const n of nodes.values()) {
   items[n.ref] = { t: n.type, r: n.ref, n: n.type === "book" ? (n.b?.title || n.name) : n.name, c: n.color, ...m };
 }
 
+// --- Photos (scripts/fetch_images.py): free licenses only, each with its credit ---------
+const usedImages = new Set();
+const photo = (key, of) => {
+  const name = images.items[key], f = name && images.files[name];
+  if (!f) return null;
+  usedImages.add(f.p);
+  return { src: "/labs/cuisines/img/" + f.p, w: f.w, h: f.h, by: f.by, lic: f.lic, licUrl: f.licUrl,
+    page: "https://commons.wikimedia.org/wiki/File:" + encodeURIComponent(name.replace(/ /g, "_")), ...(of ? { of } : {}) };
+};
+for (const n of nodes.values()) {
+  const own = n.type === "cuisine" || n.type === "dish" || n.type === "ingredient" ? photo(n.type + ":" + n.id) : null;
+  let img = own;
+  // A cuisine without its own photo shows one of its dishes, and says which
+  if (!img && n.type === "cuisine") {
+    const d = edges(n, "dish").map(e => e.node).sort(byName).find(d => images.items["dish:" + d.id] && images.files[images.items["dish:" + d.id]]);
+    if (d) img = photo("dish:" + d.id, d.name);
+  }
+  if (img) items[n.ref].img = img;
+}
+
 // --- Layout (by links like Obsidian, and with cuisines pulled toward their continent) ---
 const ANCHOR = { "Cuisine of the Americas": [-900, 40], "European cuisine": [-80, -560], "African cuisine": [-60, 600], "Asian cuisine": [780, -40], "Oceanic cuisine": [980, 720] };
 const pairs = new Map();
@@ -288,6 +309,8 @@ const out = path.join(ROOT, "data", "web");
 fs.rmSync(out, { recursive: true, force: true });
 fs.mkdirSync(path.join(out, "items"), { recursive: true });
 fs.writeFileSync(path.join(out, "skeleton.json"), JSON.stringify(skeleton));
+// The photos kylepace.net may fetch and keep (its image route refuses anything else)
+fs.writeFileSync(path.join(out, "images.json"), JSON.stringify([...usedImages].sort()));
 const buckets = {};
 for (const [ref, item] of Object.entries(items)) (buckets[bucketOf(ref)] ||= {})[ref] = item;
 for (const [b, obj] of Object.entries(buckets)) fs.writeFileSync(path.join(out, "items", b + ".json"), JSON.stringify(obj));

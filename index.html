@@ -116,6 +116,10 @@
   .page-link { display: inline-block; color: var(--muted); font-size: 0.88rem; margin: 2px 0 4px; text-underline-offset: 2px; }
   .page-link:hover { color: var(--rice); }
   .chip-btn[href] { text-decoration: none; color: var(--rice); }
+  .photo { margin: 4px 0 14px; }
+  .photo img { display: block; width: 100%; height: auto; max-height: 260px; object-fit: cover; border-radius: 12px; background: var(--panel-2); }
+  .photo figcaption { font-size: 0.75rem; color: var(--muted); margin-top: 6px; line-height: 1.35; }
+  .photo figcaption a { color: var(--muted); }
   .names { color: var(--muted); font-size: 0.9rem; margin: -8px 0 12px; }
   .source.note-src { text-align: left; margin: 2px 0 6px; }
   .nw { white-space: nowrap; }
@@ -814,6 +818,21 @@
     liveIntro(c).then(t => { if (t && selected === c && document.getElementById("intro") === intro) show(t); });
   }
 
+  // Photos (with credits) come from the web view's page buckets, loaded only for the open card
+  let R = null;
+  const itemBuckets = new Map();
+  async function fillPhoto(ref, x) {
+    try {
+      R = R || await import("./render_item.js");
+      const b = R.bucketOf(ref);
+      if (!itemBuckets.has(b)) itemBuckets.set(b, fetch(`data/web/items/${b}.json`).then(r => r.ok ? r.json() : {}).catch(() => ({})));
+      const m = (await itemBuckets.get(b))[ref];
+      const box = document.getElementById("photo");
+      if (!box || current !== x || !m?.img) return;
+      box.innerHTML = R.photoHtml(m.img, m.n);
+    } catch (e) { /* no photo is fine */ }
+  }
+
   // The trail: where you've been in the card, so you can step back
   let current = null;
   const trail = [];
@@ -922,6 +941,7 @@
       <h2>${esc(c.name)}</h2>
       <p class="kind"><i style="background:${col}"></i>${kindText}</p>
       ${cNote && cNote.names ? `<p class="names">${esc(cNote.names)}</p>` : ""}
+      <div id="photo"></div>
       <div class="intro" id="intro"></div>
       ${cNote ? noteSources(cNote, c.name) : ""}
       ${pageLink("cuisine", c.id)}
@@ -949,6 +969,7 @@
       ${arrived.length ? `<h3>Arrived from elsewhere</h3>${routeList(arrived, "from")}` : ""}
     `;
     fillIntro(c);
+    fillPhoto("cuisine/" + slug(c.id), c);
   }
 
   // --- Dishes and ingredients: cards and their maps --------------------------------
@@ -1009,6 +1030,7 @@
     body.innerHTML = `
       <h2>${esc(d.name)}</h2>
       <p class="kind"><i style="background:${col}"></i>${homes.length === 1 ? `Dish from ${esc(homes[0].name)}` : `Dish found in ${homes.length} cuisines`}</p>
+      <div id="photo"></div>
       <div class="intro" id="intro"></div>
       ${pageLink("dish", d.id)}
       ${d.ingredients.length ? `<h3>Ingredients</h3><p class="empty" style="margin-bottom:8px">Pick one to see where in the world it's cooked with.</p><div class="chips">${d.ingredients.map(id => ingChip(ingById.get(id))).join("")}</div>` : ""}
@@ -1022,6 +1044,7 @@
     `;
     showPanel();
     fillFoodIntro(d);
+    fillPhoto("dish/" + slug(d.id), d);
     if (location.hash.slice(1) !== hashOf(d)) setHash(hashOf(d));
     showLit([d], "dish");
   }
@@ -1049,6 +1072,7 @@
     body.innerHTML = `
       <h2>${esc(i.name)}</h2>
       <p class="kind"><i style="background:#ede6da"></i>Ingredient in ${i.dishes} ${i.dishes === 1 ? "dish" : "dishes"} across ${rows.length} ${rows.length === 1 ? "cuisine" : "cuisines"}</p>
+      <div id="photo"></div>
       <div class="intro" id="intro"></div>
       ${pageLink("ingredient", i.id)}
       ${g ? `<div class="tabs" role="tablist" aria-label="What the globe shows">
@@ -1072,6 +1096,7 @@
     `;
     showPanel();
     fillFoodIntro(i);
+    fillPhoto("ingredient/" + slug(i.id), i);
     if (location.hash.slice(1) !== hashOf(i)) setHash(hashOf(i));
     if (ingView === "grown") showGrown(g);
     else showLit(i.dishList, "ingredient");

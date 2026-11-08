@@ -41,5 +41,8 @@ python3 scripts/fetch_food_summaries.py
 # Where ingredients are grown (FAOSTAT, CC BY 4.0)
 python3 scripts/fetch_faostat.py
 
+# Photos and their credits (Wikidata, Wikipedia page images, Wikimedia Commons)
+python3 scripts/fetch_images.py
+
 # The web view: page models, the skeleton and the graph layout (needs `npm ci` for d3-force)
 node scripts/build_web.mjs

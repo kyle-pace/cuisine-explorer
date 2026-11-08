@@ -532,6 +532,7 @@ struct ConnectionsSection: View {
             }
             .buttonStyle(.plain)
             .accessibilityLabel("Explore the \(all.count) connections of this page")
+            .accessibilityHint("Opens walk mode")
         }
     }
 

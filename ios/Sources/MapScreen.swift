@@ -24,6 +24,7 @@ struct MapScreen: View {
     @State private var selectedShape: Int?      // a country with no cuisine of its own
     @State private var path: [Route] = []
     @State private var span: Double = 110
+    @State private var listOpen = false
 
     private var showRegions: Bool { span < 30 }
 
@@ -112,6 +113,24 @@ struct MapScreen: View {
                     }
                 }
                 .padding(.horizontal, Space.l).padding(.vertical, Space.s)
+            }
+            .accessibilityLabel("Map of the world's cuisines, colored by continent")
+            .accessibilityHint("Use the list button to browse the cuisines on the map")
+            .overlay(alignment: .bottomTrailing) {
+                Button("Cuisines on the map", systemImage: "list.bullet") { listOpen = true }
+                    .labelStyle(.iconOnly)
+                    .font(.body.weight(.semibold))
+                    .frame(width: 44, height: 44)
+                    .glassEffect(.regular.interactive(), in: Circle())
+                    .padding(.trailing, Space.m)
+                    .padding(.bottom, selected != nil || selectedShape != nil ? 110 : Space.m)
+                    .animation(Theme.motion(reduceMotion), value: selected)
+            }
+            .sheet(isPresented: $listOpen) {
+                NavigationStack {
+                    MapList { ref in listOpen = false; app.showOnMap(ref) }
+                }
+                .presentationDetents([.medium, .large])
             }
             .safeAreaInset(edge: .bottom) {
                 if let ref = selected, let n = store.node(ref) {
@@ -265,7 +284,7 @@ struct PlaceCard: View {
             Spacer(minLength: 0)
             Button(action: close) {
                 Image(systemName: "xmark").font(.footnote.weight(.bold)).foregroundStyle(Theme.muted)
-                    .frame(width: 32, height: 32)
+                    .frame(width: 44, height: 44)
             }
             .accessibilityLabel("Close")
             .frame(maxHeight: .infinity, alignment: .top)
@@ -276,5 +295,46 @@ struct PlaceCard: View {
         .overlay(RoundedRectangle(cornerRadius: Radius.large).stroke(Theme.line))
         .contentShape(RoundedRectangle(cornerRadius: Radius.large))
         .onTapGesture(perform: open)
+        .accessibilityElement(children: .contain)
+        .accessibilityLabel("\(node.name), \(node.sub)")
+    }
+}
+
+/// Every cuisine on the map, by continent, for VoiceOver users and for anyone who'd rather read
+struct MapList: View {
+    @Environment(Store.self) private var store
+    @Environment(\.dismiss) private var dismiss
+    let choose: (String) -> Void
+    @State private var filter = ""
+
+    var body: some View {
+        List {
+            ForEach(Store.continents, id: \.slug) { c in
+                let items = store.hub("cuisines#\(c.slug)").nodes.filter { n in
+                    (filter.isEmpty || n.name.localizedCaseInsensitiveContains(filter)) &&
+                    (store.place(n.ref) != nil || store.national.values.contains(n.ref))
+                }
+                if !items.isEmpty {
+                    Section {
+                        ForEach(items) { n in
+                            Button { choose(n.ref) } label: {
+                                HStack(spacing: Space.m) {
+                                    Mark(color: c.color, size: 12)
+                                    Text(n.name).foregroundStyle(Theme.ink)
+                                    Spacer()
+                                    Text(n.sub).font(Theme.caption).foregroundStyle(Theme.muted)
+                                }
+                            }
+                            .accessibilityLabel("\(n.name), \(n.sub)")
+                            .accessibilityHint("Shows it on the map")
+                        }
+                    } header: { Text(c.name) }
+                }
+            }
+        }
+        .searchable(text: $filter, prompt: "Find a cuisine")
+        .navigationTitle("On the map")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar { ToolbarItem(placement: .confirmationAction) { Button("Done") { dismiss() } } }
     }
 }

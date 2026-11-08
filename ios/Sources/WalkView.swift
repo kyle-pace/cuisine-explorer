@@ -55,11 +55,7 @@ struct WalkView: View {
                         picked: picked, labels: true, onTap: step(to:), onHold: { picked = $0 })
             .frame(maxHeight: .infinity)
             .accessibilityLabel("Connections of \(store.node(center)?.name ?? "")")
-            .overlay(alignment: .top) {
-                if shown.count > 18 {
-                    TipView(HoldForNameTip()).padding(.horizontal, Space.l)
-                }
-            }
+
 
             panel
         }
@@ -100,6 +96,7 @@ struct WalkView: View {
 
     private var panel: some View {
         VStack(alignment: .leading, spacing: Space.m) {
+            if shown.count > 18 { TipView(HoldForNameTip()).tipBackground(Theme.raised) }
             if let n = store.node(center) {
                 HStack(alignment: .top, spacing: Space.m) {
                     if let thumb = store.thumbnail(center) {
@@ -135,7 +132,7 @@ struct WalkView: View {
                                     .buttonStyle(.bordered)
                                     .buttonBorderShape(.capsule)
                                     .controlSize(.small)
-                                Image(systemName: "chevron.right").font(.caption2).foregroundStyle(Theme.muted)
+                                Image(systemName: "chevron.right").font(.caption2).foregroundStyle(Theme.muted).accessibilityHidden(true)
                             }
                             Text(store.node(center)?.name ?? "").font(Theme.caption.weight(.semibold)).foregroundStyle(Theme.ink).id("end")
                         }
@@ -179,6 +176,7 @@ struct RadialGraph: View {
                             .frame(width: max(1, hypot(dx, dy)), height: 1)
                             .rotationEffect(.radians(atan2(dy, dx)))
                             .position(x: (p.x + mid.x) / 2, y: (p.y + mid.y) / 2)
+                            .accessibilityHidden(true)
                     }
                 }
                 ForEach(neighbors) { n in
@@ -198,7 +196,9 @@ struct RadialGraph: View {
                     Dot(node: c, size: compact ? 18 : 26, label: !compact, labelBelow: true, emphasized: true, isCenter: true)
                         .position(mid)
                         .zIndex(3)
-                        .accessibilityLabel("\(c.name), the center")
+                        .accessibilityElement()
+                        .accessibilityLabel("\(c.name), the center, \(neighbors.count) links shown")
+                        .accessibilitySortPriority(2000)
                 }
                 if neighbors.isEmpty {
                     Text("Nothing links here yet").font(Theme.callout).foregroundStyle(Theme.muted)
@@ -251,6 +251,7 @@ struct Dot: View {
     var emphasized = false
     var isCenter = false
     var labelWidth: CGFloat = 92
+    var hitSize: CGFloat = 44
 
     var body: some View {
         // The hit area is the dot alone, so neighbors on a crowded ring don't steal taps
@@ -261,11 +262,11 @@ struct Dot: View {
                 .stroke(isCenter || emphasized ? Theme.ink : Theme.ground, lineWidth: isCenter ? 3 : 1.5))
             .shadow(color: .black.opacity(isCenter ? 0.25 : 0), radius: 6, y: 2)
             .scaleEffect(emphasized && !isCenter ? 1.3 : 1)
-            .frame(width: max(size, 36), height: max(size, 36))
+            .frame(width: max(size, hitSize), height: max(size, hitSize))
             .contentShape(Circle())
             .overlay(alignment: labelBelow ? .top : .bottom) {
                 if label {
-                    text.offset(y: labelBelow ? max(size, 36) / 2 + size / 2 + 2 : -(max(size, 36) / 2 + size / 2 + 2))
+                    text.offset(y: labelBelow ? max(size, hitSize) / 2 + size / 2 + 2 : -(max(size, hitSize) / 2 + size / 2 + 2))
                         .allowsHitTesting(false)
                 }
             }

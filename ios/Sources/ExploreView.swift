@@ -49,7 +49,9 @@ struct ExploreView: View {
                         Button("Shuffle", systemImage: "shuffle") { pickFeatured() }
                             .font(Theme.callout600)
                             .labelStyle(.iconOnly)
+                            .frame(width: 44, height: 44)
                             .accessibilityLabel("Show other cuisines")
+                            .sensoryFeedback(.impact(weight: .light), trigger: featured.first?.ref)
                     }
                     .padding(.horizontal, Space.xl)
                     ScrollView(.horizontal, showsIndicators: false) {
@@ -103,7 +105,7 @@ struct ExploreView: View {
 
                 VStack(alignment: .leading, spacing: 12) {
                     SectionHeader("Cuisines by continent")
-                    LazyVGrid(columns: [GridItem(.flexible(), spacing: 12), GridItem(.flexible(), spacing: 12)], spacing: 12) {
+                    LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 12), count: typeSize.isAccessibilitySize ? 1 : 2), spacing: 12) {
                         ForEach(Store.continents, id: \.slug) { c in
                             NavigationLink(value: Route.hub("cuisines#\(c.slug)")) {
                                 ContinentTile(name: c.name, color: c.color,
@@ -141,13 +143,13 @@ struct ExploreView: View {
                         SectionHeader("Browse by ingredient", trailing: "All \(count(.ingredient))", chevron: true)
                     }
                     .buttonStyle(.plain)
-                    LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: Space.s), count: 3), spacing: Space.s) {
+                    LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: Space.s), count: typeSize.isAccessibilitySize ? 2 : 3), spacing: Space.s) {
                         ForEach(topIngredients) { n in
                             NavigationLink(value: Route.item(n.ref)) {
                                 ZStack(alignment: .bottomLeading) {
                                     RemoteImage(url: store.photo(n.ref)).frame(height: 96).clipped()
                                     LinearGradient(colors: [.clear, .black.opacity(0.7)], startPoint: .center, endPoint: .bottom)
-                                    Text(n.name).font(Theme.caption.weight(.semibold)).foregroundStyle(.white).lineLimit(1).padding(8)
+                                    Text(n.name).font(Theme.caption.weight(.semibold)).foregroundStyle(.white).lineLimit(2).padding(8)
                                 }
                                 .clipShape(RoundedRectangle(cornerRadius: Radius.medium))
                             }

@@ -8,6 +8,7 @@ Writes raw/wikidata.json keyed by Wikipedia title.
 
 Usage: python3 fetch_wikidata.py data/list_entries.json raw/wikidata.json
 """
+import http.client
 import json
 import sys
 import time
@@ -55,7 +56,7 @@ def run(query):
             print(e.read()[:500])
             raise
         # A dropped connection can also cut the answer short mid-JSON
-        except (urllib.error.URLError, TimeoutError, json.JSONDecodeError, ConnectionError):
+        except (urllib.error.URLError, TimeoutError, json.JSONDecodeError, ConnectionError, http.client.HTTPException, ValueError):
             time.sleep(15 * (attempt + 1))
             continue
     raise RuntimeError("SPARQL endpoint kept refusing")

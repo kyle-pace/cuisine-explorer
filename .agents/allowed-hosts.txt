@@ -6,3 +6,6 @@ covers.openlibrary.org
 
 # Cuisine photos when the explorer runs on its own (on kylepace.net they go through /labs/cuisines/img/ instead), loaded at runtime. Approved by Kyle, 2026-11-08.
 upload.wikimedia.org
+
+# Live cuisine intros from the Wikipedia API, fetched at runtime when a cuisine is opened. Approved by Kyle "for now", 2026-11-08; revisit later.
+en.wikipedia.org

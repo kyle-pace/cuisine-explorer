@@ -136,6 +136,40 @@
   .seg button { border: 0; background: none; border-radius: 999px; padding: 5px 12px; cursor: pointer; font-size: 0.85rem; font-weight: 600; color: var(--muted); }
   .seg button[aria-pressed="true"] { background: var(--rice); color: var(--night); }
   .full-hint { position: absolute; left: 20px; bottom: 16px; z-index: 2; color: var(--muted); font-size: 0.85rem; margin: 0; max-width: 46ch; }
+  /* Walk: the graph and the current page side by side */
+  .walk { position: fixed; inset: var(--top, 61px) 0 0 0; z-index: 4; background: var(--night); display: none; flex-direction: column; }
+  .walk.open { display: flex; }
+  .walk-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; padding: 12px 20px; border-bottom: 1px solid var(--line); }
+  .walk-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-left: auto; }
+  #walk-filters { display: inline-flex; flex-wrap: wrap; gap: 6px; }
+  .walk-tools .chip { border: 1px solid var(--line); background: var(--panel); border-radius: 999px; padding: 5px 10px; cursor: pointer; font-size: 0.82rem; display: inline-flex; align-items: center; gap: 6px; }
+  .walk-tools .chip[aria-pressed="false"] { opacity: 0.55; }
+  .walk-tools .chip svg { width: 10px; height: 10px; }
+  .trail { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; font-size: 0.88rem; color: var(--muted); min-width: 0; }
+  .trail a { color: var(--muted); text-underline-offset: 2px; white-space: nowrap; max-width: 18ch; overflow: hidden; text-overflow: ellipsis; }
+  .trail a[aria-current="page"] { color: var(--rice); font-weight: 700; text-decoration: none; }
+  .trail span { color: var(--line); }
+  .walk-body { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) min(440px, 40vw); }
+  #walk-graph { min-width: 0; min-height: 0; position: relative; }
+  .walk-page { overflow-y: auto; padding: 24px 28px 48px; border-left: 1px solid var(--line); background: var(--panel); max-width: none; }
+  .walk-page h1 { font-size: 2rem; }
+  .walk-page .actions .walk-open { }
+  @media (max-width: 720px) {
+    /* On phones the walk takes the whole screen, with its tools in one row that scrolls sideways */
+    .walk { inset: 0; z-index: 6; }
+    .walk-bar { flex-wrap: nowrap; overflow-x: auto; padding: 10px 14px; gap: 8px; scrollbar-width: none; }
+    .walk-bar::-webkit-scrollbar { display: none; }
+    .walk-tools, #walk-filters { flex-wrap: nowrap; }
+    .trail { flex-wrap: nowrap; }
+    .trail a:not([aria-current]), .trail span { display: none; }
+    .walk-tools .chip, .walk-bar .btn, .seg button { white-space: nowrap; }
+  }
+  @media (max-width: 900px) {
+    .walk-body { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1fr) 42vh; }
+    .walk-page { border-left: 0; border-top: 1px solid var(--line); padding: 16px 18px 32px; }
+    .walk-tools { margin-left: 0; }
+  }
+  .tip small { display: block; font-weight: 400; max-width: 34ch; white-space: normal; margin-top: 2px; line-height: 1.35; }
   .tip { position: fixed; z-index: 12; pointer-events: none; background: var(--rice); color: var(--night); font-weight: 600; font-size: 0.85rem; padding: 4px 10px; border-radius: 999px; display: none; white-space: nowrap; }
   .loading { padding: 80px 28px; text-align: center; color: var(--muted); }
 
@@ -178,7 +212,8 @@
     <h2>Connections</h2>
     <div class="local" id="local" aria-hidden="true"></div>
     <div class="key" id="key" aria-hidden="true"></div>
-    <button class="btn" id="open-graph-2" type="button">Open the whole web</button>
+    <button class="btn solid" id="walk-here" type="button">Walk the web from here</button>
+    <button class="btn" id="open-graph-2" type="button" style="margin-top:8px">See the whole web</button>
   </aside>
 </div>
 
@@ -190,6 +225,23 @@
   </div>
   <div id="graph" aria-hidden="true"></div>
   <p class="full-hint">Drag to move around, scroll or pinch to zoom, pick a dot to open its page. Dishes and ingredients are off to start; turn them on above. Every connection here is also listed as a link on its page.</p>
+</div>
+<div class="walk" id="walk" role="dialog" aria-label="Walk the web">
+  <div class="walk-bar">
+    <button class="btn" id="walk-close" type="button" aria-label="Close and go to this page">← Page</button>
+    <nav class="trail" id="trail" aria-label="Where you've been"></nav>
+    <div class="walk-tools">
+      <span class="seg" role="group" aria-label="How far to look">
+        <button type="button" data-depth="1" aria-pressed="true">1 step</button><button type="button" data-depth="2" aria-pressed="false">2 steps</button><button type="button" data-depth="3" aria-pressed="false">3 steps</button>
+      </span>
+      <span id="walk-filters"></span>
+      <button class="btn" id="walk-whole" type="button">Whole web</button>
+    </div>
+  </div>
+  <div class="walk-body">
+    <div id="walk-graph" aria-hidden="true"></div>
+    <section class="walk-page page" id="walk-page" aria-live="polite"></section>
+  </div>
 </div>
 <div class="tip" id="tip"></div>
 
@@ -361,7 +413,8 @@
   }
 
   // --- Pages ------------------------------------------------------------------
-  const page = document.getElementById("page");
+  const mainPage = document.getElementById("page"), walkPage = document.getElementById("walk-page");
+  let page = mainPage;
   const outLink = (url, label) => `<a class="btn" href="${esc(url)}" target="_blank" rel="noopener">${label} ${ARROW}</a>`;
   const globeBtn = n => `<a class="btn" href="./#${globeHash(n)}">Show on the globe</a>`;
   const correct = name => `<p class="correct">Something wrong or missing? <a href="${CORRECT + encodeURIComponent("Correction: " + name)}" target="_blank" rel="noopener">Suggest a correction</a>.</p>`;
@@ -545,7 +598,11 @@
     const h = decodeURIComponent(location.hash.replace(/^#\/?/, ""));
     const [path, anchor] = h.split("#");
     const parts = path.split("/").filter(Boolean);
+    const walking = parts[0] === "walk";
+    if (walking) parts.shift();
     current = null;
+    page = walking ? walkPage : mainPage;
+    if (walking) mainPage.innerHTML = "";
     if (!parts.length) homePage();
     else if (INDEX[parts[0]]) indexPage(INDEX[parts[0]], parts[1]);
     else {
@@ -558,6 +615,9 @@
     }
     document.title = (current ? current.name + " · " : "") + "Cuisine Explorer: the web";
     document.getElementById("to-globe").href = "./" + (current && globeHash(current) ? "#" + globeHash(current) : "");
+    if (walking && current) { showWalk(current); return; }
+    if (walking) { location.replace("#/"); return; }
+    hideWalk();
     if (anchor) document.getElementById(anchor)?.scrollIntoView();
     else window.scrollTo(0, 0);
     drawLocal();
@@ -705,7 +765,7 @@
         })
         .nodePointerAreaPaint((g, color, ctx) => { ctx.fillStyle = color; shape(ctx, g.n, g.x, g.y, size(g.n) + 2); ctx.fill(); })
         .onNodeHover(g => { fullHover = g ? g.n : null; graphEl.style.cursor = g ? "pointer" : ""; hover(fullHover); })
-        .onNodeClick(g => { hover(null); closeFull(); location.hash = g.n.href; })
+        .onNodeClick(g => { hover(null); closeFull(); location.hash = walkHref(g.n); })
         // Dragging a dot moves it; it stays where you drop it
         .onNodeDragEnd(g => { g.fx = g.fy = undefined; g.hx = g.x; g.hy = g.y; });
       fullGraph.d3Force("charge").strength(-10).distanceMax(120);
@@ -729,7 +789,8 @@
   function closeFull() {
     fullOpen = false; full.classList.remove("open"); document.body.style.overflow = ""; hover(null);
   }
-  document.getElementById("open-graph").addEventListener("click", openFull);
+  document.getElementById("open-graph").addEventListener("click", () => current ? (location.hash = walkHref(current)) : openFull());
+  document.getElementById("walk-here").addEventListener("click", () => current && (location.hash = walkHref(current)));
   document.getElementById("open-graph-2").addEventListener("click", openFull);
   document.getElementById("close-graph").addEventListener("click", closeFull);
   addEventListener("keydown", e => { if (e.key === "Escape" && fullOpen) closeFull(); });
@@ -748,6 +809,165 @@
     shown[b.dataset.t] = !shown[b.dataset.t];
     b.setAttribute("aria-pressed", String(shown[b.dataset.t]));
     fullGraph.graphData(fullData());
+  });
+
+  // --- Walk: move through the web one step at a time, like Obsidian's local graph ---
+  const walkEl = document.getElementById("walk"), walkGraphEl = document.getElementById("walk-graph");
+  const walkHref = n => "#/walk/" + n.href.slice(2);
+  let walkGraph = null, walkCenter = null, walkHover = null, depth = 1, walkFit = false;
+  const walkShown = { cuisine: true, dish: true, ingredient: true, site: true, book: true };
+  const walkNodes = new Map();   // key -> graph node, kept between steps so dots glide
+  const trailList = [];
+  // A one-line preview for hovering, from notes or Wikipedia's intro
+  function preview(n) {
+    const own = (n.type === "cuisine" ? notes.cuisines : n.type === "dish" ? notes.dishes : n.type === "ingredient" ? notes.ingredients : {})[n.id];
+    let t = own?.text?.[0]?.replace(/\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g, (m, a, b) => b || a)
+      || (n.type === "cuisine" && (summaries[n.c.title] || n.c.desc))
+      || (n.type === "dish" && foodSummaries[n.d.title || n.d.id])
+      || (n.type === "ingredient" && n.i.title && foodSummaries[n.i.title])
+      || (n.type === "site" ? n.host : n.type === "book" ? [n.b.author, n.b.year].filter(Boolean).join(", ") : "");
+    t = clean(String(t || "").split(/\n/)[0]);
+    const first = (t.match(/^.{20,}?[.!?](\s|$)/) || [t])[0];
+    return first.length > 160 ? first.slice(0, 157) + "…" : first;
+  }
+  // Everything within `depth` steps, nearest and best-connected first, capped so it stays readable
+  function neighborhood(center) {
+    const cap = [0, 70, 140, 200][depth];
+    const priority = { cuisine: 0, site: 1, book: 1, ingredient: 2, dish: 3 };
+    const seen = new Map([[center, { d: 0, via: null }]]);
+    let ring = [center];
+    for (let d = 1; d <= depth && seen.size < cap; d++) {
+      const next = [];
+      for (const a of ring) for (const e of a.out.values()) {
+        const b = e.node;
+        if (seen.has(b) || !walkShown[b.type]) continue;
+        seen.set(b, { d, via: a }); next.push(b);
+      }
+      next.sort((a, b) => priority[a.type] - priority[b.type] || b.out.size - a.out.size);
+      ring = next.slice(0, Math.max(0, cap - (seen.size - next.length)));
+      for (const b of next.slice(ring.length)) seen.delete(b);
+    }
+    return seen;
+  }
+  function walkData() {
+    const near = neighborhood(walkCenter);
+    const keep = new Set(near.keys());
+    const gn = [...keep].map(n => {
+      let g = walkNodes.get(n.key);
+      if (!g) {
+        // New dots start next to the dot that brought them in, so they drift out of it
+        // (first ring fans out around the center, farther rings out of their parent)
+        const via = near.get(n).via;
+        const from = walkNodes.get((via && via !== walkCenter ? via : walkCenter).key);
+        const a = Math.random() * 2 * Math.PI, d = via === walkCenter ? 40 : 12;
+        g = { n, id: n.key, x: (from?.x || 0) + Math.cos(a) * d, y: (from?.y || 0) + Math.sin(a) * d };
+        walkNodes.set(n.key, g);
+      }
+      g.depth = near.get(n).d;
+      return g;
+    });
+    const gl = [];
+    for (const a of keep) for (const [k, e] of a.out) if (keep.has(e.node) && a.key < k) gl.push({ source: a.key, target: k });
+    for (const k of [...walkNodes.keys()]) if (!keep.has(nodes.get(k))) walkNodes.delete(k);
+    return { nodes: gn, links: gl };
+  }
+  function lit(n) { return !walkHover || walkHover === n || walkHover.out.has(n.key); }
+  function ensureWalkGraph() {
+    if (walkGraph) return;
+    walkGraph = ForceGraph()(walkGraphEl)
+      .backgroundColor("rgba(0,0,0,0)")
+      .nodeId("id")
+      .d3AlphaDecay(0.03).d3VelocityDecay(0.35)
+      .cooldownTicks(reduceMotion ? 0 : 300).warmupTicks(reduceMotion ? 200 : 0)
+      .linkColor(l => walkHover && (l.source.n === walkHover || l.target.n === walkHover) ? "rgba(237,230,218,0.8)"
+        : (l.source.n === walkCenter || l.target.n === walkCenter) ? "rgba(237,230,218,0.35)" : "rgba(169,159,181,0.16)")
+      .linkWidth(l => walkHover && (l.source.n === walkHover || l.target.n === walkHover) ? 1.6 : 1)
+      .nodeCanvasObject((g, ctx, scale) => {
+        const n = g.n, me = n === walkCenter, on = lit(n);
+        const r = me ? 9 : size(n) + (g.depth === 1 ? 2.5 : 1);
+        ctx.globalAlpha = on ? (g.depth > 1 && !walkHover ? 0.75 : 1) : 0.18;
+        shape(ctx, n, g.x, g.y, r);
+        ctx.fillStyle = n.color; ctx.fill();
+        if (me) { ctx.lineWidth = 2.5 / scale; ctx.strokeStyle = "#fff"; ctx.stroke(); }
+        // Every dot is labeled at walking scale; farther rings get smaller type
+        const fs = (me ? 14 : g.depth === 1 ? 11 : 9.5) / Math.max(scale, 0.6);
+        if (scale * fs > 6 || me || n === walkHover) {
+          ctx.font = `${me || n === walkHover ? 700 : 400} ${fs}px Atkinson Hyperlegible Next, system-ui, sans-serif`;
+          ctx.textAlign = "center"; ctx.textBaseline = "top";
+          ctx.fillStyle = me || n === walkHover ? "#ede6da" : "rgba(237,230,218,0.8)";
+          const label = n.name.replace(/ cuisine$/, "");
+          ctx.fillText(label.length > 30 ? label.slice(0, 29) + "…" : label, g.x, g.y + r + 2 / scale);
+        }
+        ctx.globalAlpha = 1;
+      })
+      .nodePointerAreaPaint((g, color, ctx) => { ctx.fillStyle = color; shape(ctx, g.n, g.x, g.y, size(g.n) + 6); ctx.fill(); })
+      .onNodeHover(g => {
+        walkHover = g ? g.n : null; walkGraphEl.style.cursor = g ? "pointer" : "";
+        if (!g) { tip.style.display = "none"; return; }
+        tip.innerHTML = `${esc(g.n.name)} · ${TYPE_LABEL[g.n.type]}${preview(g.n) ? `<small>${esc(preview(g.n))}</small>` : ""}`;
+        tip.style.display = "block"; placeTip();
+      })
+      .onNodeClick(g => { tip.style.display = "none"; if (g.n !== walkCenter) location.hash = walkHref(g.n); })
+      .onNodeDragEnd(g => { if (g.n !== walkCenter) { g.fx = g.fy = undefined; } })
+      .onEngineStop(() => { if (walkFit) { walkFit = false; walkGraph.zoomToFit(reduceMotion ? 0 : 280, 50); } });
+    walkGraph.d3Force("charge").strength(-220).distanceMax(500);
+    walkGraph.d3Force("link").distance(l => (l.source.n === walkCenter || l.target.n === walkCenter) ? 70 : 45);
+    new ResizeObserver(() => walkGraph.width(walkGraphEl.clientWidth).height(walkGraphEl.clientHeight)).observe(walkGraphEl);
+  }
+  function showWalk(n) {
+    const opening = !walkEl.classList.contains("open");
+    walkEl.style.setProperty("--top", isPhone() ? "0px" : document.querySelector(".top").offsetHeight + "px");
+    walkEl.classList.add("open"); document.body.style.overflow = "hidden";
+    ensureWalkGraph();
+    const prev = walkCenter && walkNodes.get(walkCenter.key);
+    if (prev) { prev.fx = prev.fy = undefined; }
+    walkCenter = n;
+    if (opening && !walkNodes.has(n.key)) walkNodes.clear();
+    walkGraph.graphData(walkData());
+    const g = walkNodes.get(n.key);
+    g.fx = g.x; g.fy = g.y;
+    walkFit = true;
+    walkGraph.centerAt(g.x, g.y, reduceMotion || opening ? 0 : 280);
+    clearTimeout(showWalk.t);
+    showWalk.t = setTimeout(() => walkGraph.zoomToFit(reduceMotion ? 0 : 280, 50), reduceMotion ? 0 : 1100);
+    if (opening) walkGraph.zoom(1.6, 0);
+    // The trail: where you've been, most recent last
+    const at = trailList.indexOf(n);
+    if (at >= 0) trailList.splice(at + 1); else trailList.push(n);
+    if (trailList.length > 8) trailList.shift();
+    document.getElementById("trail").innerHTML = trailList.map(t => `<a href="${walkHref(t)}"${t === n ? ' aria-current="page"' : ""}>${esc(t.name)}</a>`).join("<span>›</span>");
+    walkPage.scrollTop = 0;
+    document.title = n.name + " · Walk · Cuisine Explorer";
+  }
+  function hideWalk() {
+    if (!walkEl.classList.contains("open")) return;
+    walkEl.classList.remove("open"); document.body.style.overflow = ""; tip.style.display = "none";
+  }
+  // Links inside the page panel keep walking instead of leaving
+  walkPage.addEventListener("click", e => {
+    const a = e.target.closest('a[href^="#/"]');
+    if (!a) return;
+    const n = bySlug.get(a.getAttribute("href").slice(2));
+    if (n) { e.preventDefault(); location.hash = walkHref(n); }
+  });
+  document.getElementById("walk-close").addEventListener("click", () => { location.hash = walkCenter ? walkCenter.href : "#/"; });
+  document.getElementById("walk-whole").addEventListener("click", () => { openFull(); });
+  addEventListener("keydown", e => { if (e.key === "Escape" && walkEl.classList.contains("open") && !fullOpen) location.hash = walkCenter.href; });
+  walkEl.querySelector(".seg").addEventListener("click", e => {
+    const b = e.target.closest("[data-depth]");
+    if (!b) return;
+    depth = +b.dataset.depth;
+    walkEl.querySelectorAll("[data-depth]").forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+    walkGraph.graphData(walkData()); walkFit = true;
+  });
+  const wf = document.getElementById("walk-filters");
+  wf.innerHTML = Object.keys(walkShown).map(t => `<button class="chip" type="button" data-wt="${t}" aria-pressed="true">${keySvg(t)}${PLURAL[t]}</button>`).join(" ");
+  wf.addEventListener("click", e => {
+    const b = e.target.closest("[data-wt]");
+    if (!b) return;
+    walkShown[b.dataset.wt] = !walkShown[b.dataset.wt];
+    b.setAttribute("aria-pressed", String(walkShown[b.dataset.wt]));
+    walkGraph.graphData(walkData()); walkFit = true;
   });
 
   // --- Search ----------------------------------------------------------------------
@@ -771,7 +991,7 @@
     results.innerHTML = html || `<li class="group">Nothing matches</li>`;
     results.classList.add("open"); q.setAttribute("aria-expanded", "true");
   }
-  const go = i => { const x = hits[i]; if (!x) return; q.value = ""; search(); q.blur(); if (fullOpen) closeFull(); location.hash = x.n.href; };
+  const go = i => { const x = hits[i]; if (!x) return; q.value = ""; search(); q.blur(); if (fullOpen) closeFull(); location.hash = walkEl.classList.contains("open") ? walkHref(x.n) : x.n.href; };
   q.addEventListener("input", search);
   q.addEventListener("keydown", e => {
     if (e.key === "ArrowDown" || e.key === "ArrowUp") {

@@ -54,7 +54,8 @@ def run(query):
                 continue
             print(e.read()[:500])
             raise
-        except (urllib.error.URLError, TimeoutError):
+        # A dropped connection can also cut the answer short mid-JSON
+        except (urllib.error.URLError, TimeoutError, json.JSONDecodeError, ConnectionError):
             time.sleep(15 * (attempt + 1))
             continue
     raise RuntimeError("SPARQL endpoint kept refusing")

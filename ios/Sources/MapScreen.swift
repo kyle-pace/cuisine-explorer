@@ -228,11 +228,10 @@ struct MapScreen: View {
                 let r = s.bounds
                 position = .rect(r.insetBy(dx: -r.width * 0.3, dy: -r.height * 0.3))
             } else if let route = store.routes.first(where: { $0.ref == ref }),
-                      let a = store.national[route.from].flatMap(shapes.shape(for:)),
-                      let b = store.national[route.to].flatMap(shapes.shape(for:)) {
-                // A diaspora cuisine: frame both ends of its arc
-                let r = a.bounds.union(b.bounds)
-                position = .rect(r.insetBy(dx: -r.width * 0.15, dy: -r.height * 0.15))
+                      let home = store.national[route.to].flatMap(shapes.shape(for:)) {
+                // A diaspora cuisine: frame where it lives now, with its lit arc leading away
+                let r = home.bounds
+                position = .rect(r.insetBy(dx: -r.width * 0.6, dy: -r.height * 0.6))
             } else if let p = store.place(ref) {
                 position = .region(MKCoordinateRegion(center: p.coordinate, span: .init(latitudeDelta: 10, longitudeDelta: 10)))
             }

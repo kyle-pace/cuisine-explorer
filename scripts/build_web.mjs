@@ -130,7 +130,8 @@ function intro(own, title, fallback) {
 const wikiUrl = t => "https://en.wikipedia.org/wiki/" + encodeURIComponent(t.replace(/ /g, "_"));
 const shelfRow = e => {
   const n = e.node, x = e.entry;
-  return { name: n.type === "site" ? n.name : x.title, ref: n.ref, color: n.color, shape: n.type,
+  // Recipe sites and cookbooks have no page of their own: the row links straight to them
+  return { name: n.type === "site" ? n.name : x.title, color: n.color, shape: n.type,
     sub: n.type === "site" ? n.host : [x.author, x.year].filter(Boolean).join(", "), note: x.note || "",
     url: x.url || (x.isbn ? "https://openlibrary.org/isbn/" + x.isbn : ""), suggested: !!x.suggested,
     ...(x.isbn ? { isbn: x.isbn } : {}), ...(n.type === "site" && x.type ? { kind: x.type } : {}) };
@@ -139,7 +140,9 @@ const shelfRow = e => {
 // --- Page models ------------------------------------------------------------------
 const items = {};
 const ofType = t => [...nodes.values()].filter(n => n.type === t);
+const PAGE = new Set(["cuisine", "dish", "ingredient"]);   // sites and books are rows on these, not pages
 for (const n of nodes.values()) {
+  if (!PAGE.has(n.type)) continue;
   let m;
   if (n.type === "cuisine") {
     const c = n.c, own = notes.cuisines[c.id];
@@ -268,9 +271,9 @@ for (const n of nodes.values()) {
 // --- Layout (by links like Obsidian, and with cuisines pulled toward their continent) ---
 const ANCHOR = { "Cuisine of the Americas": [-900, 40], "European cuisine": [-80, -560], "African cuisine": [-60, 600], "Asian cuisine": [780, -40], "Oceanic cuisine": [980, 720] };
 const pairs = new Map();
-for (const a of nodes.values()) for (const [k, e] of a.out) if (a.key < k) pairs.set(a.key + "|" + k, { source: a.key, target: k });
+for (const a of nodes.values()) if (PAGE.has(a.type)) for (const [k, e] of a.out) if (a.key < k && PAGE.has(e.node.type)) pairs.set(a.key + "|" + k, { source: a.key, target: k });
 function layout(byContinent) {
-  const arr = [...nodes.values()].map(n => ({ key: n.key, type: n.type, cont: n.cont, weight: n.c?.kind === "national" ? 2 : 1 }));
+  const arr = [...nodes.values()].filter(n => PAGE.has(n.type)).map(n => ({ key: n.key, type: n.type, cont: n.cont, weight: n.c?.kind === "national" ? 2 : 1 }));
   arr.forEach((n, i) => { const r = 10 * Math.sqrt(i), a = i * 2.39996; n.x = r * Math.cos(a); n.y = r * Math.sin(a); });
   const anchor = n => byContinent && n.type === "cuisine" && n.cont && ANCHOR[n.cont];
   const kind = k => k.slice(0, k.indexOf(":"));
@@ -289,7 +292,7 @@ const t0 = Date.now();
 const byLinks = layout(false), byCont = layout(true);
 
 // --- Skeleton -------------------------------------------------------------------
-const list_ = [...nodes.values()];
+const list_ = [...nodes.values()].filter(n => PAGE.has(n.type));
 const index = new Map(list_.map((n, i) => [n.key, i]));
 const TYPES = ["cuisine", "dish", "ingredient", "site", "book"];
 const palette = [...new Set(list_.map(n => n.color))];

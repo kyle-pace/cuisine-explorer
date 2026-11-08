@@ -312,6 +312,11 @@ struct RowCard: View {
                 NavigationLink(value: store.route(ref)) { Color.clear }
                     .padding(.trailing, row.url == nil ? 0 : 48)
                     .accessibilityLabel(row.name)
+            } else if let url = row.url {
+                // Recipe sites and cookbooks have no page here: the whole card opens the site
+                Link(destination: url) { Color.clear }
+                    .accessibilityLabel("Open \(row.name)")
+                    .accessibilityHint("Opens in Safari")
             }
         }
     }
@@ -326,7 +331,7 @@ struct BookShelf: View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(alignment: .top, spacing: Space.m) {
                 ForEach(rows, id: \.self) { r in
-                    NavigationLink(value: r.ref.map(store.route) ?? Route.hub("cookbooks")) {
+                    Link(destination: r.url ?? URL(string: "https://openlibrary.org/search?q=\(r.name.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")")!) {
                         VStack(alignment: .leading, spacing: 6) {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 6).fill(Theme.raised)
@@ -351,6 +356,7 @@ struct BookShelf: View {
                     }
                     .buttonStyle(.plain)
                     .accessibilityLabel("\(r.name), \(r.sub)")
+                    .accessibilityHint("Opens the book's page in Safari")
                 }
             }
             .padding(.horizontal, Space.xl)

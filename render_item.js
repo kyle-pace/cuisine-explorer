@@ -38,7 +38,7 @@ export function renderItem(m, opts) {
   const links = arr => `<ul class="links">${arr.map(x => `<li>${a(x)}</li>`).join("")}</ul>`;
   const para = segs => `<p class="inline">${segs.map(x => Array.isArray(x) ? a(x) : esc(x)).join("")}</p>`;
   const row = r => `<li class="row"><span class="mark${r.shape === "cuisine" ? " dot" : ""}" style="background:${esc(r.color)}${r.shape === "cuisine" ? "" : ";border-radius:2px"}"></span><div>
-      ${r.ref ? `<a class="name" href="${esc(opts.href(r.ref))}">${esc(r.name)}</a>` : `<b>${esc(r.name)}</b>`}${r.suggested ? `<span class="tag">Suggested</span>` : ""}
+      ${r.ref ? `<a class="name" href="${esc(opts.href(r.ref))}">${esc(r.name)}</a>` : r.url ? `<a class="name" href="${esc(r.url)}"${ext}>${esc(r.name)}</a>` : `<b>${esc(r.name)}</b>`}${r.suggested ? `<span class="tag">Suggested</span>` : ""}
       <small>${esc(r.sub || "")}${r.note ? `<br>${esc(r.note)}` : ""}</small></div>
       ${r.url ? `<a class="out" href="${esc(r.url)}"${ext} aria-label="Open ${esc(r.name)}">${ARROW}</a>` : ""}</li>`;
   const section = s => {

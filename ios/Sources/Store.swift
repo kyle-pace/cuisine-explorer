@@ -19,6 +19,7 @@ final class Store {
         var isBeyondBorders: Bool { flags & 4 != 0 }
     }
 
+    /// Sites and books are kept for the skeleton's type indices; they're rows on pages, not nodes
     enum Kind: Int, CaseIterable {
         case cuisine, dish, ingredient, site, book
         var plural: String { ["Cuisines", "Dishes", "Ingredients", "Recipe sites", "Cookbooks"][rawValue] }

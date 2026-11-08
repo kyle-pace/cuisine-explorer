@@ -185,7 +185,7 @@ struct ExploreView: View {
 
                 VStack(alignment: .leading, spacing: 4) {
                     SectionHeader("Browse everything")
-                    ForEach([Store.Kind.dish, .ingredient, .book, .site], id: \.self) { kind in
+                    ForEach([Store.Kind.cuisine, .dish, .ingredient], id: \.self) { kind in
                         NavigationLink(value: Route.hub(kind.hub)) {
                             HStack {
                                 Text(kind.plural).font(Theme.body).foregroundStyle(Theme.ink)
@@ -326,7 +326,7 @@ struct HubView: View {
         }
     }
     private var cuisineFacets: Bool { ref == "cuisines" || ref.hasPrefix("cuisines#") }
-    private var continentFacets: Bool { ["dishes", "ingredients", "cookbooks", "sites"].contains(ref) }
+    private var continentFacets: Bool { ["dishes", "ingredients"].contains(ref) }
 
     var body: some View {
         let hub = hub
@@ -495,9 +495,9 @@ struct SearchView: View {
     @Environment(AppState.self) private var app
     @State private var scope: Scope = .all
 
-    enum Scope: Hashable, CaseIterable { case all, cuisine, dish, ingredient, book, site
-        var title: String { ["Everything", "Cuisines", "Dishes", "Ingredients", "Cookbooks", "Sites"][Scope.allCases.firstIndex(of: self)!] }
-        var kind: Store.Kind? { [nil, .cuisine, .dish, .ingredient, .book, .site][Scope.allCases.firstIndex(of: self)!] }
+    enum Scope: Hashable, CaseIterable { case all, cuisine, dish, ingredient
+        var title: String { ["Everything", "Cuisines", "Dishes", "Ingredients"][Scope.allCases.firstIndex(of: self)!] }
+        var kind: Store.Kind? { [nil, .cuisine, .dish, .ingredient][Scope.allCases.firstIndex(of: self)!] }
     }
 
     var body: some View {

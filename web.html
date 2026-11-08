@@ -370,7 +370,7 @@
       <h1>Browse every cuisine</h1>
       <div class="intro"><p>The same cuisines, dishes and ingredients as the globe, as pages you can read and follow. Every page links to what it's connected to: a cuisine to its dishes, a dish to its ingredients, an ingredient to everywhere it's cooked. Every page also has a map of its connections that you can move through, one link at a time.</p>
         <p class="actions"><a class="btn solid" href="#/walk/cuisine/thai-cuisine"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="5" cy="6" r="2.5"/><circle cx="18" cy="5" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M7.3 7.2 10.6 16M16.5 7.1 13.2 15.9M7.5 6h8"/></svg> Try the map, starting from Thai cuisine</a><button class="btn" type="button" id="home-everything">See everything at once</button></p></div>
-      <ul class="stats">${stat("cuisine", "cuisines")}${stat("dish", "dishes")}${stat("ingredient", "ingredients")}${stat("site", "recipe sites")}${stat("book", "cookbooks")}</ul>
+      <ul class="stats">${stat("cuisine", "cuisines")}${stat("dish", "dishes")}${stat("ingredient", "ingredients")}</ul>
       ${section("Cuisines by region", byContinent(nationals))}
       ${section("Indigenous foodways", linkList(indigenous), indigenous.length)}
       ${section("Most-used ingredients", linkList(topIngs))}

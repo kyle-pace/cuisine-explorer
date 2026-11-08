@@ -819,17 +819,17 @@
   }
 
   // Photos (with credits) come from the web view's page buckets, loaded only for the open card
-  let R = null;
+  let Render = null;
   const itemBuckets = new Map();
   async function fillPhoto(ref, x) {
     try {
-      R = R || await import("./render_item.js");
-      const b = R.bucketOf(ref);
+      Render = Render || await import("./render_item.js");
+      const b = Render.bucketOf(ref);
       if (!itemBuckets.has(b)) itemBuckets.set(b, fetch(`data/web/items/${b}.json`).then(r => r.ok ? r.json() : {}).catch(() => ({})));
       const m = (await itemBuckets.get(b))[ref];
       const box = document.getElementById("photo");
       if (!box || current !== x || !m?.img) return;
-      box.innerHTML = R.photoHtml(m.img, m.n);
+      box.innerHTML = Render.photoHtml(m.img, m.n);
     } catch (e) { /* no photo is fine */ }
   }
 

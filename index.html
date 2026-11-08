@@ -347,23 +347,8 @@
   };
   const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const isPhone = () => innerWidth <= 720;
-  // Start somewhere different every visit: a random continent, then a random country on it,
-  // so each part of the world comes up about as often (Oceania as much as Africa)
-  function startView() {
-    const byContinent = new Map();
-    for (const c of all) {
-      const k = c.kind === "national" && c.loc && (c.region || [])[0];
-      if (!k || !COLORS[k]) continue;
-      if (!byContinent.has(k)) byContinent.set(k, []);
-      byContinent.get(k).push(c.loc);
-    }
-    const pick = list => list[Math.floor(Math.random() * list.length)];
-    const groups = [...byContinent.values()];
-    if (!groups.length) return { lat: 22, lng: 20 };
-    const [lat, lng] = pick(pick(groups));
-    // Keep the view off the poles, where the globe reads as mostly ice and ocean
-    return { lat: Math.min(50, Math.max(-35, lat)), lng };
-  }
+  // Same tilt as always, but spun to a random longitude so it doesn't always open on Africa
+  const startView = () => ({ lat: 22, lng: Math.random() * 360 - 180 });
   const noHover = matchMedia("(hover: none)").matches;
 
   // Data: inlined in the preview build, fetched alongside the page otherwise

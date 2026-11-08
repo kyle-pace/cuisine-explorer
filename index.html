@@ -554,10 +554,14 @@
       world.polygonAltitude(world.polygonAltitude()).polygonCapColor(world.polygonCapColor());
       el.style.cursor = f && (isRegion(f) || nationalByIso.get(featIso(f))) ? "pointer" : "grab";
     })
-    .onPolygonClick(f => {
+    .onPolygonClick((f, e, at) => {
       if (isRegion(f)) return open(byId.get(f.properties.ids[0]));
       const n = nationalByIso.get(featIso(f));
-      if (n) open(n);
+      if (!n) return;
+      // In a big or spread-out country (Alaska, Siberia, Patagonia), stay where you
+      // clicked instead of jumping to the middle, so you can browse that part
+      const far = at && n.loc && angle([at.lat, at.lng], n.loc) > 12;
+      open(n, far ? { at: [at.lat, at.lng] } : {});
     })
     // Name labels for the focused country's regional cuisines: big, easy targets
     .htmlElementsData([])
@@ -826,7 +830,11 @@
   const CHEVRON = `<svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" style="vertical-align:-2px"><path d="m15 6-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
   const backCrumb = () => trail.length ? `<button data-back>${CHEVRON} Back to ${esc(trail[trail.length - 1].name)}</button>` : "";
 
-  function open(c, { fly = true, push } = {}) {
+  function angle([a1, o1], [a2, o2]) {
+    const r = Math.PI / 180;
+    return 2 * Math.asin(Math.sqrt(Math.sin((a2 - a1) * r / 2) ** 2 + Math.cos(a1 * r) * Math.cos(a2 * r) * Math.sin((o2 - o1) * r / 2) ** 2)) / r;
+  }
+  function open(c, { fly = true, push, at } = {}) {
     if (!c) return;
     remember(c, push);
     const wasLit = !!lit;
@@ -841,11 +849,11 @@
     refresh();
     const s = hashOf(c);
     if (location.hash.slice(1) !== s) setHash(s);
-    const target = placeOf(c) || (c.arc && nationalByIso.get(c.arc.to)?.loc) || (c.iso3 && nationalByIso.get(c.iso3)?.loc);
+    const target = at || placeOf(c) || (c.arc && nationalByIso.get(c.arc.to)?.loc) || (c.iso3 && nationalByIso.get(c.iso3)?.loc);
     if (!target || !fly) return;
     // Zoom closer for regions (sized to the region), and keep the place clear of the card
     const reg = regionOf.get(c.id);
-    let alt = c.kind === "national" ? ((local.get(c.iso3) || []).length > 6 ? 1.35 : 1.7) : 1.1;
+    let alt = at ? 0.95 : c.kind === "national" ? ((local.get(c.iso3) || []).length > 6 ? 1.35 : 1.7) : 1.1;
     if (reg) alt = Math.min(1.2, Math.max(0.45, 0.3 + reg.properties.size / 28));
     const phone = isPhone();
     world.pointOfView({

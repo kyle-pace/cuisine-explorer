@@ -581,6 +581,7 @@
   document.getElementById("key").innerHTML = ["cuisine", "dish", "ingredient", "site", "book"].map(t => `<span>${keySvg(t)}${TYPE_LABEL[t]}</span>`).join("");
   const size = n => n.type === "cuisine" ? (n.c.kind === "national" ? 5 : 3.6) : n.type === "dish" ? 2.2 : n.type === "ingredient" ? 2.8 : 3;
   const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const isPhone = () => innerWidth <= 720;
   const tip = document.getElementById("tip");
   let mouse = [0, 0];
   addEventListener("pointermove", e => { mouse = [e.clientX, e.clientY]; if (tip.style.display === "block") placeTip(); });
@@ -654,7 +655,10 @@
     const p = positions[g.n.key];
     if (!p) return;
     const [x, y] = layoutKind === "links" ? [p[0], p[1]] : [p[2], p[3]];
-    g.x = g.fx = x; g.y = g.fy = y;
+    const first = g.hx == null;
+    g.hx = x; g.hy = y;
+    if (first || reduceMotion) { g.x = x; g.y = y; }
+    if (reduceMotion) { g.fx = x; g.fy = y; }
   }
   function fullData() {
     const keep = nodeList.filter(n => shown[n.type] && positions[n.key]);
@@ -676,7 +680,10 @@
         .backgroundColor("#1b1424")
         .width(innerWidth).height(innerHeight)
         .nodeId("id")
-        .cooldownTicks(0).warmupTicks(0)
+        // Alive like Obsidian, but starting from the saved layout: dots ease in, a
+        // dragged dot pulls its neighbors, and everything springs back toward home
+        .cooldownTicks(reduceMotion ? 0 : isPhone() ? 90 : 240).warmupTicks(0)
+        .d3AlphaDecay(0.025).d3VelocityDecay(0.45)
         .linkColor(l => (l.source.n === current || l.target.n === current) ? "rgba(237,230,218,0.75)"
           : fullHover && (l.source.n === fullHover || l.target.n === fullHover) ? "rgba(237,230,218,0.5)" : "rgba(169,159,181,0.1)")
         .nodeCanvasObject((g, ctx, scale) => {
@@ -700,7 +707,15 @@
         .onNodeHover(g => { fullHover = g ? g.n : null; graphEl.style.cursor = g ? "pointer" : ""; hover(fullHover); })
         .onNodeClick(g => { hover(null); closeFull(); location.hash = g.n.href; })
         // Dragging a dot moves it; it stays where you drop it
-        .onNodeDragEnd(g => { g.fx = g.x; g.fy = g.y; });
+        .onNodeDragEnd(g => { g.fx = g.fy = undefined; g.hx = g.x; g.hy = g.y; });
+      fullGraph.d3Force("charge").strength(-10).distanceMax(120);
+      fullGraph.d3Force("link").distance(14).strength(0.25);
+      fullGraph.d3Force("center", null);
+      // A gentle spring back to each dot's place in the saved layout
+      let homeNodes = [];
+      const home = alpha => { for (const g of homeNodes) { g.vx += (g.hx - g.x) * 0.08 * alpha; g.vy += (g.hy - g.y) * 0.08 * alpha; } };
+      home.initialize = ns => { homeNodes = ns; };
+      fullGraph.d3Force("home", home);
       addEventListener("resize", () => fullOpen && fullGraph.width(innerWidth).height(innerHeight));
       fullGraph.graphData(fullData());
     }

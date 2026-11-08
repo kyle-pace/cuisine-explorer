@@ -5,6 +5,7 @@ import CoreLocation
 /// The skeleton is small and loaded at launch; page models are read one bucket at a time.
 @MainActor @Observable
 final class Store {
+    static let shared = Store()
     struct Node: Identifiable, Hashable {
         let ref: String
         let name: String

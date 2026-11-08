@@ -1,9 +1,11 @@
+import CoreSpotlight
 import SwiftUI
+import TipKit
 
 @main
 struct CuisinesApp: App {
-    @State private var store = Store()
-    @State private var app = AppState()
+    @State private var store = Store.shared
+    @State private var app = AppState.shared
     @State private var library = Library()
 
     var body: some Scene {
@@ -20,21 +22,50 @@ struct CuisinesApp: App {
     init() {
         KitchenUI.registerFonts()
         Palette.use(.saffron, neutrals: .aubergine)   // the globe's colors: saffron on aubergine
+        try? Tips.configure()
     }
 }
 
 /// Which tab is open, each tab's navigation path, and where the map should look
 @MainActor @Observable
 final class AppState {
+    static let shared = AppState()
     enum Tab: Hashable { case explore, map, search }
     var tab: Tab = .map
     var explorePath: [Route] = []
     var searchPath: [Route] = []
     var mapFocus: String?
+    var searchQuery = ""
 
     func showOnMap(_ ref: String) {
         mapFocus = ref
         tab = .map
+    }
+
+    /// Opens a page, hub or walk in the Browse tab (Spotlight, Siri, widgets, Handoff, links)
+    func open(_ route: Route) {
+        tab = .explore
+        explorePath = [route]
+    }
+
+    func search(_ query: String) {
+        searchQuery = query
+        tab = .search
+        searchPath = []
+    }
+
+    /// cuisines://open?r=<ref>, cuisines://walk?r=<ref>, cuisines://map?r=<ref>, cuisines://search?q=
+    func handle(_ url: URL) -> Bool {
+        guard url.scheme == "cuisines", let parts = URLComponents(url: url, resolvingAgainstBaseURL: false) else { return false }
+        let ref = parts.queryItems?.first { $0.name == "r" }?.value
+        switch url.host() {
+        case "open": if let ref { open(Store.shared.route(ref)) }
+        case "walk": if let ref { open(.walk(ref)) }
+        case "map": if let ref { showOnMap(ref) }
+        case "search": search(parts.queryItems?.first { $0.name == "q" }?.value ?? "")
+        default: return false
+        }
+        return true
     }
 }
 
@@ -44,7 +75,17 @@ struct RootView: View {
 
     var body: some View {
         switch store.state {
-        case .ready: tabs.onAppear(perform: openFromLaunchArguments)
+        case .ready:
+            tabs
+                .onAppear(perform: openFromLaunchArguments)
+                .task { await Spotlight.index(store) }
+                .onOpenURL { _ = app.handle($0) }
+                .onContinueUserActivity(CSSearchableItemActionType) { activity in
+                    if let ref = activity.userInfo?[CSSearchableItemActivityIdentifier] as? String { app.open(store.route(ref)) }
+                }
+                .onContinueUserActivity(PageActivity.type) { activity in
+                    if let ref = activity.userInfo?["ref"] as? String { app.open(store.route(ref)) }
+                }
         case .loading:
             VStack(spacing: 14) {
                 ProgressView().tint(Theme.muted)
@@ -108,16 +149,16 @@ struct Stack<Content: View>: View {
         }
         .environment(\.openURL, OpenURLAction { url in
             guard url.scheme == "cx", let ref = AppLink.ref(from: url) else { return .systemAction }
-            path.append(store.route(ref))
+            path.append(url.host() == "walk" ? .walk(ref) : store.route(ref))
             return .handled
         })
     }
 }
 
-/// In-app links inside text: cx://open?r=<ref>
+/// In-app links inside text and menus: cx://open?r=<ref>, cx://walk?r=<ref>
 enum AppLink {
-    static func url(_ ref: String) -> URL? {
-        var c = URLComponents(); c.scheme = "cx"; c.host = "open"; c.queryItems = [.init(name: "r", value: ref)]
+    static func url(_ ref: String, action: String = "open") -> URL? {
+        var c = URLComponents(); c.scheme = "cx"; c.host = action; c.queryItems = [.init(name: "r", value: ref)]
         return c.url
     }
     static func ref(from url: URL) -> String? {

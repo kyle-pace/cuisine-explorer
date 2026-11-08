@@ -1,4 +1,12 @@
 import SwiftUI
+import TipKit
+
+/// Shown once, the first time a ring is too crowded to label every dot
+struct HoldForNameTip: Tip {
+    var title: Text { Text("Crowded ring") }
+    var message: Text? { Text("Tap a dot to move there. Hold an unnamed one to see its name.") }
+    var image: Image? { Image(systemName: "hand.tap") }
+}
 
 /// Walk mode, as in the web view: the page you're on in the middle, everything linked to it
 /// around it. Tap a dot to make it the center; the trail at the bottom retraces your route.
@@ -47,13 +55,9 @@ struct WalkView: View {
                         picked: picked, labels: true, onTap: step(to:), onHold: { picked = $0 })
             .frame(maxHeight: .infinity)
             .accessibilityLabel("Connections of \(store.node(center)?.name ?? "")")
-            .overlay(alignment: .bottom) {
+            .overlay(alignment: .top) {
                 if shown.count > 18 {
-                    Text(picked == nil ? "Tap a dot to move there. Hold an unnamed one to see its name." : "Tap it to move there.")
-                        .font(Theme.caption).foregroundStyle(Theme.muted)
-                        .padding(.horizontal, Space.m).padding(.vertical, 6)
-                        .background(Theme.surface.opacity(0.9), in: Capsule())
-                        .padding(.bottom, Space.s)
+                    TipView(HoldForNameTip()).padding(.horizontal, Space.l)
                 }
             }
 

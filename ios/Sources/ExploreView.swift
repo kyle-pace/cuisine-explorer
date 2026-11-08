@@ -200,11 +200,7 @@ struct ExploreView: View {
 
     /// Picked from the dishes with photos by the day of the year, so it changes at midnight
     private var dailyDish: Store.Node? {
-        let dishes = store.nodes.filter { $0.type == .dish && store.hasPhoto($0.ref) }
-        guard !dishes.isEmpty else { return nil }
-        let day = Calendar.current.ordinality(of: .day, in: .year, for: .now) ?? 1
-        let year = Calendar.current.component(.year, from: .now)
-        return dishes[(day * 31 + year * 7) % dishes.count]
+        Daily.dish(from: store.nodes.filter { $0.type == .dish && store.hasPhoto($0.ref) }.map(\.ref)).flatMap(store.node)
     }
 
     private func pickFeatured() {
@@ -393,9 +389,37 @@ struct HubView: View {
 
 struct NodeRow: View {
     @Environment(Store.self) private var store
+    @Environment(Library.self) private var library
+    @Environment(AppState.self) private var app
+    @Environment(\.openURL) private var openURL
     let node: Store.Node
 
+    /// Dishes and ingredients have no place of their own; say which cuisine they belong to
+    private var sub: String {
+        if !node.sub.isEmpty { return node.sub }
+        if let c = store.neighbors(node.ref).first(where: { $0.type == .cuisine }) { return "\(node.type.singular) · \(c.name)" }
+        return node.type.singular
+    }
+
     var body: some View {
+        row
+            .contextMenu {
+                Button(library.isSaved(node.ref) ? "Unsave" : "Save", systemImage: library.isSaved(node.ref) ? "bookmark.slash" : "bookmark") {
+                    library.toggleSaved(node.ref)
+                }
+                if store.place(node.ref) != nil || store.national.values.contains(node.ref) {
+                    Button("Show on the map", systemImage: "map") { app.showOnMap(node.ref) }
+                }
+                Button("Explore connections", systemImage: "point.3.connected.trianglepath.dotted") {
+                    if let url = AppLink.url(node.ref, action: "walk") { openURL(url) }
+                }
+                if let url = Share.url(node.ref) { ShareLink(item: url) { Label("Share", systemImage: "square.and.arrow.up") } }
+            } preview: {
+                PagePeek(ref: node.ref)
+            }
+    }
+
+    private var row: some View {
         HStack(spacing: 12) {
             if let thumb = store.thumbnail(node.ref) {
                 RemoteImage(url: thumb).frame(width: 44, height: 44).clipShape(RoundedRectangle(cornerRadius: Radius.small))
@@ -405,8 +429,7 @@ struct NodeRow: View {
             }
             VStack(alignment: .leading, spacing: 2) {
                 Text(node.name).font(Theme.body).foregroundStyle(Theme.ink)
-                Text(node.sub.isEmpty ? node.type.singular : node.sub)
-                    .font(Theme.caption).foregroundStyle(Theme.muted).lineLimit(1)
+                Text(sub).font(Theme.caption).foregroundStyle(Theme.muted).lineLimit(1)
             }
         }
         .padding(.vertical, 2)
@@ -417,7 +440,7 @@ struct NodeRow: View {
 /// The search tab: everything, by name
 struct SearchView: View {
     @Environment(Store.self) private var store
-    @State private var query = ""
+    @Environment(AppState.self) private var app
     @State private var scope: Scope = .all
 
     enum Scope: Hashable, CaseIterable { case all, cuisine, dish, ingredient, book, site
@@ -426,6 +449,8 @@ struct SearchView: View {
     }
 
     var body: some View {
+        @Bindable var app = app
+        let query = app.searchQuery
         let all = store.search(query, limit: 200)
         let results = scope.kind.map { k in all.filter { $0.type == k } } ?? Array(all.prefix(80))
         List(results) { n in
@@ -437,7 +462,7 @@ struct SearchView: View {
         .scrollContentBackground(.hidden)
         .background(Theme.ground)
         .navigationTitle("Search")
-        .searchable(text: $query, prompt: "Cuisines, dishes, ingredients")
+        .searchable(text: $app.searchQuery, prompt: "Cuisines, dishes, ingredients")
         .searchScopes($scope, activation: .onSearchPresentation) {
             ForEach(Scope.allCases, id: \.self) { Text($0.title).tag($0) }
         }
@@ -449,5 +474,29 @@ struct SearchView: View {
                 ContentUnavailableView.search(text: query)
             }
         }
+    }
+}
+
+/// What a long press shows before you commit to a page
+struct PagePeek: View {
+    @Environment(Store.self) private var store
+    let ref: String
+    @State private var page: Page?
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: Space.s) {
+            if let url = store.photo(ref) {
+                RemoteImage(url: url).frame(width: 320, height: 200).clipped()
+            }
+            VStack(alignment: .leading, spacing: 4) {
+                Text(store.node(ref)?.name ?? "").font(Theme.heading).foregroundStyle(Theme.ink)
+                if let page { Text(Page.summary(page, max: 220)).font(Theme.callout).foregroundStyle(Theme.muted) }
+                else { Text(store.node(ref)?.sub ?? "").font(Theme.callout).foregroundStyle(Theme.muted) }
+            }
+            .padding(.horizontal, Space.l).padding(.bottom, Space.l)
+        }
+        .frame(width: 320)
+        .background(Theme.surface)
+        .task { page = await store.page(ref) }
     }
 }

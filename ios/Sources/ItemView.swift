@@ -1,3 +1,4 @@
+import Charts
 import SwiftUI
 
 /// One cuisine, dish, ingredient, recipe site or cookbook, drawn natively from its page model
@@ -51,6 +52,14 @@ struct ItemView: View {
             }
         }
         .task(id: ref) { await load() }
+        // Handoff: pick the page up on another device, where it opens on the web
+        .userActivity(PageActivity.type, isActive: page != nil) { activity in
+            activity.title = page?.name
+            activity.userInfo = ["ref": ref]
+            activity.webpageURL = Share.url(ref)
+            activity.isEligibleForHandoff = true
+            activity.isEligibleForSearch = false
+        }
     }
 
     private func load() async {
@@ -186,6 +195,7 @@ struct PhotoView: View {
     let photo: Photo
     let name: String
     @State private var open = false
+    @Namespace private var zoom
 
     var body: some View {
         VStack(alignment: .leading, spacing: Space.s) {
@@ -193,13 +203,17 @@ struct PhotoView: View {
                 RemoteImage(url: photo.url)
                     .aspectRatio(max(0.6, min(2.2, photo.width / max(photo.height, 1))), contentMode: .fit)
                     .clipShape(RoundedRectangle(cornerRadius: Radius.large))
+                    .matchedTransitionSource(id: "photo", in: zoom)
             }
             .buttonStyle(.plain)
             .accessibilityLabel("Photo of \(photo.pictured ?? name)")
             .accessibilityHint("Opens it full screen")
             Text(credit).font(Theme.caption).foregroundStyle(Theme.muted)
         }
-        .fullScreenCover(isPresented: $open) { PhotoViewer(photo: photo, name: name, credit: credit) }
+        .fullScreenCover(isPresented: $open) {
+            PhotoViewer(photo: photo, name: name, credit: credit)
+                .navigationTransition(.zoom(sourceID: "photo", in: zoom))
+        }
     }
 
     fileprivate var credit: AttributedString {
@@ -412,43 +426,74 @@ struct GroupBlock: View {
 struct GrownChart: View {
     @Environment(Store.self) private var store
     let grown: Page.Grown
+    @State private var picked: String?
+
+    private var top: [(name: String, ref: String?, tonnes: Double)] {
+        Array(grown.top.prefix(10)).map { ($0.0.name, $0.0.ref, $0.1) }
+    }
 
     var body: some View {
-        let max = grown.top.first?.1 ?? 1
-        VStack(alignment: .leading, spacing: 10) {
+        VStack(alignment: .leading, spacing: Space.m) {
             Text("Top producers of \(grown.what), averaged over \(grown.years).")
                 .font(Theme.callout).foregroundStyle(Theme.muted)
-            ForEach(Array(grown.top.enumerated()), id: \.offset) { _, item in
-                VStack(alignment: .leading, spacing: 4) {
-                    HStack {
-                        if let ref = item.0.ref {
-                            NavigationLink(value: store.route(ref)) {
-                                Text(item.0.name).underline().foregroundStyle(Theme.ink)
-                            }.buttonStyle(.plain)
-                        } else {
-                            Text(item.0.name).foregroundStyle(Theme.ink)
-                        }
-                        Spacer()
-                        Text(Self.tonnes(item.1)).foregroundStyle(Theme.muted)
+            Chart(top, id: \.name) { row in
+                BarMark(x: .value("Tonnes", row.tonnes), y: .value("Country", row.name))
+                    .foregroundStyle(picked == nil || picked == row.name ? Theme.tomatillo : Theme.tomatillo.opacity(0.35))
+                    .cornerRadius(3)
+                    .annotation(position: .trailing, alignment: .leading, spacing: 6) {
+                        Text(Self.tonnes(row.tonnes, short: true)).font(Theme.caption).foregroundStyle(Theme.muted)
                     }
-                    .font(Theme.callout)
-                    GeometryReader { geo in
-                        Capsule().fill(Theme.tomatillo)
-                            .frame(width: Swift.max(4, geo.size.width * item.1 / max))
-                    }
-                    .frame(height: 6)
-                    .accessibilityHidden(true)
+            }
+            .chartXAxis(.hidden)
+            .chartXScale(range: .plotDimension(endPadding: 72))
+            .chartYAxis {
+                AxisMarks(preset: .aligned) { _ in
+                    AxisValueLabel().font(Theme.caption).foregroundStyle(Theme.ink)
                 }
+            }
+            .chartLegend(.hidden)
+            .frame(height: CGFloat(top.count) * 30 + 8)
+            .chartOverlay { proxy in
+                GeometryReader { geo in
+                    Rectangle().fill(.clear).contentShape(Rectangle())
+                        .onTapGesture { pt in
+                            let origin = geo[proxy.plotFrame!].origin
+                            if let name: String = proxy.value(atY: pt.y - origin.y) { picked = picked == name ? nil : name }
+                        }
+                }
+            }
+            .accessibilityLabel("Top producers of \(grown.what)")
+            .accessibilityValue(top.prefix(3).map { "\($0.name), \(Self.tonnes($0.tonnes))" }.joined(separator: "; "))
+            if let picked, let row = top.first(where: { $0.name == picked }) {
+                HStack {
+                    Text("\(row.name): \(Self.tonnes(row.tonnes)) a year").font(Theme.callout).foregroundStyle(Theme.ink)
+                    Spacer()
+                    if let ref = row.ref {
+                        NavigationLink(value: store.route(ref)) { Text("Its cuisine").font(Theme.callout600) }
+                    }
+                }
+                .padding(Space.m)
+                .background(Theme.surface, in: RoundedRectangle(cornerRadius: Radius.medium))
+                .transition(.opacity)
+            }
+            if grown.top.count > top.count {
+                Text("And \(grown.top.count - top.count) more producers.").font(Theme.caption).foregroundStyle(Theme.muted)
             }
             if let url = grown.url {
                 Text(LocalizedStringKey(String("Production data from [FAO, FAOSTAT](\(url.absoluteString)), CC BY 4.0. The world grows about \(Self.tonnes(grown.world)) a year.")))
                     .font(Theme.caption).foregroundStyle(Theme.muted)
             }
         }
+        .animation(.easeOut(duration: 0.2), value: picked)
     }
 
-    /// Same wording as render_item.js tonnes()
-    static func tonnes(_ t: Double) -> String {
+    /// Same wording as render_item.js tonnes(); `short` for chart labels ("371M t")
+    static func tonnes(_ t: Double, short: Bool = false) -> String {
+        if short {
+            if t >= 1e6 { return String(format: t >= 1e7 ? "%.0fM t" : "%.1fM t", t / 1e6) }
+            if t >= 1000 { return String(format: "%.0fk t", t / 1000) }
+            return String(format: "%.0f t", t)
+        }
         if t >= 1e6 { return String(format: t >= 1e7 ? "%.0f million tonnes" : "%.1f million tonnes", t / 1e6) }
         let f = NumberFormatter(); f.numberStyle = .decimal
         if t >= 1000 { return "\(f.string(from: NSNumber(value: (t / 1000).rounded())) ?? "") thousand tonnes" }

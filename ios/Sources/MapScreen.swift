@@ -105,8 +105,7 @@ struct MapScreen: View {
                             }
                             .font(Theme.callout600).foregroundStyle(Theme.ink)
                             .padding(.horizontal, 12).padding(.vertical, 8)
-                            .background(.regularMaterial, in: Capsule())
-                            .overlay(Capsule().strokeBorder(Theme.line.opacity(0.6)))
+                            .glassEffect(.regular.interactive(), in: Capsule())
                         }
                         .buttonStyle(.plain)
                         .accessibilityLabel("Show \(c.name)")
@@ -136,7 +135,7 @@ struct MapScreen: View {
                         Text("Drawing the borders…").font(Theme.caption).foregroundStyle(Theme.muted)
                     }
                     .padding(.horizontal, Space.m).padding(.vertical, Space.s)
-                    .background(.regularMaterial, in: Capsule())
+                    .glassEffect(.regular, in: Capsule())
                     .padding(.bottom, Space.s)
                 }
             }
@@ -148,7 +147,7 @@ struct MapScreen: View {
         }
         .environment(\.openURL, OpenURLAction { url in
             guard url.scheme == "cx", let ref = AppLink.ref(from: url) else { return .systemAction }
-            path.append(store.route(ref))
+            path.append(url.host() == "walk" ? .walk(ref) : store.route(ref))
             return .handled
         })
         .task { await shapes.load(national: store.national, regionRefs: store.regionRefs) }
@@ -228,6 +227,12 @@ struct MapScreen: View {
             if let s = shapes.shape(for: ref) {
                 let r = s.bounds
                 position = .rect(r.insetBy(dx: -r.width * 0.3, dy: -r.height * 0.3))
+            } else if let route = store.routes.first(where: { $0.ref == ref }),
+                      let a = store.national[route.from].flatMap(shapes.shape(for:)),
+                      let b = store.national[route.to].flatMap(shapes.shape(for:)) {
+                // A diaspora cuisine: frame both ends of its arc
+                let r = a.bounds.union(b.bounds)
+                position = .rect(r.insetBy(dx: -r.width * 0.15, dy: -r.height * 0.15))
             } else if let p = store.place(ref) {
                 position = .region(MKCoordinateRegion(center: p.coordinate, span: .init(latitudeDelta: 10, longitudeDelta: 10)))
             }

@@ -26,6 +26,7 @@ targets:
       - Resources
     dependencies:
       - package: KitchenUI
+      - target: CuisinesWidget
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: net.kylepace.cuisines$(BUNDLE_ID_SUFFIX)
@@ -39,3 +40,38 @@ targets:
         INFOPLIST_KEY_UISupportedInterfaceOrientations: UIInterfaceOrientationPortrait
         INFOPLIST_KEY_ITSAppUsesNonExemptEncryption: NO
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon$(APP_ICON_SUFFIX)
+    info:
+      path: Sources/Info.plist
+      properties:
+        CFBundleURLTypes:
+          - CFBundleURLName: net.kylepace.cuisines
+            CFBundleURLSchemes: [cuisines]
+        # How Siri says the app's name (the dev build is "Cuisines Dev")
+        CFBundleSpokenName: "Cuisines$(APP_NAME_SUFFIX)"
+        UILaunchScreen:
+          UIColorName: ""
+
+  # Home Screen widget: today's dish (Widget/CuisinesWidget.swift)
+  CuisinesWidget:
+    type: app-extension
+    platform: iOS
+    sources:
+      - Widget
+      - path: Sources/Remote.swift
+      - path: Sources/Daily.swift
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: net.kylepace.cuisines$(BUNDLE_ID_SUFFIX).widget
+        PRODUCT_NAME: CuisinesWidget
+        MARKETING_VERSION: "0.1.0"
+        CURRENT_PROJECT_VERSION: "1"
+        TARGETED_DEVICE_FAMILY: "1"
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_CFBundleDisplayName: "Cuisines$(APP_NAME_SUFFIX)"
+        SKIP_INSTALL: YES
+    info:
+      path: Widget/Info.plist
+      properties:
+        CFBundleDisplayName: "Cuisines$(APP_NAME_SUFFIX)"
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension

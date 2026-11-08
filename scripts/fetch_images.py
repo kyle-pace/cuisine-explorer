@@ -143,28 +143,49 @@ def main():
             time.sleep(0.2)
         return got.values()
 
+    STEPS = {20, 40, 60, 120, 250, 330, 500, 960, 1280, 1920, 3840}
+    dropped = {}
+    samples = []
+    def drop(reason, page, extra=""):
+        dropped[reason] = dropped.get(reason, 0) + 1
+        if len(samples) < 6 and reason not in [x[0] for x in samples]:
+            samples.append((reason, page.get("title"), extra))
     for i in range(0, len(names), 50):
         for page in commons_pages(names[i:i + 50]):
             info = (page.get("imageinfo") or [None])[0]
             if not info or page.get("missing"):
+                drop("no info", page)
                 continue
             meta = {k: (v or {}).get("value", "") for k, v in (info.get("extmetadata") or {}).items()}
             lic = plain(meta.get("LicenseShortName"), 40)
-            if not FREE.match(lic) or str(meta.get("NonFree", "")).lower() == "true" or plain(meta.get("Restrictions")):
+            if not FREE.match(lic):
+                drop("license", page, lic)
+                continue
+            if str(meta.get("NonFree", "")).lower() == "true" or plain(meta.get("Restrictions")):
+                drop("restricted", page, plain(meta.get("Restrictions")))
                 continue
             # Drop the tracking query Wikimedia adds; keep originals only when they're small
             thumb = (info.get("thumburl") or info.get("url") or "").split("?", 1)[0]
-            if "/thumb/" not in thumb and (info.get("width") or 0) > WIDTH:
-                continue
             m = re.match(r"https://upload\.wikimedia\.org/wikipedia/commons/(.+)$", thumb)
-            if not m or (info.get("thumbwidth") and info["thumbwidth"] not in (WIDTH, info.get("width"))):
+            if not m:
+                drop("not on commons", page, thumb)
+                continue
+            if "/thumb/" in thumb:
+                px = re.search(r"/(\d+)px-[^/]+$", thumb)
+                if not px or int(px.group(1)) not in STEPS:
+                    drop("odd thumb width", page, thumb[-60:])
+                    continue
+            elif (info.get("width") or 0) > 960:
+                drop("big original", page, str(info.get("width")))
                 continue
             by = plain(meta.get("Attribution")) or plain(meta.get("Artist")) or "Unknown author"
             files[page["title"][5:]] = {"p": m.group(1), "w": info.get("thumbwidth") or info.get("width"),
                                         "h": info.get("thumbheight") or info.get("height"), "by": by,
                                         "lic": lic, "licUrl": meta.get("LicenseUrl", "")}
         time.sleep(0.5)
-        print(f"  commons: {min(i + 50, len(names))} of {len(names)} files, {len(files)} free", file=sys.stderr) if i % 1000 == 0 else None
+        if i % 1000 == 0:
+            print(f"  commons: {min(i + 50, len(names))} of {len(names)} files, {len(files)} free", file=sys.stderr)
+    print(f"images: dropped files by reason {dropped}; examples {samples}")
 
     kept = {k: v for k, v in items.items() if v in files}
     json.dump({"files": files, "items": kept}, open(P("data/images.json"), "w"), ensure_ascii=False, separators=(",", ":"))

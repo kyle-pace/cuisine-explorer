@@ -1,0 +1,5 @@
+# Outside hosts Kyle has approved for this project, one per line with a note.
+# The principles check reads this file. Ask Kyle before adding anything.
+
+# Cookbook cover images on cuisine pages. Approved by Kyle, 2026-11-08.
+covers.openlibrary.org

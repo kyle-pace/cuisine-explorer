@@ -22,6 +22,8 @@ inline = "\n".join([
 ] + [block("data-" + name.split(".")[0], f"data/{name}") for name in ("suggestions.json", "summaries.json", "regions.geojson", "food.json", "food_summaries.json", "notes.json", "grown.json")
      if os.path.exists(os.path.join(ROOT, f"data/{name}"))])
 html = html.replace("<!--INLINE_DATA-->", inline)
+# The preview sits in dist/, one level below the self-hosted fonts and libraries.
+html = html.replace('"vendor/', '"../vendor/')
 os.makedirs(os.path.join(ROOT, "dist"), exist_ok=True)
 out = os.path.join(ROOT, "dist", "preview.html")
 open(out, "w", encoding="utf-8").write(html)

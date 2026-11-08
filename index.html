@@ -158,6 +158,11 @@
   .where-c:hover { text-decoration: underline; }
   .where .n { color: var(--muted); font-size: 0.85rem; }
   .where .chips { margin-top: 6px; }
+  .grown { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+  .grown li { position: relative; display: flex; justify-content: space-between; gap: 12px; padding: 6px 10px; border-radius: 8px; overflow: hidden; }
+  .grown li i { position: absolute; left: 0; top: 0; bottom: 0; background: rgba(237, 230, 218, 0.12); z-index: 0; }
+  .grown li span { position: relative; z-index: 1; }
+  .grown .n { color: var(--muted); font-size: 0.88rem; }
   .tabs { display: flex; gap: 4px; padding: 4px; background: var(--panel-2); border-radius: 12px; margin: 8px 0 16px; }
   .tabs button { flex: 1; border: 0; background: none; border-radius: 9px; padding: 9px 6px; cursor: pointer; font-weight: 600; color: var(--muted); }
   .tabs button[aria-selected="true"] { background: var(--rice); color: var(--night); }
@@ -317,6 +322,9 @@
   ]);
   // Short intros for dishes and ingredients, loaded in the background
   let foodSummaries = {};
+  // Where ingredients are grown (FAOSTAT), loaded in the background
+  let grown = { items: {} };
+  load("data-grown", "data/grown.json").then(d => { grown = d || grown; if (current && current.type === "ingredient" && grown.items[current.id]) openIngredient(current, { push: false, keepView: true }); }).catch(() => {});
   load("data-food_summaries", "data/food_summaries.json").then(d => { foodSummaries = d || {}; }).catch(() => {});
   const suggestions = suggestionsFile.cuisines || {};
   const picks = picksFile.cuisines || {};
@@ -534,6 +542,7 @@
       const n = nationalByIso.get(featIso(f));
       if (lit) {
         const k = lit.byIso.get(featIso(f));
+        if (lit.kind === "grown") return `<div class="tooltip">${esc(f.properties.NAME)}<small>${k ? tonnes(k) + " a year" : "Little or none recorded"}</small></div>`;
         return `<div class="tooltip">${esc(f.properties.NAME)}<small>${k ? `${k} ${k === 1 ? "dish" : "dishes"}` : "None listed"}</small></div>`;
       }
       const more = n ? (local.get(n.iso3) || []).length : 0;
@@ -1007,8 +1016,13 @@
     if (location.hash.slice(1) !== hashOf(d)) setHash(hashOf(d));
     showLit([d], "dish");
   }
-  function openIngredient(i, { push } = {}) {
+  const tonnes = t => t >= 1e6 ? `${(t / 1e6).toFixed(t >= 1e7 ? 0 : 1)} million tonnes` : t >= 1000 ? `${Math.round(t / 1000).toLocaleString()} thousand tonnes` : `${Math.round(t).toLocaleString()} tonnes`;
+  let ingView = "cooked";
+  function openIngredient(i, { push, keepView } = {}) {
     if (!i) return;
+    if (!keepView && (!current || current.type !== "ingredient")) ingView = "cooked";
+    const g = grown.items[i.id];
+    if (!g) ingView = "cooked";
     remember(i, push);
     exploreBtn.setAttribute("aria-pressed", "false");
     controls.autoRotate = false;
@@ -1028,12 +1042,20 @@
       <p class="kind"><i style="background:#ede6da"></i>Ingredient in ${i.dishes} ${i.dishes === 1 ? "dish" : "dishes"} across ${rows.length} ${rows.length === 1 ? "cuisine" : "cuisines"}</p>
       <div class="intro" id="intro"></div>
       ${pageLink("ingredient", i.id)}
+      ${g ? `<div class="tabs" role="tablist" aria-label="What the globe shows">
+        <button role="tab" data-view="cooked" aria-selected="${ingView === "cooked"}">Where it's cooked with</button>
+        <button role="tab" data-view="grown" aria-selected="${ingView === "grown"}">Where it's grown</button></div>` : ""}
+      ${ingView === "grown" ? `
+      <h3>Where it's grown</h3>
+      <p class="empty" style="margin-bottom:10px">The brighter a country, the more it produces: ${esc(g.fao.replace(/;/g, ","))}, averaged over ${esc(grown.meta.years)}.</p>
+      <ol class="grown">${g.top.slice(0, 12).map(([iso, t]) => `<li><span>${esc(isoName.get(iso) || iso)}</span><span class="n">${tonnes(t)}</span><i style="width:${Math.max(2, 100 * t / g.top[0][1]).toFixed(1)}%"></i></li>`).join("")}</ol>
+      <p class="source" style="text-align:left;margin-top:8px">Production data from <a href="${attr(grown.meta.url)}" target="_blank" rel="noopener">FAO, FAOSTAT</a>, CC BY 4.0. The world grows about ${tonnes(g.world)} a year.</p>` : `
       <h3>Where it's cooked with</h3>
-      <p class="empty" style="margin-bottom:10px">The brighter a place on the globe, the more of its dishes use it. This counts dishes listed on Wikipedia, so well-documented cuisines show up brighter.</p>
-      <ul class="where">${rows.slice(0, 14).map(([cid, ds]) => `<li>
+      <p class="empty" style="margin-bottom:10px">The brighter a place on the globe, the more of its dishes use it. This counts dishes listed on Wikipedia, so well-documented cuisines show up brighter.</p>`}
+      ${ingView === "grown" ? "" : `<ul class="where">${rows.slice(0, 14).map(([cid, ds]) => `<li>
         <button class="where-c" data-id="${attr(cid)}">${esc(byId.get(cid).name)}</button> <span class="n">${ds.length}</span>
         <div class="chips">${ds.slice(0, 5).map(dishChip).join("")}${ds.length > 5 ? `<span class="more-n">and ${ds.length - 5} more</span>` : ""}</div></li>`).join("")}</ul>
-      ${rows.length > 14 ? `<p class="empty">Also in ${rows.slice(14).map(([cid]) => `<button class="link" data-id="${attr(cid)}">${esc(shortName(byId.get(cid)))}</button>`).join(", ")}.</p>` : ""}
+      ${rows.length > 14 ? `<p class="empty">Also in ${rows.slice(14).map(([cid]) => `<button class="link" data-id="${attr(cid)}">${esc(shortName(byId.get(cid)))}</button>`).join(", ")}.</p>` : ""}`}
       ${paired.length ? `<h3>Often cooked with</h3><div class="chips">${paired.map(x => ingChip(x)).join("")}</div>` : ""}
       ${iNote ? noteSources(iNote, i.name) : ""}
       ${i.title ? `<a class="wiki-btn" href="${attr(wikiUrl(i.title))}" target="_blank" rel="noopener">Read about ${esc(i.name.toLowerCase())} on Wikipedia ${ARROW}</a>
@@ -1042,7 +1064,15 @@
     showPanel();
     fillFoodIntro(i);
     if (location.hash.slice(1) !== hashOf(i)) setHash(hashOf(i));
-    showLit(i.dishList, "ingredient");
+    if (ingView === "grown") showGrown(g);
+    else showLit(i.dishList, "ingredient");
+  }
+  function showGrown(g) {
+    selected = null;
+    const byIso = new Map(g.top.map(([iso, t]) => [iso, t]));
+    lit = { kind: "grown", byCuisine: new Map(), byIso, max: g.top[0][1] };
+    applyLit();
+    flyToPlaces(g.top.slice(0, 5).map(([iso]) => nationalByIso.get(iso)?.loc).filter(Boolean), 1.6);
   }
 
   // --- Explore: browse when you don't know what to search for ---------------------
@@ -1083,10 +1113,11 @@
   }
 
   panel.addEventListener("click", e => {
-    const t = e.target.closest("[data-id], [data-dish], [data-ing], [data-back], [data-tab], [data-more], [data-surprise]");
+    const t = e.target.closest("[data-id], [data-dish], [data-ing], [data-back], [data-tab], [data-view], [data-more], [data-surprise]");
     if (!t) return;
     if (t.dataset.back !== undefined) return goBack();
     if (t.dataset.tab) return showExplore(t.dataset.tab);
+    if (t.dataset.view) { ingView = t.dataset.view; return openIngredient(current, { push: false, keepView: true }); }
     if (t.dataset.surprise !== undefined) return openDish(dishes[Math.floor(Math.random() * dishes.length)]);
     if (t.dataset.more) { const box = t.closest(".chips"); box.innerHTML = moreLists.get(t.dataset.more) || ""; return; }
     if (t.dataset.dish) return openDish(dishById.get(t.dataset.dish));

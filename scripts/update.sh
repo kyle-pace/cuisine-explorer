@@ -37,3 +37,6 @@ python3 scripts/fetch_dishes.py
 # Hand-written notes (content/) on top of the food data, then intros
 python3 scripts/merge_notes.py
 python3 scripts/fetch_food_summaries.py
+
+# Where ingredients are grown (FAOSTAT, CC BY 4.0)
+python3 scripts/fetch_faostat.py

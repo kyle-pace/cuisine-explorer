@@ -1,0 +1,451 @@
+{
+ "_about": "FAOSTAT items (crops and livestock production) and the ingredient names they stand for in data/food.json. A name that matches no ingredient is ignored. Edit freely.",
+ "items": {
+  "Rice": [
+   "Rice",
+   "White rice",
+   "Cooked rice"
+  ],
+  "Wheat": [
+   "Wheat",
+   "Wheat flour",
+   "Flour"
+  ],
+  "Maize (corn)": [
+   "Maize",
+   "Corn",
+   "Cornmeal",
+   "Maize flour",
+   "Masa",
+   "Hominy",
+   "Blue corn"
+  ],
+  "Barley": [
+   "Barley"
+  ],
+  "Oats": [
+   "Oat",
+   "Oats",
+   "Oatmeal"
+  ],
+  "Rye": [
+   "Rye",
+   "Rye flour"
+  ],
+  "Sorghum": [
+   "Sorghum"
+  ],
+  "Millet": [
+   "Millet",
+   "Pearl millet"
+  ],
+  "Quinoa": [
+   "Quinoa"
+  ],
+  "Buckwheat": [
+   "Buckwheat"
+  ],
+  "Fonio": [
+   "Fonio"
+  ],
+  "Potatoes": [
+   "Potato",
+   "Potatoes"
+  ],
+  "Sweet potatoes": [
+   "Sweet potato"
+  ],
+  "Cassava; fresh": [
+   "Cassava",
+   "Yuca"
+  ],
+  "Yams": [
+   "Yam"
+  ],
+  "Taro": [
+   "Taro"
+  ],
+  "Tomatoes": [
+   "Tomato",
+   "Tomatoes"
+  ],
+  "Onions and shallots; dry (excluding dehydrated)": [
+   "Onion",
+   "Shallot",
+   "Red onion"
+  ],
+  "Onions and shallots; green": [
+   "Scallion",
+   "Green onion",
+   "Spring onion"
+  ],
+  "Green garlic": [],
+  "Garlic": [
+   "Garlic"
+  ],
+  "Leeks and other alliaceous vegetables": [
+   "Leek"
+  ],
+  "Chillies and peppers; green (Capsicum spp. and Pimenta spp.)": [
+   "Chili pepper",
+   "Bell pepper",
+   "Capsicum",
+   "Green chili",
+   "Jalapeño"
+  ],
+  "Chillies and peppers; dry (Capsicum spp.; Pimenta spp.); raw": [
+   "Chili powder",
+   "Paprika",
+   "Dried chili",
+   "Red pepper flakes"
+  ],
+  "Ginger; raw": [
+   "Ginger"
+  ],
+  "Pepper (Piper spp.); raw": [
+   "Black pepper",
+   "Pepper"
+  ],
+  "Cinnamon and cinnamon-tree flowers; raw": [
+   "Cinnamon"
+  ],
+  "Cloves (whole stems); raw": [
+   "Clove",
+   "Cloves"
+  ],
+  "Nutmeg; mace; cardamoms; raw": [
+   "Nutmeg",
+   "Cardamom",
+   "Mace"
+  ],
+  "Vanilla; raw": [
+   "Vanilla"
+  ],
+  "Anise; badian; coriander; cumin; caraway; fennel and juniper berries; raw": [
+   "Cumin",
+   "Coriander seed",
+   "Star anise",
+   "Anise",
+   "Caraway",
+   "Fennel seed"
+  ],
+  "Soya beans": [
+   "Soybean",
+   "Soybeans",
+   "Soy bean"
+  ],
+  "Groundnuts; excluding shelled": [
+   "Peanut",
+   "Peanuts",
+   "Groundnut"
+  ],
+  "Sesame seed": [
+   "Sesame",
+   "Sesame seed",
+   "Sesame seeds"
+  ],
+  "Coconuts; in shell": [
+   "Coconut",
+   "Coconut milk",
+   "Coconut cream",
+   "Grated coconut"
+  ],
+  "Olives": [
+   "Olive",
+   "Olives"
+  ],
+  "Olive oil": [
+   "Olive oil",
+   "Extra virgin olive oil"
+  ],
+  "Palm oil": [
+   "Palm oil"
+  ],
+  "Cocoa beans": [
+   "Cocoa",
+   "Cacao",
+   "Chocolate",
+   "Cocoa powder"
+  ],
+  "Coffee; green": [
+   "Coffee"
+  ],
+  "Tea leaves": [
+   "Tea",
+   "Black tea",
+   "Green tea"
+  ],
+  "Maté leaves": [
+   "Yerba mate",
+   "Mate"
+  ],
+  "Sugar cane": [
+   "Sugarcane",
+   "Sugar cane"
+  ],
+  "Raw cane or beet sugar (centrifugal only)": [
+   "Sugar",
+   "Cane sugar",
+   "White sugar"
+  ],
+  "Natural honey": [
+   "Honey"
+  ],
+  "Beans; dry": [
+   "Bean",
+   "Beans",
+   "Kidney bean",
+   "Black bean",
+   "Black beans",
+   "Pinto bean",
+   "Common bean"
+  ],
+  "Chick peas; dry": [
+   "Chickpea",
+   "Chickpeas"
+  ],
+  "Lentils; dry": [
+   "Lentil",
+   "Lentils"
+  ],
+  "Peas; dry": [
+   "Pea",
+   "Split pea"
+  ],
+  "Peas; green": [
+   "Green pea",
+   "Peas"
+  ],
+  "Broad beans and horse beans; dry": [
+   "Fava bean",
+   "Broad bean"
+  ],
+  "Cow peas; dry": [
+   "Black-eyed pea",
+   "Cowpea"
+  ],
+  "Pigeon peas; dry": [
+   "Pigeon pea"
+  ],
+  "Cabbages": [
+   "Cabbage",
+   "Napa cabbage",
+   "White cabbage"
+  ],
+  "Cauliflowers and broccoli": [
+   "Cauliflower",
+   "Broccoli"
+  ],
+  "Carrots and turnips": [
+   "Carrot",
+   "Carrots",
+   "Turnip"
+  ],
+  "Spinach": [
+   "Spinach"
+  ],
+  "Lettuce and chicory": [
+   "Lettuce"
+  ],
+  "Cucumbers and gherkins": [
+   "Cucumber",
+   "Gherkin"
+  ],
+  "Eggplants (aubergines)": [
+   "Eggplant",
+   "Aubergine"
+  ],
+  "Pumpkins; squash and gourds": [
+   "Pumpkin",
+   "Squash",
+   "Zucchini",
+   "Winter squash"
+  ],
+  "Okra": [
+   "Okra"
+  ],
+  "Mushrooms and truffles": [
+   "Mushroom",
+   "Mushrooms"
+  ],
+  "Artichokes": [
+   "Artichoke"
+  ],
+  "Asparagus": [
+   "Asparagus"
+  ],
+  "Bananas": [
+   "Banana"
+  ],
+  "Plantains and cooking bananas": [
+   "Plantain"
+  ],
+  "Lemons and limes": [
+   "Lemon",
+   "Lime",
+   "Lemon juice",
+   "Lime juice"
+  ],
+  "Oranges": [
+   "Orange",
+   "Orange juice"
+  ],
+  "Mangoes; guavas and mangosteens": [
+   "Mango",
+   "Guava"
+  ],
+  "Pineapples": [
+   "Pineapple"
+  ],
+  "Papayas": [
+   "Papaya",
+   "Green papaya"
+  ],
+  "Avocados": [
+   "Avocado"
+  ],
+  "Apples": [
+   "Apple",
+   "Apples"
+  ],
+  "Pears": [
+   "Pear"
+  ],
+  "Grapes": [
+   "Grape",
+   "Raisin",
+   "Raisins"
+  ],
+  "Dates": [
+   "Date",
+   "Dates",
+   "Date palm"
+  ],
+  "Figs": [
+   "Fig",
+   "Figs"
+  ],
+  "Apricots": [
+   "Apricot"
+  ],
+  "Cherries": [
+   "Cherry",
+   "Cherries"
+  ],
+  "Peaches and nectarines": [
+   "Peach"
+  ],
+  "Plums and sloes": [
+   "Plum",
+   "Prune"
+  ],
+  "Strawberries": [
+   "Strawberry",
+   "Strawberries"
+  ],
+  "Raspberries": [
+   "Raspberry",
+   "Raspberries"
+  ],
+  "Blueberries": [
+   "Blueberry",
+   "Blueberries"
+  ],
+  "Watermelons": [
+   "Watermelon"
+  ],
+  "Almonds; in shell": [
+   "Almond",
+   "Almonds"
+  ],
+  "Walnuts; in shell": [
+   "Walnut",
+   "Walnuts"
+  ],
+  "Pistachios; in shell": [
+   "Pistachio",
+   "Pistachios"
+  ],
+  "Hazelnuts; in shell": [
+   "Hazelnut",
+   "Hazelnuts"
+  ],
+  "Cashew nuts; in shell": [
+   "Cashew",
+   "Cashews"
+  ],
+  "Chestnuts; in shell": [
+   "Chestnut"
+  ],
+  "Poppy seed": [
+   "Poppy seed"
+  ],
+  "Mustard seed": [
+   "Mustard seed",
+   "Mustard seeds"
+  ],
+  "Hop cones": [
+   "Hops"
+  ],
+  "Meat of cattle with the bone; fresh or chilled": [
+   "Beef"
+  ],
+  "Meat of pig with the bone; fresh or chilled": [
+   "Pork",
+   "Pork belly"
+  ],
+  "Meat of chickens; fresh or chilled": [
+   "Chicken",
+   "Chicken meat"
+  ],
+  "Meat of sheep; fresh or chilled": [
+   "Lamb",
+   "Mutton",
+   "Lamb and mutton"
+  ],
+  "Meat of goat; fresh or chilled": [
+   "Goat meat",
+   "Goat"
+  ],
+  "Meat of ducks; fresh or chilled": [
+   "Duck",
+   "Duck meat"
+  ],
+  "Meat of turkeys; fresh or chilled": [
+   "Turkey"
+  ],
+  "Meat of buffalo; fresh or chilled": [
+   "Water buffalo"
+  ],
+  "Meat of camels; fresh or chilled": [
+   "Camel meat"
+  ],
+  "Meat of rabbits and hares; fresh or chilled": [
+   "Rabbit"
+  ],
+  "Raw milk of cattle": [
+   "Milk",
+   "Cow's milk"
+  ],
+  "Raw milk of goats": [
+   "Goat milk"
+  ],
+  "Raw milk of sheep": [
+   "Sheep milk"
+  ],
+  "Hen eggs in shell; fresh": [
+   "Egg",
+   "Eggs",
+   "Chicken egg"
+  ],
+  "Butter of cow milk": [
+   "Butter"
+  ],
+  "Cheese from whole cow milk": [
+   "Cheese"
+  ],
+  "Ghee from cow milk": [
+   "Ghee"
+  ]
+ }
+}

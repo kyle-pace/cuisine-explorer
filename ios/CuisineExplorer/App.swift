@@ -33,10 +33,34 @@ final class AppState {
 
 struct RootView: View {
     @Environment(AppState.self) private var app
+    @Environment(Store.self) private var store
 
     var body: some View {
+        switch store.state {
+        case .ready: tabs
+        case .loading:
+            VStack(spacing: 14) {
+                ProgressView().tint(Theme.muted)
+                Text("Setting the table…").font(Theme.callout).foregroundStyle(Theme.muted)
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(Theme.night)
+            .task { await store.start() }
+        case .failed:
+            ContentUnavailableView {
+                Label("Couldn’t load the cuisines", systemImage: "wifi.exclamationmark")
+            } description: {
+                Text("Check your connection and try again.")
+            } actions: {
+                Button("Try again") { Task { await store.start() } }.buttonStyle(.borderedProminent)
+            }
+            .background(Theme.night)
+        }
+    }
+
+    private var tabs: some View {
         @Bindable var app = app
-        TabView(selection: $app.tab) {
+        return TabView(selection: $app.tab) {
             Tab("Explore", systemImage: "fork.knife", value: AppState.Tab.explore) {
                 Stack(path: $app.explorePath) { ExploreView() }
             }

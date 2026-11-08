@@ -5,28 +5,37 @@ struct ItemView: View {
     @Environment(Store.self) private var store
     @Environment(AppState.self) private var app
     let ref: String
+    @State private var page: Page?
+    @State private var missing = false
 
     var body: some View {
         Group {
-            if let page = store.page(ref) {
+            if let page {
                 ScrollView {
                     PageContent(page: page)
                         .padding(.horizontal, 20)
                         .padding(.bottom, 40)
                 }
-                .background(Theme.night)
-                .navigationTitle(page.name)
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    if store.place(ref) != nil {
-                        ToolbarItem(placement: .topBarTrailing) {
-                            Button("Show on the map", systemImage: "map") { app.showOnMap(ref) }
-                        }
-                    }
-                }
+            } else if missing {
+                ContentUnavailableView("Couldn’t open this page", systemImage: "wifi.exclamationmark",
+                                       description: Text("Check your connection and try again."))
             } else {
-                ContentUnavailableView("Nothing here by that name", systemImage: "questionmark.circle")
+                ProgressView().tint(Theme.muted).frame(maxWidth: .infinity, maxHeight: .infinity)
             }
+        }
+        .background(Theme.night)
+        .navigationTitle(page?.name ?? store.node(ref)?.name ?? "")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            if store.place(ref) != nil {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button("Show on the map", systemImage: "map") { app.showOnMap(ref) }
+                }
+            }
+        }
+        .task(id: ref) {
+            page = store.cachedPage(ref)
+            if page == nil { page = await store.page(ref); missing = page == nil }
         }
     }
 }

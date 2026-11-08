@@ -129,7 +129,7 @@ struct FeatureCard: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            RemoteImage(url: store.page(node.ref)?.photo?.url)
+            RemoteImage(url: store.photo(node.ref))
                 .frame(width: 240, height: 170)
                 .clipped()
             VStack(alignment: .leading, spacing: 4) {

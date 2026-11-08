@@ -7,8 +7,6 @@ cd "$(dirname "$0")/.."
 export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"
 [ -d /Applications/Xcode.app ] || export DEVELOPER_DIR=/Applications/Xcode-beta.app/Contents/Developer
 
-node scripts/sync-data.mjs
-
 # Atkinson Hyperlegible Next (SIL OFL), from a local copy
 mkdir -p CuisineExplorer/Fonts
 for dir in "${FONTS_DIR:-}" ~/Developer/crow-build/KitchenUI/Sources/KitchenUI/Resources/Fonts ~/Developer/KitchenUI/Sources/KitchenUI/Resources/Fonts; do

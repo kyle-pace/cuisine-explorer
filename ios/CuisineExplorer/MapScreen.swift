@@ -92,9 +92,8 @@ struct PlaceCard: View {
     let close: () -> Void
 
     var body: some View {
-        let page = store.page(node.ref)
         HStack(spacing: 14) {
-            if let url = page?.photo?.url {
+            if let url = store.photo(node.ref) {
                 RemoteImage(url: url).frame(width: 76, height: 76).clipShape(RoundedRectangle(cornerRadius: 12))
             }
             VStack(alignment: .leading, spacing: 4) {

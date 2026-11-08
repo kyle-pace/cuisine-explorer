@@ -46,3 +46,4 @@ python3 scripts/fetch_images.py
 
 # The web view: page models, the skeleton and the graph layout (needs `npm ci` for d3-force)
 node scripts/build_web.mjs
+node scripts/build_app_index.mjs

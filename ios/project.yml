@@ -18,12 +18,6 @@ targets:
     platform: iOS
     sources:
       - path: CuisineExplorer
-        excludes:
-          - "Data"
-          - "Data/**"
-      - path: CuisineExplorer/Data
-        type: folder
-        buildPhase: resources
     info:
       path: CuisineExplorer/Info.plist
       properties:

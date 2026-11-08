@@ -44,6 +44,8 @@ final class Store {
 
     private(set) var nodes: [Node] = []
     private(set) var places: [Place] = []
+    private(set) var state: LoadState = .loading
+    enum LoadState { case loading, ready, failed }
     private var index: [String: Int] = [:]
     private var placeIndex: [String: Place] = [:]
     private var continentOf: [String: String] = [:]
@@ -51,36 +53,40 @@ final class Store {
     @ObservationIgnored private var buckets: [String: [String: Any]] = [:]
     @ObservationIgnored private var pages: [String: Page] = [:]
 
-    init() {
-        let data = Bundle.main.url(forResource: "Data", withExtension: nil)!
-        if let s = Self.json(data.appendingPathComponent("web/skeleton.json")) as? [String: Any] {
-            let palette = (s["colors"] as? [String] ?? []).map { Color(hex: $0) }
-            for case let n as [Any] in s["nodes"] as? [Any] ?? [] {
-                guard n.count >= 6, let ref = n[0] as? String, let name = n[1] as? String,
-                      let t = n[2] as? Int, let kind = Kind(rawValue: t) else { continue }
-                let c = n[3] as? Int ?? 0
-                index[ref] = nodes.count
-                nodes.append(Node(ref: ref, name: name, type: kind,
-                                  color: palette.indices.contains(c) ? palette[c] : Theme.muted,
-                                  flags: n[4] as? Int ?? 0, sub: n[5] as? String ?? ""))
-            }
+    /// Loads the skeleton (every page's name, type and color) and the app index
+    @MainActor
+    func start() async {
+        state = .loading
+        async let skeleton = Remote.shared.json("skeleton.json")
+        async let extras = Remote.shared.json("app.json")
+        guard let s = await skeleton as? [String: Any], let e = await extras as? [String: Any] else {
+            state = .failed
+            return
         }
-        for case let p as [Any] in Self.json(data.appendingPathComponent("places.json")) as? [Any] ?? [] {
+        var nodes: [Node] = [], index: [String: Int] = [:]
+        let palette = (s["colors"] as? [String] ?? []).map { Color(hex: $0) }
+        for case let n as [Any] in s["nodes"] as? [Any] ?? [] {
+            guard n.count >= 6, let ref = n[0] as? String, let name = n[1] as? String,
+                  let t = n[2] as? Int, let kind = Kind(rawValue: t) else { continue }
+            let c = n[3] as? Int ?? 0
+            index[ref] = nodes.count
+            nodes.append(Node(ref: ref, name: name, type: kind,
+                              color: palette.indices.contains(c) ? palette[c] : Theme.muted,
+                              flags: n[4] as? Int ?? 0, sub: n[5] as? String ?? ""))
+        }
+        var places: [Place] = [], placeIndex: [String: Place] = [:]
+        for case let p as [Any] in e["places"] as? [Any] ?? [] {
             guard p.count == 3, let ref = p[0] as? String, let lat = (p[1] as? NSNumber)?.doubleValue,
                   let lng = (p[2] as? NSNumber)?.doubleValue else { continue }
             let place = Place(ref: ref, coordinate: .init(latitude: lat, longitude: lng))
             places.append(place)
             placeIndex[ref] = place
         }
-        if let e = Self.json(data.appendingPathComponent("extras.json")) as? [String: Any] {
-            continentOf = e["cont"] as? [String: String] ?? [:]
-            photoOf = e["photos"] as? [String: String] ?? [:]
-        }
-    }
-
-    private static func json(_ url: URL) -> Any? {
-        guard let d = try? Data(contentsOf: url) else { return nil }
-        return try? JSONSerialization.jsonObject(with: d)
+        self.nodes = nodes; self.index = index
+        self.places = places; self.placeIndex = placeIndex
+        continentOf = e["cont"] as? [String: String] ?? [:]
+        photoOf = e["photos"] as? [String: String] ?? [:]
+        state = .ready
     }
 
     // MARK: Lookups
@@ -95,16 +101,20 @@ final class Store {
         return Photo.wikimediaURL(p.replacingOccurrences(of: "/500px-", with: "/120px-"))
     }
     func hasPhoto(_ ref: String) -> Bool { photoOf[ref] != nil }
+    func photo(_ ref: String) -> URL? { photoOf[ref].flatMap(Photo.wikimediaURL) }
     var refsWithPhotos: [String] { Array(photoOf.keys) }
 
-    /// The page model for an item, or nil for hub addresses like "cuisines#asia"
-    func page(_ ref: String) -> Page? {
+    /// The page model for an item, if its bucket is already loaded
+    func cachedPage(_ ref: String) -> Page? { pages[ref] }
+
+    /// The page model for an item, fetching its bucket the first time; nil for hubs like "cuisines#asia"
+    @MainActor
+    func page(_ ref: String) async -> Page? {
         if let p = pages[ref] { return p }
         let b = Self.bucketOf(ref)
         if buckets[b] == nil {
-            let url = Bundle.main.url(forResource: "Data", withExtension: nil)!
-                .appendingPathComponent("web/items/\(b).json")
-            buckets[b] = Self.json(url) as? [String: Any] ?? [:]
+            guard let bucket = await Remote.shared.json("items/\(b).json") as? [String: Any] else { return nil }
+            buckets[b] = bucket
         }
         guard let raw = buckets[b]?[ref] as? [String: Any] else { return nil }
         let p = Page(raw)

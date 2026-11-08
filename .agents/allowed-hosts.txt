@@ -3,3 +3,6 @@
 
 # Cookbook cover images on cuisine pages. Approved by Kyle, 2026-11-08.
 covers.openlibrary.org
+
+# Cuisine photos when the explorer runs on its own (on kylepace.net they go through /labs/cuisines/img/ instead), loaded at runtime. Approved by Kyle, 2026-11-08.
+upload.wikimedia.org

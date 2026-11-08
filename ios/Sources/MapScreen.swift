@@ -6,15 +6,16 @@ struct MapScreen: View {
     @Environment(Store.self) private var store
     @Environment(AppState.self) private var app
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    static let world = MKCoordinateRegion(center: .init(latitude: 25, longitude: 10), span: .init(latitudeDelta: 110, longitudeDelta: 140))
-    static let regions: [String: MKCoordinateRegion] = [
-        "africa": .init(center: .init(latitude: 4, longitude: 20), span: .init(latitudeDelta: 75, longitudeDelta: 75)),
-        "the-americas": .init(center: .init(latitude: 12, longitude: -85), span: .init(latitudeDelta: 115, longitudeDelta: 115)),
-        "asia": .init(center: .init(latitude: 30, longitude: 95), span: .init(latitudeDelta: 85, longitudeDelta: 95)),
-        "europe": .init(center: .init(latitude: 52, longitude: 15), span: .init(latitudeDelta: 38, longitudeDelta: 45)),
-        "oceania": .init(center: .init(latitude: -22, longitude: 150), span: .init(latitudeDelta: 60, longitudeDelta: 70)),
+    /// Camera heights: the whole world, then each continent
+    static let world = MapCamera(centerCoordinate: .init(latitude: 20, longitude: 15), distance: 40_000_000)
+    static let regions: [String: MapCamera] = [
+        "africa": MapCamera(centerCoordinate: .init(latitude: 2, longitude: 20), distance: 13_000_000),
+        "the-americas": MapCamera(centerCoordinate: .init(latitude: 8, longitude: -80), distance: 24_000_000),
+        "asia": MapCamera(centerCoordinate: .init(latitude: 28, longitude: 95), distance: 17_000_000),
+        "europe": MapCamera(centerCoordinate: .init(latitude: 52, longitude: 14), distance: 7_000_000),
+        "oceania": MapCamera(centerCoordinate: .init(latitude: -22, longitude: 150), distance: 11_000_000),
     ]
-    @State private var position: MapCameraPosition = .region(MapScreen.world)
+    @State private var position: MapCameraPosition = .camera(MapScreen.world)
     @State private var selected: String?
     @State private var path: [Route] = []
     @State private var span: Double = 110
@@ -47,7 +48,7 @@ struct MapScreen: View {
                         Button {
                             withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.6)) {
                                 selected = nil
-                                position = .region(Self.regions[c.slug] ?? Self.world)
+                                position = .camera(Self.regions[c.slug] ?? Self.world)
                             }
                         } label: {
                             HStack(spacing: 6) {

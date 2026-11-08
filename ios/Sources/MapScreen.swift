@@ -40,7 +40,7 @@ struct MapScreen: View {
                     }
                 }
             }
-            .mapStyle(.standard(elevation: .flat, emphasis: .muted, pointsOfInterest: .excludingAll))
+            .mapStyle(.standard(elevation: .realistic, emphasis: .muted, pointsOfInterest: .excludingAll))   // realistic: zoomed out, it becomes a globe, like the web
             .mapControls { MapCompass(); MapScaleView() }
             .safeAreaInset(edge: .top) {
                 ChipRow {

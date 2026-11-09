@@ -48,17 +48,17 @@ const round = (n: number) => Math.floor(n / 10) * 10;
 
   <div class="fine-print prose muted">
     <p>
-      Wikipedia is the source of truth. The list of cuisines comes from its
-      <a href="https://en.wikipedia.org/wiki/List_of_cuisines">List of cuisines</a>, places and countries from Wikidata,
+      Wikipedia is the source of truth. The list of cuisines comes from its <a
+      href="https://en.wikipedia.org/wiki/List_of_cuisines">List of cuisines</a>, places and countries from Wikidata,
       and each card’s intro from its own article (CC BY-SA), refreshed weekly. Dishes and their ingredients come from
       Wikidata and Wikipedia’s infoboxes. Where Wikipedia leaves gaps, like most Indigenous foodways, I write short notes
-      from tribal, museum and health sources; each has a link to suggest a correction. Where ingredients are grown comes from
-      <a href="https://www.fao.org/faostat/en/#data/QCL">FAO’s FAOSTAT</a> (CC BY 4.0).
+      from tribal, museum and health sources; each has a link to suggest a correction. Where ingredients are grown comes from <a
+      href="https://www.fao.org/faostat/en/#data/QCL">FAO’s FAOSTAT</a> (CC BY 4.0).
     </p>
     <p>
       Recipe sites and cookbooks are mine to choose. {shelved} cuisines have a shelf so far; anything marked
-      “suggested” is research I haven’t reviewed yet. Covers from Open Library. Country shapes from
-      <a href="https://www.naturalearthdata.com">Natural Earth</a>, globe by <a href="https://globe.gl">globe.gl</a>.
+      “suggested” is research I haven’t reviewed yet. Covers from Open Library. Country shapes from <a
+      href="https://www.naturalearthdata.com">Natural Earth</a>, globe by <a href="https://globe.gl">globe.gl</a>.
     </p>
     <p>The code and data are <a href="https://github.com/kyle-pace/world-cuisine">on GitHub</a>.</p>
     <p><a href="https://kylepace.dev/labs/">More labs</a></p>
@@ -90,7 +90,11 @@ const round = (n: number) => Math.floor(n / 10) * 10;
     align-items: center;
   }
 
+  /* At least 24px tall to tap */
   .eyebrow a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 1.5rem;
     color: inherit;
   }
 
@@ -154,7 +158,10 @@ const round = (n: number) => Math.floor(n / 10) * 10;
     font-size: var(--step--1);
   }
 
+  /* The shared 40rem measure is sized for body text; at this smaller size it runs
+     about 100 characters a line. 46ch of Atkinson is about 70 characters. */
   .fine-print {
+    max-width: min(var(--measure), 46ch);
     margin-top: var(--space-12);
     font-size: var(--step--1);
   }

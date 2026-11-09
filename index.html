@@ -118,8 +118,10 @@
     background: var(--panel); border: 1px solid var(--line); border-radius: 20px;
     transform: translateX(calc(100% + 24px));
     display: flex; flex-direction: column; overflow: hidden;
+    /* Hidden while closed so its buttons can't take keyboard focus off screen */
+    visibility: hidden;
   }
-  .panel.open { transform: none; }
+  .panel.open { transform: none; visibility: visible; }
   .handle { display: none; }
   .panel-top { display: flex; justify-content: space-between; align-items: center; padding: 12px 12px 0 24px; gap: 8px; }
   .crumbs { font-size: 0.82rem; color: var(--muted); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -222,7 +224,8 @@
   .loading { position: fixed; inset: 0; display: grid; place-items: center; color: var(--muted); z-index: 1; }
 
   @media (prefers-reduced-motion: no-preference) {
-    .panel { transition: transform 0.26s var(--ease); }
+    /* visibility stays visible for the whole slide, in and out */
+    .panel { transition: transform 0.26s var(--ease), visibility 0.26s; }
     .panel.dragging { transition: none; }
   }
 

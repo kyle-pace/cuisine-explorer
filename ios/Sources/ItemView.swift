@@ -14,9 +14,12 @@ struct ItemView: View {
             if let page {
                 ScrollViewReader { proxy in
                     ScrollView {
+                        // A centered reading column on iPad; the full width on iPhone
                         PageContent(page: page)
+                            .frame(maxWidth: Theme.readingWidth)
                             .padding(.horizontal, Space.xl)
                             .padding(.bottom, 40)
+                            .frame(maxWidth: .infinity)
                     }
                     .task {
                         // For screenshots: -scrollTo "Where it's grown"

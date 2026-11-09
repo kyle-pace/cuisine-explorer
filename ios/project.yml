@@ -33,11 +33,15 @@ targets:
         PRODUCT_NAME: Cuisines
         MARKETING_VERSION: "0.1.0"
         CURRENT_PROJECT_VERSION: "1"
-        TARGETED_DEVICE_FAMILY: "1"
+        # One universal app: iPhone and iPad
+        TARGETED_DEVICE_FAMILY: "1,2"
         GENERATE_INFOPLIST_FILE: YES
         INFOPLIST_KEY_CFBundleDisplayName: "Cuisines$(APP_NAME_SUFFIX)"
         INFOPLIST_KEY_UILaunchScreen_Generation: YES
+        # iPhone stays portrait; iPad turns every way (and so works in Split View, Stage Manager
+        # and resizable windows)
         INFOPLIST_KEY_UISupportedInterfaceOrientations: UIInterfaceOrientationPortrait
+        INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad: "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight"
         INFOPLIST_KEY_ITSAppUsesNonExemptEncryption: NO
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon$(APP_ICON_SUFFIX)
     info:
@@ -65,7 +69,7 @@ targets:
         PRODUCT_NAME: CuisinesWidget
         MARKETING_VERSION: "0.1.0"
         CURRENT_PROJECT_VERSION: "1"
-        TARGETED_DEVICE_FAMILY: "1"
+        TARGETED_DEVICE_FAMILY: "1,2"
         GENERATE_INFOPLIST_FILE: YES
         INFOPLIST_KEY_CFBundleDisplayName: "Cuisines$(APP_NAME_SUFFIX)"
         SKIP_INSTALL: YES

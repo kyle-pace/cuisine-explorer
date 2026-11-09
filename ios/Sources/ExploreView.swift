@@ -6,6 +6,7 @@ struct ExploreView: View {
     @Environment(Store.self) private var store
     @Environment(Library.self) private var library
     @Environment(\.dynamicTypeSize) private var typeSize
+    @Environment(\.horizontalSizeClass) private var sizeClass
     @State private var settings = false
 
     var body: some View {
@@ -18,6 +19,7 @@ struct ExploreView: View {
                     Text("\(count(.cuisine)) cuisines, \(count(.dish)) dishes and \(count(.ingredient)) ingredients, each linked to the others.")
                         .font(Theme.body)
                         .foregroundStyle(Theme.muted)
+                        .frame(maxWidth: Theme.readingWidth, alignment: .leading)
                 }
                 .padding(.horizontal, Space.xl)
 
@@ -59,10 +61,14 @@ struct ExploreView: View {
                 Text("Intros from Wikipedia (CC BY-SA), photos from Wikimedia Commons, production figures from FAOSTAT (CC BY 4.0), plus notes written for this explorer.")
                     .font(Theme.caption)
                     .foregroundStyle(Theme.muted)
+                    .frame(maxWidth: Theme.readingWidth, alignment: .leading)
                     .padding(.horizontal, Space.xl)
                     .padding(.bottom, Space.xl)
             }
             .padding(.top, Space.s)
+            // iPad: spread out, but not edge to edge on the largest screens
+            .frame(maxWidth: Theme.contentWidth)
+            .frame(maxWidth: .infinity)
         }
         .background(Theme.ground)
         .toolbarBackground(Theme.ground, for: .navigationBar)
@@ -122,6 +128,7 @@ struct ExploreView: View {
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
+        .frame(maxWidth: Theme.readingWidth, alignment: .leading)   // a photo, not a banner, on iPad
         .padding(.horizontal, Space.xl)
         .accessibilityElement(children: .combine)
         .accessibilityLabel("Today\u{2019}s dish: \(dish.name)\(cuisineOf(dish).map { ", " + $0 } ?? "")")
@@ -160,8 +167,7 @@ struct ExploreView: View {
         VStack(alignment: .leading, spacing: Space.m) {
             ShelfHeader(title: "Ingredients", hub: "ingredients", count: count(.ingredient),
                         note: "The ones cooked with most, and where they\u{2019}re grown")
-            LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: Space.m, alignment: .top), count: typeSize.isAccessibilitySize ? 2 : 3),
-                      alignment: .leading, spacing: Space.l) {
+            LazyVGrid(columns: ingredientColumns, alignment: .leading, spacing: Space.l) {
                 ForEach(topIngredients) { n in
                     NavigationLink(value: Route.item(n.ref)) { PhotoTile(node: n, width: nil, height: 92, showSub: false) }
                         .buttonStyle(.plain)
@@ -169,6 +175,14 @@ struct ExploreView: View {
             }
             .padding(.horizontal, Space.xl)
         }
+    }
+
+    /// Three across on iPhone (two at the accessibility text sizes); as many as fit on iPad
+    private var ingredientColumns: [GridItem] {
+        if sizeClass == .regular {
+            return [GridItem(.adaptive(minimum: typeSize.isAccessibilitySize ? 220 : 150, maximum: 240), spacing: Space.m, alignment: .top)]
+        }
+        return Array(repeating: GridItem(.flexible(), spacing: Space.m, alignment: .top), count: typeSize.isAccessibilitySize ? 2 : 3)
     }
 
     // MARK: Picks
@@ -185,7 +199,7 @@ struct ExploreView: View {
     private var topIngredients: [Store.Node] {
         store.nodes.filter { $0.type == .ingredient && store.hasPhoto($0.ref) }
             .sorted { store.linkCount($0.ref) > store.linkCount($1.ref) }
-            .prefix(9).map { $0 }
+            .prefix(sizeClass == .regular ? 12 : 9).map { $0 }   // two full rows of six on iPad
     }
 
     /// Picked from the dishes with photos by the day of the year, so it changes at midnight

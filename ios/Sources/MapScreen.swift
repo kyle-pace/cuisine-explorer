@@ -8,6 +8,7 @@ struct MapScreen: View {
     @Environment(Store.self) private var store
     @Environment(AppState.self) private var app
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.horizontalSizeClass) private var sizeClass
     @State private var shapes = Shapes()
 
     /// Camera heights: the whole world, then each continent
@@ -29,6 +30,8 @@ struct MapScreen: View {
     @State private var detent: PresentationDetent = .height(236)
 
     private var showRegions: Bool { span < 30 }
+    /// iPad and other wide windows: the place card is a column beside the map, not a sheet over it
+    private var wide: Bool { sizeClass == .regular }
 
     var body: some View {
         NavigationStack(path: $path) {
@@ -161,16 +164,27 @@ struct MapScreen: View {
             }
             // A picked place opens a sheet, as in Maps: a peek with its photo and what to do next,
             // pulled up for its intro and dishes. The map stays usable behind the smaller sizes.
-            .sheet(isPresented: Binding(get: { selected != nil && path.isEmpty }, set: { if !$0 { selected = nil } })) {
+            .sheet(isPresented: Binding(get: { !wide && selected != nil && path.isEmpty }, set: { if !$0 && !wide { selected = nil } })) {
                 if let ref = selected {
-                    PlaceSheet(ref: ref) { route in
+                    PlaceSheet(ref: ref, go: { route in
                         selected = nil
                         path.append(route)
-                    }
+                    }, close: { selected = nil })
                     .presentationDetents([.height(236), .medium, .large], selection: $detent)
                     .presentationBackgroundInteraction(.enabled(upThrough: .medium))
                     .presentationDragIndicator(.visible)
                     .presentationBackground(Theme.surface)
+                }
+            }
+            // iPad: the same card in an inspector column on the trailing side, with the map still in view
+            .inspector(isPresented: Binding(get: { wide && selected != nil && path.isEmpty }, set: { if !$0 && wide { selected = nil } })) {
+                if let ref = selected {
+                    PlaceSheet(ref: ref, go: { route in
+                        selected = nil
+                        path.append(route)
+                    }, close: { selected = nil })
+                    .background(Theme.surface)
+                    .inspectorColumnWidth(min: 320, ideal: 380, max: 480)
                 }
             }
             .onChange(of: selected) { detent = .height(236) }
@@ -281,6 +295,10 @@ struct PlaceSheet: View {
     @Environment(\.dismiss) private var dismiss
     let ref: String
     let go: (Route) -> Void
+    /// Clears the selection, which closes the sheet on iPhone or the inspector on iPad
+    var close: (() -> Void)? = nil
+    @Environment(\.horizontalSizeClass) private var sizeClass
+    @Environment(\.dynamicTypeSize) private var typeSize
     @State private var page: Page?
 
     var body: some View {
@@ -298,9 +316,11 @@ struct PlaceSheet: View {
                             Text(node.sub).font(Theme.caption).foregroundStyle(Theme.muted).lineLimit(2)
                         }
                         Spacer(minLength: 0)
-                        Button("Close", systemImage: "xmark") { dismiss() }
-                            .labelStyle(.iconOnly).font(.footnote.weight(.bold)).foregroundStyle(Theme.muted)
-                            .frame(width: 44, height: 44)
+                        Button("Close", systemImage: "xmark") {
+                            if let close { close() } else { dismiss() }
+                        }
+                        .labelStyle(.iconOnly).font(.footnote.weight(.bold)).foregroundStyle(Theme.muted)
+                        .frame(width: 44, height: 44)
                     }
                     HStack(spacing: Space.s) {
                         Button { go(.item(ref)) } label: {
@@ -329,7 +349,7 @@ struct PlaceSheet: View {
                     if !dishes.isEmpty {
                         Text("Dishes").font(Theme.heading).foregroundStyle(Theme.ink).padding(.top, Space.s)
                             .accessibilityAddTraits(.isHeader)
-                        LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: Space.m, alignment: .top), count: 3), alignment: .leading, spacing: Space.l) {
+                        LazyVGrid(columns: dishColumns, alignment: .leading, spacing: Space.l) {
                             ForEach(dishes) { d in
                                 Button { go(.item(d.ref)) } label: { PhotoTile(node: d, width: nil, height: 92, showSub: false) }
                                     .buttonStyle(.plain)
@@ -342,6 +362,14 @@ struct PlaceSheet: View {
             .scrollBounceBehavior(.basedOnSize)
             .task(id: ref) { page = await store.page(ref) }
         }
+    }
+
+    /// Three across on iPhone, as before; as many as fit in a wider sheet or inspector
+    private var dishColumns: [GridItem] {
+        if sizeClass == .regular {
+            return [GridItem(.adaptive(minimum: typeSize.isAccessibilitySize ? 160 : 96, maximum: 180), spacing: Space.m, alignment: .top)]
+        }
+        return Array(repeating: GridItem(.flexible(), spacing: Space.m, alignment: .top), count: 3)
     }
 
     /// Its best-connected dishes that have a photo

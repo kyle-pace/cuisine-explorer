@@ -136,6 +136,8 @@ struct RootView: View {
                 Stack(path: $app.searchPath) { SearchView() }
             }
         }
+        // iPad: the tab bar floats at the top and opens into a sidebar; iPhone keeps the bottom tab bar
+        .tabViewStyle(.sidebarAdaptable)
     }
 }
 

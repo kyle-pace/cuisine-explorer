@@ -32,6 +32,12 @@ enum Theme {
     static let callout600 = Font.app(.callout, .semibold)
     static let caption = Font.app(.footnote)
 
+    // Widths on iPad and other wide windows; iPhone never reaches them
+    /// A reading column: about 70 characters of body text
+    static let readingWidth: CGFloat = 680
+    /// The most a screen of shelves and grids spreads to before it centers
+    static let contentWidth: CGFloat = 1100
+
     /// Interface motion: short, eased out, and none when Reduce Motion is on
     static func motion(_ reduce: Bool) -> Animation? { reduce ? nil : .timingCurve(0.2, 0.8, 0.2, 1, duration: 0.24) }
 }

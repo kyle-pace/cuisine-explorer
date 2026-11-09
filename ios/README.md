@@ -1,4 +1,4 @@
-# Cuisines for iPhone
+# Cuisines for iPhone and iPad
 
 A native SwiftUI version of the cuisine explorer, built like Henwood and Grocery Deals:
 KitchenUI for type, color and shared components, XcodeGen for the project.
@@ -28,6 +28,7 @@ repo (`../../KitchenUI` from here).
 - **Pages**: the same page models as the web view (`scripts/build_web.mjs`), drawn natively: links between pages, photos with credits (tap to zoom in), cookbooks as a shelf of covers, where ingredients are grown as a Swift Charts bar chart, sources. Save and share from the toolbar; long-press any row for a preview with Save, Share, map and connections.
 - **The web** is food: cuisines, dishes and ingredients. Recipe sites and cookbooks stay on pages and in search but aren't dots (`Store.graphKinds`; the web view does the same).
 - **Browse**: a row of continents up top, the most-used ingredients as photo tiles (the ingredients list sorts by use; a Sort menu switches to A to Z), today's dish (`Daily.swift`, the same pick as the widget), cuisines to start from, where you left off, cuisines by continent, Beyond borders, Indigenous foodways; every list filters by continent and groups A to Z.
+- **iPad**: one universal app. iPad turns every way and works in Split View, Stage Manager and resizable windows (iPhone stays portrait). The tabs open into a sidebar (`.sidebarAdaptable`), Browse spreads to `Theme.contentWidth` with ingredient tiles in as many columns as fit, pages read in a `Theme.readingWidth` column, and on the Globe a picked place opens in an inspector beside the map instead of a sheet over it.
 - **Accessibility**: walk-mode dots are VoiceOver buttons with a "Show its name" action, 44-point targets, edges hidden; grids drop columns and the ring labels fewer dots at the accessibility text sizes; Reduce Motion turns the interface motion off (`Theme.motion`); colors never carry meaning alone.
 - **iOS**: Spotlight indexes every page (`Spotlight.swift`); Siri and Shortcuts have "Surprise me", "Today's dish" and "Search" (`Intents.swift`); a Today's dish Home Screen widget (`Widget/`); Handoff to the web page; `cuisines://open?r=<ref>`, `cuisines://walk?r=`, `cuisines://map?r=`, `cuisines://search?q=`; Liquid Glass on the map chips; a TipKit tip in walk mode.
 - **Connections** (walk mode, as on the web): the page in the middle, everything linked to it on a ring, the likeliest next steps (cuisines, then dishes) labeled on the outer ring. Tap a dot to move there; hold an unlabeled one for its name; the trail retraces your route. Chips focus on one type; the list button shows every link.

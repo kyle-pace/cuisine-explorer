@@ -26,7 +26,9 @@ for (const f of fs.readdirSync(dir).sort()) {
   for (const [ref, m] of Object.entries(JSON.parse(fs.readFileSync(path.join(dir, f), "utf8")))) {
     if (m.cont) cont[ref] = m.cont;
     // Cuisines without a photo of their own show one of their dishes (m.img.of says which)
-    if (m.img) photos[ref] = m.img.src.replace(/^\/labs\/cuisines\/img\//, "");
+    // Stored without the image route's prefix; the pages add it back (photoUrl). The old
+    // /labs/cuisines/ prefix is still stripped in case an older page model is read.
+    if (m.img) photos[ref] = m.img.src.replace(/^\/(world-cuisine|labs\/cuisines)\/img\//, "");
   }
 }
 fs.writeFileSync(path.join(ROOT, "data/web/app.json"), JSON.stringify({ places, cont, photos, national, regions, routes }));

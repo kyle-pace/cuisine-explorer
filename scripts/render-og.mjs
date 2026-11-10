@@ -7,6 +7,18 @@ import { readFileSync, writeFileSync, rmSync } from 'node:fs';
 import { chromium } from 'playwright';
 
 const root = new URL('../', import.meta.url);
+
+// `node scripts/render-og.mjs drop` renders Dish drop's card (scripts/og-drop.html) instead
+if (process.argv[2] === 'drop') {
+  const browser = await chromium.launch();
+  const page = await browser.newPage({ viewport: { width: 1200, height: 630 } });
+  await page.goto(new URL('scripts/og-drop.html', root).href);
+  await page.waitForTimeout(1000);
+  await page.screenshot({ path: new URL('drop-share.png', root).pathname });
+  await browser.close();
+  console.log('Rendered drop-share.png');
+  process.exit(0);
+}
 const tag = (id, file) =>
   `<script type="application/json" id="${id}">${readFileSync(new URL(file, root), 'utf8').replace(/</g, '\\u003c')}</script>`;
 const html = readFileSync(new URL('scripts/og-card.html', root), 'utf8').replace(

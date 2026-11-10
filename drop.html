@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dish drop: World cuisine</title>
+<meta name="description" content="A daily game: see a dish, drop a pin where it comes from. Five dishes a day from World cuisine's globe.">
+<meta property="og:title" content="Dish drop">
+<meta property="og:description" content="See a dish, drop a pin where it comes from. Five a day.">
+<meta property="og:image" content="https://kylepace.dev/world-cuisine/drop-share.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#1b1424">
+<link rel="stylesheet" href="vendor/fonts/atkinson.css">
+<style>
+  /* Plan and palette: design/PLAN.md. The explorer's own colors, plus the ticket's ink. */
+  :root {
+    --night: #1b1424;      /* aubergine: page and ocean */
+    --land: #3a3045;       /* plum */
+    --line: #4a3f57;
+    --rice: #ede6da;       /* ticket paper, text on dark */
+    --ink: #241b2f;        /* text on the ticket */
+    --ink-soft: #5b4f66;   /* secondary text on the ticket (6.3:1 on rice) */
+    --saffron: #f0b340;    /* your pin, the arc, focus */
+    --chili: #a8381a;      /* the answer, on the ticket */
+    --font: "Atkinson Hyperlegible Next", system-ui, sans-serif;
+    --ease: cubic-bezier(.2, .8, .2, 1);
+    --safe-b: env(safe-area-inset-bottom, 0px);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: var(--night); color: var(--rice); font-family: var(--font); font-size: 16px; line-height: 1.5; }
+  body { overflow: hidden; overscroll-behavior: none; -webkit-tap-highlight-color: transparent; }
+  a { color: inherit; }
+  button, input { font: inherit; }
+  :focus-visible { outline: 3px solid var(--saffron); outline-offset: 2px; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  #globe { position: fixed; inset: 0; touch-action: none; cursor: crosshair; }
+  #globe canvas { display: block; }
+
+  .back { position: fixed; top: 14px; left: 20px; z-index: 8; font-weight: 600; text-decoration: none; padding: 8px 4px; }
+  .back:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  /* The order ticket. Square corners and a torn bottom edge (the mask); the shadow sits
+     on the wrapper because a mask would clip it. */
+  .ticket-wrap { position: fixed; z-index: 7; top: 56px; left: 20px; width: min(340px, calc(100vw - 40px)); filter: drop-shadow(0 10px 22px rgba(0, 0, 0, .45)); }
+  .ticket {
+    background: var(--rice); color: var(--ink); padding: 14px 16px 26px;
+    max-height: calc(100vh - 56px - 110px - var(--safe-b)); overflow-y: auto;
+    -webkit-mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / 14px 100%;
+    mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / 14px 100%;
+  }
+  .ticket-top { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 2px dashed var(--ink); padding-bottom: 8px; margin-bottom: 12px; }
+  .ticket-top h1 { margin: 0; font-size: 1.35rem; font-weight: 800; letter-spacing: -0.01em; }
+  .ticket-top span { font-weight: 600; color: var(--ink-soft); }
+  .photo { margin: 0 0 12px; }
+  .photo .frame { aspect-ratio: 4 / 3; background: #d9d0c2; overflow: hidden; }
+  .photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .photo figcaption { font-size: 0.78rem; color: var(--ink-soft); margin-top: 4px; }
+  .photo figcaption a { color: inherit; }
+  .ticket h2 { font-size: 1.5rem; line-height: 1.15; margin: 0 0 2px; font-weight: 800; }
+  .ticket .from { margin: 0 0 8px; font-weight: 700; color: var(--chili); }
+  .ticket .from a { color: inherit; }
+  .ticket p { margin: 0 0 10px; }
+  .ask { font-size: 1.15rem; font-weight: 700; margin: 0 0 4px; }
+  .muted { color: var(--ink-soft); font-size: 0.92rem; }
+  .linkish { background: none; border: 0; padding: 4px 0; color: var(--ink); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; font-weight: 600; min-height: 32px; }
+  /* Receipt rows with dotted leaders */
+  .rows { list-style: none; margin: 4px 0 12px; padding: 0; }
+  .rows li { display: flex; gap: 6px; align-items: baseline; padding: 3px 0; }
+  .rows li::after { content: ""; order: 1; flex: 1; border-bottom: 2px dotted #a49aa9; transform: translateY(-4px); min-width: 12px; }
+  .rows .v { order: 2; font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .rows .k { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .rows .total { border-top: 2px dashed var(--ink); margin-top: 6px; padding-top: 8px; font-size: 1.15rem; font-weight: 800; }
+  .ticket .actions { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; margin-top: 4px; }
+  .stamp { display: inline-block; border: 3px solid var(--chili); color: var(--chili); font-weight: 800; padding: 2px 10px; transform: rotate(-4deg); margin: 2px 0 10px; letter-spacing: 0.04em; }
+
+  /* Bottom: type a country, lock in, next */
+  .controls { position: fixed; z-index: 7; left: 50%; bottom: calc(20px + var(--safe-b)); transform: translateX(-50%); width: min(520px, calc(100vw - 32px)); display: flex; gap: 8px; }
+  .controls input {
+    flex: 1; min-width: 0; min-height: 48px; padding: 10px 16px; border-radius: 24px; border: 1px solid var(--line);
+    background: rgba(36, 27, 47, 0.94); color: var(--rice);
+  }
+  .controls input::placeholder { color: #b3a9be; }
+  .btn { min-height: 48px; padding: 10px 22px; border: 0; border-radius: 24px; background: var(--saffron); color: var(--ink); font-weight: 800; cursor: pointer; white-space: nowrap; }
+  .btn:disabled { background: #6d6177; color: #ede6da; cursor: not-allowed; }
+  .btn.quiet { background: var(--rice); }
+  .controls .btn:only-child { flex: 1; }
+  .status { position: fixed; z-index: 6; left: 50%; transform: translateX(-50%); bottom: calc(80px + var(--safe-b)); margin: 0; font-size: 0.92rem; color: var(--rice); text-shadow: 0 1px 4px #000; text-align: center; width: min(520px, calc(100vw - 32px)); }
+
+  /* Pins on the globe, labeled so color isn't the only cue */
+  .flag { transform: translate(-50%, -100%); pointer-events: none; white-space: nowrap; font: 700 0.8rem/1 var(--font); padding: 6px 9px; position: relative; }
+  .flag::after { content: ""; position: absolute; left: 50%; bottom: -6px; width: 10px; height: 10px; transform: translateX(-50%) rotate(45deg); background: inherit; z-index: -1; }
+  .flag.you { background: var(--saffron); color: var(--ink); }
+  .flag.here { background: var(--rice); color: var(--chili); border: 2px solid var(--chili); }
+  .tooltip { font: 600 0.85rem/1.2 var(--font); background: var(--rice); color: var(--ink); padding: 6px 9px; }
+
+  #loading { position: fixed; inset: 0; display: grid; place-items: center; color: #b3a9be; z-index: 9; }
+
+  @media (max-width: 720px) {
+    .back { top: 6px; left: 12px; }
+    .ticket-wrap { top: 44px; left: 12px; width: calc(100vw - 24px); }
+    .ticket { padding: 10px 12px 22px; max-height: 52vh; }
+    .ticket-top { margin-bottom: 8px; padding-bottom: 6px; }
+    .ticket-top h1 { font-size: 1.15rem; }
+    /* Photo beside the words while guessing, so the globe keeps most of the screen */
+    .layout { display: grid; grid-template-columns: 42% 1fr; gap: 12px; align-items: start; }
+    .layout .photo { margin: 0 0 10px; }
+    .ticket h2 { font-size: 1.25rem; }
+    .ask { font-size: 1rem; }
+    .status { bottom: calc(76px + var(--safe-b)); }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .ticket-wrap { transition: transform 0.25s var(--ease); }
+    .ticket-wrap.new { transform: translateY(-8px); }
+  }
+</style>
+</head>
+<body>
+<nav aria-label="Site"><a class="back" href="/world-cuisine/">← World cuisine</a></nav>
+<div id="globe" aria-hidden="true"></div>
+<div id="loading">Setting the table…</div>
+
+<div class="ticket-wrap" id="ticketWrap">
+  <main class="ticket" id="ticket" aria-labelledby="ticketTitle" tabindex="-1"></main>
+</div>
+
+<p class="status" id="status" aria-hidden="true"></p>
+<form class="controls" id="controls" autocomplete="off"></form>
+<datalist id="countryList"></datalist>
+<div class="sr-only" aria-live="polite" id="live"></div>
+
+<script src="vendor/globe.gl.min.js"></script>
+<script>
+(async () => {
+  const ROUNDS = 5, FULL = 5000, HINT_CAP = 2500;
+  const FIRST_DAY = new Date(2026, 10, 10);   // Dish drop No. 1: November 10, 2026
+  const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const isPhone = () => innerWidth <= 720;
+  const $ = id => document.getElementById(id);
+  const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const fmt = n => n.toLocaleString("en-US");
+  const onSite = location.pathname.startsWith("/world-cuisine/");
+  // Photos come through the site's own photo route (cached in R2); none on a bare local server
+  const photoUrl = p => onSite ? "/world-cuisine/img/" + p : "";
+  const pageUrl = ref => onSite ? `/world-cuisine/${ref}/` : `web.html#/${ref}`;
+
+  const [pool, countries] = await Promise.all([
+    fetch("data/drop.json").then(r => r.json()),
+    fetch("data/countries.geojson").then(r => r.json()),
+  ]);
+  const places = pool.places;
+  const isoOf = p => [p.ISO_A3_EH, p.ADM0_A3].find(c => places[c]) || p.ADM0_A3;
+  const land = countries.features.filter(f => f.properties.ADM0_A3 !== "ATA");
+  const byName = new Map(Object.entries(places).map(([iso, p]) => [p.n.toLowerCase(), iso]));
+  $("countryList").innerHTML = Object.values(places).map(p => p.n).sort().map(n => `<option value="${esc(n)}">`).join("");
+
+  // --- Which five dishes: the same for everyone on a given day -----------------------
+  // A seeded shuffle (mulberry32) picks five different countries, then one dish from each,
+  // so a country with lots of listed dishes doesn't crowd out the rest.
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const dayNo = Math.round((today - FIRST_DAY) / 864e5) + 1;
+  function rng(seed) {
+    return () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+  }
+  const byIso = new Map();
+  for (const d of pool.dishes) { if (!byIso.has(d.iso)) byIso.set(d.iso, []); byIso.get(d.iso).push(d); }
+  const isoList = [...byIso.keys()].sort();
+  function pick(rand) {
+    const isos = [...isoList];
+    for (let i = isos.length - 1; i > 0; i--) { const j = Math.floor(rand() * (i + 1)); [isos[i], isos[j]] = [isos[j], isos[i]]; }
+    return isos.slice(0, ROUNDS).map(iso => { const list = byIso.get(iso); return list[Math.floor(rand() * list.length)]; });
+  }
+
+  // --- Saved results (this browser only) --------------------------------------------
+  const KEY = "dishdrop:v1";
+  const saved = (() => { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch { return {}; } })();
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch { /* private mode: fine */ } };
+
+  // --- Scoring ------------------------------------------------------------------------
+  const rad = x => x * Math.PI / 180;
+  function km([la1, lo1], [la2, lo2]) {
+    const a = Math.sin(rad(la2 - la1) / 2) ** 2 + Math.cos(rad(la1)) * Math.cos(rad(la2)) * Math.sin(rad(lo2 - lo1) / 2) ** 2;
+    return 6371 * 2 * Math.asin(Math.min(1, Math.sqrt(a)));
+  }
+  // Points fall off with distance: about 2,900 at 1,000 km, under 1,000 at 3,000 km.
+  // The right country is worth full marks for a national dish and at least 4,000 for a
+  // regional one (Sichuan, Oaxacan), whose exact spot inside the country is harder.
+  function scoreOf(dish, guess, hinted) {
+    const d = km(guess.loc, dish.loc);
+    let s = Math.round(FULL * Math.exp(-d / 1800));
+    if (guess.iso && guess.iso === dish.iso) s = dish.kind === "national" ? FULL : Math.max(s, 4000);
+    if (d < 100) s = FULL;
+    return { d, s: hinted ? Math.min(s, HINT_CAP) : s };
+  }
+  const distText = d => d < 100 ? "Right on it" : `${fmt(Math.round(d / 10) * 10)} km (${fmt(Math.round(d * 0.621371 / 10) * 10)} mi)`;
+  const square = s => s >= 4500 ? "🟩" : s >= 3000 ? "🟨" : s >= 1500 ? "🟧" : "🟥";
+
+  // --- The globe --------------------------------------------------------------------
+  let hover = null;
+  const world = Globe({ animateIn: !reduceMotion })($("globe"))
+    .backgroundColor("#1b1424")
+    .showAtmosphere(true).atmosphereColor("#6f5690").atmosphereAltitude(0.12)
+    .polygonsData(land)
+    .polygonAltitude(f => f === hover ? 0.012 : 0.006)
+    .polygonCapColor(f => f === hover ? "#56496a" : "#3a3045")
+    .polygonSideColor(() => "rgba(27,20,36,0.9)")
+    .polygonStrokeColor(() => "#1b1424")
+    .polygonsTransitionDuration(reduceMotion ? 0 : 200)
+    .polygonLabel(f => state.phase !== "guess" || matchMedia("(hover: none)").matches ? "" : `<div class="tooltip">${esc(f.properties.NAME)}</div>`)
+    .onPolygonHover(f => { hover = state.phase === "guess" ? f : null; world.polygonAltitude(world.polygonAltitude()).polygonCapColor(world.polygonCapColor()); })
+    .onPolygonClick((f, e, at) => at && setGuess([at.lat, at.lng], isoOf(f.properties)))
+    .onGlobeClick(at => setGuess([at.lat, at.lng], null))
+    .htmlElementsData([])
+    .htmlLat(m => m.loc[0]).htmlLng(m => m.loc[1]).htmlAltitude(0.01)
+    .htmlElement(m => Object.assign(document.createElement("div"), { className: "flag " + m.cls, textContent: m.label }))
+    .arcsData([])
+    .arcColor(() => "#f0b340").arcStroke(0.7).arcAltitudeAutoScale(0.35)
+    .arcDashLength(0.5).arcDashGap(0.12).arcDashAnimateTime(reduceMotion ? 0 : 1800);
+  world.globeMaterial().color.set("#231a2e");
+  world.globeMaterial().shininess = 2;
+  const controls = world.controls();
+  controls.enableDamping = true;
+  const alt = () => isPhone() ? 2.6 : 2.0;
+  const fly = (pov, ms = 900) => world.pointOfView(pov, reduceMotion ? 0 : ms);
+  const resize = () => world.width(innerWidth).height(innerHeight);
+  addEventListener("resize", resize); resize();
+  // On phones the ticket covers the top, so aim the globe a little lower in the view
+  const aim = ([lat, lng], altitude) => fly({ lat: lat + (isPhone() ? altitude * 9 : 0), lng: lng - (isPhone() ? 0 : altitude * 6), altitude });
+  $("loading").remove();
+
+  // --- Game state -------------------------------------------------------------------
+  const state = { mode: "daily", dishes: [], i: 0, results: [], guess: null, hinted: false, phase: "guess" };
+
+  function start(mode) {
+    state.mode = mode;
+    state.dishes = mode === "daily" ? pick(rng(dayNo * 7919)) : pick(rng(Math.floor(Math.random() * 2 ** 31)));
+    state.i = 0; state.results = [];
+    if (mode === "daily" && saved.day === dayNo && saved.results?.length === ROUNDS) {
+      state.results = saved.results; return finish(false);
+    }
+    round();
+  }
+
+  function round() {
+    Object.assign(state, { guess: null, hinted: false, phase: "guess" });
+    world.htmlElementsData([]).arcsData([]);
+    fly({ lat: 20, lng: (state.i * 97 + dayNo * 41) % 360 - 180, altitude: alt() }, 1200);
+    drawTicket(); drawControls();
+    status("Drag to turn the globe. Click or tap to drop your pin.");
+    $("ticketWrap").classList.add("new"); requestAnimationFrame(() => requestAnimationFrame(() => $("ticketWrap").classList.remove("new")));
+  }
+
+  function setGuess(loc, iso, typed) {
+    if (state.phase !== "guess") return;
+    state.guess = { loc, iso };
+    world.htmlElementsData([{ loc, cls: "you", label: "Your pin" }]);
+    const where = iso && places[iso] ? places[iso].n : "the ocean";
+    $("lockIn").disabled = false;
+    if (!typed) $("country").value = iso && places[iso] ? places[iso].n : "";
+    status(`Pin in ${where}. Move it or lock it in.`);
+    announce(`Pin dropped in ${where}.`);
+  }
+
+  function lockIn() {
+    const dish = state.dishes[state.i];
+    const { d, s } = scoreOf(dish, state.guess, state.hinted);
+    state.results.push({ n: dish.n, s, d: Math.round(d), hint: state.hinted });
+    state.phase = "reveal";
+    hover = null; world.polygonCapColor(world.polygonCapColor());
+    const g = state.guess.loc;
+    world.htmlElementsData([
+      { loc: g, cls: "you", label: "Your pin" },
+      { loc: dish.loc, cls: "here", label: dish.c.replace(/ cuisine$/, "") },
+    ]);
+    world.arcsData(d < 100 ? [] : [{ startLat: g[0], startLng: g[1], endLat: dish.loc[0], endLng: dish.loc[1] }]);
+    // Frame both pins
+    const [x1, y1, z1] = toXYZ(g), [x2, y2, z2] = toXYZ(dish.loc);
+    const mid = fromXYZ(x1 + x2, y1 + y2, z1 + z2) || dish.loc;
+    aim(mid, Math.min(2.6, Math.max(0.9, d / 3500 + 0.7)));
+    drawTicket({ d, s }); drawControls();
+    status("");
+    announce(`It's ${dish.n}, from ${dish.c}. ${distText(d)} away. ${fmt(s)} points.`);
+    $("ticket").focus({ preventScroll: true });
+  }
+  const toXYZ = ([lat, lng]) => [Math.cos(rad(lat)) * Math.cos(rad(lng)), Math.cos(rad(lat)) * Math.sin(rad(lng)), Math.sin(rad(lat))];
+  const fromXYZ = (x, y, z) => { const r = Math.hypot(x, y, z); return r < 1e-6 ? null : [Math.asin(z / r) * 180 / Math.PI, Math.atan2(y, x) * 180 / Math.PI]; };
+
+  function next() {
+    state.i++;
+    if (state.i < ROUNDS) round(); else finish(true);
+  }
+
+  function finish(fresh) {
+    state.phase = "done";
+    world.htmlElementsData([]).arcsData([]);
+    if (fresh && state.mode === "daily") {
+      if (saved.last === dayNo - 1) saved.streak = (saved.streak || 0) + 1; else if (saved.last !== dayNo) saved.streak = 1;
+      Object.assign(saved, { day: dayNo, results: state.results, last: dayNo });
+      save();
+    }
+    drawTicket(); drawControls();
+    status("");
+    const total = state.results.reduce((a, r) => a + r.s, 0);
+    announce(`All five done. ${fmt(total)} of ${fmt(FULL * ROUNDS)} points.`);
+    $("ticket").focus({ preventScroll: true });
+  }
+
+  // --- Drawing ----------------------------------------------------------------------
+  function photoHtml(dish, revealed) {
+    const src = photoUrl(dish.img.p);
+    const alt = revealed ? `Photo of ${dish.n}` : "Photo of the dish to place on the map";
+    return `<figure class="photo"><div class="frame">${src ? `<img src="${esc(src)}" alt="${esc(alt)}" width="${dish.img.w}" height="${dish.img.h}">` : ""}</div>
+      ${revealed ? `<figcaption>Photo: <a href="${esc(dish.img.page)}" target="_blank" rel="noopener">${esc(dish.img.by || "Wikimedia Commons")}</a>, ${esc(dish.img.lic || "")}</figcaption>` : ""}</figure>`;
+  }
+  const top = left => `<header class="ticket-top"><h1 id="ticketTitle">${left}</h1><span>${state.mode === "daily" ? `No. ${dayNo}` : "Practice"}</span></header>`;
+
+  function drawTicket(res) {
+    const t = $("ticket"), dish = state.dishes[state.i];
+        if (state.phase === "guess") {
+      t.innerHTML = top(`Order ${state.i + 1} of ${ROUNDS}`) + `<div class="layout">${photoHtml(dish, false)}<div>
+        <p class="ask">Where is this from?</p>
+        ${state.hinted ? `<p><b>${esc(dish.n)}</b></p><p class="muted">Worth up to ${fmt(HINT_CAP)} now.</p>`
+          : `<button type="button" class="linkish" id="hint">Show its name</button><p class="muted">Halves the most you can score.</p>`}
+      </div></div>`;
+      $("hint")?.addEventListener("click", () => { state.hinted = true; drawTicket(); announce(`It's ${dish.n}.`); $("ticket").focus({ preventScroll: true }); });
+    } else if (state.phase === "reveal") {
+      t.innerHTML = top(`Order ${state.i + 1} of ${ROUNDS}`) + `<div class="layout">${photoHtml(dish, true)}<div>
+        <h2>${esc(dish.n)}</h2>
+        <p class="from">from <a href="${esc(pageUrl(dish.cref))}">${esc(dish.c)}</a></p></div></div>
+        ${dish.sum ? `<p>${esc(dish.sum)}</p>` : ""}
+        <ul class="rows">
+          <li><span class="k">Your pin</span><span class="v">${esc(distText(res.d))}</span></li>
+          <li><span class="k">Points${state.hinted ? " (name shown)" : ""}</span><span class="v">${fmt(res.s)}</span></li>
+        </ul>
+        <div class="actions"><a href="${esc(pageUrl(dish.ref))}">Open its page</a></div>`;
+    } else {
+      const total = state.results.reduce((a, r) => a + r.s, 0);
+      const streak = state.mode === "daily" && saved.streak > 1 ? `<p class="muted">${saved.streak} days in a row.</p>` : "";
+      t.innerHTML = top("Your check") + `
+        ${total >= 20000 ? `<span class="stamp">CHEF'S KISS</span>` : total >= 12500 ? `<span class="stamp">WELL TRAVELED</span>` : ""}
+        <ul class="rows">
+          ${state.results.map(r => `<li><span class="k">${square(r.s)} ${esc(r.n)}</span><span class="v">${fmt(r.s)}</span></li>`).join("")}
+          <li class="total"><span class="k">Total</span><span class="v">${fmt(total)} / ${fmt(FULL * ROUNDS)}</span></li>
+        </ul>
+        ${streak}
+        <div class="actions">
+          ${state.mode === "daily" ? `<button type="button" class="linkish" id="share">Copy my result</button>` : ""}
+          <button type="button" class="linkish" id="practice">${state.mode === "daily" ? "Play a practice round" : "Another practice round"}</button>
+        </div>
+        ${state.mode === "daily" ? `<p class="muted">Five new dishes tomorrow.</p>` : ""}`;
+      $("share")?.addEventListener("click", share);
+      $("practice").addEventListener("click", () => start("practice"));
+    }
+    t.scrollTop = 0;
+  }
+
+  function drawControls() {
+    const c = $("controls");
+    if (state.phase === "guess") {
+      c.innerHTML = `<label class="sr-only" for="country">Or type a country</label>
+        <input id="country" list="countryList" placeholder="Or type a country" enterkeyhint="go">
+        <button class="btn" id="lockIn" type="submit" disabled>Lock in</button>`;
+      const input = $("country");
+      const fromInput = () => {
+        const iso = byName.get(input.value.trim().toLowerCase());
+        if (iso) { setGuess(places[iso].loc, iso, true); aim(places[iso].loc, 1.6); }
+        return iso;
+      };
+      input.addEventListener("change", fromInput);
+      c.onsubmit = e => {
+        e.preventDefault();
+        if (input.value.trim() && !(state.guess && state.guess.iso && places[state.guess.iso].n.toLowerCase() === input.value.trim().toLowerCase()) && !fromInput()) {
+          status("Pick a country from the list, or drop a pin on the globe."); announce("No country by that name. Pick one from the list."); return;
+        }
+        if (state.guess) lockIn();
+      };
+    } else if (state.phase === "reveal") {
+      c.innerHTML = `<button class="btn" id="next" type="submit">${state.i + 1 < ROUNDS ? "Next dish" : "See my check"}</button>`;
+      c.onsubmit = e => { e.preventDefault(); next(); };
+    } else {
+      c.innerHTML = ""; c.onsubmit = null;
+    }
+  }
+
+  async function share() {
+    const total = state.results.reduce((a, r) => a + r.s, 0);
+    const text = `Dish drop No. ${dayNo}: ${fmt(total)} / ${fmt(FULL * ROUNDS)}\n${state.results.map(r => square(r.s)).join("")}\nhttps://kylepace.dev/world-cuisine/app/drop.html`;
+    try { await navigator.clipboard.writeText(text); $("share").textContent = "Copied"; announce("Result copied."); }
+    catch { prompt("Copy your result:", text); }
+  }
+
+  const status = s => { $("status").textContent = s; };
+  const announce = s => { $("live").textContent = ""; setTimeout(() => { $("live").textContent = s; }, 50); };
+
+  start("daily");
+})().catch(err => {
+  console.error(err);
+  const l = document.getElementById("loading");
+  if (l) l.textContent = "Dish drop couldn't load. Try reloading the page.";
+});
+</script>
+</body>
+</html>

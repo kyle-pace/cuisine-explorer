@@ -13,6 +13,12 @@ Live at **[kylepace.dev/world-cuisine](https://kylepace.dev/world-cuisine/)**, o
 
 Nothing from Wikipedia is copied into the repo except page titles, links, and short Wikidata descriptions (used as a fallback). The intro on each card is fetched from Wikipedia when you open it.
 
+## Dish drop (prototype)
+
+`drop.html` is a daily game on the same globe: five dish photos a day, drop a pin where each comes from, scored by distance (the right country counts as full marks for a national dish). Everyone gets the same five on a given day; results stay in the browser. It plays at [kylepace.dev/world-cuisine/app/drop.html](https://kylepace.dev/world-cuisine/app/drop.html) and isn't linked from anywhere yet.
+
+Its pool, `data/drop.json`, is built by `scripts/build_drop.mjs`: every dish with a photo that belongs to exactly one national or regional cuisine with a place on the map. Design notes are in `design/PLAN.md`.
+
 ## Adding picks
 
 Edit `data/picks.json`. Key each cuisine by its Wikipedia page title, the same `id` used in `data/cuisines.json`:

@@ -12,3 +12,6 @@ public/world-cuisine/share.png
 public/world-cuisine/drop-share.png
 .astro/
 .wrangler/
+
+# npm run check output (screenshots)
+.check/

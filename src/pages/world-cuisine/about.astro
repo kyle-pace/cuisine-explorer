@@ -1,0 +1,260 @@
+---
+// About World cuisine: where everything on the globe comes from and how it gets there,
+// written the way the subject writes things down: a recipe, with ingredients (the sources)
+// and a method (the weekly refresh, step by step). Counts come from the data files.
+import DevLayout from 'kp-design/layouts/DevLayout.astro';
+
+const files = import.meta.glob<{ default: any }>(
+  ['../../../data/cuisines.json', '../../../data/picks.json', '../../../data/suggestions.json', '../../../data/food.json'],
+  { eager: true },
+);
+const read = (name: string) => files[`../../../data/${name}`]?.default ?? {};
+const cuisines = read('cuisines.json').cuisines ?? [];
+const meta = read('cuisines.json').meta ?? {};
+const dishes: number = (read('food.json').dishes ?? []).length;
+const ingredients: number = (read('food.json').ingredients ?? []).length;
+const shelved = new Set([...Object.keys(read('picks.json').cuisines ?? {}), ...Object.keys(read('suggestions.json').cuisines ?? {})]).size;
+const n = (x: number) => x.toLocaleString('en-US');
+const pages = n(Math.round((cuisines.length + dishes + ingredients) / 100) * 100);
+
+const sources = [
+  { name: 'Wikipedia', href: 'https://en.wikipedia.org/wiki/List_of_cuisines', what: 'its List of cuisines, and each cuisine’s intro from its own article (CC BY-SA)' },
+  { name: 'Wikidata', href: 'https://www.wikidata.org', what: 'places and countries, dishes, and what goes in them' },
+  { name: 'FAO’s FAOSTAT', href: 'https://www.fao.org/faostat/en/#data/QCL', what: 'where each ingredient is grown (CC BY 4.0)' },
+  { name: 'Wikimedia Commons', href: 'https://commons.wikimedia.org', what: 'photos, each with its credit' },
+  { name: 'Natural Earth', href: 'https://www.naturalearthdata.com', what: 'the shapes of countries' },
+  { name: 'Open Library', href: 'https://openlibrary.org', what: 'cookbook covers' },
+];
+
+const method = [
+  {
+    name: 'Read the list',
+    body: [
+      'Once a week, a script reads Wikipedia’s List of cuisines from top to bottom and keeps its shape: which continent a cuisine is under, which country, which region. That shape is the explorer’s shape. I don’t reorder it.',
+    ],
+  },
+  {
+    name: 'Look each one up',
+    body: [
+      `For every cuisine, it fetches the opening of its Wikipedia article and asks Wikidata where in the world it belongs. Then it gathers dishes and their ingredients from Wikidata and from the fact boxes on Wikipedia’s dish pages. Today that comes to ${n(cuisines.length)} cuisines, ${n(dishes)} dishes and ${n(ingredients)} ingredients.`,
+    ],
+  },
+  {
+    name: 'Add where things grow, and photos',
+    body: [
+      'FAOSTAT says which countries grow each ingredient, which is how searching an ingredient lights up the globe. Photos come from Wikimedia Commons with the photographer’s credit. Each photo is fetched once and kept on this site’s own storage, so Wikimedia isn’t asked again on every visit.',
+    ],
+  },
+  {
+    name: 'Fold in the handwritten parts',
+    body: [
+      `Wikipedia leaves gaps, most of all for Indigenous foodways. Where it does, I write short notes from tribal, museum and health sources (${n(meta.notes ?? 0)} so far), each with a link to suggest a correction. The cookbooks and recipe sites are mine to choose: ${n(shelved)} cuisines have a shelf, and anything marked “suggested” is research I haven’t reviewed yet.`,
+    ],
+  },
+  {
+    name: 'Taste before serving',
+    body: [
+      'Before anything is published, the new batch is compared with last week’s. If it lost a big share of its cuisines, dishes, ingredients or photos, something went wrong on the way, so the batch is thrown out and last week’s stays up.',
+    ],
+  },
+  {
+    name: 'Plate it',
+    body: [
+      `The globe is drawn in your browser from plain data files. There’s no database. The page for each cuisine, dish and ingredient, about ${pages} of them, is put together when someone asks for it.`,
+    ],
+  },
+];
+---
+
+<DevLayout
+  title="How World cuisine works"
+  description="Where World cuisine’s cuisines, dishes, ingredients and photos come from, and how the weekly refresh turns Wikipedia’s list into a globe."
+  accent="tangerine"
+  image="/world-cuisine/share-about.png"
+  imageAlt="How World cuisine works, written as a recipe: six sources as the ingredients and a six-step method."
+>
+  <header class="intro">
+    <p class="back"><a href="/world-cuisine/">World cuisine</a></p>
+    <h1>How it works.</h1>
+    <p class="lede prose">
+      Everything on <a href="/world-cuisine/">the globe</a> starts as someone else’s careful work, mostly Wikipedia’s. Here’s the recipe for
+      turning it into something you can spin.
+    </p>
+  </header>
+
+  <article class="recipe">
+    <p class="yield">
+      <strong>Makes</strong> {n(cuisines.length)} cuisines across {n(meta.national ?? 0)} countries and territories, {n(dishes)} dishes and {n(ingredients)} ingredients.{' '}
+      <strong>Refreshed</strong> every week.
+    </p>
+
+    <div class="columns">
+      <section class="ingredients" aria-labelledby="ingredients-title">
+        <h2 id="ingredients-title">Ingredients</h2>
+        <ul>
+          {
+            sources.map((source) => (
+              <li>
+                <a href={source.href}>{source.name}</a>: {source.what}
+              </li>
+            ))
+          }
+          <li>My own notes and picks, added by hand</li>
+        </ul>
+      </section>
+
+      <section class="method" aria-labelledby="method-title">
+        <h2 id="method-title">Method</h2>
+        <ol>
+          {
+            method.map((step) => (
+              <li>
+                <h3>{step.name}</h3>
+                {step.body.map((text) => <p>{text}</p>)}
+              </li>
+            ))
+          }
+        </ol>
+      </section>
+    </div>
+  </article>
+
+  <div class="after prose">
+    <h2>Notes from the cook</h2>
+    <p>
+      Wikipedia is the source of truth here, so the place to fix a fact about a cuisine is its Wikipedia article. The fix shows up on the globe
+      within a week. Corrections to my own notes can go through the link on each note.
+    </p>
+    <p>
+      The weekly refresh is tested against a saved copy of Wikipedia’s list and against broken ones, so a bad download can’t empty the
+      explorer.
+    </p>
+    <p>
+      Analytics works the same as the rest of kylepace.dev: anonymous, no cookies, and you can turn it off
+      (<a href="https://kylepace.dev/privacy/">privacy</a>). The code and data are <a href="https://github.com/kyle-pace/world-cuisine">on GitHub</a>.
+    </p>
+  </div>
+</DevLayout>
+
+<style>
+  .intro {
+    padding-bottom: var(--space-6);
+  }
+
+  /* At least 24px tall to tap */
+  .back a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 1.5rem;
+  }
+
+  .back {
+    margin: 0 0 var(--space-2);
+    font-size: var(--step--1);
+  }
+
+  .lede {
+    font-size: var(--step-1);
+    color: var(--ink-muted);
+  }
+
+  /* The recipe: a yield line across the top, then ingredients beside the method, the
+     way a cookbook page is laid out. On a phone they stack, ingredients first. */
+  .recipe {
+    border-top: 3px solid var(--ink);
+  }
+
+  .yield {
+    margin: 0;
+    padding: var(--space-3) 0;
+    border-bottom: 1px solid var(--line);
+    max-width: none;
+  }
+
+  .yield strong {
+    font-weight: 700;
+  }
+
+  .columns {
+    display: grid;
+    grid-template-columns: minmax(14rem, 20rem) minmax(0, 40rem);
+    gap: var(--space-8) var(--space-12);
+    padding-top: var(--space-6);
+  }
+
+  h2 {
+    margin: 0 0 var(--space-3);
+    font-size: var(--step-1);
+  }
+
+  .ingredients ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .ingredients li {
+    padding: var(--space-2) 0;
+    border-bottom: 1px solid var(--line);
+    font-size: var(--step--1);
+    line-height: 1.5;
+  }
+
+  .ingredients li:first-child {
+    border-top: 1px solid var(--line);
+  }
+
+  .ingredients a {
+    font-weight: 700;
+  }
+
+  .method ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: step;
+  }
+
+  .method li {
+    position: relative;
+    counter-increment: step;
+    padding: 0 0 var(--space-6) 3rem;
+  }
+
+  /* Big step numbers in the margin, as in a cookbook. */
+  .method li::before {
+    content: counter(step);
+    position: absolute;
+    left: 0;
+    top: -0.08em;
+    font-family: var(--font-display);
+    font-size: var(--step-3);
+    font-weight: 700;
+    line-height: 1;
+    color: var(--accent-ink);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .method h3 {
+    margin: 0 0 var(--space-1);
+    font-size: var(--step-1);
+    line-height: 1.25;
+  }
+
+  .method p {
+    margin: 0 0 var(--space-2);
+    max-width: 36rem;
+  }
+
+  .after {
+    margin-top: var(--space-8);
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--line);
+  }
+
+  @media (max-width: 52rem) {
+    .columns {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

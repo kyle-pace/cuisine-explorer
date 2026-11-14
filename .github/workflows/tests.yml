@@ -1,0 +1,22 @@
+# Runs the data job's tests on every push and pull request: the Wikipedia list parser
+# against a saved real page and broken copies of it, and the check that stops a
+# half-empty build from being published.
+name: Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python3 -m unittest discover -s tests

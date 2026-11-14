@@ -49,3 +49,8 @@ node scripts/build_web.mjs
 node scripts/build_app_index.mjs
 # Dish drop's pool of playable dishes (drop.html)
 node scripts/build_drop.mjs
+
+# Last step: refuse to publish a build that lost a big share of its cuisines, dishes,
+# ingredients or photos since the last commit (a fetch that failed partway). The run goes
+# red and the commit step never happens.
+python3 scripts/check_data.py

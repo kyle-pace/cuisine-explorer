@@ -20,6 +20,10 @@ THEMATIC = {
 }
 STOP = {"References", "External links", "See also"}
 
+# The real page lists well over 600 cuisines. Far fewer means we were handed something
+# else (an error page, half a download), and writing that out would empty the explorer.
+MIN_LINKED = 300
+
 
 def clean_title(t):
     t = t.strip().replace("_", " ")
@@ -121,8 +125,11 @@ def main(src, dst):
                         for p in e["parents"]]
 
     out = [entries[k] for k in order]
-    json.dump(out, open(dst, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     linked = [e for e in out if not e["group"]]
+    if len(linked) < MIN_LINKED:
+        sys.exit(f"Only {len(linked)} cuisines found in {src}; expected at least {MIN_LINKED}. "
+                 f"That doesn't look like Wikipedia's List of cuisines, so nothing was written.")
+    json.dump(out, open(dst, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     print(f"{len(out)} entries, {len(linked)} linked, "
           f"{len({e['title'] for e in linked})} unique pages")
 

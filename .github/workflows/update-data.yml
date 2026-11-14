@@ -35,6 +35,9 @@ jobs:
         run: |
           pip install pyyaml
           npm ci
+      # If the scripts themselves are broken, stop before they touch the data.
+      - name: Test the data job
+        run: python3 -m unittest discover -s tests
       - name: Rebuild the cuisine index
         run: ./scripts/update.sh
       - name: Commit if anything changed

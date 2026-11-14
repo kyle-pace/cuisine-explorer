@@ -184,7 +184,7 @@ A globe and a linked-page browser for the world's cuisines, with Wikipedia as th
 - **The explorer itself** is two static pages, `index.html` (the globe) and `web.html` (the page browser), plus `data/`, `vendor/` and `render_item.js`. They stay at the repo root as the source. `scripts/update.sh` rebuilds the data and runs weekly in GitHub Actions.
 - **The site around it** is Astro on its own Cloudflare Worker (`world-cuisine`), mounted on `kylepace.dev/world-cuisine` by the routes in `wrangler.jsonc`:
   - `src/pages/world-cuisine/index.astro`: the framed page with the header, credits and counts.
-  - `src/pages/world-cuisine/about.astro` (`/world-cuisine/about/`): how it works, written as a recipe: the sources are the ingredients and the weekly refresh is the method. Counts come from the data files. If a source or a step of `scripts/update.sh` changes, change this page too.
+  - `src/pages/world-cuisine/about.astro` (`/world-cuisine/about/`): the standard title, headings and step format from the `about-page` skill. Counts come from the data files. If a source or a step of `scripts/update.sh` changes, change this page too.
   - `src/pages/world-cuisine/[type]/[slug].astro`: about 3,600 cuisine, dish and ingredient pages, rendered on request with `render_item.js` (noindex).
   - `src/pages/world-cuisine/img/[...path].ts`: the photo route. Fetches each listed Wikimedia photo once and keeps it in the R2 bucket `kylepace-cuisine-images` (binding `CUISINE_IMAGES`).
   - `scripts/stage-app.mjs` copies the explorer into `public/world-cuisine/app/` before every build (gitignored). A new top-level file the pages need has to be added there too.

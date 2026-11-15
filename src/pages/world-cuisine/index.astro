@@ -2,7 +2,7 @@
 // World cuisine: frames the globe (index.html, served at /world-cuisine/app/) with the
 // site's header and credits, and passes #cuisine links through to it.
 import DevLayout from 'kp-design/layouts/DevLayout.astro';
-import { AboutLink, StatusBadge } from 'kp-design';
+import { AboutLink, LabWelcome, StatusBadge } from 'kp-design';
 
 // The data files at the repo root; picks and suggestions are optional
 const files = import.meta.glob<{ default: any }>(
@@ -26,6 +26,11 @@ const round = (n: number) => Math.floor(n / 10) * 10;
   image="/world-cuisine/share.png"
   imageAlt="World cuisine: a dark globe with countries colored by continent and thin routes arcing between them."
 >
+  <LabWelcome
+    name="World cuisine"
+    text="Wikipedia’s 600-plus cuisines and their dishes on one globe. Search an ingredient to see where in the world it’s cooked with, follow a dish to where it’s from, and find recipe sites and cookbooks to start cooking."
+    about="/world-cuisine/about/"
+  />
   <header class="intro">
     <p class="eyebrow"><a href="https://kylepace.dev/labs/">Labs</a> <StatusBadge status="in-progress" /></p>
     <h1>World cuisine.</h1>

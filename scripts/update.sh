@@ -44,6 +44,10 @@ python3 scripts/fetch_faostat.py
 # Photos and their credits (Wikidata, Wikipedia page images, Wikimedia Commons)
 python3 scripts/fetch_images.py
 
+# Link ingredients to KitchenCatalog (the grocery list Recipe search, Henwood and Grocery Deals
+# share) and read how many recipes Recipe search has for each. Keeps the last counts if it can't.
+node scripts/link_catalog.mjs
+
 # The web view: page models, the skeleton and the graph layout (needs `npm ci` for d3-force)
 node scripts/build_web.mjs
 node scripts/build_app_index.mjs

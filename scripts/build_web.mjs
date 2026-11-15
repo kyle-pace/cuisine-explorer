@@ -27,6 +27,15 @@ const foodSummaries = read("food_summaries.json", {});
 const grown = read("grown.json", { items: {} });
 const countries = read("countries.geojson");
 const images = read("images.json", { files: {}, items: {} });
+// Ingredient -> KitchenCatalog id and Recipe search's recipe count (scripts/link_catalog.mjs)
+const catalogLinks = read("catalog_links.json", { links: {} }).links || {};
+const recipesAction = (i) => {
+  const l = catalogLinks[i.id];
+  if (!l || !(l.recipes > 0)) return [];
+  const what = l.name.toLowerCase();
+  return [{ kind: "recipes", id: l.id, url: "https://kylepace.dev/recipe-search/?with=" + encodeURIComponent(l.id),
+    label: `${l.recipes.toLocaleString("en-US")} ${l.recipes === 1 ? "recipe" : "recipes"} with ${what}` }];
+};
 
 const COLORS = { "African cuisine": "#e46a3f", "Cuisine of the Americas": "#94bd5c", "Asian cuisine": "#f0b340", "European cuisine": "#cf5f87", "Oceanic cuisine": "#55b8ad" };
 const CONTINENT = { "African cuisine": "Africa", "Cuisine of the Americas": "The Americas", "Asian cuisine": "Asia", "European cuisine": "Europe", "Oceanic cuisine": "Oceania" };
@@ -211,7 +220,7 @@ for (const n of nodes.values()) {
       crumb: [["Ingredients", "ingredients"]],
       sub: `Ingredient in ${ds.length} ${ds.length === 1 ? "dish" : "dishes"} across ${rows.length} ${rows.length === 1 ? "cuisine" : "cuisines"}`,
       ...intro(own, i.title),
-      actions: [...(ds.length ? [{ kind: "globe", hash: "ingredient-" + slug(i.id) }] : []), ...(i.title ? [{ kind: "wiki", url: wikiUrl(i.title) }] : [])],
+      actions: [...(ds.length ? [{ kind: "globe", hash: "ingredient-" + slug(i.id) }] : []), ...recipesAction(i), ...(i.title ? [{ kind: "wiki", url: wikiUrl(i.title) }] : [])],
       sections: [
         rows.length && { h: "Where it's cooked with", count: rows.length, groups: rows.map(([c, l]) => [c.name, c.ref, list(l.sort(byName))]) },
         g && { h: "Where it's grown", grown: { what: g.fao.replace(/;/g, ","), years: grown.meta.years, url: grown.meta.url, world: g.world,

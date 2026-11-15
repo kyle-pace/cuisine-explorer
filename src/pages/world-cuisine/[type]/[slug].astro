@@ -78,6 +78,16 @@ const shareAlt = item?.img ? `Photo of ${item.img.of ?? item.n}` : 'World cuisin
   )}
 </DevLayout>
 
+<script>
+  // An ingredient page's "recipes with …" button goes to Recipe search. This says how often
+  // World cuisine sends people there, and for which ingredients (catalog ids, never text).
+  import { track } from 'kp-design/analytics';
+  document.addEventListener('click', (e) => {
+    const link = (e.target as Element | null)?.closest<HTMLAnchorElement>('a[data-recipes]');
+    if (link) track('Opened Recipe Search', { experiment: 'world-cuisine', ingredient_id: link.dataset.recipes, from: 'ingredient page' });
+  });
+</script>
+
 <style is:global>
   .cx-top { max-width: var(--measure); margin: var(--space-8) auto 0; padding: 0 var(--space-4); font-size: var(--step--1); color: var(--ink-muted); display: flex; gap: var(--space-2); }
   .cx { max-width: var(--measure); margin: var(--space-4) auto var(--space-16); padding: 0 var(--space-4); }

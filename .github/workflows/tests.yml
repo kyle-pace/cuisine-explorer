@@ -1,6 +1,6 @@
 # Runs the data job's tests on every push and pull request: the Wikipedia list parser
-# against a saved real page and broken copies of it, and the check that stops a
-# half-empty build from being published.
+# against a saved real page and broken copies of it, the check that stops a
+# half-empty build from being published, and the KitchenCatalog link step.
 name: Tests
 
 on:
@@ -20,3 +20,8 @@ jobs:
         with:
           python-version: "3.12"
       - run: python3 -m unittest discover -s tests
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      # The catalog link step (scripts/link_catalog.mjs); needs nothing from npm.
+      - run: node --test tests/*.test.mjs

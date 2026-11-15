@@ -5,7 +5,7 @@
 import DevLayout from 'kp-design/layouts/DevLayout.astro';
 
 const files = import.meta.glob<{ default: any }>(
-  ['../../../data/cuisines.json', '../../../data/picks.json', '../../../data/suggestions.json', '../../../data/food.json'],
+  ['../../../data/cuisines.json', '../../../data/picks.json', '../../../data/suggestions.json', '../../../data/food.json', '../../../data/catalog_links.json'],
   { eager: true },
 );
 const read = (name: string) => files[`../../../data/${name}`]?.default ?? {};
@@ -14,6 +14,8 @@ const meta = read('cuisines.json').meta ?? {};
 const dishes: number = (read('food.json').dishes ?? []).length;
 const ingredients: number = (read('food.json').ingredients ?? []).length;
 const shelved = new Set([...Object.keys(read('picks.json').cuisines ?? {}), ...Object.keys(read('suggestions.json').cuisines ?? {})]).size;
+const links = Object.values(read('catalog_links.json').links ?? {}) as { recipes?: number }[];
+const withRecipes = links.filter((l) => (l.recipes ?? 0) > 0).length;
 const n = (x: number) => x.toLocaleString('en-US');
 const pages = n(Math.round((cuisines.length + dishes + ingredients) / 100) * 100);
 
@@ -24,6 +26,7 @@ const sources = [
   { name: 'Wikimedia Commons', href: 'https://commons.wikimedia.org', what: 'photos, each with its credit' },
   { name: 'Natural Earth', href: 'https://www.naturalearthdata.com', what: 'the shapes of countries' },
   { name: 'Open Library', href: 'https://openlibrary.org', what: 'cookbook covers' },
+  { name: 'Recipe search', href: 'https://kylepace.dev/recipe-search/', what: 'how many recipes it has for each ingredient' },
 ];
 
 const steps = [
@@ -46,6 +49,13 @@ const steps = [
     where: 'GitHub Actions, once a week',
     body: [
       'FAOSTAT says which countries grow each ingredient, which is how searching an ingredient lights up the globe. Photos come from Wikimedia Commons with the photographer’s credit.',
+    ],
+  },
+  {
+    name: 'Link ingredients to recipes',
+    where: 'GitHub Actions, once a week',
+    body: [
+      `Each ingredient is matched to the grocery list my other food projects share (Recipe search, Henwood and Seattle Grocery Deals), so “Maize” here and “corn” there are the same thing. Names only Wikipedia uses, like Agaricus bisporus for button mushrooms, are matched by hand. ${n(withRecipes)} ingredients have recipes in Recipe search, and their pages link straight to them.`,
     ],
   },
   {

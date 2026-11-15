@@ -5,6 +5,8 @@
   "description": "World cuisine: the world's cuisines, dishes and ingredients on one globe, at kylepace.dev/world-cuisine/",
   "scripts": {
     "web": "node scripts/build_web.mjs",
+    "link": "node scripts/link_catalog.mjs",
+    "sync-catalog": "node scripts/sync-catalog.mjs",
     "dev": "node scripts/stage-app.mjs && astro dev",
     "build": "node scripts/stage-app.mjs && astro build",
     "preview": "npm run build && wrangler dev",

@@ -121,7 +121,7 @@ const href = (i: Item) => `/world-cuisine/ingredient/${i.slug}/`;
       timer = window.setTimeout(() => {
         if (q.length < 2 || q === sent) return;
         sent = q;
-        track('Searched Ingredients', { experiment: 'world-cuisine', match_count: count });
+        track('Searched Ingredients', { experiment: 'world-cuisine', result_count: count });
       }, 1200);
     });
   }

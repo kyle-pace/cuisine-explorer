@@ -1,0 +1,287 @@
+---
+// How World cuisine is built: the technical version of the About page, for the curious.
+// Diagrams are inline SVG in the lab's own colors, each with a title, a description and
+// the same facts in the text. Counts come from the data files.
+import DevLayout from 'kp-design/layouts/DevLayout.astro';
+const files = import.meta.glob<{ default: any }>(['../../../data/cuisines.json', '../../../data/food.json'], { eager: true });
+const read = (name: string) => files[`../../../data/${name}`]?.default ?? {};
+const cuisines: number = (read('cuisines.json').cuisines ?? []).length;
+const dishes: number = (read('food.json').dishes ?? []).length;
+const ingredients: number = (read('food.json').ingredients ?? []).length;
+const n = (x: number) => x.toLocaleString('en-US');
+---
+
+<DevLayout
+  title="How World cuisine is built"
+  description="The technical version: a weekly refresh from Wikipedia and Wikidata that can't publish a broken build, a globe drawn in the browser, and photos kept once in R2."
+  accent="tangerine"
+  image="/world-cuisine/share-about.png"
+  imageAlt="About World cuisine: the title beside a card listing its six steps."
+>
+  <article class="page">
+    <p class="back"><a href="/world-cuisine/about/">About World cuisine</a></p>
+    <h1>How World cuisine is built</h1>
+    <p class="lede">
+      The <a href="/world-cuisine/about/">About page</a> walks through where the data comes from. This is the technical version, with
+      links into <a href="https://github.com/kyle-pace/cuisine-explorer">the code</a>.
+    </p>
+
+    <section aria-labelledby="numbers-heading">
+      <h2 id="numbers-heading">The numbers</h2>
+      <dl class="numbers">
+        <div><dt>Cuisines</dt><dd>{n(cuisines)}</dd></div>
+        <div><dt>Dishes</dt><dd>{n(dishes)}</dd></div>
+        <div><dt>Ingredients</dt><dd>{n(ingredients)}</dd></div>
+        <div><dt>Refresh</dt><dd>weekly</dd></div>
+      </dl>
+    </section>
+
+    <section aria-labelledby="pipe-heading">
+      <h2 id="pipe-heading">A weekly refresh that can't publish a broken build</h2>
+      <figure tabindex="0" role="region" aria-label="Diagram: The weekly refresh. On narrow screens it scrolls sideways.">
+        <svg class="diagram" viewBox="0 0 940 200" role="img" aria-labelledby="pipe-title pipe-desc">
+          <title id="pipe-title">The weekly refresh</title>
+          <desc id="pipe-desc">Wikipedia’s list of cuisines, Wikidata, FAOSTAT and Wikimedia Commons feed a weekly refresh script. A safety check stops the run if anything shrank by more than a sixth. Only then is the data committed, which rebuilds the site.</desc>
+          <defs>
+            <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0 0 L10 5 L0 10 z" class="ink-fill"></path>
+            </marker>
+          </defs>
+          <g class="box"><rect x="10" y="20" width="180" height="46" rx="6"></rect><text x="100.0" y="48.0">Wikipedia list</text></g>
+          <g class="box"><rect x="10" y="80" width="180" height="46" rx="6"></rect><text x="100.0" y="108.0">Wikidata</text></g>
+          <g class="box"><rect x="10" y="140" width="180" height="46" rx="6"></rect><text x="100.0" y="168.0">FAOSTAT, Commons</text></g>
+          <g class="box accent"><rect x="240" y="60" width="190" height="80" rx="6"></rect><text x="335.0" y="96.0">Weekly refresh</text><text x="335.0" y="116.0" class="small">scripts/update.sh</text></g>
+          <g class="box"><rect x="480" y="60" width="170" height="80" rx="6"></rect><text x="565.0" y="96.0">Safety check</text><text x="565.0" y="116.0" class="small">nothing shrank by 1/6</text></g>
+          <g class="box accent"><rect x="700" y="60" width="230" height="80" rx="6"></rect><text x="815.0" y="96.0">Commit, then rebuild</text><text x="815.0" y="116.0" class="small">Cloudflare deploys main</text></g>
+          <path d="M190 43 C215 43 215 85 238 90" class="link" marker-end="url(#arrow)"></path>
+          <path d="M190 103 L238 103" class="link" marker-end="url(#arrow)"></path>
+          <path d="M190 163 C215 163 215 120 238 115" class="link" marker-end="url(#arrow)"></path>
+          <path d="M430 100 L478 100" class="link" marker-end="url(#arrow)"></path>
+          <path d="M650 100 L698 100" class="link" marker-end="url(#arrow)"></path>
+          <text x="565" y="165" class="small">a bad week fails out loud</text>
+        </svg>
+      </figure>
+      <ol class="steps">
+        <li>
+          <strong>Wikipedia's shape is the explorer's shape.</strong> <code>scripts/parse_list.py</code> reads the List of cuisines top to
+          bottom and keeps its continents, countries and regions. It refuses a page with fewer than 300 cuisines (an error page, half a
+          download).
+        </li>
+        <li>
+          <strong>Look everything up.</strong> Intros from each article, places from Wikidata, dishes and ingredients from Wikidata and
+          from dish pages' fact boxes, where ingredients grow from FAOSTAT, and photos with credits from Commons.
+        </li>
+        <li>
+          <strong>Link to the kitchen projects.</strong> Each ingredient is matched to KitchenCatalog, so World cuisine, Recipe search,
+          Henwood and Grocery Deals agree that "Maize" and "corn" are one thing.
+        </li>
+        <li>
+          <strong>Fail out loud.</strong> <code>scripts/check_data.py</code>, the last step, fails the run if cuisines, dishes,
+          ingredients, intros or photos fell by more than a sixth since the last commit, so a bad week never replaces good data.
+        </li>
+      </ol>
+    </section>
+
+    <section aria-labelledby="site-heading">
+      <h2 id="site-heading">One Worker, three kinds of page</h2>
+      <figure tabindex="0" role="region" aria-label="Diagram: How the site is put together. On narrow screens it scrolls sideways.">
+        <svg class="diagram" viewBox="0 0 940 220" role="img" aria-labelledby="site-title site-desc">
+          <title id="site-title">How the site is put together</title>
+          <desc id="site-desc">The globe page and the every-ingredient page are static. About 3,600 cuisine, dish and ingredient pages are drawn on request. All run on one Cloudflare Worker. The globe and graph are drawn in the browser with self-hosted globe.gl and force-graph, and a photo route fetches each Wikimedia photo once and keeps it in R2.</desc>
+          
+          <g class="box"><rect x="10" y="20" width="220" height="50" rx="6"></rect><text x="120.0" y="41.0">The globe page</text><text x="120.0" y="61.0" class="small">static, framed</text></g>
+          <g class="box"><rect x="10" y="90" width="220" height="50" rx="6"></rect><text x="120.0" y="111.0">Every ingredient</text><text x="120.0" y="131.0" class="small">static</text></g>
+          <g class="box"><rect x="10" y="160" width="220" height="50" rx="6"></rect><text x="120.0" y="181.0">3,600 item pages</text><text x="120.0" y="201.0" class="small">drawn on request</text></g>
+          <g class="box accent"><rect x="330" y="90" width="210" height="60" rx="6"></rect><text x="435.0" y="125.0">One Cloudflare Worker</text></g>
+          <g class="box"><rect x="640" y="20" width="290" height="50" rx="6"></rect><text x="785.0" y="41.0">globe.gl and force-graph</text><text x="785.0" y="61.0" class="small">self-hosted, in the browser</text></g>
+          <g class="box"><rect x="640" y="120" width="290" height="60" rx="6"></rect><text x="785.0" y="146.0">Photo route</text><text x="785.0" y="166.0" class="small">each photo fetched once, kept in R2</text></g>
+          <path d="M230 45 C280 45 280 100 328 108" class="link" marker-end="url(#arrow)"></path>
+          <path d="M230 115 L328 118" class="link" marker-end="url(#arrow)"></path>
+          <path d="M230 185 C280 185 280 140 328 135" class="link" marker-end="url(#arrow)"></path>
+          <path d="M540 105 C590 105 590 45 638 45" class="link" marker-end="url(#arrow)"></path>
+          <path d="M540 135 C590 135 590 150 638 150" class="link" marker-end="url(#arrow)"></path>
+        </svg>
+      </figure>
+      <p>
+        The explorer itself is two static pages kept at the repo root (<code>index.html</code>, the globe, and <code>web.html</code>,
+        the page browser) and copied into the site before each build. The 3,600 item pages would make the build slow and the site huge,
+        so they're rendered on request from the same data and kept out of search engines.
+      </p>
+    </section>
+
+    <section aria-labelledby="stack-heading">
+      <h2 id="stack-heading">The stack</h2>
+      <ul class="notes-list">
+        <li><strong>Data:</strong> Python scripts on GitHub Actions, weekly; tests against a saved real Wikipedia page and broken copies.</li>
+        <li><strong>Site:</strong> Astro on its own Cloudflare Worker, with photos in R2.</li>
+        <li><strong>Globe:</strong> globe.gl (three.js) and force-graph, self-hosted in <code>vendor/</code>.</li>
+        <li><strong>How I work:</strong> the principles every project follows are in <a href="https://kylepace.dev/how-i-build/">how I build</a>.</li>
+      </ul>
+    </section>
+  </article>
+</DevLayout>
+
+<style>
+  .back {
+    margin: 0 0 var(--space-2);
+    font-weight: 600;
+  }
+
+  .page {
+    padding: var(--space-4) var(--gutter) var(--space-12);
+    max-width: 64rem;
+  }
+
+  .page h1 {
+    margin: 0 0 var(--space-4);
+    font-size: var(--step-3, var(--step-2));
+    line-height: 1.1;
+  }
+
+  .lede {
+    max-width: 40rem;
+    font-size: var(--step-0);
+  }
+
+  .page section {
+    margin-top: var(--space-12);
+  }
+
+  .page h2 {
+    margin: 0 0 var(--space-4);
+    padding-bottom: var(--space-2);
+    font-size: var(--step-1);
+    font-weight: 700;
+    border-bottom: 3px solid var(--ink);
+  }
+
+  .page a {
+    color: var(--accent-ink);
+    text-underline-offset: 0.15em;
+  }
+
+  .page p,
+  .page li {
+    max-width: 40rem;
+  }
+
+  .page p {
+    margin: 0 0 var(--space-3);
+  }
+
+  .page code {
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.92em;
+  }
+
+  .numbers {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+    gap: var(--space-4);
+    margin: 0;
+  }
+
+  .numbers div {
+    border-top: 3px solid var(--accent);
+    padding-top: var(--space-2);
+  }
+
+  .numbers dt {
+    color: var(--ink-muted);
+    font-size: var(--step--1);
+  }
+
+  .numbers dd {
+    margin: 0;
+    font-size: var(--step-2);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Diagrams keep their size, so their labels stay readable; on a phone they scroll
+     sideways, and can be reached and scrolled with the keyboard. */
+  figure {
+    margin: 0 0 var(--space-6);
+    overflow-x: auto;
+  }
+
+  figure:focus-visible {
+    outline: 3px solid var(--accent-ink);
+    outline-offset: 2px;
+  }
+
+  /* Diagrams in the lab's own colors, so they follow light and dark. */
+  .diagram {
+    display: block;
+    width: 100%;
+    min-width: 40rem;
+    height: auto;
+    font-family: inherit;
+  }
+
+  .diagram text {
+    fill: var(--ink);
+    font-size: 15px;
+    font-weight: 600;
+    text-anchor: middle;
+  }
+
+  .diagram text.small {
+    font-size: 12px;
+    font-weight: 400;
+    fill: var(--ink-muted);
+  }
+
+  .diagram text.left {
+    text-anchor: start;
+  }
+
+  .diagram .box rect {
+    fill: var(--bg-raised, var(--bg));
+    stroke: var(--ink);
+    stroke-width: 1.5;
+  }
+
+  .diagram .box.accent rect {
+    stroke: var(--accent);
+    stroke-width: 3;
+  }
+
+  .diagram .box.muted rect {
+    stroke-dasharray: 5 4;
+    stroke: var(--ink-muted);
+  }
+
+  .diagram .link {
+    fill: none;
+    stroke: var(--ink);
+    stroke-width: 1.5;
+  }
+
+  .diagram .ink-fill {
+    fill: var(--ink);
+  }
+
+  .diagram .axis {
+    stroke: var(--ink-muted);
+    stroke-width: 1.5;
+  }
+
+  .diagram .accent-fill {
+    fill: var(--accent);
+  }
+
+  .diagram .soft-fill {
+    fill: color-mix(in oklab, var(--accent), var(--bg) 70%);
+  }
+
+  .steps,
+  .notes-list {
+    padding-left: 1.25rem;
+  }
+
+  .steps li,
+  .notes-list li {
+    margin-bottom: var(--space-3);
+  }
+</style>

@@ -198,6 +198,7 @@ A globe and a linked-page browser for the world's cuisines, with Wikipedia as th
   - `src/pages/world-cuisine/index.astro`: the framed page with the header, credits and counts.
   - `src/pages/world-cuisine/ingredients.astro` (`/world-cuisine/ingredients/`): every ingredient, built as a static page.
   - `src/pages/world-cuisine/about.astro` (`/world-cuisine/about/`): the standard title, headings and step format from the `about-page` skill. Counts come from the data files. If a source or a step of `scripts/update.sh` changes, change this page too.
+- **Deep dive:** `src/pages/world-cuisine/how-its-built.astro` (`/world-cuisine/how-its-built/`, linked from About) is the technical version, with inline SVG diagrams in the lab's colors, each with a title and description and the same facts in the text. If the refresh or the Worker changes, keep its numbers and diagrams current.
   - `src/pages/world-cuisine/[type]/[slug].astro`: about 3,600 cuisine, dish and ingredient pages, rendered on request with `render_item.js` (noindex).
   - `src/pages/world-cuisine/img/[...path].ts`: the photo route. Fetches each listed Wikimedia photo once and keeps it in the R2 bucket `kylepace-cuisine-images` (binding `CUISINE_IMAGES`).
   - `scripts/stage-app.mjs` copies the explorer into `public/world-cuisine/app/` before every build (gitignored). A new top-level file the pages need has to be added there too.

@@ -59,6 +59,16 @@ Each ingredient is linked to [KitchenCatalog](https://github.com/kyle-pace/kitch
 
 It writes `data/catalog_links.json`. If a grocery is missing from the catalog altogether, add it in KitchenCatalog (and check its answer keys), then run `npm run sync-catalog` here: the copy lives in `scripts/kitchen-catalog/`, not `vendor/`, so it isn't published with the site. Tests: `node --test tests/*.test.mjs`.
 
+## The ingredient map
+
+[kylepace.dev/world-cuisine/ingredient-map/](https://kylepace.dev/world-cuisine/ingredient-map/) puts every ingredient in three or more dishes near the ones it's cooked with. `scripts/build_ingredient_map.mjs` runs in the weekly update and writes `data/ingredient_map.json`:
+
+1. Two ingredients are linked by how many dishes they share, scaled so everyday ones (sugar, egg) don't link to everything; each keeps its strongest few links.
+2. Louvain community detection sorts them into neighborhoods; groups under four are folded into their closest neighbor. Each is named for its two most-used ingredients and the cuisines its dishes come from most.
+3. The layout is worked out once (d3-force, deterministic): neighborhoods first, as circles, with related ones side by side, then the ingredients packed inside.
+
+The page (`src/pages/world-cuisine/ingredient-map.astro`) draws it as a plain SVG with `scripts/ingredient_map_svg.mjs`, so it needs about 2 KB of script for the highlighting. The list under the map is the same thing in words. Ingredient pages link to it (`#<slug>` lights that ingredient). Share card: `node scripts/render-og.mjs ingredient-map`. Tests: `node --test tests/*.test.mjs`.
+
 ## Files
 
 | Path | What it is |
@@ -73,6 +83,7 @@ It writes `data/catalog_links.json`. If a grocery is missing from the catalog al
 | `data/overrides.json` | Hand fixes for places and countries |
 | `data/catalog_links.json` | Generated: each ingredient's KitchenCatalog id and recipe count |
 | `data/catalog_overrides.json` | Hand decisions for linking ingredients to the catalog |
+| `data/ingredient_map.json` | Generated: the ingredient map's neighborhoods and layout |
 | `scripts/` | The data pipeline, plus `build_preview.py` for a single-file preview with data inlined |
 | `og.png` | Share card |
 

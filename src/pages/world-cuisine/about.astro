@@ -5,7 +5,7 @@
 import DevLayout from 'kp-design/layouts/DevLayout.astro';
 
 const files = import.meta.glob<{ default: any }>(
-  ['../../../data/cuisines.json', '../../../data/picks.json', '../../../data/suggestions.json', '../../../data/food.json', '../../../data/catalog_links.json'],
+  ['../../../data/cuisines.json', '../../../data/picks.json', '../../../data/suggestions.json', '../../../data/food.json', '../../../data/catalog_links.json', '../../../data/ingredient_map.json'],
   { eager: true },
 );
 const read = (name: string) => files[`../../../data/${name}`]?.default ?? {};
@@ -16,6 +16,9 @@ const ingredients: number = (read('food.json').ingredients ?? []).length;
 const shelved = new Set([...Object.keys(read('picks.json').cuisines ?? {}), ...Object.keys(read('suggestions.json').cuisines ?? {})]).size;
 const links = Object.values(read('catalog_links.json').links ?? {}) as { recipes?: number }[];
 const withRecipes = links.filter((l) => (l.recipes ?? 0) > 0).length;
+const imap = read('ingredient_map.json');
+const mapped: number = (imap.nodes ?? []).length;
+const hoods: number = (imap.groups ?? []).length;
 const n = (x: number) => x.toLocaleString('en-US');
 const pages = n(Math.round((cuisines.length + dishes + ingredients) / 100) * 100);
 
@@ -56,6 +59,13 @@ const steps = [
     where: 'GitHub Actions, once a week',
     body: [
       `Each ingredient is matched to the grocery list my other food projects share (Recipe search, Henwood and Seattle Grocery Deals), so “Maize” here and “corn” there are the same thing. Names only Wikipedia uses, like Agaricus bisporus for button mushrooms, are matched by hand. ${n(withRecipes)} ingredients have recipes in Recipe search, and their pages link straight to them.`,
+    ],
+  },
+  {
+    name: 'Group ingredients by what they’re cooked with',
+    where: 'GitHub Actions, once a week',
+    body: [
+      `Two ingredients count as close when they share dishes, scaled so everyday ones like sugar and egg don’t pull everything together. A standard method for finding groups in a network (Louvain) sorts the ${n(mapped)} ingredients in three or more dishes into ${n(hoods)} neighborhoods, each named for its two most-used ingredients, and lays them out once. That’s the ingredient map.`,
     ],
   },
   {

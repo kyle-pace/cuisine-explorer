@@ -45,6 +45,7 @@ const round = (n: number) => Math.floor(n / 10) * 10;
     <noscript><p class="noscript">The globe needs JavaScript. <a href="/world-cuisine/app/">Open it on its own</a>.</p></noscript>
   </div>
   <p class="open muted"><a href="/world-cuisine/app/">Open the globe full screen</a>, or <a href="/world-cuisine/app/web.html#/">browse every cuisine, dish and ingredient as pages</a></p>
+  <p class="map-link"><a href="/world-cuisine/ingredient-map/">The ingredient map</a>: every ingredient near the ones it’s cooked with.</p>
 
   <div class="fine-print prose muted">
     <p>
@@ -153,6 +154,13 @@ const round = (n: number) => Math.floor(n / 10) * 10;
     color: inherit;
   }
 
+  .map-link {
+    margin: var(--space-3) 0 0;
+  }
+  .map-link a {
+    font-weight: 700;
+    color: inherit;
+  }
   .open {
     margin: var(--space-3) 0 0;
     font-size: var(--step--1);

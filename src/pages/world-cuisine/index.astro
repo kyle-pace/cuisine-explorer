@@ -2,7 +2,7 @@
 // World cuisine: frames the globe (index.html, served at /world-cuisine/app/) with the
 // site's header and credits, and passes #cuisine links through to it.
 import DevLayout from 'kp-design/layouts/DevLayout.astro';
-import { StatusBadge } from 'kp-design';
+import { AboutLink, StatusBadge } from 'kp-design';
 
 // The data files at the repo root; picks and suggestions are optional
 const files = import.meta.glob<{ default: any }>(
@@ -34,6 +34,7 @@ const round = (n: number) => Math.floor(n / 10) * 10;
       regional cooking, and {dishCount.toLocaleString()} dishes. Search an ingredient and the globe becomes a map of where it’s cooked
       with; pick a dish to see where it’s from and what goes in it.
     </p>
+    <p class="about-row"><AboutLink href="/world-cuisine/about/" /></p>
   </header>
 
   <a class="fullscreen" href="/world-cuisine/app/">Open the globe full screen</a>
@@ -83,6 +84,10 @@ const round = (n: number) => Math.floor(n / 10) * 10;
 
   .intro h1 {
     max-width: 18ch;
+  }
+
+  .about-row {
+    margin-top: var(--space-4);
   }
 
   .eyebrow {

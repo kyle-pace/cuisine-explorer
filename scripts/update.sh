@@ -48,8 +48,8 @@ python3 scripts/fetch_images.py
 # share) and read how many recipes Recipe search has for each. Keeps the last counts if it can't.
 node scripts/link_catalog.mjs
 
-# The ingredient map: ingredients grouped by what they're cooked with (needs d3-force too)
-node scripts/build_ingredient_map.mjs
+# Every ingredient, grouped by what it's cooked with (the ingredients page)
+node scripts/build_ingredient_groups.mjs
 
 # The web view: page models, the skeleton and the graph layout (needs `npm ci` for d3-force)
 node scripts/build_web.mjs

@@ -18,6 +18,6 @@ cpSync(new URL('og.png', root), new URL('public/world-cuisine/share.png', root))
 cpSync(new URL('drop-share.png', root), new URL('public/world-cuisine/drop-share.png', root));
 // The About page's card (scripts/og-about.html; render it with the share-card skill).
 cpSync(new URL('about-share.png', root), new URL('public/world-cuisine/share-about.png', root));
-// The ingredient map's card (node scripts/render-og.mjs ingredient-map).
-cpSync(new URL('ingredient-map-share.png', root), new URL('public/world-cuisine/share-ingredient-map.png', root));
+// The Every ingredient page's card (node scripts/render-og.mjs ingredients).
+cpSync(new URL('ingredients-share.png', root), new URL('public/world-cuisine/share-ingredients.png', root));
 console.log('Staged the globe and page browser in public/world-cuisine/app/.');

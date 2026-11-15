@@ -59,15 +59,16 @@ Each ingredient is linked to [KitchenCatalog](https://github.com/kyle-pace/kitch
 
 It writes `data/catalog_links.json`. If a grocery is missing from the catalog altogether, add it in KitchenCatalog (and check its answer keys), then run `npm run sync-catalog` here: the copy lives in `scripts/kitchen-catalog/`, not `vendor/`, so it isn't published with the site. Tests: `node --test tests/*.test.mjs`.
 
-## The ingredient map
+## Every ingredient
 
-[kylepace.dev/world-cuisine/ingredient-map/](https://kylepace.dev/world-cuisine/ingredient-map/) puts every ingredient in three or more dishes near the ones it's cooked with. `scripts/build_ingredient_map.mjs` runs in the weekly update and writes `data/ingredient_map.json`:
+[kylepace.dev/world-cuisine/ingredients/](https://kylepace.dev/world-cuisine/ingredients/) lists every ingredient, shelved with the ones it's cooked with. `scripts/build_ingredient_groups.mjs` runs in the weekly update and writes `data/ingredient_groups.json`:
 
-1. Two ingredients are linked by how many dishes they share, scaled so everyday ones (sugar, egg) don't link to everything; each keeps its strongest few links.
-2. Louvain community detection sorts them into neighborhoods; groups under four are folded into their closest neighbor. Each is named for its two most-used ingredients and the cuisines its dishes come from most.
-3. The layout is worked out once (d3-force, deterministic): neighborhoods first, as circles, with related ones side by side, then the ingredients packed inside.
+1. Ingredients in three or more dishes are linked by how many dishes they share, scaled so everyday ones (sugar, egg) don't link to everything; each keeps its strongest few links.
+2. Louvain community detection sorts them into shelves; groups under four are folded into their closest neighbor. Each is named for its two most-used ingredients and the cuisines its dishes come from most.
+3. Every other ingredient joins the shelf its dish-mates are on (rare dish-mates count more than everyday ones). The few whose dishes share nothing with any shelf go on a last shelf, "On their own".
+4. Each shelf lists its eight most-used ingredients first, then the rest A to Z. Ingredients that share a page (Wikipedia's "Atta flour" and "Atta (flour)") are listed once.
 
-The page (`src/pages/world-cuisine/ingredient-map.astro`) draws it as a plain SVG with `scripts/ingredient_map_svg.mjs`, so it needs about 2 KB of script for the highlighting. The list under the map is the same thing in words. Ingredient pages link to it (`#<slug>` lights that ingredient). Share card: `node scripts/render-og.mjs ingredient-map`. Tests: `node --test tests/*.test.mjs`.
+The page (`src/pages/world-cuisine/ingredients.astro`) is plain lists of links with a small find box. Ingredient pages link to their spot (`#ing-<slug>`). It replaced the ingredient map (a drawing of the same groups) on the night it launched, November 14, 2026, because the drawing was too crowded; `/world-cuisine/ingredient-map/` redirects here. Share card: `node scripts/render-og.mjs ingredients`. Tests: `node --test tests/*.test.mjs`.
 
 ## Files
 
@@ -83,7 +84,7 @@ The page (`src/pages/world-cuisine/ingredient-map.astro`) draws it as a plain SV
 | `data/overrides.json` | Hand fixes for places and countries |
 | `data/catalog_links.json` | Generated: each ingredient's KitchenCatalog id and recipe count |
 | `data/catalog_overrides.json` | Hand decisions for linking ingredients to the catalog |
-| `data/ingredient_map.json` | Generated: the ingredient map's neighborhoods and layout |
+| `data/ingredient_groups.json` | Generated: every ingredient on its shelf, for the Every ingredient page |
 | `scripts/` | The data pipeline, plus `build_preview.py` for a single-file preview with data inlined |
 | `og.png` | Share card |
 

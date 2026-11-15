@@ -14,5 +14,7 @@ export default defineConfig({
   site: 'https://kylepace.dev',
   build: { assets: 'world-cuisine/_astro' },
   session: false,
+  // The ingredient map (November 14, 2026) became the Every ingredient page the same night
+  redirects: { '/world-cuisine/ingredient-map': '/world-cuisine/ingredients/' },
   adapter: cloudflare({ imageService: 'compile' }),
 });

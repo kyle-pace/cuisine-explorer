@@ -56,7 +56,7 @@ export function renderItem(m, opts) {
   };
   const action = x => x.kind === "globe" ? `<a class="btn" href="${esc(opts.globe(x.hash))}">Show on the globe</a>`
     : x.kind === "wiki" ? `<a class="btn" href="${esc(x.url)}"${ext}>Wikipedia ${ARROW}</a>`
-    : x.kind === "map" ? `<a class="btn" href="${esc(x.url)}">On the ingredient map</a>`
+    : x.kind === "shelf" ? `<a class="btn" href="${esc(x.url)}">${esc(x.label || "Every ingredient")}</a>`
     : x.kind === "recipes" ? `<a class="btn" href="${esc(x.url)}" data-recipes="${esc(x.id)}">${esc(x.label)}</a>`
     : `<a class="btn" href="${esc(x.url)}"${ext}>${esc(x.label)} ${ARROW}</a>`;
   const dot = m.dot || m.c;

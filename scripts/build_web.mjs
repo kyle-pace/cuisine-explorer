@@ -27,8 +27,10 @@ const foodSummaries = read("food_summaries.json", {});
 const grown = read("grown.json", { items: {} });
 const countries = read("countries.geojson");
 const images = read("images.json", { files: {}, items: {} });
-// Ingredients on the ingredient map (scripts/build_ingredient_map.mjs) get a button to it
-const onMap = new Set((read("ingredient_map.json", { nodes: [] }).nodes || []).map(n => n.id));
+// Every ingredient has a place on the ingredients page (scripts/build_ingredient_groups.mjs);
+// its button says "cooked with" when it's on a real shelf, not the last "On their own" one
+const shelfOf = new Map((read("ingredient_groups.json", { groups: [] }).groups || []).flatMap(g => [...g.lead, ...g.rest].map(x => [x.id, g.id])));
+const shelfAction = (i) => shelfOf.has(i.id) ? [{ kind: "shelf", url: "/world-cuisine/ingredients/#ing-" + slug(i.id), label: shelfOf.get(i.id) === "on-their-own" ? "Every ingredient" : "Ingredients cooked with it" }] : [];
 // Ingredient -> KitchenCatalog id and Recipe search's recipe count (scripts/link_catalog.mjs)
 const catalogLinks = read("catalog_links.json", { links: {} }).links || {};
 const recipesAction = (i) => {
@@ -222,7 +224,7 @@ for (const n of nodes.values()) {
       crumb: [["Ingredients", "ingredients"]],
       sub: `Ingredient in ${ds.length} ${ds.length === 1 ? "dish" : "dishes"} across ${rows.length} ${rows.length === 1 ? "cuisine" : "cuisines"}`,
       ...intro(own, i.title),
-      actions: [...(ds.length ? [{ kind: "globe", hash: "ingredient-" + slug(i.id) }] : []), ...recipesAction(i), ...(onMap.has(i.id) ? [{ kind: "map", url: "/world-cuisine/ingredient-map/#" + slug(i.id) }] : []), ...(i.title ? [{ kind: "wiki", url: wikiUrl(i.title) }] : [])],
+      actions: [...(ds.length ? [{ kind: "globe", hash: "ingredient-" + slug(i.id) }] : []), ...recipesAction(i), ...shelfAction(i), ...(i.title ? [{ kind: "wiki", url: wikiUrl(i.title) }] : [])],
       sections: [
         rows.length && { h: "Where it's cooked with", count: rows.length, groups: rows.map(([c, l]) => [c.name, c.ref, list(l.sort(byName))]) },
         g && { h: "Where it's grown", grown: { what: g.fao.replace(/;/g, ","), years: grown.meta.years, url: grown.meta.url, world: g.world,

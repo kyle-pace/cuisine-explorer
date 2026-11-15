@@ -5,7 +5,7 @@
 import DevLayout from 'kp-design/layouts/DevLayout.astro';
 
 const files = import.meta.glob<{ default: any }>(
-  ['../../../data/cuisines.json', '../../../data/picks.json', '../../../data/suggestions.json', '../../../data/food.json', '../../../data/catalog_links.json', '../../../data/ingredient_map.json'],
+  ['../../../data/cuisines.json', '../../../data/picks.json', '../../../data/suggestions.json', '../../../data/food.json', '../../../data/catalog_links.json', '../../../data/ingredient_groups.json'],
   { eager: true },
 );
 const read = (name: string) => files[`../../../data/${name}`]?.default ?? {};
@@ -16,9 +16,9 @@ const ingredients: number = (read('food.json').ingredients ?? []).length;
 const shelved = new Set([...Object.keys(read('picks.json').cuisines ?? {}), ...Object.keys(read('suggestions.json').cuisines ?? {})]).size;
 const links = Object.values(read('catalog_links.json').links ?? {}) as { recipes?: number }[];
 const withRecipes = links.filter((l) => (l.recipes ?? 0) > 0).length;
-const imap = read('ingredient_map.json');
-const mapped: number = (imap.nodes ?? []).length;
-const hoods: number = (imap.groups ?? []).length;
+const igroups = read('ingredient_groups.json');
+const listed: number = igroups.ingredients ?? 0;
+const hoods: number = (igroups.groups ?? []).filter((g: { id: string }) => g.id !== 'on-their-own').length;
 const n = (x: number) => x.toLocaleString('en-US');
 const pages = n(Math.round((cuisines.length + dishes + ingredients) / 100) * 100);
 
@@ -65,7 +65,7 @@ const steps = [
     name: 'Group ingredients by what they’re cooked with',
     where: 'GitHub Actions, once a week',
     body: [
-      `Two ingredients count as close when they share dishes, scaled so everyday ones like sugar and egg don’t pull everything together. A standard method for finding groups in a network (Louvain) sorts the ${n(mapped)} ingredients in three or more dishes into ${n(hoods)} neighborhoods, each named for its two most-used ingredients, and lays them out once. That’s the ingredient map.`,
+      `Two ingredients count as close when they share dishes, scaled so everyday ones like sugar and egg don’t pull everything together. A standard method for finding groups in a network (Louvain) sorts the ingredients in three or more dishes into ${n(hoods)} shelves, each named for its two most-used ingredients. Every other ingredient joins the shelf its dish-mates are on, so all ${n(listed)} are listed on the Every ingredient page.`,
     ],
   },
   {

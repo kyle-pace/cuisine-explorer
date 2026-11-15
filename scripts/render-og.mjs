@@ -8,38 +8,29 @@ import { chromium } from 'playwright';
 
 const root = new URL('../', import.meta.url);
 
-// `node scripts/render-og.mjs ingredient-map` renders the ingredient map's card from the real
-// map (scripts/og-ingredient-map.html + scripts/ingredient_map_svg.mjs), with lemongrass lit
-if (process.argv[2] === 'ingredient-map') {
-  const { mapSvg } = await import('./ingredient_map_svg.mjs');
-  const map = JSON.parse(readFileSync(new URL('data/ingredient_map.json', root), 'utf8'));
-  const html = readFileSync(new URL('scripts/og-ingredient-map.html', root), 'utf8')
-    .replace('<div class="map">{{SVG}}</div>', () => '<div class="map">' + mapSvg(map, { interactive: true }) + '</div>')
-    .replace('{{COUNT}}', String(map.nodes.length))
-    .replace('{{HOODS}}', String(map.groups.length));
-  const tmp = new URL('scripts/.og-ingredient-map.html', root);
+// `node scripts/render-og.mjs ingredients` renders the Every ingredient page's card from the
+// real shelves (scripts/og-ingredients.html + data/ingredient_groups.json)
+if (process.argv[2] === 'ingredients') {
+  const data = JSON.parse(readFileSync(new URL('data/ingredient_groups.json', root), 'utf8'));
+  const esc = (t) => String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;');
+  const pick = ['Chili pepper and ginger', 'Wheat flour and sugar', 'Potato and carrot'];
+  const shelves = pick.map((name) => data.groups.find((g) => g.name === name) ?? data.groups[0]).map((g) =>
+    `<div class="shelf"><h2>${esc(g.name)}</h2><p class="lead">${g.lead.map((i) => `<span>${esc(i.name)}</span>`).join(' ')}</p>` +
+    `<p class="rest">${g.rest.slice(0, 14).map((i) => `<span>${esc(i.name)}</span>`).join(' ')}</p></div>`).join('');
+  const html = readFileSync(new URL('scripts/og-ingredients.html', root), 'utf8')
+    .replace('<div class="shelves">{{SHELVES}}</div>', () => '<div class="shelves">' + shelves + '</div>')
+    .replace('{{COUNT}}', data.ingredients.toLocaleString('en-US'))
+    .replace('{{HOODS}}', String(data.groups.length));
+  const tmp = new URL('scripts/.og-ingredients.html', root);
   writeFileSync(tmp, html);
   const browser = await chromium.launch();
   const page = await browser.newPage({ viewport: { width: 1200, height: 630 } });
   await page.goto(tmp.href);
-  await page.evaluate(() => {
-    const svg = document.querySelector('svg');
-    const me = svg.querySelector('a.ing[data-slug="lemongrass"]');
-    const near = me.dataset.near.split(' ');
-    svg.classList.add('active');
-    me.classList.add('on', 'me');
-    for (const s of near) svg.querySelector(`a.ing[data-slug="${s}"]`)?.classList.add('on');
-    svg.querySelectorAll('.links line').forEach((l) => {
-      if ((l.dataset.a === 'lemongrass' && near.includes(l.dataset.b)) || (l.dataset.b === 'lemongrass' && near.includes(l.dataset.a))) l.classList.add('on');
-    });
-  });
   await page.evaluate(() => document.fonts.ready);
-  // Names that would peek out from behind the title read as fragments; leave them off the card
-  await page.evaluate(() => document.querySelectorAll('.hoods text, .lab').forEach((t) => { if (t.getBoundingClientRect().left < 600) t.style.display = 'none'; }));
-  await page.screenshot({ path: new URL('ingredient-map-share.png', root).pathname });
+  await page.screenshot({ path: new URL('ingredients-share.png', root).pathname });
   await browser.close();
   rmSync(tmp);
-  console.log('Rendered ingredient-map-share.png');
+  console.log('Rendered ingredients-share.png');
   process.exit(0);
 }
 

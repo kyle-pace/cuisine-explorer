@@ -1,0 +1,28 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+/* Share card for kylepace.dev/world-cuisine/ingredients/ (ingredients-share.png).
+   Render with: node scripts/render-og.mjs ingredients. The shelves are the real ones
+   (the shelves div is filled from data/ingredient_groups.json). */
+@font-face{font-family:A;src:url("../node_modules/@fontsource/atkinson-hyperlegible-next/files/atkinson-hyperlegible-next-latin-400-normal.woff2")}
+@font-face{font-family:A;font-weight:700;src:url("../node_modules/@fontsource/atkinson-hyperlegible-next/files/atkinson-hyperlegible-next-latin-700-normal.woff2")}
+html,body{margin:0}
+body{width:1200px;height:630px;background:#1b1424;color:#ede6da;font-family:A;overflow:hidden;position:relative}
+.text{position:absolute;left:64px;top:64px;bottom:64px;width:420px;display:flex;flex-direction:column;justify-content:space-between}
+.site{font-size:26px;color:#b8acc7}
+h1{margin:0;font-size:84px;line-height:1;letter-spacing:-0.02em;font-weight:700}
+.sub{margin:24px 0 0;font-size:30px;line-height:1.3;color:#d6cdc0}
+.shelves{position:absolute;left:560px;top:56px;width:600px}
+.shelf{margin:0 0 30px}
+.shelf h2{margin:0 0 8px;font-size:30px;color:#f0b340}
+.lead{font-size:24px;font-weight:700;line-height:1.35;margin:0 0 4px}
+.rest{font-size:20px;line-height:1.45;color:#b8acc7;margin:0}
+.lead span,.rest span{margin-right:18px;white-space:nowrap}
+.fade{position:absolute;left:0;right:0;bottom:0;height:150px;background:linear-gradient(rgba(27,20,36,0),#1b1424 85%)}
+</style></head><body>
+<div class="shelves">{{SHELVES}}</div>
+<div class="fade"></div>
+<div class="text">
+  <div class="site">kylepace.dev/world-cuisine</div>
+  <div><h1>Every ingredient</h1><p class="sub">{{COUNT}} ingredients, shelved with the ones they’re cooked with.</p></div>
+  <div class="site">{{HOODS}} shelves</div>
+</div>
+</body></html>

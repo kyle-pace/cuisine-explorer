@@ -17,7 +17,7 @@
     "@astrojs/cloudflare": "^14.4.6",
     "astro": "^7.4.7",
     "d3-force": "3.0.0",
-    "kp-design": "github:kyle-pace/kp-design#2ebaf37266d6576d4ded754d1c303932d1749d89"
+    "kp-design": "github:kyle-pace/kp-design#d464a8fb5fdf124fb30ac0f828d32cb9ec616f8c"
   },
   "devDependencies": {
     "axe-core": "^4.14.0",

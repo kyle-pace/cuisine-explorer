@@ -1,33 +1,59 @@
 ---
-// Every ingredient, at /world-cuisine/ingredients/: all of World cuisine's ingredients on
-// shelves of what they're cooked with. The grouping is worked out at build time
-// (scripts/build_ingredient_groups.mjs, data/ingredient_groups.json); the page is plain
-// lists of links, with a small script for the find box. Ingredient pages link here with
-// #ing-<slug>, which marks that ingredient on its shelf (CSS :target, no script).
+// Every ingredient, at /world-cuisine/ingredients/: all of World cuisine's ingredients, each
+// under the part of the world where it's most at home, or A to Z. The placing is worked out at
+// build time (scripts/build_ingredient_groups.mjs, data/ingredient_groups.json). Both orders
+// are plain lists of links in the page; a small script runs the find box, the part-of-the-world
+// filter and the order switch, and keeps them in the address (?where=…&order=az).
+// Ingredient pages link here with #ing-<slug>, which marks that ingredient in its part of the
+// world (CSS :target).
 // Design plan: design/PLAN.md, "Every ingredient".
 import DevLayout from 'kp-design/layouts/DevLayout.astro';
 import data from '../../../data/ingredient_groups.json';
 import food from '../../../data/food.json';
 
 type Item = { id: string; name: string; slug: string; dishes: number };
-type Shelf = { id: string; name: string; cuisines: string[]; lead: Item[]; rest: Item[]; size: number };
-const shelves = data.groups as Shelf[];
+type Part = { id: string; name: string; continent: string | null; dishes: number; cuisines: string[]; lead: Item[]; rest: Item[]; size: number };
+const parts = data.groups as Part[];
 const n = (x: number) => x.toLocaleString('en-US');
 const dishes = (food as { dishes?: unknown[] }).dishes?.length ?? 0;
 const list = (xs: string[]) => (xs.length > 1 ? `${xs.slice(0, -1).join(', ')} and ${xs.at(-1)}` : (xs[0] ?? ''));
-const from = (s: Shelf) =>
-  s.cuisines.length
-    ? `${n(s.size)} ingredients, mostly in ${list(s.cuisines)} dishes.`
-    : `${n(s.size)} ingredients from dishes that list few others, so there’s nothing yet to group them by.`;
+const words = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
 const href = (i: Item) => `/world-cuisine/ingredient/${i.slug}/`;
+const contId = (c: string) => c.toLowerCase().replace(/^the /, '').replace(/[^a-z]+/g, '-');
+
+const say = (p: Part) => {
+  const count = `${n(p.size)} ${p.size === 1 ? 'ingredient' : 'ingredients'}`;
+  if (p.id === 'all-over-the-world') return `${count} found in dishes from ${words[data.everywhere] ?? data.everywhere} or more parts of the world.`;
+  if (p.id === 'beyond-borders') return `${count} most at home in cuisines tied to a people, faith or time rather than a place.`;
+  if (p.id === 'not-in-a-dish-yet') return `${count} with a page of their own but no dish listed yet.`;
+  return p.cuisines.length ? `${count}, most at home in ${list(p.cuisines)} dishes.` : `${count}.`;
+};
+
+// Reading order: parts on their own, and continents holding their parts
+type Block = { kind: 'part'; part: Part } | { kind: 'continent'; name: string; id: string; parts: Part[] };
+const blocks: Block[] = [];
+for (const p of parts) {
+  if (!p.continent) { blocks.push({ kind: 'part', part: p }); continue; }
+  const last = blocks.at(-1);
+  if (last?.kind === 'continent' && last.name === p.continent) last.parts.push(p);
+  else blocks.push({ kind: 'continent', name: p.continent, id: contId(p.continent), parts: [p] });
+}
+
+// A to Z: every ingredient with the part it's under
+const all = parts.flatMap((p) => [...p.lead, ...p.rest].map((i) => ({ ...i, part: p })))
+  .sort((a, b) => a.name.localeCompare(b.name, 'en', { sensitivity: 'base' }));
+const letterOf = (s: string) => { const c = s.normalize('NFD')[0]?.toUpperCase() ?? '#'; return /[A-Z]/.test(c) ? c : '#'; };
+const letters: [string, typeof all][] = [];
+for (const i of all) { const l = letterOf(i.name); const last = letters.at(-1); if (last?.[0] === l) last[1].push(i); else letters.push([l, [i]]); }
+const data_ = (p: Part) => ({ 'data-part': p.id, 'data-cont': p.continent ? contId(p.continent) : '' });
 ---
 
 <DevLayout
   title="Every ingredient"
-  description={`All ${n(data.ingredients)} ingredients in World cuisine's dishes, shelved with the ones they're cooked with.`}
+  description={`All ${n(data.ingredients)} ingredients in World cuisine's dishes, each under the part of the world where it's most at home.`}
   accent="tangerine"
   image="/world-cuisine/share-ingredients.png"
-  imageAlt="Every ingredient: shelves of ingredient names on a dark background, each shelf named for its two most-used ingredients."
+  imageAlt="Every ingredient: ingredient names under parts of the world, like Southeast Asia and Southern Europe, on a dark background."
 >
   <nav class="cx-top" aria-label="World cuisine">
     <a href="/world-cuisine/">World cuisine</a>
@@ -38,50 +64,109 @@ const href = (i: Item) => `/world-cuisine/ingredient/${i.slug}/`;
   <article class="every">
     <h1>Every ingredient</h1>
     <p class="say">
-      All {n(data.ingredients)} ingredients in World cuisine’s {n(dishes)} dishes, shelved with the ones they’re cooked with.
+      All {n(data.ingredients)} ingredients in World cuisine’s {n(dishes)} dishes, each under the part of the world where it’s most at home.
     </p>
 
-    <div class="find" hidden>
-      <label for="find">Find an ingredient</label>
-      <input id="find" type="search" autocomplete="off" spellcheck="false" />
-      <p id="found" aria-live="polite"></p>
-    </div>
+    <form class="controls" hidden role="search" aria-label="Ingredients">
+      <div class="field find">
+        <label for="find">Find an ingredient</label>
+        <input id="find" type="search" autocomplete="off" spellcheck="false" />
+      </div>
+      <div class="field">
+        <label for="where">Part of the world</label>
+        <select id="where">
+          <option value="">Everywhere</option>
+          {
+            blocks.map((b) =>
+              b.kind === 'part' ? (
+                <option value={b.part.id}>{b.part.name}</option>
+              ) : b.parts.length === 1 && b.parts[0].name === b.name ? (
+                <option value={b.parts[0].id}>{b.name}</option>
+              ) : (
+                <optgroup label={b.name}>
+                  <option value={`all-${b.id}`}>All of {b.name.replace(/^The /, 'the ')}</option>
+                  {b.parts.map((p) => <option value={p.id}>{p.name}</option>)}
+                </optgroup>
+              ),
+            )
+          }
+        </select>
+      </div>
+      <fieldset class="field order">
+        <legend>Order</legend>
+        <label><input type="radio" name="order" value="place" checked /> By part of the world</label>
+        <label><input type="radio" name="order" value="az" /> A to Z</label>
+      </fieldset>
+      <p id="found" class="found" aria-live="polite"></p>
+    </form>
 
-    <nav class="shelves" aria-label="Shelves">
-      <ol>
-        {shelves.map((s) => <li><a href={`#${s.id}`}>{s.name}</a></li>)}
-      </ol>
+    <nav class="jump" aria-label="Parts of the world">
+      <ol>{parts.map((p) => <li><a href={`#${p.id}`}>{p.name}</a></li>)}</ol>
     </nav>
 
-    {
-      shelves.map((s) => (
-        <section class="shelf" id={s.id} aria-labelledby={`${s.id}-name`}>
-          <h2 id={`${s.id}-name`}>{s.name}</h2>
-          <p class="from">{from(s)}</p>
-          {s.lead.length > 0 && (
-            <ul class="lead" aria-label="Most used">
-              {s.lead.map((i) => (
-                <li>
-                  <a id={`ing-${i.slug}`} href={href(i)} data-hood={s.name}>{i.name}</a>
+    <div id="by-place" class="view">
+      {
+        blocks.map((b) =>
+          b.kind === 'part' ? (
+            <section class="part top" id={b.part.id} {...data_(b.part)} aria-labelledby={`${b.part.id}-name`}>
+              <h2 id={`${b.part.id}-name`}>{b.part.name}</h2>
+              <p class="from">{say(b.part)}</p>
+              {b.part.lead.length > 0 && (
+                <ul class="lead" aria-label="Most used">
+                  {b.part.lead.map((i) => <li {...data_(b.part)}><a id={`ing-${i.slug}`} href={href(i)}>{i.name}</a></li>)}
+                </ul>
+              )}
+              <ul class="rest" aria-label={b.part.lead.length ? 'The rest, A to Z' : 'A to Z'}>
+                {b.part.rest.map((i) => <li {...data_(b.part)}><a id={`ing-${i.slug}`} href={href(i)}>{i.name}</a></li>)}
+              </ul>
+            </section>
+          ) : (
+            <section class="continent" id={b.id} data-cont={b.id} aria-labelledby={`${b.id}-name`}>
+              <h2 id={`${b.id}-name`}>{b.name}</h2>
+              {b.parts.map((p) => (
+                <section class="part" id={p.id} {...data_(p)} aria-labelledby={p.name === b.name ? undefined : `${p.id}-name`}>
+                  {p.name !== b.name && <h3 id={`${p.id}-name`}>{p.name}</h3>}
+                  <p class="from">{say(p)}</p>
+                  {p.lead.length > 0 && (
+                    <ul class="lead" aria-label="Most used">
+                      {p.lead.map((i) => <li {...data_(p)}><a id={`ing-${i.slug}`} href={href(i)}>{i.name}</a></li>)}
+                    </ul>
+                  )}
+                  <ul class="rest" aria-label={p.lead.length ? 'The rest, A to Z' : 'A to Z'}>
+                    {p.rest.map((i) => <li {...data_(p)}><a id={`ing-${i.slug}`} href={href(i)}>{i.name}</a></li>)}
+                  </ul>
+                </section>
+              ))}
+            </section>
+          ),
+        )
+      }
+    </div>
+
+    <div id="a-to-z" class="view" hidden>
+      <nav class="jump letters" aria-label="Letters">
+        <ol>{letters.map(([l]) => <li><a href={`#letter-${l === '#' ? 'other' : l}`}>{l}</a></li>)}</ol>
+      </nav>
+      {
+        letters.map(([l, items]) => (
+          <section class="letter" id={`letter-${l === '#' ? 'other' : l}`} aria-labelledby={`letter-${l === '#' ? 'other' : l}-name`}>
+            <h2 id={`letter-${l === '#' ? 'other' : l}-name`}>{l}</h2>
+            <ul>
+              {items.map((i) => (
+                <li {...data_(i.part)}>
+                  <a href={href(i)}>{i.name}</a> <span class="where">{i.part.name}</span>
                 </li>
               ))}
             </ul>
-          )}
-          <ul class="rest" aria-label={s.lead.length ? 'The rest, A to Z' : 'A to Z'}>
-            {s.rest.map((i) => (
-              <li>
-                <a id={`ing-${i.slug}`} href={href(i)} data-hood={s.name}>{i.name}</a>
-              </li>
-            ))}
-          </ul>
-        </section>
-      ))
-    }
+          </section>
+        ))
+      }
+    </div>
 
     <p class="how">
-      Two ingredients are close when they share dishes, counted so everyday ones like sugar and egg don’t pull everything together. The
-      shelves are found from the ingredients in three or more dishes and named for their two most-used ones; every other ingredient joins
-      the shelf its dish-mates are on. <a href="/world-cuisine/about/">How World cuisine works</a>.
+      Each ingredient sits where the biggest share of a part of the world’s dishes use it; one found in dishes from {words[data.everywhere]} or
+      more parts is all over the world. The parts come from Wikipedia’s List of cuisines. <a href="/world-cuisine/about/">How World cuisine
+      works</a>.
     </p>
   </article>
 </DevLayout>
@@ -89,51 +174,87 @@ const href = (i: Item) => `/world-cuisine/ingredient/${i.slug}/`;
 <script>
   import { track } from 'kp-design/analytics';
 
-  const box = document.querySelector<HTMLElement>('.find');
-  const input = document.getElementById('find') as HTMLInputElement | null;
+  const form = document.querySelector<HTMLFormElement>('.controls');
+  const find = document.getElementById('find') as HTMLInputElement | null;
+  const where = document.getElementById('where') as HTMLSelectElement | null;
   const found = document.getElementById('found');
-  const shelves = [...document.querySelectorAll<HTMLElement>('.shelf')];
+  const jump = document.querySelector<HTMLElement>('nav.jump:not(.letters)');
+  const views = { place: document.getElementById('by-place')!, az: document.getElementById('a-to-z')! };
   const fold = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();
-  const items = shelves.flatMap((shelf) =>
-    [...shelf.querySelectorAll<HTMLAnchorElement>('li a')].map((a) => ({ shelf, li: a.parentElement!, name: fold(a.textContent ?? '') })),
-  );
+  const items = [...document.querySelectorAll<HTMLLIElement>('.view li[data-part]')].map((li) => ({
+    li, view: li.closest('#a-to-z') ? 'az' : 'place', part: li.dataset.part ?? '', cont: li.dataset.cont ?? '',
+    name: fold(li.querySelector('a')?.textContent ?? ''),
+  }));
+  const total = items.filter((it) => it.view === 'place').length;
+  const order = () => (form?.querySelector<HTMLInputElement>('input[name="order"]:checked')?.value === 'az' ? 'az' : 'place');
 
-  // The find box only works with the script, so it stays hidden without it
-  if (box && input && found) {
-    box.hidden = false;
+  function apply() {
+    const q = fold(find?.value ?? '');
+    const w = where?.value ?? '';
+    const o = order();
+    views.place.hidden = o !== 'place';
+    views.az.hidden = o !== 'az';
+    let shown = 0;
+    for (const it of items) {
+      const show = (!q || it.name.includes(q)) && (!w || it.part === w || `all-${it.cont}` === w);
+      it.li.hidden = !show;
+      if (show && it.view === o) shown++;
+    }
+    // Hide lists, parts, continents and letters left empty
+    for (const el of document.querySelectorAll<HTMLElement>('.view ul, .view .part, .view .continent, .view .letter')) {
+      el.hidden = !el.querySelector('li[data-part]:not([hidden])');
+    }
+    document.querySelector<HTMLElement>('.letters')!.hidden = !!(q || w);
+    if (found) found.textContent = !q && !w ? '' : shown ? `Showing ${shown.toLocaleString('en-US')} of ${total.toLocaleString('en-US')} ingredients.` : 'No ingredients match.';
+    // Keep the filter and order in the address, so it can be shared or come back to
+    const url = new URL(location.href);
+    w ? url.searchParams.set('where', w) : url.searchParams.delete('where');
+    o === 'az' ? url.searchParams.set('order', 'az') : url.searchParams.delete('order');
+    history.replaceState(history.state, '', url.pathname + url.search + url.hash);
+    return shown;
+  }
+
+  if (form && find && where && found) {
+    form.hidden = false;
+    if (jump) jump.hidden = true; // the filter does its job
+    form.addEventListener('submit', (e) => e.preventDefault());
+    // Start from the address; arriving from an ingredient's page (#ing-…) shows it in its place
+    const params = new URLSearchParams(location.search);
+    const fromPage = location.hash.startsWith('#ing-');
+    if (!fromPage && [...where.options].some((op) => op.value === params.get('where'))) where.value = params.get('where')!;
+    if (!fromPage && params.get('order') === 'az') form.querySelector<HTMLInputElement>('input[value="az"]')!.checked = true;
+    if (where.value || order() === 'az') apply();
+
     let sent = '';
     let timer = 0;
-    input.addEventListener('input', () => {
-      const q = fold(input.value);
-      let count = 0;
-      for (const it of items) {
-        const show = !q || it.name.includes(q);
-        it.li.hidden = !show;
-        if (show) count++;
-      }
-      for (const shelf of shelves) {
-        shelf.hidden = !!q && !items.some((it) => it.shelf === shelf && !it.li.hidden);
-        for (const ul of shelf.querySelectorAll('ul')) (ul as HTMLElement).hidden = ![...ul.children].some((li) => !(li as HTMLElement).hidden);
-      }
-      found.textContent = !q ? '' : count ? `${count.toLocaleString('en-US')} ${count === 1 ? 'ingredient matches' : 'ingredients match'}.` : 'No ingredient matches.';
+    find.addEventListener('input', () => {
+      const count = apply();
       // Whether people use the find box and whether it finds things (never what they typed)
       clearTimeout(timer);
       timer = window.setTimeout(() => {
+        const q = fold(find.value);
         if (q.length < 2 || q === sent) return;
         sent = q;
         track('Searched Ingredients', { experiment: 'world-cuisine', result_count: count });
       }, 1200);
     });
+    const changed = () => {
+      apply();
+      track('Changed Ingredient Filter', { experiment: 'world-cuisine', region: where.value || 'everywhere', order: order() === 'az' ? 'a-z' : 'place' });
+    };
+    where.addEventListener('change', changed);
+    for (const r of form.querySelectorAll('input[name="order"]')) r.addEventListener('change', changed);
   }
 
-  // Which ingredients people open from here, and from which shelf
+  // Which ingredients people open from here, from which part of the world and which order
   document.addEventListener('click', (e) => {
-    const a = (e.target as Element | null)?.closest<HTMLAnchorElement>('.shelf a[data-hood]');
+    const a = (e.target as Element | null)?.closest<HTMLAnchorElement>('.view li[data-part] a');
     if (!a) return;
     track('Opened Ingredient', {
       experiment: 'world-cuisine',
-      ingredient_slug: a.id.replace(/^ing-/, ''),
-      neighborhood: a.dataset.hood ?? '',
+      ingredient_slug: a.pathname.split('/').filter(Boolean).at(-1) ?? '',
+      region: a.closest<HTMLElement>('li')?.dataset.part ?? '',
+      order: a.closest('#a-to-z') ? 'a-z' : 'place',
       from: 'ingredients page',
     });
   });
@@ -144,37 +265,53 @@ const href = (i: Item) => `/world-cuisine/ingredient/${i.slug}/`;
   .cx-top a { color: inherit; text-underline-offset: 3px; }
 
   .every { max-width: 72rem; margin: var(--space-4) auto var(--space-16); padding: 0 var(--space-4); }
+  .every [hidden] { display: none !important; }
   .every h1 { font-family: var(--font-display); font-size: var(--step-4); line-height: 1.05; margin: 0 0 var(--space-2); }
   .every .say { max-width: var(--measure); color: var(--ink-muted); margin: 0 0 var(--space-6); }
 
-  .every .find { margin: 0 0 var(--space-6); max-width: 28rem; }
-  .every .find[hidden] { display: none; }
-  .every .find label { display: block; font-weight: 700; margin-bottom: var(--space-1); }
-  .every .find input {
+  /* The controls: one row on wide screens, stacked on phones */
+  .every .controls { display: flex; flex-wrap: wrap; align-items: end; gap: var(--space-4) var(--space-6); padding: 0 0 var(--space-4); margin: 0 0 var(--space-8); border-bottom: 1px solid var(--line); }
+  .every .field { margin: 0; padding: 0; border: 0; min-width: 0; }
+  .every .field > label, .every .field legend { display: block; font-weight: 700; margin-bottom: var(--space-1); padding: 0; }
+  .every .find { flex: 1 1 16rem; max-width: 26rem; }
+  .every .controls input[type='search'], .every .controls select {
     width: 100%; min-height: 2.75rem; padding: var(--space-2) var(--space-3); font: inherit; color: var(--ink);
     background: var(--bg-raised); border: 1px solid var(--ink-muted); border-radius: var(--radius-sm);
   }
-  .every .find input:focus-visible { outline: 3px solid var(--accent-ink); outline-offset: 2px; }
-  .every #found { min-height: 1.5em; margin: var(--space-1) 0 0; color: var(--ink-muted); font-size: var(--step--1); }
+  .every .controls select { width: auto; max-width: 100%; }
+  .every .order label { display: inline-flex; align-items: center; gap: var(--space-2); min-height: 2.75rem; margin-right: var(--space-4); cursor: pointer; }
+  .every .order input { width: 1.25rem; height: 1.25rem; accent-color: var(--accent-ink); margin: 0; }
+  .every .controls :focus-visible { outline: 3px solid var(--accent-ink); outline-offset: 2px; }
+  .every .found { flex-basis: 100%; min-height: 1.5em; margin: 0; color: var(--ink-muted); font-size: var(--step--1); }
+  .every .found:empty { display: none; }
 
-  /* The shelf names as a table of contents: plain links in a wrapping row */
-  .every .shelves ol { list-style: none; margin: 0 0 var(--space-12); padding: var(--space-3) 0; border-block: 1px solid var(--line); display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-4); font-size: var(--step--1); }
-  .every .shelves a { display: inline-block; padding: var(--space-1) 0; color: inherit; text-underline-offset: 3px; }
+  /* Parts of the world as a table of contents (without the script) and the letters for A to Z */
+  .every .jump ol { list-style: none; margin: 0 0 var(--space-12); padding: var(--space-3) 0; border-block: 1px solid var(--line); display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-4); font-size: var(--step--1); }
+  .every .jump a { display: inline-block; min-width: 1.5rem; padding: var(--space-1) 0; color: inherit; text-underline-offset: 3px; }
+  .every .letters ol { font-size: var(--step-0); font-weight: 700; gap: var(--space-1) var(--space-3); margin-bottom: var(--space-8); }
 
-  .every .shelf { margin: 0 0 var(--space-12); scroll-margin-top: var(--space-4); }
-  .every .shelf[hidden] { display: none; }
-  .every .shelf h2 { font-size: var(--step-2); line-height: 1.15; margin: 0 0 var(--space-1); color: var(--accent-ink); }
+  .every .continent { margin: 0 0 var(--space-16); }
+  .every .continent > h2, .every .part.top > h2, .every .letter h2 { font-size: var(--step-3); line-height: 1.1; margin: 0 0 var(--space-6); }
+  .every .part { margin: 0 0 var(--space-12); scroll-margin-top: var(--space-4); }
+  .every .part h3 { font-size: var(--step-2); line-height: 1.15; margin: 0 0 var(--space-1); color: var(--accent-ink); }
+  .every .part.top > h2 { color: var(--accent-ink); margin-bottom: var(--space-1); }
+  .every .continent > .part:only-of-type .from { margin-top: calc(-1 * var(--space-4)); }
   .every .from { color: var(--ink-muted); font-size: var(--step--1); margin: 0 0 var(--space-3); max-width: var(--measure); }
-  .every .shelf ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; }
-  .every .shelf ul[hidden], .every .shelf li[hidden] { display: none; }
+  .every .part ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; }
   .every .lead { gap: var(--space-1) var(--space-4); font-size: var(--step-1); font-weight: 700; margin-bottom: var(--space-2) !important; }
   .every .rest { gap: 0 var(--space-4); line-height: 1.4; }
-  /* Every word on a shelf is a link and nothing else is, so they go without underlines until pointed at */
-  .every .shelf a { display: inline-block; padding: 0.15rem 0; color: inherit; text-decoration: none; text-underline-offset: 3px; scroll-margin-top: 30vh; }
-  .every .shelf a:hover { text-decoration: underline; }
-  .every .shelf a:focus-visible { outline: 3px solid var(--accent-ink); outline-offset: 2px; border-radius: 2px; }
+  /* Every word here is a link and nothing else is, so they go without underlines until pointed at */
+  .every .view a { display: inline-block; padding: 0.15rem 0; color: inherit; text-decoration: none; text-underline-offset: 3px; scroll-margin-top: 30vh; }
+  .every .view a:hover { text-decoration: underline; }
+  .every .view a:focus-visible { outline: 3px solid var(--accent-ink); outline-offset: 2px; border-radius: 2px; }
   /* Arriving from an ingredient's page */
-  .every .shelf a:target { outline: 3px solid var(--accent-ink); outline-offset: 3px; border-radius: 2px; font-weight: 700; }
+  .every .view a:target { outline: 3px solid var(--accent-ink); outline-offset: 3px; border-radius: 2px; font-weight: 700; }
+
+  /* A to Z: name, then where it's at home, in newspaper columns */
+  .every .letter { margin: 0 0 var(--space-12); scroll-margin-top: var(--space-4); }
+  .every .letter ul { list-style: none; margin: 0; padding: 0; columns: 17rem; column-gap: var(--space-8); }
+  .every .letter li { break-inside: avoid; padding: 0.1rem 0; }
+  .every .letter .where { color: var(--ink-muted); font-size: var(--step--1); }
 
   .every .how { max-width: var(--measure); color: var(--ink-muted); font-size: var(--step--1); margin-top: var(--space-12); }
   .every .how a { color: inherit; }

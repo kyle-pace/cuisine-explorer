@@ -61,14 +61,15 @@ It writes `data/catalog_links.json`. If a grocery is missing from the catalog al
 
 ## Every ingredient
 
-[kylepace.dev/world-cuisine/ingredients/](https://kylepace.dev/world-cuisine/ingredients/) lists every ingredient, shelved with the ones it's cooked with. `scripts/build_ingredient_groups.mjs` runs in the weekly update and writes `data/ingredient_groups.json`:
+[kylepace.dev/world-cuisine/ingredients/](https://kylepace.dev/world-cuisine/ingredients/) lists every ingredient under the part of the world where it's most at home. `scripts/build_ingredient_groups.mjs` runs in the weekly update and writes `data/ingredient_groups.json`:
 
-1. Ingredients in three or more dishes are linked by how many dishes they share, scaled so everyday ones (sugar, egg) don't link to everything; each keeps its strongest few links.
-2. Louvain community detection sorts them into shelves; groups under four are folded into their closest neighbor. Each is named for its two most-used ingredients and the cuisines its dishes come from most.
-3. Every other ingredient joins the shelf its dish-mates are on (rare dish-mates count more than everyday ones). The few whose dishes share nothing with any shelf go on a last shelf, "On their own".
-4. Each shelf lists its eight most-used ingredients first, then the rest A to Z. Ingredients that share a page (Wikipedia's "Atta flour" and "Atta (flour)") are listed once.
+1. Each cuisine gets a part of the world from Wikipedia's List of cuisines ("Asian cuisine > Maritime Southeast Asian cuisine" is Southeast Asia). A cuisine listed with only a continent borrows its part from related cuisines, then from other cuisines of the same country, on the same continent. Cuisines with no place (Jewish, Soviet) are Beyond borders, as on the globe. `REGION_FIXES` in the script holds the few places the list gets wrong (New Zealand is listed under Asia).
+2. Each ingredient goes where the biggest share of a part's dishes use it, smoothed so one dish in a small part doesn't outweigh many elsewhere. One found in dishes from six or more parts is "All over the world" (garlic, sugar, egg). Ingredients in no dish yet get their own group.
+3. Each part lists its six most-used first, then the rest A to Z. Ingredients that share a page (Wikipedia's "Atta flour" and "Atta (flour)") are listed once.
 
-The page (`src/pages/world-cuisine/ingredients.astro`) is plain lists of links with a small find box. Ingredient pages link to their spot (`#ing-<slug>`). It replaced the ingredient map (a drawing of the same groups) on the night it launched, November 14, 2026, because the drawing was too crowded; `/world-cuisine/ingredient-map/` redirects here. Share card: `node scripts/render-og.mjs ingredients`. Tests: `node --test tests/*.test.mjs`.
+The page (`src/pages/world-cuisine/ingredients.astro`) has both orders, by part of the world and A to Z, as plain lists of links, with a find box, a part-of-the-world filter and an order switch kept in the address (`?where=southeast-asia&order=az`). Without JavaScript it shows the list by part of the world with links to each part. Ingredient pages link to their spot ("More from Southeast Asia", `#ing-<slug>`).
+
+It started on November 14, 2026 as the ingredient map, a drawing of ingredients grouped by what they're cooked with; that was too crowded, then grouping by cooked-with read as arbitrary, so it became this. `/world-cuisine/ingredient-map/` redirects here. Share card: `node scripts/render-og.mjs ingredients`. Tests: `node --test tests/*.test.mjs`.
 
 ## Files
 
@@ -84,7 +85,7 @@ The page (`src/pages/world-cuisine/ingredients.astro`) is plain lists of links w
 | `data/overrides.json` | Hand fixes for places and countries |
 | `data/catalog_links.json` | Generated: each ingredient's KitchenCatalog id and recipe count |
 | `data/catalog_overrides.json` | Hand decisions for linking ingredients to the catalog |
-| `data/ingredient_groups.json` | Generated: every ingredient on its shelf, for the Every ingredient page |
+| `data/ingredient_groups.json` | Generated: every ingredient under its part of the world, for the Every ingredient page |
 | `scripts/` | The data pipeline, plus `build_preview.py` for a single-file preview with data inlined |
 | `og.png` | Share card |
 

@@ -27,10 +27,16 @@ const foodSummaries = read("food_summaries.json", {});
 const grown = read("grown.json", { items: {} });
 const countries = read("countries.geojson");
 const images = read("images.json", { files: {}, items: {} });
-// Every ingredient has a place on the ingredients page (scripts/build_ingredient_groups.mjs);
-// its button says "cooked with" when it's on a real shelf, not the last "On their own" one
-const shelfOf = new Map((read("ingredient_groups.json", { groups: [] }).groups || []).flatMap(g => [...g.lead, ...g.rest].map(x => [x.id, g.id])));
-const shelfAction = (i) => shelfOf.has(i.id) ? [{ kind: "shelf", url: "/world-cuisine/ingredients/#ing-" + slug(i.id), label: shelfOf.get(i.id) === "on-their-own" ? "Every ingredient" : "Ingredients cooked with it" }] : [];
+// Every ingredient has a place on the ingredients page (scripts/build_ingredient_groups.mjs),
+// under a part of the world: its button says "More from Southeast Asia", or just "Every
+// ingredient" for the ones all over the world, beyond borders or in no dish yet
+const partOf = new Map((read("ingredient_groups.json", { groups: [] }).groups || []).flatMap(g => [...g.lead, ...g.rest].map(x => [x.id, g])));
+const shelfAction = (i) => {
+  const g = partOf.get(i.id);
+  if (!g) return [];
+  const label = g.continent ? "More from " + g.name.replace(/^(The|Across) /, (w) => w.toLowerCase()) : "Every ingredient";
+  return [{ kind: "shelf", url: "/world-cuisine/ingredients/#ing-" + slug(i.id), label }];
+};
 // Ingredient -> KitchenCatalog id and Recipe search's recipe count (scripts/link_catalog.mjs)
 const catalogLinks = read("catalog_links.json", { links: {} }).links || {};
 const recipesAction = (i) => {

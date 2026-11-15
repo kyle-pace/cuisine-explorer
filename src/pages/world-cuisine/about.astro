@@ -18,7 +18,7 @@ const links = Object.values(read('catalog_links.json').links ?? {}) as { recipes
 const withRecipes = links.filter((l) => (l.recipes ?? 0) > 0).length;
 const igroups = read('ingredient_groups.json');
 const listed: number = igroups.ingredients ?? 0;
-const hoods: number = (igroups.groups ?? []).filter((g: { id: string }) => g.id !== 'on-their-own').length;
+const places: number = (igroups.groups ?? []).filter((g: { continent: string | null }) => g.continent).length;
 const n = (x: number) => x.toLocaleString('en-US');
 const pages = n(Math.round((cuisines.length + dishes + ingredients) / 100) * 100);
 
@@ -62,10 +62,10 @@ const steps = [
     ],
   },
   {
-    name: 'Group ingredients by what they’re cooked with',
+    name: 'Place each ingredient in the world',
     where: 'GitHub Actions, once a week',
     body: [
-      `Two ingredients count as close when they share dishes, scaled so everyday ones like sugar and egg don’t pull everything together. A standard method for finding groups in a network (Louvain) sorts the ingredients in three or more dishes into ${n(hoods)} shelves, each named for its two most-used ingredients. Every other ingredient joins the shelf its dish-mates are on, so all ${n(listed)} are listed on the Every ingredient page.`,
+      `Each cuisine’s part of the world comes from Wikipedia’s List of cuisines, like Southeast Asia or the British Isles. Each ingredient then goes where the biggest share of that part’s dishes use it, so lemongrass lands in Southeast Asia and suet in the British Isles; one found in dishes from six or more parts is “all over the world”. The Every ingredient page lists all ${n(listed)} that way, across ${n(places)} parts of the world.`,
     ],
   },
   {

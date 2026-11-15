@@ -13,14 +13,14 @@ const root = new URL('../', import.meta.url);
 if (process.argv[2] === 'ingredients') {
   const data = JSON.parse(readFileSync(new URL('data/ingredient_groups.json', root), 'utf8'));
   const esc = (t) => String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;');
-  const pick = ['Chili pepper and ginger', 'Wheat flour and sugar', 'Potato and carrot'];
+  const pick = ['Southeast Asia', 'Southern Europe', 'South Asia'];
   const shelves = pick.map((name) => data.groups.find((g) => g.name === name) ?? data.groups[0]).map((g) =>
     `<div class="shelf"><h2>${esc(g.name)}</h2><p class="lead">${g.lead.map((i) => `<span>${esc(i.name)}</span>`).join(' ')}</p>` +
     `<p class="rest">${g.rest.slice(0, 14).map((i) => `<span>${esc(i.name)}</span>`).join(' ')}</p></div>`).join('');
   const html = readFileSync(new URL('scripts/og-ingredients.html', root), 'utf8')
     .replace('<div class="shelves">{{SHELVES}}</div>', () => '<div class="shelves">' + shelves + '</div>')
     .replace('{{COUNT}}', data.ingredients.toLocaleString('en-US'))
-    .replace('{{HOODS}}', String(data.groups.length));
+    .replace('{{HOODS}}', String(data.groups.filter((g) => g.continent).length));
   const tmp = new URL('scripts/.og-ingredients.html', root);
   writeFileSync(tmp, html);
   const browser = await chromium.launch();

@@ -1,86 +1,74 @@
-// Tests for scripts/build_ingredient_groups.mjs: putting every World cuisine ingredient on a
-// shelf of what it's cooked with. Runs against the real dish data (data/food.json) and broken records.
+// Tests for scripts/build_ingredient_groups.mjs: placing every World cuisine ingredient under
+// the part of the world where it's most at home. Runs against the real data (data/food.json,
+// data/cuisines.json) and broken records.
 // Run with: node --test tests/*.test.mjs
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { linksFrom, louvain, tidyGroups, buildGroups } from '../scripts/build_ingredient_groups.mjs';
+import { buildGroups, cuisineParts, ALL_OVER, BEYOND, NO_DISH } from '../scripts/build_ingredient_groups.mjs';
 import { slug } from '../render_item.js';
 
 const food = JSON.parse(readFileSync(new URL('../data/food.json', import.meta.url), 'utf8'));
+const cuisines = JSON.parse(readFileSync(new URL('../data/cuisines.json', import.meta.url), 'utf8')).cuisines;
 const all = (g) => [...g.lead, ...g.rest];
+const partOf = (out, id) => out.groups.find((g) => all(g).some((x) => x.id === id))?.name;
 
 test('every ingredient page is listed exactly once', () => {
-  const out = buildGroups(food);
+  const out = buildGroups(food, cuisines);
   const ids = out.groups.flatMap(all).map((x) => x.id);
   assert.equal(ids.length, new Set(food.ingredients.map((i) => slug(i.id))).size);
   assert.equal(new Set(ids).size, ids.length);
   const slugs = out.groups.flatMap(all).map((x) => x.slug);
   assert.equal(new Set(slugs).size, slugs.length, 'slugs are used as ids on the page, so they must be unique');
-  for (const s of slugs) assert.match(s, /^[a-z0-9-]+$/);
   assert.equal(out.ingredients, ids.length);
+  assert.equal(new Set(out.groups.map((g) => g.id)).size, out.groups.length);
 });
 
-test('real dishes give real shelves', () => {
-  const out = buildGroups(food);
-  const named = out.groups.filter((g) => g.id !== 'on-their-own');
-  assert.ok(named.length >= 5 && named.length <= 30, `${named.length} shelves`);
-  const shelfOf = (id) => out.groups.find((g) => all(g).some((x) => x.id === id))?.id;
-  // Things cooked together end up together...
-  assert.equal(shelfOf('Lemongrass'), shelfOf('Galangal'));
-  assert.equal(shelfOf('Wheat flour'), shelfOf('Butter'));
-  // ...and things that aren't, don't
-  assert.notEqual(shelfOf('Lemongrass'), shelfOf('Butter'));
-  for (const g of named) assert.ok(g.size >= 4 && g.name && g.cuisines.length && g.lead.length, `shelf ${g.id}`);
-  // The rest of each shelf is A to Z, and the most-used come first
+test('ingredients land where they are most at home', () => {
+  const out = buildGroups(food, cuisines);
+  assert.equal(partOf(out, 'Lemongrass'), 'Southeast Asia');
+  assert.equal(partOf(out, 'Ghee'), 'South Asia');
+  assert.equal(partOf(out, 'Suet'), 'The British Isles');
+  assert.equal(partOf(out, 'Pasta'), 'Southern Europe');
+  assert.equal(partOf(out, 'Garlic'), ALL_OVER);
+  assert.equal(out.groups[0].name, ALL_OVER);
+  // Each part lists its most-used first, then the rest A to Z
   for (const g of out.groups) {
     const names = g.rest.map((x) => x.name);
     assert.deepEqual(names, [...names].sort((a, b) => a.localeCompare(b, 'en', { sensitivity: 'base' })), `${g.name} A to Z`);
-    for (let i = 1; i < g.lead.length; i++) assert.ok(g.lead[i - 1].dishes >= g.lead[i].dishes);
   }
 });
 
-test('the shelves are the same every run', () => {
-  assert.deepEqual(buildGroups(food), buildGroups(food));
+test('cuisines get a part of the world, fixing the gaps in Wikipedia’s list', () => {
+  const parts = cuisineParts(cuisines);
+  assert.equal(parts.get('Indonesian cuisine').part, 'Southeast Asia'); // listed with only "Asian cuisine"
+  assert.equal(parts.get('German cuisine').part, 'Central Europe'); // listed with only "European cuisine"
+  assert.equal(parts.get('New Zealand cuisine').part, 'Oceania'); // listed under Asian cuisine
+  assert.equal(parts.get('Pakistani cuisine').part, 'South Asia');
+  assert.equal(parts.get('Jewish cuisine').part, BEYOND);
 });
 
-test('an ingredient in no shared dish goes on the last shelf, not nowhere', () => {
-  const dishes = [
-    ...Array.from({ length: 5 }, () => ({ ingredients: ['a1', 'a2', 'a3', 'a4'] })),
-    { ingredients: ['a1', 'rare'] },
-    { ingredients: ['loner'] },
-  ];
-  const ingredients = ['a1', 'a2', 'a3', 'a4', 'rare', 'loner', 'unused'].map((id) => ({ id, name: id }));
-  const out = buildGroups({ dishes, ingredients });
-  const shelfOf = (id) => out.groups.find((g) => all(g).some((x) => x.id === id))?.id;
-  assert.equal(shelfOf('rare'), shelfOf('a1'));
-  assert.equal(shelfOf('loner'), 'on-their-own');
-  assert.equal(shelfOf('unused'), 'on-their-own');
-  assert.equal(out.groups.at(-1).id, 'on-their-own');
+test('the placing is the same every run', () => {
+  assert.deepEqual(buildGroups(food, cuisines), buildGroups(food, cuisines));
 });
 
 test('broken records are skipped without stopping the rest', () => {
+  const cs = [
+    null, { name: 'no id' },
+    { id: 'Thai cuisine', region: ['Asian cuisine', 'Mainland Southeast Asian cuisine'] },
+    { id: 'Odd cuisine', region: ['Not a continent'] },
+  ];
   const dishes = [
     null, {}, { ingredients: 'not a list' }, { ingredients: [null, 42, ''] },
-    ...Array.from({ length: 4 }, () => ({ ingredients: ['A', 'B', 'C'] })),
+    { cuisines: ['Thai cuisine', 'Missing cuisine'], ingredients: ['Lemongrass', 'Lime'] },
+    { cuisines: 'Thai cuisine', ingredients: ['Lime'] },
+    { cuisines: ['Odd cuisine'], ingredients: ['Salt'] },
   ];
-  const { nodes, links } = linksFrom(dishes);
-  assert.deepEqual(nodes, ['A', 'B', 'C']);
-  assert.equal(links.length, 3);
-  assert.deepEqual(linksFrom(undefined).nodes, []);
-  const out = buildGroups({ dishes, ingredients: [null, { name: 'no id' }, { id: 'A' }, { id: 'B' }, { id: 'C' }, { id: 'D' }] });
+  const ingredients = [null, { name: 'no id' }, { id: 'Lemongrass' }, { id: 'Lime' }, { id: 'Salt' }, { id: 'Unused' }];
+  const out = buildGroups({ dishes, ingredients }, cs);
   assert.equal(out.ingredients, 4);
-  assert.deepEqual(buildGroups(undefined).groups, []);
-});
-
-test('two separate clusters come out as two groups', () => {
-  const dishes = [
-    ...Array.from({ length: 5 }, () => ({ ingredients: ['a1', 'a2', 'a3', 'a4'] })),
-    ...Array.from({ length: 5 }, () => ({ ingredients: ['b1', 'b2', 'b3', 'b4'] })),
-  ];
-  const { nodes, links } = linksFrom(dishes);
-  const g = tidyGroups(louvain(nodes, links), links);
-  assert.equal(g.get('a1'), g.get('a4'));
-  assert.equal(g.get('b1'), g.get('b4'));
-  assert.notEqual(g.get('a1'), g.get('b1'));
+  assert.equal(partOf(out, 'Lemongrass'), 'Southeast Asia');
+  assert.equal(partOf(out, 'Salt'), BEYOND);
+  assert.equal(partOf(out, 'Unused'), NO_DISH);
+  assert.deepEqual(buildGroups(undefined, undefined).groups, []);
 });

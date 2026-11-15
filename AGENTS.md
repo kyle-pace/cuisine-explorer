@@ -181,6 +181,7 @@ CI runs the check command where a project has one, the stack check (see "Default
 
 A globe and a linked-page browser for the world's cuisines, with Wikipedia as the source of truth and Kyle's hand-picked cookbooks and recipe sites on top. Live at [kylepace.dev/world-cuisine](https://kylepace.dev/world-cuisine/), one of the experiments on the [kylepace.dev](https://github.com/kyle-pace/kylepace.dev) hub. It was called Cuisine Explorer and lived at kylepace.net/labs/cuisines/ (which now redirects). See README.md for how the data works.
 
+- **Confluence:** [World cuisine](https://kylepace.atlassian.net/wiki/spaces/LABS/pages/13664305) in the Labs space. The older notes from its kylepace.net days stay in the kylepace.net space as history.
 - **The explorer itself** is two static pages, `index.html` (the globe) and `web.html` (the page browser), plus `data/`, `vendor/` and `render_item.js`. They stay at the repo root as the source. `scripts/update.sh` rebuilds the data and runs weekly in GitHub Actions.
 - **The site around it** is Astro on its own Cloudflare Worker (`world-cuisine`), mounted on `kylepace.dev/world-cuisine` by the routes in `wrangler.jsonc`:
   - `src/pages/world-cuisine/index.astro`: the framed page with the header, credits and counts.

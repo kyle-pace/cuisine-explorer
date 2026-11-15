@@ -1,6 +1,7 @@
 # Runs the data job's tests on every push and pull request: the Wikipedia list parser
 # against a saved real page and broken copies of it, the check that stops a
-# half-empty build from being published, and the KitchenCatalog link step.
+# half-empty build from being published, the KitchenCatalog link step and the
+# ingredient map.
 name: Tests
 
 on:
@@ -23,5 +24,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
-      # The catalog link step (scripts/link_catalog.mjs); needs nothing from npm.
+          cache: npm
+      # The catalog link step and the ingredient map; the map's layout needs d3-force.
+      - run: npm ci
       - run: node --test tests/*.test.mjs

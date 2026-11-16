@@ -1,0 +1,11 @@
+/* World cuisine's look on top of kp-design: the shared site styles (prose, headings, the
+   page width), since these pages grew up on DevLayout, and the tangerine accent for the
+   whole page, the lab bar included. Doubled :root so it wins over the tokens' default. */
+@import 'kp-design/global.css';
+
+:root:root {
+  --accent: var(--tangerine);
+  --accent-ink: var(--tangerine-ink);
+  /* <main> already sits inside the page gutter here (global.css). */
+  --more-labs-inset: 0;
+}

@@ -1,8 +1,8 @@
 ---
 // World cuisine: frames the globe (index.html, served at /world-cuisine/app/) with the
 // site's header and credits, and passes #cuisine links through to it.
-import DevLayout from 'kp-design/layouts/DevLayout.astro';
-import { AboutLink, LabWelcome, StatusBadge } from 'kp-design';
+import CuisineLayout from '../../layouts/CuisineLayout.astro';
+import { StatusBadge } from 'kp-design';
 
 // The data files at the repo root; picks and suggestions are optional
 const files = import.meta.glob<{ default: any }>(
@@ -19,27 +19,21 @@ const shelved = new Set([...Object.keys(picks), ...Object.keys(suggestions)]).si
 const round = (n: number) => Math.floor(n / 10) * 10;
 ---
 
-<DevLayout
+<CuisineLayout
   title="World cuisine"
   description="More than 600 of the world's cuisines, 2,400 dishes and their ingredients on one globe. Search an ingredient to see where it's cooked with."
-  accent="tangerine"
   image="/world-cuisine/share.png"
   imageAlt="World cuisine: a dark globe with countries colored by continent and thin routes arcing between them."
+  welcome
 >
-  <LabWelcome
-    name="World cuisine"
-    text="Wikipedia’s 600-plus cuisines and their dishes on one globe. Search an ingredient to see where in the world it’s cooked with, follow a dish to where it’s from, and find recipe sites and cookbooks to start cooking."
-    about="/world-cuisine/about/"
-  />
   <header class="intro">
-    <p class="eyebrow"><a href="https://kylepace.dev/labs/">Labs</a> <StatusBadge status="in-progress" /></p>
-    <h1>World cuisine.</h1>
+    <p class="eyebrow"><StatusBadge status="in-progress" /></p>
+    <h1>World cuisine</h1>
     <p class="lede prose">
       Wikipedia lists {round(cuisines.length)}+ of the world’s cuisines. Here they are on a globe: {countries} countries and territories, their
       regional cooking, and {dishCount.toLocaleString()} dishes. Search an ingredient and the globe becomes a map of where it’s cooked
       with; pick a dish to see where it’s from and what goes in it.
     </p>
-    <p class="about-row"><AboutLink href="/world-cuisine/about/" /></p>
   </header>
 
   <a class="fullscreen" href="/world-cuisine/app/">Open the globe full screen</a>
@@ -68,9 +62,8 @@ const round = (n: number) => Math.floor(n / 10) * 10;
       href="https://www.naturalearthdata.com">Natural Earth</a>, globe by <a href="https://globe.gl">globe.gl</a>.
     </p>
     <p><a href="/world-cuisine/about/">How it works</a>, step by step. The code and data are <a href="https://github.com/kyle-pace/world-cuisine">on GitHub</a>.</p>
-    <p><a href="https://kylepace.dev/labs/">More labs</a></p>
   </div>
-</DevLayout>
+</CuisineLayout>
 
 <script>
   // Load the globe, passing through a #cuisine link (kylepace.dev/world-cuisine/#thai-cuisine)
@@ -91,9 +84,6 @@ const round = (n: number) => Math.floor(n / 10) * 10;
     max-width: 18ch;
   }
 
-  .about-row {
-    margin-top: var(--space-4);
-  }
 
   .eyebrow {
     display: flex;
@@ -101,13 +91,6 @@ const round = (n: number) => Math.floor(n / 10) * 10;
     align-items: center;
   }
 
-  /* At least 24px tall to tap */
-  .eyebrow a {
-    display: inline-flex;
-    align-items: center;
-    min-height: 1.5rem;
-    color: inherit;
-  }
 
   .lede {
     font-size: var(--step-1);
@@ -119,6 +102,13 @@ const round = (n: number) => Math.floor(n / 10) * 10;
     border-radius: var(--radius);
     overflow: hidden;
     background: #1b1424;
+  }
+
+  /* Keyboard focus inside the globe shows on its frame, since the page can't see in. */
+  .frame:has(iframe:focus-visible),
+  .frame:focus-within {
+    outline: 3px solid var(--accent-ink);
+    outline-offset: 2px;
   }
 
   iframe {

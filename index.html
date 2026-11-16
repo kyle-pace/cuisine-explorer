@@ -43,6 +43,11 @@
   /* Top-left: title and search */
   .masthead { position: fixed; top: 24px; left: 28px; width: min(380px, calc(100vw - 56px)); z-index: 7; }
   .masthead h1 { font-weight: 800; font-size: 2.5rem; line-height: 1; margin: 0 0 10px; letter-spacing: -0.02em; }
+  /* The way out of the full-screen views, back to the World cuisine page (its About, the
+     lab bar, More labs). Hidden when the globe is embedded in that page. */
+  .exit { display: inline-flex; align-items: center; gap: 4px; min-height: 24px; margin: 0 0 8px; color: var(--muted); font-size: 0.9rem; font-weight: 600; text-decoration: none; }
+  .exit:hover { color: var(--rice); text-decoration: underline; }
+  .embed .exit { display: none; }
   /* Globe and Browse, the same switch as the top of the browse pages */
   .views { display: inline-flex; gap: 4px; padding: 3px; background: var(--panel-2); border-radius: 999px; margin: 0 0 14px; }
   .views a { text-decoration: none; padding: 5px 14px; border-radius: 999px; font-weight: 600; font-size: 0.9rem; color: var(--muted); }
@@ -241,6 +246,7 @@
     }
     .masthead h1 { font-size: 1.15rem; letter-spacing: -0.01em; margin: 0; white-space: nowrap; }
     .masthead .views { margin: 0; }
+    .masthead .exit { flex: 1 0 100%; margin: 0; }
     .masthead .search { flex: 1 0 100%; }
     .masthead p, .swatches, .hint, .nearby { display: none; }
     .views a { padding: 5px 11px; }
@@ -280,6 +286,7 @@
 <div class="loading" id="loading">Setting the table…</div>
 
 <header class="masthead">
+  <a class="exit" href="/world-cuisine/"><span aria-hidden="true">‹</span> Back to World cuisine</a>
   <h1>World cuisine</h1>
   <nav class="views" aria-label="Views"><a href="./" aria-current="page">Globe</a><a id="to-browse" href="web.html#/">Browse</a></nav>
   <p>Spin the globe, pick a place, and see what's cooking there. Every cuisine links back to Wikipedia.</p>

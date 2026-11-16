@@ -2,7 +2,7 @@
 // How World cuisine is built: the technical version of the About page, for the curious.
 // Diagrams are inline SVG in the lab's own colors, each with a title, a description and
 // the same facts in the text. Counts come from the data files.
-import DevLayout from 'kp-design/layouts/DevLayout.astro';
+import CuisineLayout from '../../layouts/CuisineLayout.astro';
 const files = import.meta.glob<{ default: any }>(['../../../data/cuisines.json', '../../../data/food.json'], { eager: true });
 const read = (name: string) => files[`../../../data/${name}`]?.default ?? {};
 const cuisines: number = (read('cuisines.json').cuisines ?? []).length;
@@ -11,15 +11,13 @@ const ingredients: number = (read('food.json').ingredients ?? []).length;
 const n = (x: number) => x.toLocaleString('en-US');
 ---
 
-<DevLayout
+<CuisineLayout
   title="How World cuisine is built"
   description="The technical version: a weekly refresh from Wikipedia and Wikidata that can't publish a broken build, a globe drawn in the browser, and photos kept once in R2."
-  accent="tangerine"
   image="/world-cuisine/share-about.png"
   imageAlt="About World cuisine: the title beside a card listing its six steps."
 >
   <article class="page">
-    <p class="back"><a href="/world-cuisine/about/">About World cuisine</a></p>
     <h1>How World cuisine is built</h1>
     <p class="lede">
       The <a href="/world-cuisine/about/">About page</a> walks through where the data comes from. This is the technical version, with
@@ -119,13 +117,9 @@ const n = (x: number) => x.toLocaleString('en-US');
       </ul>
     </section>
   </article>
-</DevLayout>
+</CuisineLayout>
 
 <style>
-  .back {
-    margin: 0 0 var(--space-2);
-    font-weight: 600;
-  }
 
   .page {
     padding: var(--space-4) var(--gutter) var(--space-12);

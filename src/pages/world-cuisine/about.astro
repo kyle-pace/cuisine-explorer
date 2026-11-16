@@ -2,7 +2,7 @@
 // About World cuisine. Title, headings and step format follow the about-page skill
 // (.agents/skills/about-page/SKILL.md). "How it works" sits beside "Where the data comes
 // from" on wide screens, with big step numbers in the margin. Counts come from the data files.
-import DevLayout from 'kp-design/layouts/DevLayout.astro';
+import CuisineLayout from '../../layouts/CuisineLayout.astro';
 
 const files = import.meta.glob<{ default: any }>(
   ['../../../data/cuisines.json', '../../../data/picks.json', '../../../data/suggestions.json', '../../../data/food.json', '../../../data/catalog_links.json', '../../../data/ingredient_groups.json'],
@@ -92,15 +92,13 @@ const steps = [
 ];
 ---
 
-<DevLayout
+<CuisineLayout
   title="About World cuisine"
   description="What World cuisine is, how it works, where its cuisines, dishes, ingredients and photos come from, and what it collects."
-  accent="tangerine"
   image="/world-cuisine/share-about.png"
   imageAlt="About World cuisine: the title beside a card listing its six steps, from Read Wikipedia’s list of cuisines to The site rebuilds."
 >
   <header class="intro">
-    <p class="back"><a href="/world-cuisine/">World cuisine</a></p>
     <h1>About World cuisine</h1>
     <p class="deep-dive">Curious how it’s made? Read <a href="/world-cuisine/how-its-built/">how World cuisine is built</a>, the technical version with diagrams.</p>
   </header>
@@ -169,24 +167,14 @@ const steps = [
       <a href="https://github.com/kyle-pace/world-cuisine">on GitHub</a>.
     </p>
   </div>
-</DevLayout>
+</CuisineLayout>
 
 <style>
   .intro {
     padding-bottom: var(--space-4);
   }
 
-  .back {
-    margin: 0 0 var(--space-2);
-    font-size: var(--step--1);
-  }
 
-  /* At least 24px tall to tap */
-  .back a {
-    display: inline-flex;
-    align-items: center;
-    min-height: 1.5rem;
-  }
 
   h2 {
     margin: 0 0 var(--space-3);

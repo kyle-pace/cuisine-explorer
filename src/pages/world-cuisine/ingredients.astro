@@ -7,7 +7,7 @@
 // Ingredient pages link here with #ing-<slug>, which marks that ingredient in its part of the
 // world (CSS :target).
 // Design plan: design/PLAN.md, "Every ingredient".
-import DevLayout from 'kp-design/layouts/DevLayout.astro';
+import CuisineLayout from '../../layouts/CuisineLayout.astro';
 import data from '../../../data/ingredient_groups.json';
 import food from '../../../data/food.json';
 
@@ -48,18 +48,12 @@ for (const i of all) { const l = letterOf(i.name); const last = letters.at(-1); 
 const data_ = (p: Part) => ({ 'data-part': p.id, 'data-cont': p.continent ? contId(p.continent) : '' });
 ---
 
-<DevLayout
+<CuisineLayout
   title="Every ingredient"
   description={`All ${n(data.ingredients)} ingredients in World cuisine's dishes, each under the part of the world where it's most at home.`}
-  accent="tangerine"
   image="/world-cuisine/share-ingredients.png"
   imageAlt="Every ingredient: ingredient names under parts of the world, like Southeast Asia and Southern Europe, on a dark background."
 >
-  <nav class="cx-top" aria-label="World cuisine">
-    <a href="/world-cuisine/">World cuisine</a>
-    <span aria-hidden="true">/</span>
-    <span>Every ingredient</span>
-  </nav>
 
   <article class="every">
     <h1>Every ingredient</h1>
@@ -169,7 +163,7 @@ const data_ = (p: Part) => ({ 'data-part': p.id, 'data-cont': p.continent ? cont
       works</a>.
     </p>
   </article>
-</DevLayout>
+</CuisineLayout>
 
 <script>
   import { track } from 'kp-design/analytics';
@@ -261,8 +255,6 @@ const data_ = (p: Part) => ({ 'data-part': p.id, 'data-cont': p.continent ? cont
 </script>
 
 <style is:global>
-  .cx-top { max-width: var(--wide); margin: var(--space-8) auto 0; padding: 0 var(--space-4); font-size: var(--step--1); color: var(--ink-muted); display: flex; gap: var(--space-2); }
-  .cx-top a { color: inherit; text-underline-offset: 3px; }
 
   .every { max-width: 72rem; margin: var(--space-4) auto var(--space-16); padding: 0 var(--space-4); }
   .every [hidden] { display: none !important; }

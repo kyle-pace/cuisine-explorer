@@ -29,6 +29,11 @@
   .top { position: sticky; top: 0; z-index: 5; display: flex; align-items: center; gap: 16px; padding: 12px 28px;
     background: rgba(27, 20, 36, 0.94); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
   .brand { font-weight: 800; font-size: 1.15rem; letter-spacing: -0.01em; text-decoration: none; white-space: nowrap; }
+  /* The way out of the full-screen views, back to the World cuisine page (its About, the
+     lab bar, More labs). Hidden when the globe is embedded in that page. */
+  .exit { display: inline-flex; align-items: center; gap: 4px; min-height: 24px; margin: 0 0 8px; color: var(--muted); font-size: 0.9rem; font-weight: 600; text-decoration: none; }
+  .exit:hover { color: var(--rice); text-decoration: underline; }
+  .top .exit { margin: 0; }
   .views { display: flex; gap: 4px; padding: 3px; background: var(--panel-2); border-radius: 999px; }
   .views a { text-decoration: none; padding: 5px 14px; border-radius: 999px; font-weight: 600; font-size: 0.9rem; color: var(--muted); }
   .views a[aria-current="page"] { background: var(--rice); color: var(--night); }
@@ -255,6 +260,7 @@
 </head>
 <body>
 <header class="top">
+  <a class="exit" href="/world-cuisine/"><span aria-hidden="true">‹</span> Back to World cuisine</a>
   <a class="brand" href="#/">World cuisine</a>
   <nav class="views" aria-label="Views">
     <a id="to-globe" href="./">Globe</a>

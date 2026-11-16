@@ -1,0 +1,48 @@
+---
+// Every World cuisine page: kp-design's LabLayout, like the other labs (the bar with
+// "Back to World cuisine", "More labs by Kyle" and "About this project", the one-line
+// footer, the welcome on the globe page and "More labs" at the end of About), plus the
+// shared site styles and the tangerine accent (src/styles/theme.css).
+import LabLayout from 'kp-design/layouts/LabLayout.astro';
+import '../styles/theme.css';
+
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  imageAlt?: string;
+  imageWidth?: number;
+  imageHeight?: number;
+  noindex?: boolean;
+  /** Only the globe page greets first-time visitors. */
+  welcome?: boolean;
+}
+
+const {
+  title,
+  description,
+  image = '/world-cuisine/share.png',
+  imageAlt = 'World cuisine: a dark globe with countries colored by continent and thin routes arcing between them.',
+  imageWidth,
+  imageHeight,
+  noindex = false,
+  welcome = false,
+} = Astro.props;
+---
+
+<LabLayout
+  title={title}
+  description={description}
+  image={image}
+  imageAlt={imageAlt}
+  imageWidth={imageWidth}
+  imageHeight={imageHeight}
+  noindex={noindex}
+  about="/world-cuisine/about/"
+  lab={{ name: 'World cuisine', href: '/world-cuisine/' }}
+  welcome={welcome
+    ? 'Wikipedia’s 600-plus cuisines and their dishes on one globe. Search an ingredient to see where in the world it’s cooked with, follow a dish to where it’s from, and find recipe sites and cookbooks to start cooking.'
+    : undefined}
+>
+  <slot />
+</LabLayout>

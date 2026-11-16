@@ -358,7 +358,9 @@
   const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const isPhone = () => innerWidth <= 720;
   // Same tilt as always, but spun to a random longitude so it doesn't always open on Africa
-  const startView = () => ({ lat: 22, lng: Math.random() * 360 - 180 });
+  // A random longitude each visit; ?lng= pins it (the screenshot for kylepace.dev's cards).
+  const pinnedLng = parseFloat(new URLSearchParams(location.search).get("lng"));
+  const startView = () => ({ lat: 22, lng: Number.isFinite(pinnedLng) ? pinnedLng : Math.random() * 360 - 180 });
   const noHover = matchMedia("(hover: none)").matches;
 
   // Data: inlined in the preview build, fetched alongside the page otherwise

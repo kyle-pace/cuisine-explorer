@@ -68,7 +68,9 @@ const round = (n: number) => Math.floor(n / 10) * 10;
 <script>
   // Load the globe, passing through a #cuisine link (kylepace.dev/world-cuisine/#thai-cuisine)
   const frame = document.querySelector<HTMLIFrameElement>('.frame iframe');
-  if (frame?.dataset.src) frame.src = frame.dataset.src + location.hash;
+  // ?lng= on this page pins where the globe starts (used for kylepace.dev's card screenshot).
+  const lng = new URLSearchParams(location.search).get('lng');
+  if (frame?.dataset.src) frame.src = frame.dataset.src + (lng ? `&lng=${encodeURIComponent(lng)}` : '') + location.hash;
   addEventListener('hashchange', () => {
     const win = frame?.contentWindow;
     if (win && win.location.hash !== location.hash) win.location.hash = location.hash;

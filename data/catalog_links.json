@@ -1,6 +1,6 @@
 {
- "built": "2026-11-15",
- "recipesChecked": "2026-11-15",
+ "built": "2026-11-16",
+ "recipesChecked": "2026-11-16",
  "links": {
   "Adzuki bean": {
    "id": "adzuki-beans",
@@ -10,7 +10,7 @@
   "Agaricus bisporus": {
    "id": "mushrooms",
    "name": "Mushrooms",
-   "recipes": 395
+   "recipes": 398
   },
   "Akkawi cheese": {
    "id": "cheese",
@@ -30,7 +30,7 @@
   "Allium fistulosum": {
    "id": "green-onion",
    "name": "Green Onion",
-   "recipes": 1338
+   "recipes": 1341
   },
   "Allium tuberosum": {
    "id": "fresh-herbs",
@@ -45,7 +45,7 @@
   "Almond": {
    "id": "almonds",
    "name": "Almonds",
-   "recipes": 84
+   "recipes": 85
   },
   "Almond flour": {
    "id": "almond-flour",
@@ -60,17 +60,17 @@
   "Almonds": {
    "id": "almonds",
    "name": "Almonds",
-   "recipes": 84
+   "recipes": 85
   },
   "Anchovies as food": {
    "id": "anchovies",
    "name": "Anchovies",
-   "recipes": 43
+   "recipes": 46
   },
   "Anchovy": {
    "id": "anchovies",
    "name": "Anchovies",
-   "recipes": 43
+   "recipes": 46
   },
   "Apple": {
    "id": "apples",
@@ -155,7 +155,7 @@
   "Baking powder": {
    "id": "baking-powder",
    "name": "Baking Powder",
-   "recipes": 363
+   "recipes": 364
   },
   "Baking soda": {
    "id": "baking-soda",
@@ -205,12 +205,12 @@
   "Bean sprout": {
    "id": "bean-sprouts",
    "name": "Bean sprouts",
-   "recipes": 136
+   "recipes": 135
   },
   "Bean sprouts": {
    "id": "bean-sprouts",
    "name": "Bean sprouts",
-   "recipes": 136
+   "recipes": 135
   },
   "Beef": {
    "id": "beef",
@@ -225,7 +225,7 @@
   "Beef tenderloin": {
    "id": "beef-steak",
    "name": "Beef steak",
-   "recipes": 120
+   "recipes": 121
   },
   "Beet": {
    "id": "beets",
@@ -240,12 +240,12 @@
   "Bell pepper": {
    "id": "bell-peppers",
    "name": "Bell peppers",
-   "recipes": 343
+   "recipes": 344
   },
   "Bell peppers": {
    "id": "bell-peppers",
    "name": "Bell peppers",
-   "recipes": 343
+   "recipes": 344
   },
   "Beni shoga": {
    "id": "kizami-pickled-ginger",
@@ -270,7 +270,7 @@
   "Bitter almond": {
    "id": "almonds",
    "name": "Almonds",
-   "recipes": 84
+   "recipes": 85
   },
   "Black adzuki bean": {
    "id": "adzuki-beans",
@@ -295,7 +295,7 @@
   "Blood sausage": {
    "id": "sausage",
    "name": "Sausage",
-   "recipes": 83
+   "recipes": 84
   },
   "Blue cheese": {
    "id": "cheese",
@@ -315,7 +315,7 @@
   "Bologna sausage": {
    "id": "sausage",
    "name": "Sausage",
-   "recipes": 83
+   "recipes": 84
   },
   "Boston butt": {
    "id": "pork-shoulder",
@@ -325,7 +325,7 @@
   "Bread crumbs": {
    "id": "breadcrumbs",
    "name": "Breadcrumbs",
-   "recipes": 49
+   "recipes": 50
   },
   "Bread roll": {
    "id": "bread",
@@ -335,7 +335,7 @@
   "Breadcrumbs": {
    "id": "breadcrumbs",
    "name": "Breadcrumbs",
-   "recipes": 49
+   "recipes": 50
   },
   "Brinjal": {
    "id": "eggplant",
@@ -355,12 +355,12 @@
   "Broth": {
    "id": "broth",
    "name": "Broth & stock",
-   "recipes": 266
+   "recipes": 267
   },
   "Brown sugar": {
    "id": "brown-sugar",
    "name": "Brown Sugar",
-   "recipes": 506
+   "recipes": 507
   },
   "Bulgur": {
    "id": "bulgur",
@@ -370,7 +370,7 @@
   "Butter": {
    "id": "butter",
    "name": "Butter",
-   "recipes": 1270
+   "recipes": 1273
   },
   "Buttermilk": {
    "id": "buttermilk",
@@ -425,12 +425,12 @@
   "Carrot": {
    "id": "carrots",
    "name": "Carrots",
-   "recipes": 576
+   "recipes": 578
   },
   "Carrots": {
    "id": "carrots",
    "name": "Carrots",
-   "recipes": 576
+   "recipes": 578
   },
   "Cassava": {
    "id": "cassava",
@@ -445,12 +445,12 @@
   "Cayenne pepper": {
    "id": "cayenne",
    "name": "Cayenne",
-   "recipes": 190
+   "recipes": 191
   },
   "Celery": {
    "id": "celery",
    "name": "Celery",
-   "recipes": 173
+   "recipes": 174
   },
   "Celery root": {
    "id": "celery-root",
@@ -505,7 +505,7 @@
   "Chicken stock": {
    "id": "chicken-broth-concentrate",
    "name": "Chicken Broth Concentrate",
-   "recipes": 562
+   "recipes": 561
   },
   "Chickpea": {
    "id": "canned-chickpeas",
@@ -540,7 +540,7 @@
   "Chili sauce": {
    "id": "chili-sauce",
    "name": "Chili sauce",
-   "recipes": 129
+   "recipes": 130
   },
   "Chilli pepper": {
    "id": "chili-peppers",
@@ -560,7 +560,7 @@
   "Chinese sausage": {
    "id": "sausage",
    "name": "Sausage",
-   "recipes": 83
+   "recipes": 84
   },
   "Chives": {
    "id": "fresh-herbs",
@@ -575,7 +575,7 @@
   "Chorizo": {
    "id": "sausage",
    "name": "Sausage",
-   "recipes": 83
+   "recipes": 84
   },
   "Chum salmon": {
    "id": "salmon-other",
@@ -625,7 +625,7 @@
   "Cocoa powder": {
    "id": "cocoa-powder",
    "name": "Cocoa Powder",
-   "recipes": 94
+   "recipes": 95
   },
   "Coconut": {
    "id": "coconut",
@@ -710,7 +710,7 @@
   "Corn starch": {
    "id": "cornstarch",
    "name": "Cornstarch",
-   "recipes": 862
+   "recipes": 863
   },
   "Corn tortilla": {
    "id": "corn-tortillas",
@@ -730,7 +730,7 @@
   "Cornstarch": {
    "id": "cornstarch",
    "name": "Cornstarch",
-   "recipes": 862
+   "recipes": 863
   },
   "Cottage cheese": {
    "id": "cottage-cheese",
@@ -765,7 +765,7 @@
   "Cream cheese": {
    "id": "cream-cheese",
    "name": "Cream cheese",
-   "recipes": 110
+   "recipes": 111
   },
   "Cream of tartar": {
    "id": "cream-of-tartar",
@@ -790,12 +790,12 @@
   "Cumin": {
    "id": "cumin",
    "name": "Cumin",
-   "recipes": 319
+   "recipes": 320
   },
   "Cumin seed": {
    "id": "cumin",
    "name": "Cumin",
-   "recipes": 319
+   "recipes": 320
   },
   "Cured salmon": {
    "id": "salmon",
@@ -810,7 +810,7 @@
   "Curry powder": {
    "id": "curry-powder",
    "name": "Curry Powder",
-   "recipes": 91
+   "recipes": 92
   },
   "Cut of pork": {
    "id": "pork",
@@ -845,7 +845,7 @@
   "Dark soy sauce": {
    "id": "dark-soy-sauce",
    "name": "Dark Soy Sauce",
-   "recipes": 499
+   "recipes": 500
   },
   "Dashi": {
    "id": "dashi-packs",
@@ -920,12 +920,12 @@
   "Duck egg": {
    "id": "eggs",
    "name": "Eggs",
-   "recipes": 1503
+   "recipes": 1506
   },
   "Duck eggs": {
    "id": "eggs",
    "name": "Eggs",
-   "recipes": 1503
+   "recipes": 1506
   },
   "Dumpling": {
    "id": "dumplings",
@@ -950,7 +950,7 @@
   "Edible mushrooms": {
    "id": "mushrooms",
    "name": "Mushrooms",
-   "recipes": 395
+   "recipes": 398
   },
   "Edible salt": {
    "id": "salt",
@@ -965,22 +965,22 @@
   "Egg": {
    "id": "eggs",
    "name": "Eggs",
-   "recipes": 1503
+   "recipes": 1506
   },
   "Egg white": {
    "id": "eggs",
    "name": "Eggs",
-   "recipes": 1503
+   "recipes": 1506
   },
   "Egg yolk": {
    "id": "eggs",
    "name": "Eggs",
-   "recipes": 1503
+   "recipes": 1506
   },
   "Egg yolks": {
    "id": "eggs",
    "name": "Eggs",
-   "recipes": 1503
+   "recipes": 1506
   },
   "Eggplant": {
    "id": "eggplant",
@@ -990,7 +990,7 @@
   "European anchovy": {
    "id": "anchovies",
    "name": "Anchovies",
-   "recipes": 43
+   "recipes": 46
   },
   "European eel": {
    "id": "unagi",
@@ -1040,7 +1040,7 @@
   "Fettuccine": {
    "id": "dried-pasta",
    "name": "Dried Pasta",
-   "recipes": 178
+   "recipes": 179
   },
   "Filo": {
    "id": "phyllo-dough",
@@ -1135,12 +1135,12 @@
   "Garlic": {
    "id": "garlic",
    "name": "Garlic",
-   "recipes": 2415
+   "recipes": 2418
   },
   "Gelatin": {
    "id": "gelatin",
    "name": "Gelatin",
-   "recipes": 23
+   "recipes": 22
   },
   "Ghee": {
    "id": "ghee",
@@ -1150,12 +1150,12 @@
   "Ginger": {
    "id": "ginger",
    "name": "Ginger",
-   "recipes": 1079
+   "recipes": 1081
   },
   "Ginger root": {
    "id": "ginger",
    "name": "Ginger",
-   "recipes": 1079
+   "recipes": 1081
   },
   "Glass noodles": {
    "id": "bean-thread-noodles",
@@ -1215,7 +1215,7 @@
   "Granulated sugar": {
    "id": "white-sugar",
    "name": "White Sugar",
-   "recipes": 667
+   "recipes": 668
   },
   "Grape": {
    "id": "grapes",
@@ -1255,7 +1255,7 @@
   "Ground beef": {
    "id": "beef-ground",
    "name": "Ground beef",
-   "recipes": 113
+   "recipes": 112
   },
   "Ground turkey": {
    "id": "turkey",
@@ -1280,7 +1280,7 @@
   "Hard-boiled egg": {
    "id": "eggs",
    "name": "Eggs",
-   "recipes": 1503
+   "recipes": 1506
   },
   "Harissa": {
    "id": "harissa",
@@ -1290,7 +1290,7 @@
   "Hazelnut": {
    "id": "hazelnuts",
    "name": "Hazelnuts",
-   "recipes": 8
+   "recipes": 9
   },
   "Hoisin sauce": {
    "id": "hoisin-sauce",
@@ -1325,7 +1325,7 @@
   "Hot sauce": {
    "id": "chili-sauce",
    "name": "Chili sauce",
-   "recipes": 129
+   "recipes": 130
   },
   "Hummus": {
    "id": "hummus",
@@ -1335,7 +1335,7 @@
   "Hungarian sausages": {
    "id": "sausage",
    "name": "Sausage",
-   "recipes": 83
+   "recipes": 84
   },
   "Iceberg lettuce": {
    "id": "lettuce-iceberg",
@@ -1345,7 +1345,7 @@
   "Icing sugar": {
    "id": "powdered-sugar",
    "name": "Powdered Sugar",
-   "recipes": 197
+   "recipes": 198
   },
   "Illicium verum": {
    "id": "star-anise",
@@ -1395,7 +1395,7 @@
   "Juglans regia": {
    "id": "walnuts",
    "name": "Walnuts",
-   "recipes": 66
+   "recipes": 67
   },
   "Juice": {
    "id": "juice",
@@ -1430,7 +1430,7 @@
   "Kecap manis": {
    "id": "dark-soy-sauce",
    "name": "Dark Soy Sauce",
-   "recipes": 499
+   "recipes": 500
   },
   "Kefir": {
    "id": "yogurt",
@@ -1480,12 +1480,12 @@
   "Leek": {
    "id": "leeks",
    "name": "Leeks",
-   "recipes": 119
+   "recipes": 120
   },
   "Leeks": {
    "id": "leeks",
    "name": "Leeks",
-   "recipes": 119
+   "recipes": 120
   },
   "Lemon": {
    "id": "lemons",
@@ -1500,12 +1500,12 @@
   "Lemon juice": {
    "id": "lemons-and-limes",
    "name": "Lemons and Limes",
-   "recipes": 729
+   "recipes": 730
   },
   "Lemon zest": {
    "id": "lemons-and-limes",
    "name": "Lemons and Limes",
-   "recipes": 729
+   "recipes": 730
   },
   "Lemongrass": {
    "id": "lemongrass",
@@ -1565,7 +1565,7 @@
   "Macaroni": {
    "id": "dried-pasta",
    "name": "Dried Pasta",
-   "recipes": 178
+   "recipes": 179
   },
   "Maggi": {
    "id": "liquid-seasoning",
@@ -1650,12 +1650,12 @@
   "Mashed potato": {
    "id": "potatoes-and-root-vegetables",
    "name": "Potatoes and Root Vegetables",
-   "recipes": 185
+   "recipes": 186
   },
   "Mashed potatoes": {
    "id": "potatoes-and-root-vegetables",
    "name": "Potatoes and Root Vegetables",
-   "recipes": 185
+   "recipes": 186
   },
   "Mayonnaise": {
    "id": "mayonnaise",
@@ -1700,12 +1700,12 @@
   "Minced beef": {
    "id": "beef-ground",
    "name": "Ground beef",
-   "recipes": 113
+   "recipes": 112
   },
   "Mirin": {
    "id": "mirin",
    "name": "Mirin",
-   "recipes": 397
+   "recipes": 398
   },
   "Miso": {
    "id": "miso",
@@ -1735,7 +1735,7 @@
   "Mung bean sprout": {
    "id": "bean-sprouts",
    "name": "Bean sprouts",
-   "recipes": 136
+   "recipes": 135
   },
   "Mung beans": {
    "id": "mung-beans",
@@ -1745,7 +1745,7 @@
   "Mushroom": {
    "id": "mushrooms",
    "name": "Mushrooms",
-   "recipes": 395
+   "recipes": 398
   },
   "Mussel": {
    "id": "mussels",
@@ -1770,7 +1770,7 @@
   "Nib sugar": {
    "id": "sugar",
    "name": "Sugar",
-   "recipes": 1774
+   "recipes": 1776
   },
   "Nile tilapia": {
    "id": "tilapia",
@@ -1885,7 +1885,7 @@
   "Oyster sauce": {
    "id": "oyster-sauce",
    "name": "Oyster Sauce",
-   "recipes": 580
+   "recipes": 581
   },
   "Pachyrhizus erosus": {
    "id": "jicama",
@@ -1935,12 +1935,12 @@
   "Parmesan": {
    "id": "parmesan",
    "name": "Parmesan",
-   "recipes": 299
+   "recipes": 300
   },
   "Parmigiano-Reggiano": {
    "id": "parmesan",
    "name": "Parmesan",
-   "recipes": 299
+   "recipes": 300
   },
   "Parsley": {
    "id": "fresh-herbs",
@@ -1955,7 +1955,7 @@
   "Pasta": {
    "id": "dried-pasta",
    "name": "Dried Pasta",
-   "recipes": 178
+   "recipes": 179
   },
   "Peach": {
    "id": "peaches",
@@ -1990,7 +1990,7 @@
   "Penne": {
    "id": "dried-pasta",
    "name": "Dried Pasta",
-   "recipes": 178
+   "recipes": 179
   },
   "Peppercorn": {
    "id": "black-pepper",
@@ -2015,7 +2015,7 @@
   "Pistachio": {
    "id": "pistachios",
    "name": "Pistachios",
-   "recipes": 26
+   "recipes": 27
   },
   "Pistachio nut": {
    "id": "nuts",
@@ -2025,7 +2025,7 @@
   "Pistachios": {
    "id": "pistachios",
    "name": "Pistachios",
-   "recipes": 26
+   "recipes": 27
   },
   "Pita": {
    "id": "pita",
@@ -2045,7 +2045,7 @@
   "Poached egg": {
    "id": "eggs",
    "name": "Eggs",
-   "recipes": 1503
+   "recipes": 1506
   },
   "Pomegranate": {
    "id": "pomegranate",
@@ -2070,7 +2070,7 @@
   "Pork belly": {
    "id": "pork-belly",
    "name": "Pork Belly",
-   "recipes": 117
+   "recipes": 118
   },
   "Pork chop": {
    "id": "pork-chops",
@@ -2095,27 +2095,27 @@
   "Potato": {
    "id": "potatoes-and-root-vegetables",
    "name": "Potatoes and Root Vegetables",
-   "recipes": 185
+   "recipes": 186
   },
   "Potato flour": {
    "id": "potato-starch",
    "name": "Potato Starch",
-   "recipes": 111
+   "recipes": 112
   },
   "Potato starch": {
    "id": "potato-starch",
    "name": "Potato Starch",
-   "recipes": 111
+   "recipes": 112
   },
   "Potatoes": {
    "id": "potatoes-and-root-vegetables",
    "name": "Potatoes and Root Vegetables",
-   "recipes": 185
+   "recipes": 186
   },
   "Powdered sugar": {
    "id": "powdered-sugar",
    "name": "Powdered Sugar",
-   "recipes": 197
+   "recipes": 198
   },
   "Processed cheese": {
    "id": "cheese",
@@ -2210,7 +2210,7 @@
   "Red bell pepper": {
    "id": "bell-peppers",
    "name": "Bell peppers",
-   "recipes": 343
+   "recipes": 344
   },
   "Red onion": {
    "id": "onion",
@@ -2310,7 +2310,7 @@
   "Sake": {
    "id": "sake",
    "name": "Sake",
-   "recipes": 342
+   "recipes": 343
   },
   "Salami": {
    "id": "salami",
@@ -2355,12 +2355,12 @@
   "Sardine": {
    "id": "tinned-sardines",
    "name": "Tinned Sardines",
-   "recipes": 12
+   "recipes": 9
   },
   "Sardines": {
    "id": "tinned-sardines",
    "name": "Tinned Sardines",
-   "recipes": 12
+   "recipes": 9
   },
   "Sauerkraut": {
    "id": "sauerkraut",
@@ -2370,7 +2370,7 @@
   "Sausage": {
    "id": "sausage",
    "name": "Sausage",
-   "recipes": 83
+   "recipes": 84
   },
   "Sautéed onions": {
    "id": "onion",
@@ -2385,12 +2385,12 @@
   "Scallion": {
    "id": "green-onion",
    "name": "Green Onion",
-   "recipes": 1338
+   "recipes": 1341
   },
   "Scallions": {
    "id": "green-onion",
    "name": "Green Onion",
-   "recipes": 1338
+   "recipes": 1341
   },
   "Scallops": {
    "id": "scallops",
@@ -2400,12 +2400,12 @@
   "Scrambled egg": {
    "id": "eggs",
    "name": "Eggs",
-   "recipes": 1503
+   "recipes": 1506
   },
   "Scrambled eggs": {
    "id": "eggs",
    "name": "Eggs",
-   "recipes": 1503
+   "recipes": 1506
   },
   "Self-rising flour": {
    "id": "all-purpose-flour",
@@ -2425,12 +2425,12 @@
   "Sesame": {
    "id": "toasted-sesame-seeds",
    "name": "Toasted Sesame Seeds",
-   "recipes": 368
+   "recipes": 369
   },
   "Sesame oil": {
    "id": "sesame-oil",
    "name": "Sesame Oil",
-   "recipes": 1008
+   "recipes": 1010
   },
   "Sesame paste": {
    "id": "tahini",
@@ -2440,7 +2440,7 @@
   "Sesame seeds": {
    "id": "toasted-sesame-seeds",
    "name": "Toasted Sesame Seeds",
-   "recipes": 368
+   "recipes": 369
   },
   "Seville orange": {
    "id": "oranges",
@@ -2480,7 +2480,7 @@
   "Shiitake": {
    "id": "mushrooms",
    "name": "Mushrooms",
-   "recipes": 395
+   "recipes": 398
   },
   "Shrimp": {
    "id": "shrimp",
@@ -2555,7 +2555,7 @@
   "Soy sauce": {
    "id": "soy-sauce",
    "name": "Soy Sauce",
-   "recipes": 1814
+   "recipes": 1819
   },
   "Soybean": {
    "id": "dried-soybeans",
@@ -2565,7 +2565,7 @@
   "Spaghetti": {
    "id": "dried-pasta",
    "name": "Dried Pasta",
-   "recipes": 178
+   "recipes": 179
   },
   "Spanish mackerel": {
    "id": "mackerel",
@@ -2575,12 +2575,12 @@
   "Spinach": {
    "id": "spinach",
    "name": "Spinach",
-   "recipes": 69
+   "recipes": 70
   },
   "Spring onions": {
    "id": "green-onion",
    "name": "Green Onion",
-   "recipes": 1338
+   "recipes": 1341
   },
   "Squash (plant)": {
    "id": "squash",
@@ -2600,12 +2600,12 @@
   "Steak": {
    "id": "beef-steak",
    "name": "Beef steak",
-   "recipes": 120
+   "recipes": 121
   },
   "Stock (cooking)": {
    "id": "broth",
    "name": "Broth & stock",
-   "recipes": 266
+   "recipes": 267
   },
   "Strained yogurt": {
    "id": "yogurt",
@@ -2625,7 +2625,7 @@
   "Sugar": {
    "id": "sugar",
    "name": "Sugar",
-   "recipes": 1774
+   "recipes": 1776
   },
   "Sultana (grape)": {
    "id": "raisins",
@@ -2635,7 +2635,7 @@
   "Swamp taro": {
    "id": "taro",
    "name": "Taro",
-   "recipes": 25
+   "recipes": 26
   },
   "Sweet basil": {
    "id": "fresh-herbs",
@@ -2645,7 +2645,7 @@
   "Sweet bean sauce": {
    "id": "bean-sauce",
    "name": "Bean Sauce",
-   "recipes": 77
+   "recipes": 78
   },
   "Sweet corn": {
    "id": "corn",
@@ -2660,7 +2660,7 @@
   "Sweet soy sauce": {
    "id": "dark-soy-sauce",
    "name": "Dark Soy Sauce",
-   "recipes": 499
+   "recipes": 500
   },
   "Swiss cheese (North America)": {
    "id": "cheese",
@@ -2680,7 +2680,7 @@
   "Tagliatelle": {
    "id": "dried-pasta",
    "name": "Dried Pasta",
-   "recipes": 178
+   "recipes": 179
   },
   "Tahini": {
    "id": "tahini",
@@ -2715,7 +2715,7 @@
   "Taro": {
    "id": "taro",
    "name": "Taro",
-   "recipes": 25
+   "recipes": 26
   },
   "Tarragon": {
    "id": "fresh-herbs",
@@ -2840,17 +2840,17 @@
   "Urfa butter": {
    "id": "butter",
    "name": "Butter",
-   "recipes": 1270
+   "recipes": 1273
   },
   "Vanilla": {
    "id": "vanilla-extract",
    "name": "Vanilla Extract",
-   "recipes": 493
+   "recipes": 494
   },
   "Vanilla extract": {
    "id": "vanilla-extract",
    "name": "Vanilla Extract",
-   "recipes": 493
+   "recipes": 494
   },
   "Veal": {
    "id": "veal",
@@ -2865,7 +2865,7 @@
   "Vienna sausage": {
    "id": "sausage",
    "name": "Sausage",
-   "recipes": 83
+   "recipes": 84
   },
   "Vinegar": {
    "id": "vinegar",
@@ -2875,12 +2875,12 @@
   "Walnut": {
    "id": "walnuts",
    "name": "Walnuts",
-   "recipes": 66
+   "recipes": 67
   },
   "Walnuts": {
    "id": "walnuts",
    "name": "Walnuts",
-   "recipes": 66
+   "recipes": 67
   },
   "Water spinach": {
    "id": "water-spinach",

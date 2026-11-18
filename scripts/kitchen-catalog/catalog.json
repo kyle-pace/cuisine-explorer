@@ -84,6 +84,16 @@
     "aduki beans"
    ]
   },
+  "agar": {
+   "name": "Agar",
+   "section": "pantry",
+   "aliases": [
+    "agar agar",
+    "agar agar powder",
+    "agar powder",
+    "kanten"
+   ]
+  },
   "aka-miso": {
    "name": "Aka Miso",
    "section": "international",
@@ -113,7 +123,11 @@
   "allspice": {
    "name": "Allspice",
    "section": "spices",
-   "aliases": []
+   "aliases": [
+    "all spice",
+    "all spice powder",
+    "ground allspice"
+   ]
   },
   "almond-flour": {
    "name": "Almond Flour",
@@ -140,6 +154,13 @@
    "name": "Anchovies",
    "section": "pantry",
    "aliases": []
+  },
+  "aonori": {
+   "name": "Aonori",
+   "section": "international",
+   "aliases": [
+    "aonori flakes"
+   ]
   },
   "apple-cider-vinegar": {
    "name": "Apple Cider Vinegar",
@@ -373,6 +394,17 @@
     "pearled barley"
    ]
   },
+  "basil": {
+   "name": "Basil",
+   "section": "produce",
+   "aliases": [
+    "basil leaves",
+    "fresh basil",
+    "italian basil",
+    "sweet basil"
+   ],
+   "parent": "fresh-herbs"
+  },
   "basmati-rice": {
    "name": "Basmati Rice",
    "section": "pantry",
@@ -414,7 +446,8 @@
     "soy bean sprouts",
     "soybean sprouts",
     "sukju",
-    "toge"
+    "toge",
+    "beansprouts"
    ]
   },
   "bean-thread-noodles": {
@@ -696,7 +729,10 @@
    "aliases": [
     "black peppercorns",
     "freshly ground black pepper",
-    "ground black pepper"
+    "ground black pepper",
+    "cracked black pepper",
+    "freshly ground pepper",
+    "ground pepper"
    ]
   },
   "black-sesame-seeds": {
@@ -783,6 +819,16 @@
    ],
    "parent": "drinks",
    "product": true
+  },
+  "bourbon": {
+   "name": "Bourbon",
+   "section": "pantry",
+   "aliases": []
+  },
+  "brandy": {
+   "name": "Brandy",
+   "section": "pantry",
+   "aliases": []
   },
   "bratwurst": {
    "name": "Bratwurst",
@@ -1105,7 +1151,10 @@
   "cayenne": {
    "name": "Cayenne",
    "section": "spices",
-   "aliases": []
+   "aliases": [
+    "cayenne pepper",
+    "ground cayenne"
+   ]
   },
   "celery": {
    "name": "Celery",
@@ -1138,6 +1187,15 @@
     "breakfast cereal"
    ],
    "product": true
+  },
+  "chanterelles": {
+   "name": "Chanterelles",
+   "section": "produce",
+   "aliases": [
+    "chanterelle",
+    "chanterelle mushrooms"
+   ],
+   "parent": "mushrooms"
   },
   "char-siu-sauce": {
    "name": "Char Siu Sauce",
@@ -1461,7 +1519,9 @@
    "aliases": [
     "chile peppers",
     "chilli peppers",
-    "hot peppers"
+    "hot peppers",
+    "red chili",
+    "red chilli"
    ]
   },
   "chili-powder": {
@@ -1536,6 +1596,14 @@
    ],
    "product": true
   },
+  "chives": {
+   "name": "Chives",
+   "section": "produce",
+   "aliases": [
+    "fresh chives"
+   ],
+   "parent": "fresh-herbs"
+  },
   "chocolate": {
    "name": "Chocolate",
    "section": "snacks-drinks",
@@ -1568,6 +1636,18 @@
    "name": "Chu Hou Paste",
    "section": "international",
    "aliases": []
+  },
+  "cilantro": {
+   "name": "Cilantro",
+   "section": "produce",
+   "aliases": [
+    "chinese parsley",
+    "cilantro leaves",
+    "coriander leaves",
+    "fresh cilantro",
+    "fresh coriander"
+   ],
+   "parent": "fresh-herbs"
   },
   "cinnamon-sticks": {
    "name": "Cinnamon Sticks",
@@ -1721,7 +1801,13 @@
    "aliases": [
     "canola oil",
     "soybean oil",
-    "vegetable oil"
+    "vegetable oil",
+    "caiziyou",
+    "corn oil",
+    "frying oil",
+    "oil",
+    "rapeseed oil",
+    "sunflower oil"
    ],
    "deals": {
     "staple": true
@@ -1753,7 +1839,8 @@
     "local corn",
     "sweet corn",
     "sweetcorn",
-    "waxy corn"
+    "waxy corn",
+    "creamed corn"
    ]
   },
   "corn-tortillas": {
@@ -1880,7 +1967,9 @@
    "aliases": [
     "chili flakes",
     "crushed chili",
-    "red pepper flakes"
+    "red pepper flakes",
+    "chilli flakes",
+    "red chilli flakes"
    ]
   },
   "cucumbers": {
@@ -1901,7 +1990,8 @@
     "cumin seed",
     "cumin seeds",
     "ground cumin",
-    "jeera"
+    "jeera",
+    "cumin powder"
    ]
   },
   "curry-leaves": {
@@ -2040,6 +2130,15 @@
     "dijon"
    ],
    "parent": "mustard"
+  },
+  "dill": {
+   "name": "Dill",
+   "section": "produce",
+   "aliases": [
+    "dill weed",
+    "fresh dill"
+   ],
+   "parent": "fresh-herbs"
   },
   "dim-sum": {
    "name": "Dim sum",
@@ -2393,6 +2492,11 @@
    ],
    "parent": "mushrooms"
   },
+  "evaporated-milk": {
+   "name": "Evaporated Milk",
+   "section": "pantry",
+   "aliases": []
+  },
   "farro": {
    "name": "Farro",
    "section": "pantry",
@@ -2530,21 +2634,7 @@
   "fresh-herbs": {
    "name": "Fresh Herbs",
    "section": "produce",
-   "aliases": [
-    "basil",
-    "chinese parsley",
-    "chives",
-    "cilantro",
-    "coriander leaves",
-    "dill",
-    "flat-leaf parsley",
-    "fresh coriander",
-    "italian parsley",
-    "mint",
-    "parsley",
-    "rau ram",
-    "vietnamese coriander"
-   ]
+   "aliases": []
   },
   "fresh-noodles": {
    "name": "Fresh noodles",
@@ -2731,6 +2821,16 @@
     "garlic cloves"
    ],
    "popularity": "everyday"
+  },
+  "garlic-chives": {
+   "name": "Garlic Chives",
+   "section": "produce",
+   "aliases": [
+    "chinese chives",
+    "garlic chive",
+    "jiu cai",
+    "nira"
+   ]
   },
   "garlic-powder": {
    "name": "Garlic Powder",
@@ -2941,7 +3041,8 @@
    "name": "Ground Cinnamon",
    "section": "spices",
    "aliases": [
-    "cinnamon"
+    "cinnamon",
+    "cinnamon powder"
    ]
   },
   "ground-ginger": {
@@ -3057,7 +3158,8 @@
     "double cream",
     "heavy cream",
     "thickened cream",
-    "whipping cream"
+    "whipping cream",
+    "cream"
    ]
   },
   "heirloom-tomatoes": {
@@ -3487,7 +3589,10 @@
    "name": "Lemons",
    "section": "produce",
    "aliases": [
-    "lemon"
+    "lemon",
+    "lemon juice",
+    "lemon wedges",
+    "lemon zest"
    ],
    "deals": {
     "staple": true,
@@ -3501,15 +3606,7 @@
    "section": "produce",
    "aliases": [
     "calamansi",
-    "kalamansi",
-    "lemon",
-    "lemon juice",
-    "lemon zest",
-    "lemons",
-    "lime",
-    "lime juice",
-    "lime zest",
-    "limes"
+    "kalamansi"
    ],
    "popularity": "everyday"
   },
@@ -3571,7 +3668,10 @@
     "key limes",
     "lime",
     "limon persa",
-    "persian limes"
+    "persian limes",
+    "lime juice",
+    "lime wedges",
+    "lime zest"
    ],
    "deals": {
     "staple": true
@@ -3784,11 +3884,25 @@
    "section": "dairy-eggs",
    "aliases": []
   },
+  "marjoram": {
+   "name": "Marjoram",
+   "section": "spices",
+   "aliases": [
+    "dried marjoram"
+   ]
+  },
   "masa-harina": {
    "name": "Masa Harina",
    "section": "pantry",
    "aliases": [
     "masa"
+   ]
+  },
+  "matcha": {
+   "name": "Matcha",
+   "section": "pantry",
+   "aliases": [
+    "matcha powder"
    ]
   },
   "mayonnaise": {
@@ -3850,6 +3964,16 @@
    "section": "pantry",
    "aliases": []
   },
+  "mint": {
+   "name": "Mint",
+   "section": "produce",
+   "aliases": [
+    "fresh mint",
+    "mint leaves",
+    "spearmint"
+   ],
+   "parent": "fresh-herbs"
+  },
   "mirin": {
    "name": "Mirin",
    "section": "international",
@@ -3892,6 +4016,11 @@
   },
   "mochiko": {
    "name": "Mochiko",
+   "section": "pantry",
+   "aliases": []
+  },
+  "molasses": {
+   "name": "Molasses",
    "section": "pantry",
    "aliases": []
   },
@@ -4353,6 +4482,18 @@
    ],
    "parent": "cheese"
   },
+  "parsley": {
+   "name": "Parsley",
+   "section": "produce",
+   "aliases": [
+    "curly parsley",
+    "flat-leaf parsley",
+    "fresh parsley",
+    "italian parsley",
+    "parsley leaves"
+   ],
+   "parent": "fresh-herbs"
+  },
   "parsnips": {
    "name": "Parsnips",
    "section": "produce",
@@ -4462,8 +4603,17 @@
    "aliases": [
     "garden peas",
     "english peas",
-    "sweet peas"
+    "sweet peas",
+    "frozen peas"
    ]
+  },
+  "pecans": {
+   "name": "Pecans",
+   "section": "pantry",
+   "aliases": [
+    "pecan"
+   ],
+   "parent": "nuts"
   },
   "perilla-leaves": {
    "name": "Perilla leaves",
@@ -5137,6 +5287,11 @@
    "section": "pantry",
    "aliases": []
   },
+  "rhubarb": {
+   "name": "Rhubarb",
+   "section": "produce",
+   "aliases": []
+  },
   "rice": {
    "name": "Rice",
    "section": "pantry",
@@ -5283,6 +5438,16 @@
    ],
    "parent": "fish"
   },
+  "rosemary": {
+   "name": "Rosemary",
+   "section": "produce",
+   "aliases": [
+    "dried rosemary",
+    "fresh rosemary",
+    "rosemary sprigs"
+   ],
+   "parent": "fresh-herbs"
+  },
   "rutabaga": {
    "name": "Rutabaga",
    "section": "produce",
@@ -5307,6 +5472,15 @@
     "saffron threads"
    ],
    "popularity": "specialty"
+  },
+  "sage": {
+   "name": "Sage",
+   "section": "produce",
+   "aliases": [
+    "fresh sage",
+    "sage leaves"
+   ],
+   "parent": "fresh-herbs"
   },
   "sake": {
    "name": "Sake",
@@ -5714,6 +5888,13 @@
    "popularity": "everyday",
    "parent": "rice"
   },
+  "shortening": {
+   "name": "Shortening",
+   "section": "pantry",
+   "aliases": [
+    "vegetable shortening"
+   ]
+  },
   "shredded-preserved-radish": {
    "name": "Shredded Preserved Radish",
    "section": "international",
@@ -5764,7 +5945,9 @@
     "sichuan peppercorns",
     "szechuan green pepper",
     "szechuan pepper",
-    "szechuan peppercorns"
+    "szechuan peppercorns",
+    "ground sichuan pepper",
+    "sichuan pepper"
    ]
   },
   "side-mixes": {
@@ -5955,6 +6138,14 @@
    ],
    "parent": "leafy-greens"
   },
+  "split-peas": {
+   "name": "Split Peas",
+   "section": "pantry",
+   "aliases": [
+    "green split peas",
+    "yellow split peas"
+   ]
+  },
   "spring-rolls": {
    "name": "Spring rolls & lumpia",
    "section": "frozen",
@@ -6052,6 +6243,13 @@
     "snap peas",
     "sugar snaps",
     "sugar snap"
+   ]
+  },
+  "sumac": {
+   "name": "Sumac",
+   "section": "spices",
+   "aliases": [
+    "ground sumac"
    ]
   },
   "summer-squash": {
@@ -6210,6 +6408,13 @@
     "boba pearls"
    ]
   },
+  "tapioca-starch": {
+   "name": "Tapioca Starch",
+   "section": "pantry",
+   "aliases": [
+    "tapioca flour"
+   ]
+  },
   "taro": {
    "name": "Taro",
    "section": "produce",
@@ -6254,9 +6459,21 @@
    "aliases": [
     "holy basil",
     "horapha",
-    "thai sweet basil"
+    "thai sweet basil",
+    "holy basil leaves",
+    "thai basil leaves"
    ],
    "parent": "fresh-herbs"
+  },
+  "thai-chili-paste": {
+   "name": "Thai Chili Paste",
+   "section": "international",
+   "aliases": [
+    "nam prik pao",
+    "thai chili jam",
+    "thai chilli paste",
+    "thai roasted chili paste"
+   ]
   },
   "thai-chilies": {
    "name": "Thai Chilies",
@@ -6270,7 +6487,9 @@
     "fresh chilies",
     "red chilies",
     "siling labuyo",
-    "thai bird chilies"
+    "thai bird chilies",
+    "thai chili",
+    "thai chilli"
    ],
    "parent": "chili-peppers"
   },
@@ -6460,7 +6679,8 @@
    "section": "spices",
    "aliases": [
     "ground turmeric",
-    "haldi"
+    "haldi",
+    "turmeric powder"
    ]
   },
   "turnips": {
@@ -6506,7 +6726,8 @@
    "name": "Vanilla Extract",
    "section": "spices",
    "aliases": [
-    "vanilla"
+    "vanilla",
+    "vanilla essence"
    ]
   },
   "veal": {
@@ -6532,8 +6753,21 @@
    "section": "international",
    "aliases": []
   },
+  "vietnamese-coriander": {
+   "name": "Vietnamese Coriander",
+   "section": "produce",
+   "aliases": [
+    "rau ram"
+   ],
+   "parent": "fresh-herbs"
+  },
   "vinegar": {
    "name": "Vinegar",
+   "section": "pantry",
+   "aliases": []
+  },
+  "vodka": {
+   "name": "Vodka",
    "section": "pantry",
    "aliases": []
   },
@@ -6542,6 +6776,14 @@
    "section": "pantry",
    "aliases": [],
    "parent": "nuts"
+  },
+  "wasabi": {
+   "name": "Wasabi",
+   "section": "international",
+   "aliases": [
+    "wasabi paste",
+    "wasabi powder"
+   ]
   },
   "water-spinach": {
    "name": "Water spinach",
@@ -6597,7 +6839,8 @@
    "section": "spices",
    "aliases": [
     "ground white pepper",
-    "white peppercorns"
+    "white peppercorns",
+    "white pepper powder"
    ]
   },
   "white-sugar": {
@@ -6775,7 +7018,8 @@
    "name": "Zucchini",
    "section": "produce",
    "aliases": [
-    "courgette"
+    "courgette",
+    "zucchinis"
    ],
    "parent": "summer-squash"
   }
